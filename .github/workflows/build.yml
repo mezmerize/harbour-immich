@@ -1,0 +1,55 @@
+name: Build harbour-immich
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: sailfishos/sdk:latest
+
+    strategy:
+      matrix:
+        target:
+          - SailfishOS-5.0.0.62-i486
+          - SailfishOS-5.0.0.62-aarch64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Start SDK engine
+        run: sfdk engine start
+
+      - name: Configure target
+        run: sfdk config target ${{ matrix.target }}
+
+      - name: Build RPM
+        run: sfdk build
+
+      - name: Collect RPMs
+        run: |
+          mkdir -p output
+          find RPMS -name "harbour-immich*.rpm" -exec cp {} output/ \;
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: harbour-immich-${{ matrix.target }}
+          path: output/*.rpm
+
+      - name: Attach to Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: output/*.rpm
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
