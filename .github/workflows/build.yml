@@ -1,55 +1,100 @@
-name: Build harbour-immich
+name: Build RPMs
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-  workflow_dispatch:
-  push:
     tags:
-      - "v*"
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  OS_VERSION: 5.0.0.43
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    container:
-      image: sailfishos/sdk:latest
-
+    name: Build App
     strategy:
       matrix:
-        target:
-          - SailfishOS-5.0.0.62-i486
-          - SailfishOS-5.0.0.62-aarch64
-
+        store: [yes, no]
+        arch: [armv7hl, aarch64, i486]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    - name: Prepare
+      run: docker pull coderus/sailfishos-platform-sdk:$OS_VERSION && mkdir output
 
-      - name: Start SDK engine
-        run: sfdk engine start
+    - name: Build ${{ matrix.arch }} (store)
+      if: matrix.store == 'yes'
+      run: docker run --rm --privileged -v $PWD:/share coderus/sailfishos-platform-sdk:$OS_VERSION /bin/bash -c "
+            mkdir -p build ;
+            cd build ;
+            cp -r /share/* . ;
+            HARBOUR_STORE=1 MB2_QMAKE_ARGS='CONFIG+=harbour_store' mb2 -t SailfishOS-$OS_VERSION-${{ matrix.arch }} build --no-check ;
+            sudo cp -r RPMS/*.rpm /share/output
 
-      - name: Configure target
-        run: sfdk config target ${{ matrix.target }}
+    - name: Build ${{ matrix.arch }}
+      if: matrix.store != 'yes'
+      run: docker run --rm --privileged -v $PWD:/share coderus/sailfishos-platform-sdk:$OS_VERSION /bin/bash -c "
+            mkdir -p build ;
+            cd build ;
+            cp -r /share/* . ;
+            mb2 -t SailfishOS-$OS_VERSION-${{ matrix.arch }} build --no-check ;
+            sudo cp -r RPMS/*.rpm /share/output
+      
+    - name: Upload RPM (${{ matrix.arch }})
+      if: matrix.store != 'yes'
+      uses: actions/upload-artifact@v4
+      with:
+        name: rpm-${{ matrix.arch }}
+        path: output
 
-      - name: Build RPM
-        run: sfdk build
-
-      - name: Collect RPMs
-        run: |
-          mkdir -p output
-          find RPMS -name "harbour-immich*.rpm" -exec cp {} output/ \;
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+    - name: Upload RPM Store (${{ matrix.arch }})
+      if: matrix.store == 'yes'
+      uses: actions/upload-artifact@v4
+      with:
+        name: rpm-store-${{ matrix.arch }}
+        path: output
+  release:
+    permissions: write-all
+    name: Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download armv7hl
+        uses: actions/download-artifact@v4
         with:
-          name: harbour-immich-${{ matrix.target }}
-          path: output/*.rpm
-
-      - name: Attach to Release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
+          name: rpm-store-armv7hl
+        continue-on-error: true
+      - name: Download aarch64
+        uses: actions/download-artifact@v4
         with:
-          files: output/*.rpm
+          name: rpm-store-aarch64
+        continue-on-error: true
+      - name: Download i486
+        uses: actions/download-artifact@v4
+        with:
+          name: rpm-store-i486
+        continue-on-error: true
+      - name: Extract Version Name
+        id: extract_name
+        uses: actions/github-script@v4
+        with:
+          result-encoding: string
+          script: |
+            return context.payload.ref.replace(/refs\/tags\//, '');
+      - name: Create a Release
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: ${{ steps.extract_name.outputs.result }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: '*.rpm'
