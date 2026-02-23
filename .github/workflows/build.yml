@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  OS_VERSION: 5.0.0.43
+  OS_VERSION: 4.5.0.16
 
 jobs:
   build:
