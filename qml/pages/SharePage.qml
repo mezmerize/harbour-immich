@@ -100,10 +100,11 @@ Dialog {
            Label {
                x: Theme.horizontalPageMargin
                width: parent.width - 2 * Theme.horizontalPageMargin
-               //% "Sharing %1 asset(s)" : "Sharing album"
-               text: shareType === "INDIVIDUAL"
-                     //% "Sharing %1 asset(s)"
-                     ? qsTrId("sharePage.sharingAssets").arg(assetIds.length)
+               text: shareType === "INDIVIDUAL" ? (assetIds.length === 1
+                     //% "Sharing asset"
+                     ? qsTrId("sharePage.sharingAsset")
+                     //% "Sharing %1 assets"
+                     : qsTrId("sharePage.sharingAssets").arg(assetIds.length))
                      //% "Sharing album"
                      : qsTrId("sharePage.sharingAlbum")
                font.pixelSize: Theme.fontSizeSmall

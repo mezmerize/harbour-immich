@@ -67,8 +67,11 @@ CoverBackground {
                    }
                    var yearsAgo = currentYear - memoryYear
                    if (yearsAgo <= 0) yearsAgo = 1
-                   //% "%1 year(s) ago"
-                   return qsTrId("coverPage.yearsAgo").arg(yearsAgo)
+                   return yearsAgo === 1
+                        //% "A year ago"
+                        ? qsTrId("coverPage.yearAgo")
+                        //% "%1 years ago"
+                        : qsTrId("coverPage.yearsAgo").arg(yearsAgo)
                }
                return ""
            }

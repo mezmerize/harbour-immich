@@ -104,7 +104,7 @@ Dialog {
                }
 
                Label {
-                   //% "Clear selection."
+                   //% "Clear selection"
                    text: qsTrId("peoplePickerDialog.clear")
                    font.pixelSize: Theme.fontSizeExtraSmall
                    color: Theme.highlightColor

@@ -283,8 +283,11 @@ Page {
 
                   Label {
                       width: parent.width
-                      //% "%1 asset(s)"
-                      text: qsTrId("albumsPage.assets").arg(assetCount)
+                      text: assetCount === 1
+                            //% "1 asset"
+                            ? qsTrId("albumsPage.asset")
+                            //% "%1 assets"
+                            : qsTrId("albumsPage.assets").arg(assetCount)
                       color: listItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
                       font.pixelSize: Theme.fontSizeSmall
                   }

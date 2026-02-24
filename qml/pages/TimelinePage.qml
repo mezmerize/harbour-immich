@@ -86,9 +86,11 @@ Page {
          spacing: 0
 
          PageHeader {
-             title: timelineModel.selectedCount > 0 ?
-                    //% "%1 asset(s) selected"
-                    qsTrId("timelinePage.assetsSelected").arg(timelineModel.selectedCount) :
+             title: timelineModel.selectedCount > 0 ? (timelineModel.selectedCount === 1
+                    //% "1 asset selected"
+                    ? qsTrId("timelinePage.assetSelected")
+                    //% "%1 assets selected"
+                    : qsTrId("timelinePage.assetsSelected").arg(timelineModel.selectedCount)) :
                     //% "Timeline"
                     qsTrId("timelinePage.timeline")
          }
@@ -345,8 +347,11 @@ Page {
                          anchors.left: parent.left
                          anchors.leftMargin: Theme.horizontalPageMargin
                          anchors.verticalCenter: parent.verticalCenter
-                         //% "%1 item(s)"
-                         text: bucketData ? qsTrId("timelinePage.items").arg(bucketData.count) : ""
+                         text: bucketData ? (bucketData.count === 1
+                            //% "1 item"
+                            ? qsTrId("timelinePage.item")
+                            //% "%1 items"
+                            : qsTrId("timelinePage.items").arg(bucketData.count)) : ""
                          font.pixelSize: Theme.fontSizeSmall
                          color: Theme.secondaryColor
                          visible: !isFirstOfMonth && !assetsLoaded
@@ -630,15 +635,21 @@ Page {
              immichApi.downloadAsset(selectedIds[i], "asset_" + selectedIds[i])
          }
          timelineModel.clearSelection()
-         //% "Downloading %1 asset(s)..."
-         errorNotification.show(qsTrId("timelinePage.downloading").arg(selectedIds.length))
+         errorNotification.show(selectedIds.length === 1
+            //% "Downloading asset..."
+            ? qsTrId("timelinePage.downloadingAsset")
+            //% "Downloading %1 assets..."
+            : qsTrId("timelinePage.downloadingAssets").arg(selectedIds.length))
      }
      onDeleteSelected: {
          var selectedIds = timelineModel.getSelectedAssetIds()
-         //% "Deleting %1 asset(s)"
-         deleteRemorse.execute(qsTrId("timelinePage.deleting").arg(selectedIds.length), function() {
-             immichApi.deleteAssets(selectedIds)
-             timelineModel.clearSelection()
+         deleteRemorse.execute(selectedIds.length === 1
+            //% "Deleting asset"
+            ? qsTrId("timelinePage.deletingAsset")
+            //% "Deleting %1 assets"
+            : qsTrId("timelinePage.deletingAssets").arg(selectedIds.length), function() {
+                immichApi.deleteAssets(selectedIds)
+                timelineModel.clearSelection()
          })
      }
  }
@@ -830,8 +841,11 @@ Page {
                                  }
 
                                  Label {
-                                     //% "%1 asset(s)"
-                                     text: qsTrId("timelinePage.assets").arg(assetCount || 0)
+                                     text: assetCount === 1
+                                           //% "1 asset"
+                                           ? qsTrId("timelinePage.asset")
+                                           //% "%1 assets"
+                                           : qsTrId("timelinePage.assets").arg(assetCount || 0)
                                      font.pixelSize: Theme.fontSizeSmall
                                      color: Theme.secondaryColor
                                  }
@@ -993,8 +1007,11 @@ Page {
          errorNotification.show(error)
      }
      onAssetsDeleted: {
-         //% "Deleted %1 asset(s)"
-         errorNotification.show(qsTrId("timelinePage.deleted").arg(assetIds.length))
+         errorNotification.show(assetIds.length === 1
+            //% "Deleted asset"
+            ? qsTrId("timelinePage.deletedAsset")
+            //% "Deleted %1 assets"
+            : qsTrId("timelinePage.deletedAssets").arg(assetIds.length))
      }
      onAssetDownloaded: {
          //% "Downloaded to: %1"
@@ -1008,11 +1025,15 @@ Page {
      }
      onFavoritesToggled: {
          timelineModel.clearSelection()
-         errorNotification.show(isFavorite
-              //% "Added %1 asset(s) to favorites"
-              ? qsTrId("timelinePage.addedToFavorites").arg(assetIds.length)
-              //% "Removed %1 asset(s) from favorites"
-              : qsTrId("timelinePage.removedFromFavorites").arg(assetIds.length))
+         errorNotification.show(isFavorite ? (assetIds.length === 1
+              //% "Added asset to favorites"
+              ? qsTrId("timelinePage.addedAssetToFavorites")
+              //% "Added %1 assets to favorites"
+              : qsTrId("timelinePage.addedAssetsToFavorites").arg(assetIds.length)) : (assetIds.length === 1
+              //% "Removed asset from favorites"
+              ? qsTrId("timelinePage.removedAssetFromFavorites")
+              //% "Removed %1 assets from favorites"
+              : qsTrId("timelinePage.removedAssetsFromFavorites").arg(assetIds.length)))
      }
      onAlbumCreated: {
          // After album is created, add pending assets to it

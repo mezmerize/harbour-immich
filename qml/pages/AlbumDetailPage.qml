@@ -91,10 +91,16 @@ Page {
        }
 
        header: PageHeader {
-           //% "%1 asset(s) selected"
-           title: page.selectionMode ? qsTrId("albumDetailPage.assetsSelected").arg(page.selectedAssets.length) : albumName
-           //% "%1 asset(s)"
-           description: page.selectionMode ? "" : qsTrId("albumDetailPage.assets").arg(assetCount)
+           title: page.selectionMode ? (page.selectedAssets.length === 1
+                //% "1 asset selected"
+                ? qsTrId("albumDetailPage.assetSelected")
+                //% "%1 assets selected"
+                : qsTrId("albumDetailPage.assetsSelected").arg(page.selectedAssets.length)) : albumName
+           description: page.selectionMode ? "" : (assetCount === 1
+                //% "1 asset"
+                ? qsTrId("albumDetailPage.asset")
+                //% "%1 assets"
+                : qsTrId("albumDetailPage.assets").arg(assetCount))
        }
 
        property int assetsPerRow: page.isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
@@ -263,8 +269,11 @@ Page {
                immichApi.downloadAsset(page.selectedAssets[i], page.selectedAssets[i] + ".jpg")
            }
            page.clearSelection()
-           //% "Downloading %1 asset(s)..."
-           notification.show(qsTrId("albumDetailPage.downloading").arg(page.selectedAssets.length))
+           notification.show(page.selectedAssets.length === 1
+                //% "Downloading asset..."
+                ? qsTrId("albumDetailPage.downloadingAsset")
+                //% "Downloading %1 assets..."
+                : qsTrId("albumDetailPage.downloadingAssets").arg(page.selectedAssets.length))
        }
        onDeleteSelected: {
            immichApi.deleteAssets(page.selectedAssets)

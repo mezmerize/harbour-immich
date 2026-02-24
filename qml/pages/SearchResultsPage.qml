@@ -93,8 +93,11 @@ Page {
        header: PageHeader {
            //% "Search Results"
            title: searchTitle !== "" ? searchTitle : qsTrId("searchResultsPage.searchResults")
-           //% "%1 result(s)"
-           description: qsTrId("searchResultsPage.results").arg(resultsGrid.count)
+           description: resultsGrid.count === 1
+                //% "1 result"
+                ? qsTrId("searchResultsPage.result")
+                //% "%1 results"
+                : qsTrId("searchResultsPage.results").arg(resultsGrid.count)
        }
 
        model: ListModel {
@@ -232,8 +235,11 @@ Page {
                immichApi.downloadAsset(page.selectedAssets[i], page.selectedAssets[i] + ".jpg")
            }
            page.clearSelection()
-           //% "Downloading %1 asset(s)..."
-           notification.show(qsTrId("searchResultsPage.downloading").arg(page.selectedAssets.length))
+           notification.show(page.selectedAssets.length === 1
+                //% "Downloading asset..."
+                ? qsTrId("searchResultsPage.downloadingAsset")
+                //% "Downloading %1 assets..."
+                : qsTrId("searchResultsPage.downloadingAssets").arg(page.selectedAssets.length))
        }
        onDeleteSelected: {
            immichApi.deleteAssets(page.selectedAssets)

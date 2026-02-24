@@ -34,8 +34,11 @@ Item {
                }
                var yearsAgo = currentYear - memoryYear
                if (yearsAgo <= 0) yearsAgo = 1
-               //% "%1 year(s) ago"
-               var title = qsTrId("memoriesBar.yearsAgo").arg(yearsAgo)
+               var title = yearsAgo === 1
+                    //% "A year ago"
+                    ? qsTrId("memoriesBar.yearAgo")
+                    //% "%1 years ago"
+                    : qsTrId("memoriesBar.yearsAgo").arg(yearsAgo)
                memoriesModel.append({
                    memoryId: memory.id,
                    title: title,

@@ -105,11 +105,16 @@ Dialog {
            Label {
                x: Theme.horizontalPageMargin
                width: parent.width - 2 * Theme.horizontalPageMargin
-               text: filterText.length > 0
-                     //% "%1 result(s)"
-                     ? qsTrId("filterablePickerDialog.results").arg(filteredModel.length)
-                     //% "%1 option(s)"
-                     : qsTrId("filterablePickerDialog.options").arg(model.length)
+               text: filterText.length > 0 ? (filteredModel.length === 1
+                     //% "1 result"
+                     ? qsTrId("filterablePickerDialog.result")
+                     //% "%1 results"
+                     : qsTrId("filterablePickerDialog.results").arg(filteredModel.length))
+                     : (model.length === 1
+                     //% "1 option"
+                     ? qsTrId("filterablePickerDialog.option")
+                     //% "%1 options"
+                     : qsTrId("filterablePickerDialog.options").arg(model.length))
                font.pixelSize: Theme.fontSizeExtraSmall
                color: Theme.secondaryColor
                visible: model.length > 10

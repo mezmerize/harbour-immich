@@ -195,11 +195,15 @@ Dialog {
           Label {
               x: Theme.horizontalPageMargin
               width: parent.width - 2 * Theme.horizontalPageMargin
-              text: filterText.length > 0 ?
-                    //% "%1 result(s)"
-                    qsTrId("albumPickerPage.results").arg(filteredCount) :
-                    //% "%1 album(s)"
-                    qsTrId("albumPickerPage.albums").arg(albumModel.rowCount())
+              text: filterText.length > 0 ? (filteredCount === 1
+                     //% "1 result"
+                     ? qsTrId("albumPickerPage.result")
+                     //% "%1 results"
+                     : qsTrId("albumPickerPage.results").arg(filteredCount)) : (albumModel.rowCount() === 1
+                     //% "1 album"
+                     ? qsTrId("albumPickerPage.album")
+                     //% "%1 albums"
+                     : qsTrId("albumPickerPage.albums").arg(albumModel.rowCount()))
               font.pixelSize: Theme.fontSizeExtraSmall
               color: Theme.secondaryColor
               visible: albumModel.rowCount() > 5
@@ -241,8 +245,11 @@ Dialog {
                           }
 
                           Label {
-                              //% "%1 asset(s)"
-                              text: qsTrId("albumPickerPage.assets").arg(assetCount || 0)
+                              text: assetCount === 1
+                                    //% "1 asset"
+                                    ? qsTrId("albumPickerPage.asset")
+                                    //% "%1 assets"
+                                    : qsTrId("albumPickerPage.assets").arg(assetCount || 0)
                               font.pixelSize: Theme.fontSizeSmall
                               color: Theme.secondaryColor
                           }
@@ -260,7 +267,6 @@ Dialog {
           Label {
               x: Theme.horizontalPageMargin
               width: parent.width - 2 * Theme.horizontalPageMargin
-              //% "No albums match filter" : "No albums yet"
               text: filterText.length > 0
                    //% "No albums match filter"
                     ? qsTrId("albumPickerPage.noAlbumsMatch")
