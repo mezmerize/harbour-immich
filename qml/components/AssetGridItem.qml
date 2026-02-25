@@ -68,7 +68,7 @@ BackgroundItem {
         Icon {
             anchors.centerIn: parent
             source: "image://theme/icon-m-image"
-            visible: thumbnail.status === Image.Error
+            visible: thumbnail.status === Image.Error && !thumbhash
             opacity: 0.3
         }
     }

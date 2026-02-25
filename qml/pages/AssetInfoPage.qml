@@ -100,77 +100,90 @@ Page {
                 visible: assetInfo && assetInfo.people && assetInfo.people.length > 0
             }
 
-            Flow {
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                x: Theme.horizontalPageMargin
-                spacing: Theme.paddingMedium
+            Item {
+                width: parent.width
+                height: peopleFlow.height
                 visible: assetInfo && assetInfo.people && assetInfo.people.length > 0
 
-                Repeater {
-                    model: assetInfo && assetInfo.people ? assetInfo.people : []
+                Flow {
+                    id: peopleFlow
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: {
+                        var itemWidth = Theme.itemSizeMedium
+                        var availableWidth = parent.width - 2 * Theme.horizontalPageMargin
+                        var count = assetInfo && assetInfo.people ? assetInfo.people.length : 0
+                        var maxPerRow = Math.floor((availableWidth + spacing) / (itemWidth + spacing))
+                        var perRow = Math.min(count, maxPerRow)
+                        return perRow * itemWidth + (perRow - 1) * spacing
+                    }
+                    spacing: Theme.paddingMedium
 
-                    BackgroundItem {
-                        width: Theme.itemSizeMedium
-                        height: Theme.itemSizeMedium + Theme.paddingSmall + Theme.fontSizeTiny
+                    Repeater {
+                        model: assetInfo && assetInfo.people ? assetInfo.people : []
 
-                        Column {
-                            anchors.fill: parent
-                            spacing: Theme.paddingSmall / 2
+                        BackgroundItem {
+                            width: Theme.itemSizeMedium
+                            height: Theme.itemSizeMedium + Theme.paddingSmall + Theme.fontSizeTiny
 
-                            Rectangle {
-                                width: Theme.itemSizeMedium
-                                height: Theme.itemSizeMedium
-                                color: "transparent"
-                                border.width: 1
-                                border.color: Theme.secondaryColor
-                                radius: width / 2
+                            Column {
+                                anchors.fill: parent
+                                spacing: Theme.paddingSmall / 2
 
-                                Image {
-                                    id: personThumbnail
-                                    anchors.fill: parent
-                                    anchors.margins: 2
-                                    source: modelData.id ? "image://immich/person/" + modelData.id : ""
-                                    fillMode: Image.PreserveAspectCrop
-                                    asynchronous: true
-                                    layer.enabled: true
-                                    layer.effect: OpacityMask {
-                                        maskSource:  Item {
-                                            width: personThumbnail.width
-                                            height: personThumbnail.height
-                                            Rectangle {
-                                                anchors.fill: parent
-                                                radius: width / 2
+                                Rectangle {
+                                    width: Theme.itemSizeMedium
+                                    height: Theme.itemSizeMedium
+                                    color: "transparent"
+                                    border.width: 1
+                                    border.color: Theme.secondaryColor
+                                    radius: width / 2
+
+                                    Image {
+                                        id: personThumbnail
+                                        anchors.fill: parent
+                                        anchors.margins: 2
+                                        source: modelData.id ? "image://immich/person/" + modelData.id : ""
+                                        fillMode: Image.PreserveAspectCrop
+                                        asynchronous: true
+                                        layer.enabled: true
+                                        layer.effect: OpacityMask {
+                                            maskSource:  Item {
+                                                width: personThumbnail.width
+                                                height: personThumbnail.height
+                                                Rectangle {
+                                                    anchors.fill: parent
+                                                    radius: width / 2
+                                                }
                                             }
                                         }
+                                    }
+
+                                    Label {
+                                        anchors.centerIn: parent
+                                        text: (modelData.name || "?").charAt(0).toUpperCase()
+                                        font.pixelSize: Theme.fontSizeLarge
+                                        color: Theme.secondaryColor
+                                        visible: personThumbnail.status !== Image.Ready
                                     }
                                 }
 
                                 Label {
-                                    anchors.centerIn: parent
-                                    text: (modelData.name || "?").charAt(0).toUpperCase()
-                                    font.pixelSize: Theme.fontSizeLarge
-                                    color: Theme.secondaryColor
-                                    visible: personThumbnail.status !== Image.Ready
+                                    width: Theme.itemSizeMedium
+                                    //% "Unknown"
+                                    text: modelData.name || qsTrId("assetInfoPage.unknownPerson")
+                                    font.pixelSize: Theme.fontSizeTiny
+                                    truncationMode: TruncationMode.Fade
+                                    horizontalAlignment: Text.AlignHCenter
+                                    color: Theme.primaryColor
                                 }
                             }
 
-                            Label {
-                                width: Theme.itemSizeMedium
-                                //% "Unknown"
-                                text: modelData.name || qsTrId("assetInfoPage.unknownPerson")
-                                font.pixelSize: Theme.fontSizeTiny
-                                truncationMode: TruncationMode.Fade
-                                horizontalAlignment: Text.AlignHCenter
-                                color: Theme.primaryColor
-                            }
-                        }
-
-                        onClicked: {
-                            if (modelData.id) {
-                                pageStack.push(Qt.resolvedUrl("SearchResultsPage.qml"), {
-                                    personIds: [modelData.id],
-                                    searchTitle: modelData.name || qsTrId("assetInfoPage.unknownPerson")
-                                })
+                            onClicked: {
+                                if (modelData.id) {
+                                    pageStack.push(Qt.resolvedUrl("SearchResultsPage.qml"), {
+                                        personIds: [modelData.id],
+                                        searchTitle: modelData.name || qsTrId("assetInfoPage.unknownPerson")
+                                    })
+                                }
                             }
                         }
                     }

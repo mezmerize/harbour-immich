@@ -110,3 +110,4 @@ GPLv3
 
 - Immich project and contributors
 - Sailfish OS community
+- Frank Paul Silye (https://forum.sailfishos.org/u/frankps) - Norwegian translations and testing
