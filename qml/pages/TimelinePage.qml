@@ -87,13 +87,8 @@ Page {
 
          PageHeader {
              id: pageHeader
-             title: timelineModel.selectedCount > 0 ? (timelineModel.selectedCount === 1
-                    //% "1 asset selected"
-                    ? qsTrId("timelinePage.assetSelected")
-                    //% "%1 assets selected"
-                    : qsTrId("timelinePage.assetsSelected").arg(timelineModel.selectedCount)) :
-                    //% "Timeline"
-                    qsTrId("timelinePage.timeline")
+             //% "Timeline"
+             title: qsTrId("timelinePage.timeline")
          }
 
          // Memories / On This Day section

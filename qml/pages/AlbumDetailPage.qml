@@ -411,26 +411,6 @@ Page {
               }
           }
 
-          // Selection header
-          Rectangle {
-              width: parent.width
-              height: selectionHeaderLabel.height + Theme.paddingLarge
-              color: Theme.rgba(Theme.highlightBackgroundColor, 0.3)
-              visible: page.selectionMode
-
-              Label {
-                  id: selectionHeaderLabel
-                  anchors.centerIn: parent
-                  text: page.selectedAssets.length === 1
-                        //% "1 asset selected"
-                        ? qsTrId("albumDetailPage.assetSelected")
-                        //% "%1 assets selected"
-                        : qsTrId("albumDetailPage.assetsSelected").arg(page.selectedAssets.length)
-                  font.pixelSize: Theme.fontSizeSmall
-                  color: Theme.highlightColor
-              }
-          }
-
           // Loading indicator
           Item {
               width: parent.width
