@@ -86,6 +86,7 @@ Page {
          spacing: 0
 
          PageHeader {
+             id: pageHeader
              title: timelineModel.selectedCount > 0 ? (timelineModel.selectedCount === 1
                     //% "1 asset selected"
                     ? qsTrId("timelinePage.assetSelected")
@@ -497,6 +498,7 @@ Page {
                                              isVideo: modelData.isVideo
                                              assetIndex: modelData.assetIndex
                                              thumbhash: modelData.thumbhash || ""
+                                             duration: modelData.duration || ""
 
                                              shouldLoad: bucketColumn.isNearViewport
 
@@ -534,48 +536,54 @@ Page {
          }
 
          // Empty state
-         Column {
+         Item {
              width: parent.width
-             spacing: Theme.paddingLarge
+             height: flickable.height - pageHeader.height - memoriesBar.height - filterBar.height
              visible: !timelineModel.loading && bucketCount === 0
 
-             Item {
+             Column {
                  width: parent.width
-                 height: Theme.paddingLarge * 2
-             }
+                 spacing: Theme.paddingLarge
+                 anchors.verticalCenter: parent.verticalCenter
 
-             Icon {
-                 anchors.horizontalCenter: parent.horizontalCenter
-                 source: page.activeFilter === "favorites" ? "image://theme/icon-m-favorite" : "image://theme/icon-m-image"
-                 color: Theme.highlightColor
-             }
+                 Item {
+                     width: parent.width
+                     height: Theme.paddingLarge * 2
+                 }
 
-             Label {
-                 x: Theme.horizontalPageMargin
-                 width: parent.width - 2 * Theme.horizontalPageMargin
-                 text: page.activeFilter === "favorites"
-                       //% "No favorites yet"
-                       ? qsTrId("timelinePage.noFavoritesLabel")
-                       //% "No assets yet"
-                       : qsTrId("timelinePage.noAssetsLabel")
-                 font.pixelSize: Theme.fontSizeLarge
-                 color: Theme.highlightColor
-                 wrapMode: Text.WordWrap
-                 horizontalAlignment: Text.AlignHCenter
-             }
+                 Icon {
+                     anchors.horizontalCenter: parent.horizontalCenter
+                     source: page.activeFilter === "favorites" ? "image://theme/icon-m-favorite" : "image://theme/icon-m-image"
+                     color: Theme.highlightColor
+                 }
 
-             Label {
-                 x: Theme.horizontalPageMargin
-                 width: parent.width - 2 * Theme.horizontalPageMargin
-                 text: page.activeFilter === "favorites"
-                       //% "Long-press an asset and add it to favorites to see it here"
-                       ? qsTrId("timelinePage.noFavoritesInfo")
-                       //% "Upload or import assets in Immich to start building your timeline"
-                       : qsTrId("timelinePage.noAssetsInfo")
-                 font.pixelSize: Theme.fontSizeSmall
-                 color: Theme.secondaryHighlightColor
-                 wrapMode: Text.WordWrap
-                 horizontalAlignment: Text.AlignHCenter
+                 Label {
+                     x: Theme.horizontalPageMargin
+                     width: parent.width - 2 * Theme.horizontalPageMargin
+                     text: page.activeFilter === "favorites"
+                           //% "No favorites yet"
+                           ? qsTrId("timelinePage.noFavoritesLabel")
+                           //% "No assets yet"
+                           : qsTrId("timelinePage.noAssetsLabel")
+                     font.pixelSize: Theme.fontSizeLarge
+                     color: Theme.highlightColor
+                     wrapMode: Text.WordWrap
+                     horizontalAlignment: Text.AlignHCenter
+                 }
+
+                 Label {
+                     x: Theme.horizontalPageMargin
+                     width: parent.width - 2 * Theme.horizontalPageMargin
+                     text: page.activeFilter === "favorites"
+                           //% "Long-press an asset and add it to favorites to see it here"
+                           ? qsTrId("timelinePage.noFavoritesInfo")
+                           //% "Upload or import assets in Immich to start building your timeline"
+                           : qsTrId("timelinePage.noAssetsInfo")
+                     font.pixelSize: Theme.fontSizeSmall
+                     color: Theme.secondaryHighlightColor
+                     wrapMode: Text.WordWrap
+                     horizontalAlignment: Text.AlignHCenter
+                 }
              }
          }
 

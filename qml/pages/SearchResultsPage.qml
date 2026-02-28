@@ -113,6 +113,7 @@ Page {
            isSelected: page.selectedAssets.indexOf(model.assetId) > -1
            isVideo: model.isVideo
            thumbhash: model.thumbhash || ""
+           duration: model.duration || ""
 
            onClicked: {
                if (page.selectionMode) {
@@ -185,7 +186,8 @@ Page {
                    assetId: asset.id,
                    isFavorite: asset.isFavorite || false,
                    isVideo: asset.type === "VIDEO",
-                   thumbhash: asset.thumbhash || ""
+                   thumbhash: asset.thumbhash || "",
+                   duration: asset.duration || ""
                })
            }
        }

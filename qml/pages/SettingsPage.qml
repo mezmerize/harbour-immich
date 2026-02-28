@@ -86,27 +86,21 @@ Page {
            }
 
            ComboBox {
-               //% "Thumbnail quality"
-               label: qsTrId("settingsPage.thumbnailQuality")
-               currentIndex: {
-                   var quality = settingsManager.thumbnailQuality
-                   if (quality === "thumbnail") return 0
-                   if (quality === "preview") return 1
-                   if (quality === "fullsize") return 2
-                   return 1  // default to preview
-               }
+               //% "Detail viewer quality"
+               label: qsTrId("settingsPage.detailQuality")
+               //% "Controls image quality when viewing photos in full screen. Preview is faster and uses less data, Original shows the full resolution image."
+               description: qsTrId("settingsPage.detailQualityInfo")
+               currentIndex: settingsManager.detailQuality === "original" ? 1 : 0
                menu: ContextMenu {
-                   //% "Low (faster)"
-                   MenuItem { text: qsTrId("settingsPage.thumbnailQualityLow") }
-                   //% "Medium"
-                   MenuItem { text: qsTrId("settingsPage.thumbnailQualityMedium") }
-                   //% "High (slower)"
-                   MenuItem { text: qsTrId("settingsPage.thumbnailQualityHigh") }
+                   //% "Preview (faster, less data)"
+                   MenuItem { text: qsTrId("settingsPage.detailQualityPreview") }
+                   //% "Original (full resolution)"
+                   MenuItem { text: qsTrId("settingsPage.detailQualityOriginal") }
                }
                onCurrentIndexChanged: {
-                   var quality = ["thumbnail", "preview", "fullsize"][currentIndex]
-                   if (quality !== settingsManager.thumbnailQuality) {
-                       settingsManager.thumbnailQuality = quality
+                   var quality = currentIndex === 1 ? "original" : "preview"
+                   if (quality !== settingsManager.detailQuality) {
+                       settingsManager.detailQuality = quality
                    }
                }
            }
@@ -114,7 +108,7 @@ Page {
            TextSwitch {
                //% "Show memories bar"
                text: qsTrId("settingsPage.showMemoriesBar")
-               //% "Display memories at the top of the timeline"
+               //% "Display memories at the top of the timeline."
                description: qsTrId("settingsPage.showMemoriesBarInfo")
                checked: settingsManager.showMemoriesBar
                onCheckedChanged: {
@@ -125,6 +119,8 @@ Page {
            ComboBox {
                //% "Memories thumbnail size"
                label: qsTrId("settingsPage.memoriesThumbnailSize")
+               //% "Controls appearance size of the memory thumbnails on Timeline page."
+               description: qsTrId("settingsPage.memoriesThumbnailSizeInfo")
                currentIndex: settingsManager.memoriesThumbnailSize
                enabled: settingsManager.showMemoriesBar
                menu: ContextMenu {
@@ -147,6 +143,8 @@ Page {
            ComboBox {
                //% "Scroll to top button position"
                label: qsTrId("settingsPage.scrollToTopPosition")
+               //% "Controls position of the scroll to top button on the pages which display assets in lists exceeding the viewport height."
+               description: qsTrId("settingsPage.scrollToTopPositionInfo")
                currentIndex: {
                    var pos = settingsManager.scrollToTopPosition
                    if (pos === "left") return 0

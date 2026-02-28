@@ -28,6 +28,7 @@ public:
     Q_INVOKABLE void fetchSearchSuggestions(const QString &type);
     Q_INVOKABLE void toggleFavorite(const QStringList &assetIds, bool isFavorite);
     Q_INVOKABLE void getAssetInfo(const QString &assetId);
+    Q_INVOKABLE void updateAssetDescription(const QString &assetId, const QString &description);
     Q_INVOKABLE void uploadAsset(const QString &filePath);
     Q_INVOKABLE void deleteAssets(const QStringList &assetIds);
     Q_INVOKABLE void downloadAsset(const QString &assetId, const QString &fileName);
@@ -37,6 +38,7 @@ public:
     Q_INVOKABLE void fetchServerStatistics();
     Q_INVOKABLE void fetchServerAbout();
     Q_INVOKABLE void createAlbum(const QString &albumName, const QString &description);
+    Q_INVOKABLE void updateAlbum(const QString &albumId, const QString &albumName, const QString &description);
     Q_INVOKABLE void fetchTimelineBuckets(bool isFavorite = false, const QString &order = QStringLiteral("desc"));
     Q_INVOKABLE void fetchTimelineBucket(const QString &timeBucket, bool isFavorite = false);
     Q_INVOKABLE QString serverUrl() const;
@@ -48,6 +50,7 @@ signals:
     void peopleReceived(const QJsonArray &people);
     void searchSuggestionsReceived(const QString &type, const QJsonArray &suggestions);
     void assetInfoReceived(const QJsonObject &info);
+    void assetDescriptionUpdated(const QString &assetId, const QString &description);
     void favoritesToggled(const QStringList &assetIds, bool isFavorite);
     void assetUploaded(const QString &assetId);
     void uploadProgress(int current, int total);
@@ -60,6 +63,7 @@ signals:
     void serverStatisticsReceived(const QJsonObject &stats);
     void serverAboutReceived(const QJsonObject &about);
     void albumCreated(const QString &albumId, const QString &albumName);
+    void albumUpdated(const QString &albumId, const QString &albumName, const QString &description);
     void timelineBucketsReceived(const QJsonArray &buckets);
     void timelineBucketReceived(const QString &timeBucket, const QJsonObject &bucketData);
     void errorOccurred(const QString &error);

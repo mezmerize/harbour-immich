@@ -11,6 +11,9 @@ Page {
   // Filter state: "all", "shared", "mine"
   property string activeFilter: "all"
 
+  // Text filter
+  property string filterText: ""
+
   // Sort state
   property string sortField: "endDate"
   property bool sortAscending: false
@@ -144,6 +147,17 @@ Page {
               }
           }
 
+          SearchField {
+              id: albumSearchField
+              width: listView.width
+              visible: listView.count > 5
+              //% "Filter albums..."
+              placeholderText: qsTrId("albumsPage.filter")
+              onTextChanged: page.filterText = text.toLowerCase()
+              EnterKey.iconSource: "image://theme/icon-m-enter-close"
+              EnterKey.onClicked: focus = false
+          }
+
           // Quick filters row
           Item {
               width: listView.width
@@ -217,7 +231,11 @@ Page {
 
       delegate: ListItem {
           id: listItem
-          contentHeight: page.thumbnailSize + 2 * Theme.paddingMedium
+
+          property bool matchesFilter: page.filterText.length === 0 || albumName.toLowerCase().indexOf(page.filterText) !== -1
+
+          contentHeight: matchesFilter ? page.thumbnailSize + 2 * Theme.paddingMedium : 0
+          visible: matchesFilter
 
           Row {
               anchors.fill: parent
@@ -245,25 +263,6 @@ Page {
                           anchors.centerIn: parent
                           source: "image://theme/icon-m-image"
                           visible: albumThumbnail.status !== Image.Ready
-                      }
-                  }
-
-                  Rectangle {
-                      anchors.bottom: parent.bottom
-                      anchors.right: parent.right
-                      anchors.margins: Theme.paddingSmall
-                      width: countLabel.width + Theme.paddingMedium
-                      height: countLabel.height + Theme.paddingSmall
-                      radius: Theme.paddingSmall
-                      color: Theme.rgba(Theme.highlightBackgroundColor, 0.9)
-
-                      Label {
-                          id: countLabel
-                          anchors.centerIn: parent
-                          text: assetCount
-                          font.pixelSize: Theme.fontSizeSmall
-                          font.bold: true
-                          color: Theme.primaryColor
                       }
                   }
               }
@@ -315,14 +314,51 @@ Page {
           }
       }
 
-      ViewPlaceholder {
-          enabled: listView.count === 0
-          //% "No albums"
-          text: qsTrId("albumsPage.noAlbums")
-          //% "Pull down to refresh"
-          hintText: qsTrId("albumsPage.noAlbumsHint")
-      }
+      // Empty state
+      Column {
+          width: parent.width
+          spacing: Theme.paddingLarge
+          visible: listView.count === 0
+          anchors.verticalCenter: parent.verticalCenter
 
+          Icon {
+              anchors.horizontalCenter: parent.horizontalCenter
+              source: page.activeFilter === "all" ? "image://theme/icon-m-folder" : page.activeFilter === "shared" ? "image://theme/icon-m-share" : "image://theme/icon-m-person"
+              color: Theme.highlightColor
+          }
+
+          Label {
+              x: Theme.horizontalPageMargin
+              width: parent.width - 2 * Theme.horizontalPageMargin
+              text: page.activeFilter === "all"
+                    //% "No albums"
+                    ? qsTrId("albumsPage.noAlbums") : page.activeFilter === "shared"
+                    //% "No shared albums"
+                    ? qsTrId("albumsPage.noSharedAlbums")
+                    //% "No personal albums"
+                    : qsTrId("albumsPage.noMyAlbums")
+              font.pixelSize: Theme.fontSizeLarge
+              color: Theme.highlightColor
+              wrapMode: Text.WordWrap
+              horizontalAlignment: Text.AlignHCenter
+          }
+
+          Label {
+              x: Theme.horizontalPageMargin
+              width: parent.width - 2 * Theme.horizontalPageMargin
+              text: page.activeFilter === "all"
+                    //% "Pull down to refresh or create albums in Immich"
+                    ? qsTrId("albumsPage.noAllAlbumsHint") : page.activeFilter === "shared"
+                    //% "Albums shared with you will appear here"
+                    ? qsTrId("albumsPage.noSharedAlbumsHint")
+                    //% "Create an album in Immich to see it here"
+                    : qsTrId("albumsPage.noMyAlbumsHint")
+              font.pixelSize: Theme.fontSizeSmall
+              color: Theme.secondaryHighlightColor
+              wrapMode: Text.WordWrap
+              horizontalAlignment: Text.AlignHCenter
+          }
+      }
 
       VerticalScrollDecorator {}
   }

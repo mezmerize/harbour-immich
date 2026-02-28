@@ -12,6 +12,20 @@ Page {
         anchors.fill: parent
         contentHeight: column.height
 
+        PullDownMenu {
+            MenuItem {
+                //% "Edit Description"
+                text: qsTrId("assetInfoPage.editDescription")
+                onClicked: {
+                    var currentDesc = assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.description ? assetInfo.exifInfo.description : ""
+                    pageStack.push(Qt.resolvedUrl("EditAssetDescriptionDialog.qml"), {
+                        assetId: page.assetId,
+                        description: currentDesc
+                    })
+                }
+            }
+        }
+
         Column {
             id: column
             width: page.width
@@ -23,7 +37,6 @@ Page {
             }
 
             DetailItem {
-                visible: assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.description && assetInfo.exifInfo.description !== ""
                 //% "Description"
                 label: qsTrId("assetInfoPage.description")
                 value: assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.description ? assetInfo.exifInfo.description : ""
@@ -232,5 +245,19 @@ Page {
         }
 
         VerticalScrollDecorator {}
+    }
+
+    Connections {
+        target: immichApi
+        onAssetDescriptionUpdated: {
+            if (assetId === page.assetId && page.assetInfo) {
+                // Update local assetInfo with new description
+                var info = page.assetInfo
+                if (!info.exifInfo) info.exifInfo = {}
+                info.exifInfo.description = description
+                page.assetInfo = null
+                page.assetInfo = info
+            }
+        }
     }
 }

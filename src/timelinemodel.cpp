@@ -105,6 +105,7 @@ void TimelineModel::loadBucketAssets(const QString &timeBucket, const QJsonObjec
    QJsonArray isFavoriteArr = bucketData[QStringLiteral("isFavorite")].toArray();
    QJsonArray fileCreatedAtArr = bucketData[QStringLiteral("fileCreatedAt")].toArray();
    QJsonArray thumbhashArr = bucketData[QStringLiteral("thumbhash")].toArray();
+   QJsonArray durationArr = bucketData[QStringLiteral("duration")].toArray();
 
    int count = ids.size();
    bucket.assets.reserve(count);
@@ -116,6 +117,7 @@ void TimelineModel::loadBucketAssets(const QString &timeBucket, const QJsonObjec
        asset.isFavorite = isFavoriteArr[i].toBool();
        asset.createdAt = QDateTime::fromString(fileCreatedAtArr[i].toString(), Qt::ISODate);
        asset.thumbhash = i < thumbhashArr.size() ? thumbhashArr[i].toString() : QString();
+       asset.duration = i < durationArr.size() ? durationArr[i].toString() : QString();
 
        bucket.assets.append(asset);
        m_assetIndex[asset.id] = qMakePair(bucketIndex, bucket.assets.size() - 1);
@@ -184,6 +186,7 @@ QVariantList TimelineModel::getBucketAssets(int bucketIndex) const
        assetMap[QStringLiteral("isFavorite")] = asset.isFavorite;
        assetMap[QStringLiteral("isVideo")] = asset.isVideo;
        assetMap[QStringLiteral("thumbhash")] = asset.thumbhash;
+       assetMap[QStringLiteral("duration")] = asset.duration;
        assetMap[QStringLiteral("assetIndex")] = assetIndex++;
        result.append(assetMap);
    }
@@ -218,6 +221,7 @@ QVariantList TimelineModel::getBucketSubGroups(int bucketIndex) const
        assetMap[QStringLiteral("isFavorite")] = asset.isFavorite;
        assetMap[QStringLiteral("isVideo")] = asset.isVideo;
        assetMap[QStringLiteral("thumbhash")] = asset.thumbhash;
+       assetMap[QStringLiteral("duration")] = asset.duration;
        assetMap[QStringLiteral("assetIndex")] = assetIndex++;
 
        groupedAssets[dateKey].append(assetMap);
@@ -349,6 +353,7 @@ QVariantMap TimelineModel::getAssetByAssetIndex(int assetIndex) const
                result[QStringLiteral("id")] = asset.id;
                result[QStringLiteral("isFavorite")] = asset.isFavorite;
                result[QStringLiteral("isVideo")] = asset.isVideo;
+               result[QStringLiteral("duration")] = asset.duration;
                return result;
            }
            currentIndex++;

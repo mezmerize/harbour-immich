@@ -9,6 +9,7 @@ Page {
    property bool isFavorite: false
    property int currentIndex: -1
    property var albumAssets: null
+   property var assetInfo: null
 
    allowedOrientations: Orientation.All
 
@@ -23,7 +24,8 @@ Page {
                text: qsTrId("videoPlayerPage.information")
                onClicked: {
                    pageStack.push(Qt.resolvedUrl("AssetInfoPage.qml"), {
-                       assetId: videoId
+                       assetId: videoId,
+                       assetInfo: page.assetInfo
                    })
                }
            }
@@ -227,7 +229,17 @@ Page {
        return (num < 10 ? "0" : "") + num
    }
 
+   Connections {
+       target: immichApi
+       onAssetInfoReceived: {
+           if (info.id === videoId) {
+               page.assetInfo = info
+           }
+       }
+   }
+
    Component.onCompleted: {
+       immichApi.getAssetInfo(videoId)
        videoPlayer.play()
        controlsHideTimer.start()
    }

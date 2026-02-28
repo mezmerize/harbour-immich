@@ -104,7 +104,7 @@ Page {
                     id: assetImage
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectFit
-                    source: assetId ? "image://immich/original/" + assetId : ""
+                    source: assetId ? "image://immich/detail/" + assetId : ""
                     asynchronous: true
                     smooth: true
 
@@ -135,7 +135,7 @@ Page {
                 source: {
                     if (currentIndex > 0) {
                         var prevAsset = albumAssets ? albumAssets[currentIndex - 1] : timelineModel.getAssetByAssetIndex(currentIndex - 1)
-                        return prevAsset && prevAsset.id ? "image://immich/original/" + prevAsset.id : ""
+                        return prevAsset && prevAsset.id ? "image://immich/detail/" + prevAsset.id : ""
                     }
                     return ""
                 }
@@ -151,7 +151,7 @@ Page {
                 source: {
                     if (currentIndex >= 0 && currentIndex < totalAssets - 1) {
                         var nextAsset = albumAssets ? albumAssets[currentIndex + 1] : timelineModel.getAssetByAssetIndex(currentIndex + 1)
-                        return nextAsset && nextAsset.id ? "image://immich/original/" + nextAsset.id : ""
+                        return nextAsset && nextAsset.id ? "image://immich/detail/" + nextAsset.id : ""
                     }
                     return ""
                 }
@@ -252,7 +252,7 @@ Page {
                     albumAssets: albumAssets
                 })
             } else {
-                assetImage.source = "image://immich/original/" + assetId
+                assetImage.source = "image://immich/detail/" + assetId
                 immichApi.getAssetInfo(assetId)
             }
         } else {

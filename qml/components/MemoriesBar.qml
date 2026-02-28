@@ -4,10 +4,11 @@ import Sailfish.Silica 1.0
 Item {
    id: memoriesBar
    width: parent.width
-   height: memoriesRow.height + Theme.paddingMedium * 2
-   visible: memoriesModel.count > 0
+   height: memoriesModel.count > 0 && memoriesLoaded ? memoriesList.height + Theme.paddingMedium * 2 : 0
+   visible: memoriesModel.count > 0 && memoriesLoaded
 
    property bool loading: false
+   property bool memoriesLoaded: false
 
    property int thumbnailSize: settingsManager.memoriesThumbnailSize
    property int baseSize: Math.min(Screen.width, Screen.height)
@@ -19,6 +20,7 @@ Item {
 
    function loadMemories(memories) {
        memoriesModel.clear()
+       memoriesLoaded = true
        var currentYear = new Date().getFullYear()
        for (var i = 0; i < memories.length; i++) {
            var memory = memories[i]
@@ -56,122 +58,107 @@ Item {
        color: Theme.rgba(Theme.highlightBackgroundColor, 0.1)
    }
 
-   Column {
-       id: memoriesRow
+   SilicaListView {
+       id: memoriesList
        width: parent.width
+       height: memoriesBar.itemSize + Theme.paddingMedium
        anchors.verticalCenter: parent.verticalCenter
-       spacing: Theme.paddingSmall
+       orientation: ListView.Horizontal
+       clip: true
+       spacing: Theme.paddingMedium
+       leftMargin: Theme.horizontalPageMargin
+       rightMargin: Theme.horizontalPageMargin
+       cacheBuffer: 256  // Limit cache to prevent memory issues
 
-       Row {
-           x: Theme.horizontalPageMargin
-           spacing: Theme.paddingSmall
+       model: memoriesModel
 
-           Icon {
-               source: "image://theme/icon-m-clock"
-               width: Theme.iconSizeSmall
-               height: Theme.iconSizeSmall
-               anchors.verticalCenter: parent.verticalCenter
-           }
+       delegate: BackgroundItem {
+           id: memoryDelegate
+           width: memoriesBar.itemSize
+           height: memoriesBar.itemSize
 
-           Label {
-               //% "On This Day"
-               text: qsTrId("memoriesBar.onThisDay")
-               font.pixelSize: Theme.fontSizeSmall
-               font.bold: true
-               color: Theme.highlightColor
-               anchors.verticalCenter: parent.verticalCenter
-           }
-       }
+           Rectangle {
+               anchors.fill: parent
+               color: Theme.rgba(Theme.highlightBackgroundColor, 0.2)
+               radius: Theme.paddingSmall
 
-       SilicaListView {
-           id: memoriesList
-           width: parent.width
-           height: memoriesBar.itemSize + Theme.paddingSmall
-           orientation: ListView.Horizontal
-           clip: true
-           spacing: Theme.paddingMedium
-           leftMargin: Theme.horizontalPageMargin
-           rightMargin: Theme.horizontalPageMargin
-           cacheBuffer: 256  // Limit cache to prevent memory issues
-
-           model: memoriesModel
-
-           delegate: BackgroundItem {
-               id: memoryDelegate
-               width: memoriesBar.itemSize + Theme.paddingLarge
-               height: memoriesBar.itemSize + Theme.paddingSmall
-
-               Column {
+               Image {
                    anchors.fill: parent
-                   spacing: Theme.paddingSmall / 2
+                   anchors.margins: 2
+                   source: model.thumbnailId ? "image://immich/thumbnail/" + model.thumbnailId : ""
+                   fillMode: Image.PreserveAspectCrop
+                   asynchronous: true
+                   sourceSize.width: memoriesBar.itemSize * 2
+                   sourceSize.height: memoriesBar.itemSize * 2
 
                    Rectangle {
-                       width: memoriesBar.itemSize
-                       height: memoriesBar.itemSize
-                       anchors.horizontalCenter: parent.horizontalCenter
-                       color: Theme.rgba(Theme.highlightBackgroundColor, 0.2)
-                       radius: Theme.paddingSmall
+                       anchors.fill: parent
+                       color: "transparent"
+                       radius: Theme.paddingSmall - 2
+                       border.width: 2
+                       border.color: Theme.highlightColor
+                   }
+               }
 
-                       Image {
-                           anchors.fill: parent
-                           anchors.margins: 2
-                           source: model.thumbnailId ? "image://immich/thumbnail/" + model.thumbnailId : ""
-                           fillMode: Image.PreserveAspectCrop
-                           asynchronous: true
-                           sourceSize.width: memoriesBar.itemSize * 2
-                           sourceSize.height: memoriesBar.itemSize * 2
+               // "N years ago" overlay at bottom
+               Rectangle {
+                   anchors.left: parent.left
+                   anchors.right: parent.right
+                   anchors.bottom: parent.bottom
+                   height: yearsAgoLabel.height + Theme.paddingSmall
+                   radius: Theme.paddingSmall
+                   color: Theme.rgba(Theme.highlightDimmerColor, 0.8)
 
-                           Rectangle {
-                               anchors.fill: parent
-                               color: "transparent"
-                               radius: Theme.paddingSmall - 2
-                               border.width: 2
-                               border.color: Theme.highlightColor
-                           }
-                       }
-
-                       Rectangle {
-                           anchors.bottom: parent.bottom
-                           anchors.right: parent.right
-                           anchors.margins: Theme.paddingSmall / 2
-                           width: countLabel.width + Theme.paddingSmall
-                           height: countLabel.height + Theme.paddingSmall / 2
-                           radius: height / 2
-                           color: Theme.rgba(Theme.highlightDimmerColor, 0.8)
-                           visible: model.assetCount > 1
-
-                           Label {
-                               id: countLabel
-                               anchors.centerIn: parent
-                               text: model.assetCount
-                               font.pixelSize: Theme.fontSizeTiny
-                               color: Theme.primaryColor
-                           }
-                       }
+                   // Square off top corners by overlaying a rect
+                   Rectangle {
+                       anchors.left: parent.left
+                       anchors.right: parent.right
+                       anchors.top: parent.top
+                       height: parent.radius
+                       color: parent.color
                    }
 
                    Label {
-                       anchors.horizontalCenter: parent.horizontalCenter
+                       id: yearsAgoLabel
+                       anchors.centerIn: parent
                        text: model.title
                        font.pixelSize: Theme.fontSizeTiny
-                       color: Theme.secondaryColor
-                       truncationMode: TruncationMode.Fade
-                       width: parent.width
-                       horizontalAlignment: Text.AlignHCenter
+                       font.bold: true
+                       color: Theme.primaryColor
                    }
                }
 
-               onClicked: {
-                   var assetsArray = JSON.parse(model.assetsJson)
-                   pageStack.push(Qt.resolvedUrl("../pages/MemoryDetailPage.qml"), {
-                       memoryTitle: model.title,
-                       assets: assetsArray
-                   })
+               // Asset count badge
+               Rectangle {
+                   anchors.top: parent.top
+                   anchors.right: parent.right
+                   anchors.margins: Theme.paddingSmall / 2
+                   width: countLabel.width + Theme.paddingSmall
+                   height: countLabel.height + Theme.paddingSmall / 2
+                   radius: height / 2
+                   color: Theme.rgba(Theme.highlightDimmerColor, 0.8)
+                   visible: model.assetCount > 1
+
+                   Label {
+                       id: countLabel
+                       anchors.centerIn: parent
+                       text: model.assetCount
+                       font.pixelSize: Theme.fontSizeTiny
+                       color: Theme.primaryColor
+                   }
                }
            }
 
-           HorizontalScrollDecorator {}
+           onClicked: {
+               var assetsArray = JSON.parse(model.assetsJson)
+               pageStack.push(Qt.resolvedUrl("../pages/MemoryDetailPage.qml"), {
+                   memoryTitle: model.title,
+                   assets: assetsArray
+               })
+           }
        }
+
+       HorizontalScrollDecorator {}
    }
 
    BusyIndicator {
@@ -179,16 +166,4 @@ Item {
        running: memoriesBar.loading && memoriesModel.count === 0
        size: BusyIndicatorSize.Small
    }
-
-   Label {
-       anchors.centerIn: parent
-       //% "No memories for today"
-       text: qsTrId("memoriesBar.noMemories")
-       color: Theme.secondaryColor
-       font.pixelSize: Theme.fontSizeSmall
-       visible: !memoriesBar.loading && memoriesModel.count === 0 && memoriesBar.visible
-   }
 }
-
-
-

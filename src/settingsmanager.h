@@ -7,7 +7,7 @@
 class SettingsManager : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString thumbnailQuality READ thumbnailQuality WRITE setThumbnailQuality NOTIFY thumbnailQualityChanged)
+    Q_PROPERTY(QString detailQuality READ detailQuality WRITE setDetailQuality NOTIFY detailQualityChanged)
     Q_PROPERTY(int assetsPerRow READ assetsPerRow WRITE setAssetsPerRow NOTIFY assetsPerRowChanged)
     Q_PROPERTY(int memoriesThumbnailSize READ memoriesThumbnailSize WRITE setMemoriesThumbnailSize NOTIFY memoriesThumbnailSizeChanged)
     Q_PROPERTY(bool showMemoriesBar READ showMemoriesBar WRITE setShowMemoriesBar NOTIFY showMemoriesBarChanged)
@@ -16,8 +16,8 @@ class SettingsManager : public QObject
 public:
     explicit SettingsManager(QObject *parent = nullptr);
 
-    QString thumbnailQuality() const;
-    void setThumbnailQuality(const QString &quality);
+    QString detailQuality() const;
+    void setDetailQuality(const QString &quality);
 
     int assetsPerRow() const;
     void setAssetsPerRow(int count);
@@ -32,7 +32,7 @@ public:
     void setScrollToTopPosition(const QString &position);
 
 signals:
-    void thumbnailQualityChanged();
+    void detailQualityChanged();
     void assetsPerRowChanged();
     void memoriesThumbnailSizeChanged();
     void showMemoriesBarChanged();

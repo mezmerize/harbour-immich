@@ -11,7 +11,22 @@ BackgroundItem {
     property bool isVideo
     property int assetIndex: -1
     property string thumbhash: ""
+    property string duration: ""
     property int imageSize: Math.floor(1024 / settingsManager.assetsPerRow)
+
+    function formatDuration(dur) {
+        if (!dur || dur === "") return ""
+        // API returns duration as "H:MM:SS.ffffff"
+        var parts = dur.split(".")
+        var timePart = parts[0] // "H:MM:SS"
+        var segments = timePart.split(":")
+        if (segments.length < 3) return timePart
+        var h = parseInt(segments[0])
+        var m = parseInt(segments[1])
+        var s = parseInt(segments[2])
+        if (h > 0) return h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s
+        return m + ":" + (s < 10 ? "0" : "") + s
+    }
 
     // Track if this item is potentially visible (within viewport + buffer)
     property bool shouldLoad: true // Will be set by parent based on scroll position
@@ -85,15 +100,29 @@ BackgroundItem {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        height: Theme.paddingLarge
+        height: durationRow.height + Theme.paddingSmall
         color: Theme.rgba(Theme.highlightDimmerColor, 0.8)
         visible: isVideo
-        
-        Icon {
+
+        Row {
+            id: durationRow
             anchors.centerIn: parent
-            source: "image://theme/icon-m-play"
-            width: Theme.iconSizeSmall
-            height: Theme.iconSizeSmall
+            spacing: Theme.paddingSmall / 2
+
+            Icon {
+                source: "image://theme/icon-m-play"
+                width: Theme.iconSizeExtraSmall
+                height: Theme.iconSizeExtraSmall
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Label {
+                text: formatDuration(duration)
+                font.pixelSize: Theme.fontSizeTiny
+                color: Theme.primaryColor
+                visible: text !== ""
+                anchors.verticalCenter: parent.verticalCenter
+            }
         }
     }
     

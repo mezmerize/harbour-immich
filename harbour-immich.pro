@@ -40,6 +40,8 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/AlbumPickerPage.qml \
     qml/pages/AssetDetailPage.qml \
     qml/pages/AssetInfoPage.qml \
+    qml/pages/EditAlbumDialog.qml \
+    qml/pages/EditAssetDescriptionDialog.qml \
     qml/pages/MemoryDetailPage.qml \
     qml/pages/OAuthPage.qml \
     qml/pages/SearchResultsPage.qml \

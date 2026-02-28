@@ -5,16 +5,16 @@ SettingsManager::SettingsManager(QObject *parent)
 {
 }
 
-QString SettingsManager::thumbnailQuality() const
+QString SettingsManager::detailQuality() const
 {
-    return m_settings.value("thumbnailQuality", "thumbnail").toString();
+    return m_settings.value("detailQuality", "preview").toString();
 }
 
-void SettingsManager::setThumbnailQuality(const QString &quality)
+void SettingsManager::setDetailQuality(const QString &quality)
 {
-    if (thumbnailQuality() != quality) {
-        m_settings.setValue("thumbnailQuality", quality);
-        emit thumbnailQualityChanged();
+    if (detailQuality() != quality) {
+        m_settings.setValue("detailQuality", quality);
+        emit detailQualityChanged();
     }
 }
 
@@ -33,7 +33,7 @@ void SettingsManager::setAssetsPerRow(int count)
 
 int SettingsManager::memoriesThumbnailSize() const
 {
-    return m_settings.value("memoriesThumbnailSize", 0).toInt();
+    return m_settings.value("memoriesThumbnailSize", 2).toInt();
 }
 
 void SettingsManager::setMemoriesThumbnailSize(int size)

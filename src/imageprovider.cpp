@@ -169,13 +169,13 @@ QQuickImageResponse *ImmichImageProvider::requestImageResponse(const QString &id
 
    QString url;
    if (type == "thumbnail") {
-       url = m_authManager->serverUrl() + "/api/assets/" + assetId + "/thumbnail?edited=true";
+       url = m_authManager->serverUrl() + "/api/assets/" + assetId + "/thumbnail?edited=true&size=thumbnail";
+   } else if (type == "detail") {
+       QString size = QStringLiteral("preview");
        if (m_settingsManager) {
-           QString size = m_settingsManager->thumbnailQuality();
-           if (!size.isEmpty()) {
-               url += "&size=" + size;
-           }
+           size = m_settingsManager->detailQuality();
        }
+       url = m_authManager->serverUrl() + "/api/assets/" + assetId + "/thumbnail?edited=true&size=" + size;
    } else if (type == "original") {
        url = m_authManager->serverUrl() + "/api/assets/" + assetId + "/original";
    } else if (type == "person") {

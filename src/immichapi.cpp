@@ -305,6 +305,23 @@ void ImmichApi::getAssetInfo(const QString &assetId)
    });
 }
 
+void ImmichApi::updateAssetDescription(const QString &assetId, const QString &description)
+{
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/assets/") + assetId);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    json["description"] = description;
+
+    QJsonDocument doc(json);
+    QNetworkReply *reply = m_networkManager->put(request, doc.toJson());
+    QString savedId = assetId;
+    QString savedDesc = description;
+    connectReply(reply, [this, savedId, savedDesc](const QByteArray &) {
+        emit assetDescriptionUpdated(savedId, savedDesc);
+    });
+}
+
 QString ImmichApi::serverUrl() const
 {
    return m_authManager->serverUrl();
@@ -640,6 +657,31 @@ void ImmichApi::createAlbum(const QString &albumName, const QString &description
        QString albumId = obj["id"].toString();
        QString albumName = obj["albumName"].toString();
        emit albumCreated(albumId, albumName);
+    });
+}
+
+void ImmichApi::updateAlbum(const QString &albumId, const QString &albumName, const QString &description)
+{
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/albums/") + albumId);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    json["albumName"] = albumName;
+    json["description"] = description;
+
+    QJsonDocument doc(json);
+    QByteArray data = doc.toJson();
+    QBuffer *buffer = new QBuffer();
+    buffer->setData(data);
+    buffer->open(QIODevice::ReadOnly);
+
+    QNetworkReply *reply = m_networkManager->sendCustomRequest(request, "PATCH", buffer);
+    buffer->setParent(reply);
+    QString savedAlbumId = albumId;
+    QString savedAlbumName = albumName;
+    QString savedDescription = description;
+    connectReply(reply, [this, savedAlbumId, savedAlbumName, savedDescription](const QByteArray &) {
+        emit albumUpdated(savedAlbumId, savedAlbumName, savedDescription);
     });
 }
 

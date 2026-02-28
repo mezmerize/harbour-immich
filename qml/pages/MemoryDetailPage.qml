@@ -98,8 +98,7 @@ Page {
                    id: mainImage
                    anchors.fill: parent
                    anchors.margins: Theme.paddingSmall
-                   source: (assets && assets.length > 0 && assets[currentIndex]) ?
-                           "image://immich/original/" + assets[currentIndex].id : ""
+                   source: (assets && assets.length > 0 && assets[currentIndex]) ? "image://immich/detail/" + assets[currentIndex].id : ""
                    fillMode: Image.PreserveAspectFit
                    asynchronous: true
                    sourceSize.width: page.width

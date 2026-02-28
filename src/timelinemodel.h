@@ -12,6 +12,7 @@ struct TimelineAsset {
    bool isVideo;
    QDateTime createdAt;
    QString thumbhash;
+   QString duration;
 };
 
 struct TimelineBucket {
