@@ -17,6 +17,7 @@
 #include <QUrl>
 #include <QStandardPaths>
 #include <QDateTime>
+#include <QTimer>
 
 ImmichApi::ImmichApi(AuthManager *authManager, QObject *parent)
    : QObject(parent)
@@ -391,11 +392,19 @@ void ImmichApi::handleNetworkError(QNetworkReply *reply)
        }
    }
 
+   qWarning() << "ImmichApi: Network error:" << errorString;
    emit errorOccurred(errorString);
 }
 
 void ImmichApi::connectReply(QNetworkReply *reply, std::function<void(const QByteArray&)> onSuccess)
 {
+   // Timeout after 30 seconds
+   QTimer *timer = new QTimer(reply);
+   timer->setSingleShot(true);
+   timer->setInterval(30000);
+   connect(timer, &QTimer::timeout, reply, &QNetworkReply::abort);
+   timer->start();
+
    connect(reply, &QNetworkReply::finished, this, [this, reply, onSuccess]() {
        if (reply->error() == QNetworkReply::NoError) {
            onSuccess(reply->readAll());

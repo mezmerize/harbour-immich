@@ -48,6 +48,7 @@ void TimelineModel::loadBuckets(const QJsonArray &bucketsJson)
    m_buckets.clear();
    m_selectedIds.clear();
    m_assetIndex.clear();
+   m_bucketIndex.clear();
    m_totalCount = 0;
 
    for (const QJsonValue &value : bucketsJson) {
@@ -66,19 +67,20 @@ void TimelineModel::loadBuckets(const QJsonArray &bucketsJson)
        // Parse the timeBucket to create display strings
        bucket.dateTime = QDateTime::fromString(bucket.timeBucket, Qt::ISODate);
        if (bucket.dateTime.isValid()) {
-           bucket.monthYear = bucket.dateTime.toString(QStringLiteral("MMMM yyyy"));
-           bucket.date = bucket.dateTime.toString(QStringLiteral("dd.MM.yyyy"));
+           bucket.monthYear = QLocale().toString(bucket.dateTime, QStringLiteral("MMMM yyyy"));
+           bucket.date = QLocale().toString(bucket.dateTime, QStringLiteral("dd.MM.yyyy"));
        } else {
            // Fallback - try parsing just the date part
            QString dateStr = bucket.timeBucket.left(10);
            QDate date = QDate::fromString(dateStr, Qt::ISODate);
            if (date.isValid()) {
                bucket.monthYear = QLocale().toString(date, QStringLiteral("MMMM yyyy"));
-               bucket.date = date.toString(QStringLiteral("dd.MM.yyyy"));
+               bucket.date = QLocale().toString(date, QStringLiteral("dd.MM.yyyy"));
                bucket.dateTime = QDateTime(date, QTime(0, 0));
            }
        }
 
+       m_bucketIndex[bucket.timeBucket] = m_buckets.size();
        m_buckets.append(bucket);
        m_totalCount += bucket.count;
    }
@@ -232,7 +234,7 @@ QVariantList TimelineModel::getBucketSubGroups(int bucketIndex) const
        QVariantMap subGroup;
        QDate date = QDate::fromString(dateKey, Qt::ISODate);
        subGroup[QStringLiteral("date")] = dateKey;
-       subGroup[QStringLiteral("displayDate")] = date.toString(QStringLiteral("dd.MM.yyyy"));
+       subGroup[QStringLiteral("displayDate")] = QLocale().toString(date, QStringLiteral("dd.MM.yyyy"));
        subGroup[QStringLiteral("assets")] = groupedAssets[dateKey];
        subGroup[QStringLiteral("count")] = groupedAssets[dateKey].size();
        result.append(subGroup);
@@ -250,10 +252,9 @@ QString TimelineModel::getBucketTimeBucket(int bucketIndex) const
 
 int TimelineModel::findBucketByTimeBucket(const QString &timeBucket) const
 {
-   for (int i = 0; i < m_buckets.size(); ++i) {
-       if (m_buckets.at(i).timeBucket == timeBucket)
-           return i;
-   }
+   auto it = m_bucketIndex.find(timeBucket);
+   if (it != m_bucketIndex.end())
+       return it.value();
    return -1;
 }
 
@@ -381,6 +382,7 @@ int TimelineModel::getAssetIndexById(const QString &assetId) const
 
 void TimelineModel::updateFavorites(const QStringList &assetIds, bool isFavorite)
 {
+   QSet<int> affectedBuckets;
    for (const QString &assetId : assetIds) {
        auto it = m_assetIndex.find(assetId);
        if (it != m_assetIndex.end()) {
@@ -388,10 +390,13 @@ void TimelineModel::updateFavorites(const QStringList &assetIds, bool isFavorite
            int assetIdx = it.value().second;
            if (bucketIdx < m_buckets.size() && assetIdx < m_buckets[bucketIdx].assets.size()) {
                m_buckets[bucketIdx].assets[assetIdx].isFavorite = isFavorite;
+               affectedBuckets.insert(bucketIdx);
            }
        }
    }
-   emit dataChanged(index(0), index(m_buckets.size() - 1));
+   for (int bucketIdx : affectedBuckets) {
+       emit dataChanged(index(bucketIdx), index(bucketIdx));
+   }
 }
 
 void TimelineModel::updateAssetMetadata(const QString &assetId, const QJsonObject &metadata)
@@ -521,6 +526,7 @@ void TimelineModel::clear()
    m_buckets.clear();
    m_selectedIds.clear();
    m_assetIndex.clear();
+   m_bucketIndex.clear();
    m_totalCount = 0;
    endResetModel();
    emit bucketCountChanged();

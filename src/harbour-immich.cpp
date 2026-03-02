@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
    AlbumModel *albumModel = new AlbumModel(app);
    TimelineModel *timelineModel = new TimelineModel(app);
 
-   // Set settings manager for thumbnail quality
    immichApi->setSettingsManager(settingsManager);
 
    // Register custom image provider for authenticated image loading

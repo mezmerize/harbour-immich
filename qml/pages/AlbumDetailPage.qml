@@ -123,12 +123,11 @@ Page {
       // Group by month+year, then by date
       var monthMap = {}
       var monthOrder = []
-      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
       for (var g = 0; g < parsed.length; g++) {
           var asset = parsed[g]
           var d = asset.dateObj
           var monthKey = d.getFullYear() + "-" + (d.getMonth() + 1)
-          var monthLabel = months[d.getMonth()] + " " + d.getFullYear()
+          var monthLabel = Qt.formatDate(d, "MMMM yyyy")
           var dateKey = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
           var dateLabel = Qt.formatDate(d, "dd.MM.yyyy")
 

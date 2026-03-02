@@ -111,6 +111,7 @@ private:
    QList<TimelineBucket> m_buckets;
    QSet<QString> m_selectedIds;
    QHash<QString, QPair<int, int>> m_assetIndex; // assetId -> (bucketIndex, assetIndex)
+   QHash<QString, int> m_bucketIndex; // timeBucket -> index in m_buckets
    int m_totalCount;
    bool m_loading;
    QString m_serverUrl;
