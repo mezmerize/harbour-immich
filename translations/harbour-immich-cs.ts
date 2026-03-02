@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="cs">
+<TS version="2.1" language="cs_CZ">
 <context>
     <name></name>
     <message id="filterablePickerDialog.cancel">
@@ -1575,7 +1575,7 @@
     <message id="timelinePage.settings">
         <location filename="../qml/pages/TimelinePage.qml" line="55"/>
         <source>Settings</source>
-        <translation>Nastavené</translation>
+        <translation>Nastavení</translation>
     </message>
     <message id="timelinePage.search">
         <location filename="../qml/pages/TimelinePage.qml" line="61"/>
