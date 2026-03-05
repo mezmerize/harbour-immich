@@ -23,6 +23,28 @@ Page {
                    })
                }
            }
+
+           MenuItem {
+               //% "Add users"
+               text: qsTrId("albumInfoPage.addUsers")
+               onClicked: {
+                   var existingIds = []
+                   if (albumInfo && albumInfo.albumUsers) {
+                       for (var i = 0; i < albumInfo.albumUsers.length; i++) {
+                           var u = albumInfo.albumUsers[i].user
+                           if (u && u.id) existingIds.push(u.id)
+                       }
+                   }
+                   // Exclude owner
+                   if (albumInfo && albumInfo.owner && albumInfo.owner.id) {
+                       existingIds.push(albumInfo.owner.id)
+                   }
+                   pageStack.push(Qt.resolvedUrl("UserPickerPage.qml"), {
+                       albumId: page.albumId,
+                       existingUserIds: existingIds
+                   })
+               }
+           }
        }
 
        Column {
@@ -127,6 +149,11 @@ Page {
                updated.albumName = albumName
                updated.description = description
                albumInfo = updated
+           }
+       }
+       onUsersAddedToAlbum: {
+           if (albumId === page.albumId) {
+               immichApi.fetchAlbumDetails(page.albumId)
            }
        }
    }

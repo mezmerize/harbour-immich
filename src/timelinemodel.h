@@ -103,6 +103,7 @@ signals:
    void bucketCountChanged();
    void favoriteFilterChanged();
    void bucketLoadRequested(const QString &timeBucket, bool isFavorite);
+   void bucketDataUpdated();
    void assetMetadataRequested(const QString &assetId);
    void scrollToAssetRequested(const QString &assetId, int bucketIndex);
 

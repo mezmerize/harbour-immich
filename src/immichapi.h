@@ -34,6 +34,8 @@ public:
     Q_INVOKABLE void downloadAsset(const QString &assetId);
     Q_INVOKABLE void addAssetsToAlbum(const QString &albumId, const QStringList &assetIds);
     Q_INVOKABLE void createSharedLink(const QString &type, const QVariant &ids, const QString &password, const QString &expiresAt, bool allowDownload, bool allowUpload);
+    Q_INVOKABLE void fetchUsers();
+    Q_INVOKABLE void addUsersToAlbum(const QString &albumId, const QStringList &userIds);
     Q_INVOKABLE void fetchMemories();
     Q_INVOKABLE void fetchServerStatistics();
     Q_INVOKABLE void fetchServerAbout();
@@ -59,6 +61,8 @@ signals:
     void assetDownloaded(const QString &assetId, const QString &filePath);
     void assetsAddedToAlbum(const QString &albumId);
     void sharedLinkCreated(const QString &shareKey);
+    void usersReceived(const QJsonArray &users);
+    void usersAddedToAlbum(const QString &albumId);
     void memoriesReceived(const QJsonArray &memories);
     void serverStatisticsReceived(const QJsonObject &stats);
     void serverAboutReceived(const QJsonObject &about);

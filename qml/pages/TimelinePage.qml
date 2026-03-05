@@ -306,6 +306,11 @@ Page {
                              bucketColumn.loadAssets()
                          }
                      }
+                     onBucketDataUpdated: {
+                         if (bucketColumn.assetsLoaded && bucketColumn.isNearViewport) {
+                             bucketSubGroups = timelineModel.getBucketSubGroups(bucketColumn.bucketIndex)
+                         }
+                     }
                  }
 
                  // Listen for scroll to check visibility (throttled)

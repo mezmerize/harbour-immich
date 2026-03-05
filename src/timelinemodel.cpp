@@ -426,6 +426,7 @@ void TimelineModel::removeAssets(const QStringList &assetIds)
    emit totalCountChanged();
    emit selectedCountChanged();
    emit dataChanged(index(0), index(m_buckets.size() - 1));
+   emit bucketDataUpdated();
 }
 
 void TimelineModel::scrollToAsset(const QString &assetId, const QString &dateString)
