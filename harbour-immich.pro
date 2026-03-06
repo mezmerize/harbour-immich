@@ -8,6 +8,7 @@ INCLUDEPATH += /usr/include/Sailfish
 SOURCES += src/harbour-immich.cpp \
     src/immichapi.cpp \
     src/authmanager.cpp \
+    src/logmanager.cpp \
     src/oauthmanager.cpp \
     src/securestorage.cpp \
     src/albummodel.cpp \
@@ -19,6 +20,7 @@ SOURCES += src/harbour-immich.cpp \
 HEADERS += \
     src/immichapi.h \
     src/authmanager.h \
+    src/logmanager.h \
     src/oauthmanager.h \
     src/securestorage.h \
     src/albummodel.h \
@@ -43,6 +45,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/AssetInfoPage.qml \
     qml/pages/EditAlbumDialog.qml \
     qml/pages/EditAssetDialog.qml \
+    qml/pages/LogViewerPage.qml \
     qml/pages/MemoryDetailPage.qml \
     qml/pages/OAuthPage.qml \
     qml/pages/SearchResultsPage.qml \

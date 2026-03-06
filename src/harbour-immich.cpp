@@ -17,12 +17,16 @@
 #include "securestorage.h"
 #include "imageprovider.h"
 #include "thumbhashprovider.h"
+#include "logmanager.h"
 
 int main(int argc, char *argv[])
 {
    QGuiApplication *app = SailfishApp::application(argc, argv);
    app->setOrganizationName("mezmerize");
    app->setApplicationName("harbour-immich");
+
+   LogManager *logManager = new LogManager(app);
+   qInstallMessageHandler(LogManager::messageHandler);
 
    QQuickView *view = SailfishApp::createView();
 
@@ -71,6 +75,7 @@ int main(int argc, char *argv[])
    view->rootContext()->setContextProperty("timelineModel", timelineModel);
    view->rootContext()->setContextProperty("settingsManager", settingsManager);
    view->rootContext()->setContextProperty("secureStorage", secureStorage);
+   view->rootContext()->setContextProperty("logManager", logManager);
 
    view->setSource(SailfishApp::pathTo("qml/harbour-immich.qml"));
    view->show();

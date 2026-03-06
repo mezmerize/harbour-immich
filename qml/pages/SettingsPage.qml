@@ -332,10 +332,18 @@ Page {
                value: timelineModel.totalCount
            }
 
+           Button {
+               anchors.horizontalCenter: parent.horizontalCenter
+               //% "View application logs"
+               text: qsTrId("settingsPage.viewLogs")
+               onClicked: pageStack.push(Qt.resolvedUrl("LogViewerPage.qml"))
+           }
+
            Label {
                x: Theme.horizontalPageMargin
                width: parent.width - 2 * Theme.horizontalPageMargin
                wrapMode: Text.WordWrap
+               horizontalAlignment: Text.AlignHCenter
                color: Theme.secondaryColor
                font.pixelSize: Theme.fontSizeSmall
                //% "Harbour Immich - A native Immich client for Sailfish OS"
