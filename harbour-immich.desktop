@@ -2,8 +2,9 @@
 Type=Application
 X-Nemo-Application-Type=silica-qt5
 Icon=harbour-immich
-Exec=harbour-immich
+Exec=harbour-immich %u
 Name=Immich
+MimeType=x-scheme-handler/app.immich;
 
 [X-Sailjail]
 Permissions=Internet;Secrets;Pictures;Videos;UserDirs

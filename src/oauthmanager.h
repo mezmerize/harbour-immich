@@ -3,11 +3,9 @@
 
 #include <QObject>
 #include <QString>
-#include <QTcpServer>
 
 class QNetworkAccessManager;
 class QNetworkReply;
-class QTcpSocket;
 class AuthManager;
 class SecureStorage;
 
@@ -26,6 +24,10 @@ public:
 
     Q_INVOKABLE void checkOAuthAvailability(const QString &serverUrl);
     Q_INVOKABLE void startOAuthLogin(const QString &serverUrl);
+    Q_INVOKABLE void cancelOAuthLogin();
+
+public slots:
+    void handleCallbackUrl(const QString &url);
 
 signals:
     void oauthEnabledChanged();
@@ -37,22 +39,17 @@ private slots:
     void onServerConfigReplyFinished();
     void onAuthorizeReplyFinished();
     void onCallbackReplyFinished();
-    void onNewConnection();
 
 private:
     QNetworkAccessManager *m_networkManager;
-    QTcpServer *m_callbackServer;
     AuthManager *m_authManager;
     SecureStorage *m_storage;
     QString m_serverUrl;
     bool m_oauthEnabled;
     bool m_busy;
-    static const int CALLBACK_PORT = 34821;
 
     void setBusy(bool busy);
     void setOAuthEnabled(bool enabled);
-    bool startCallbackServer();
-    void stopCallbackServer();
     void handleOAuthCallback(const QString &callbackUrl);
     QString redirectUri() const;
     void raiseWindow();

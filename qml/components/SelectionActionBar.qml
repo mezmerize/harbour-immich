@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtFeedback 5.0
 
 ListItem {
    id: actionBar
@@ -19,6 +20,11 @@ ListItem {
    signal clearSelection()
    signal download()
    signal deleteSelected()
+
+   ThemeEffect {
+       id: actionFeedback
+       effect: ThemeEffect.Press
+   }
 
    Rectangle {
        anchors.left: parent.left
@@ -51,6 +57,7 @@ ListItem {
            height: parent.height
            icon.source: allAreFavorites ? "image://theme/icon-m-favorite-selected" : "image://theme/icon-m-favorite"
            onClicked: {
+               actionFeedback.play()
                if (allAreFavorites) {
                    removeFromFavorites()
                } else {
@@ -77,7 +84,10 @@ ListItem {
            width: parent.width / 4
            height: parent.height
            icon.source: "image://theme/icon-m-share"
-           onClicked: share()
+           onClicked: {
+               actionFeedback.play()
+               share()
+           }
 
            Label {
                anchors.bottom: parent.bottom
@@ -95,7 +105,10 @@ ListItem {
            width: parent.width / 4
            height: parent.height
            icon.source: "image://theme/icon-m-add"
-           onClicked: addToAlbum()
+           onClicked: {
+               actionFeedback.play()
+               addToAlbum()
+           }
 
            Label {
                anchors.bottom: parent.bottom

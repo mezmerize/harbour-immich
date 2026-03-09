@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 
 Page {
     id: page
+    objectName: "loginPage"
 
     property bool isLoggingIn: false
     property bool hasError: false
@@ -107,7 +108,7 @@ Page {
                 height: errorLabel.height + Theme.paddingMedium * 2
                 radius: Theme.paddingSmall
                 color: Theme.rgba(Theme.errorColor, 0.2)
-                visible: errorLabel.text.length > 0
+                visible: page.hasError && errorLabel.text.length > 0
 
                 Row {
                     anchors.centerIn: parent

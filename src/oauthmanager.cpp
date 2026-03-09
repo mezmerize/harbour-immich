@@ -8,7 +8,6 @@
 #include <QJsonObject>
 #include <QUrl>
 #include <QUrlQuery>
-#include <QTcpSocket>
 #include <QDesktopServices>
 #include <QGuiApplication>
 #include <QWindow>
@@ -17,18 +16,15 @@
 OAuthManager::OAuthManager(AuthManager *authManager, SecureStorage *storage, QObject *parent)
    : QObject(parent)
    , m_networkManager(new QNetworkAccessManager(this))
-   , m_callbackServer(new QTcpServer(this))
    , m_authManager(authManager)
    , m_storage(storage)
    , m_oauthEnabled(false)
    , m_busy(false)
 {
-   connect(m_callbackServer, &QTcpServer::newConnection, this, &OAuthManager::onNewConnection);
 }
 
 OAuthManager::~OAuthManager()
 {
-   stopCallbackServer();
 }
 
 bool OAuthManager::oauthEnabled() const
@@ -59,31 +55,7 @@ void OAuthManager::setOAuthEnabled(bool enabled)
 
 QString OAuthManager::redirectUri() const
 {
-   return QString("http://127.0.0.1:%1/callback").arg(CALLBACK_PORT);
-}
-
-bool OAuthManager::startCallbackServer()
-{
-   if (m_callbackServer->isListening()) {
-       return true;
-   }
-
-   if (!m_callbackServer->listen(QHostAddress::LocalHost, CALLBACK_PORT)) {
-       qWarning() << "OAuthManager: Failed to start callback server on port" << CALLBACK_PORT
-                   << ":" << m_callbackServer->errorString();
-       return false;
-   }
-
-   qDebug() << "OAuthManager: Callback server listening on port" << CALLBACK_PORT;
-   return true;
-}
-
-void OAuthManager::stopCallbackServer()
-{
-   if (m_callbackServer->isListening()) {
-       m_callbackServer->close();
-       qDebug() << "OAuthManager: Callback server stopped";
-   }
+   return QStringLiteral("app.immich://oauth-callback");
 }
 
 void OAuthManager::raiseWindow()
@@ -139,12 +111,6 @@ void OAuthManager::startOAuthLogin(const QString &serverUrl)
    m_serverUrl = serverUrl;
    setBusy(true);
 
-   if (!startCallbackServer()) {
-       setBusy(false);
-       emit oauthLoginFailed("Could not start local callback server");
-       return;
-   }
-
    QUrl url(serverUrl + "/api/oauth/authorize");
    QNetworkRequest request(url);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -154,6 +120,27 @@ void OAuthManager::startOAuthLogin(const QString &serverUrl)
 
    QNetworkReply *reply = m_networkManager->post(request, QJsonDocument(json).toJson());
    connect(reply, &QNetworkReply::finished, this, &OAuthManager::onAuthorizeReplyFinished);
+}
+
+void OAuthManager::cancelOAuthLogin()
+{
+    if (m_busy) {
+        setBusy(false);
+        emit oauthLoginFailed(QStringLiteral("Login cancelled"));
+    }
+}
+
+void OAuthManager::handleCallbackUrl(const QString &url)
+{
+    qDebug() << "OAuthManager: Received callback URL";
+
+    if (!m_busy) {
+        qWarning() << "OAuthManager: Received callback but no OAuth login in progress";
+        return;
+    }
+
+    raiseWindow();
+    handleOAuthCallback(url);
 }
 
 void OAuthManager::onAuthorizeReplyFinished()
@@ -170,12 +157,10 @@ void OAuthManager::onAuthorizeReplyFinished()
        if (!oauthUrl.isEmpty()) {
            QDesktopServices::openUrl(QUrl(oauthUrl));
        } else {
-           stopCallbackServer();
            setBusy(false);
            emit oauthLoginFailed("OAuth URL not received from server");
        }
    } else {
-       stopCallbackServer();
        setBusy(false);
        QString errorString = reply->errorString();
        QByteArray response = reply->readAll();
@@ -192,65 +177,6 @@ void OAuthManager::onAuthorizeReplyFinished()
    }
 
    reply->deleteLater();
-}
-
-void OAuthManager::onNewConnection()
-{
-   QTcpSocket *socket = m_callbackServer->nextPendingConnection();
-   if (!socket) return;
-
-   connect(socket, &QTcpSocket::readyRead, this, [this, socket]() {
-       QByteArray data = socket->readAll();
-       QString request = QString::fromUtf8(data);
-
-       // Parse the HTTP request line to extract the path and query
-       // e.g. "GET /callback?code=abc&state=xyz HTTP/1.1\r\n..."
-       int endOfLine = request.indexOf("\r\n");
-       if (endOfLine < 0) endOfLine = request.length();
-       QString requestLine = request.left(endOfLine);
-       QStringList parts = requestLine.split(' ');
-
-       QString callbackUrl;
-       if (parts.size() >= 2) {
-           // Reconstruct the full callback URL
-           callbackUrl = redirectUri().section('/', 0, 2) + parts[1];
-       }
-
-       // Send a response to the browser
-       QByteArray httpResponse =
-           "HTTP/1.1 200 OK\r\n"
-           "Content-Type: text/html; charset=utf-8\r\n"
-           "Connection: close\r\n"
-           "\r\n"
-           "<!DOCTYPE html><html><head>"
-           "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
-           "<style>body{font-family:sans-serif;display:flex;justify-content:center;"
-           "align-items:center;min-height:100vh;margin:0;background:#1a1a2e;color:#e0e0e0;}"
-           ".card{text-align:center;padding:2em;border-radius:12px;background:#16213e;}"
-           "h1{color:#4ecca3;}p{color:#a0a0b0;}</style></head><body>"
-           "<div class=\"card\"><h1>&#10003; Authentication Successful</h1>"
-           "<p>You can close this tab and return to the app.</p></div>"
-           "</body></html>";
-
-       socket->write(httpResponse);
-       socket->flush();
-       socket->disconnectFromHost();
-
-       // Bring the app to foreground
-       raiseWindow();
-
-       // Stop listening for more connections
-       stopCallbackServer();
-
-       if (!callbackUrl.isEmpty()) {
-           handleOAuthCallback(callbackUrl);
-       } else {
-           setBusy(false);
-           emit oauthLoginFailed("Invalid OAuth callback received");
-       }
-   });
-
-   connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
 }
 
 void OAuthManager::handleOAuthCallback(const QString &callbackUrl)

@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtFeedback 5.0
 
 Rectangle {
     id: root
@@ -12,6 +13,16 @@ Rectangle {
     opacity: 0
 
     property bool isError: false
+
+    ThemeEffect {
+        id: notificationFeedback
+        effect: ThemeEffect.PressWeak
+    }
+
+    ThemeEffect {
+        id: errorFeedback
+        effect: ThemeEffect.Press
+    }
 
     Behavior on opacity {
         NumberAnimation { duration: 300 }
@@ -30,6 +41,7 @@ Rectangle {
         isError = false
         notificationLabel.text = message
         opacity = 1
+        notificationFeedback.play()
         notificationTimer.restart()
     }
 
@@ -37,6 +49,7 @@ Rectangle {
         isError = true
         notificationLabel.text = message
         opacity = 1
+        errorFeedback.play()
         notificationTimer.restart()
     }
 

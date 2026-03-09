@@ -8,6 +8,9 @@
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QTranslator>
+#include <QDBusConnection>
+#include <QDBusInterface>
+#include <QTimer>
 #include "authmanager.h"
 #include "oauthmanager.h"
 #include "immichapi.h"
@@ -24,6 +27,26 @@ int main(int argc, char *argv[])
    QGuiApplication *app = SailfishApp::application(argc, argv);
    app->setOrganizationName("mezmerize");
    app->setApplicationName("harbour-immich");
+
+   // Check for URL scheme activation argument (app.immich://oauth-callback?...)
+   QString activationUrl;
+   for (int i = 1; i < argc; ++i) {
+       QString arg = QString::fromUtf8(argv[i]);
+       if (arg.startsWith(QStringLiteral("app.immich://"))) {
+           activationUrl = arg;
+           break;
+       }
+   }
+
+   // Single instance - if already running forward url by DBus and exit
+   QDBusConnection dbus = QDBusConnection::sessionBus();
+   if (!dbus.registerService(QStringLiteral("org.harbour.immich"))) {
+       if (!activationUrl.isEmpty()) {
+           QDBusInterface iface(QStringLiteral("org.harbour.immich"), QStringLiteral("/oauth"), QStringLiteral("local.OAuthManager"), dbus);
+           iface.call(QStringLiteral("handleCallbackUrl"), activationUrl);
+       }
+       return 0;
+   }
 
    LogManager *logManager = new LogManager(app);
    qInstallMessageHandler(LogManager::messageHandler);
@@ -45,6 +68,12 @@ int main(int argc, char *argv[])
 
    AuthManager *authManager = new AuthManager(secureStorage, app);
    OAuthManager *oauthManager = new OAuthManager(authManager, secureStorage, app);
+   dbus.registerObject(QStringLiteral("/oauth"), oauthManager, QDBusConnection::ExportAllSlots);
+   if (!activationUrl.isEmpty()) {
+       QTimer::singleShot(0, [oauthManager, activationUrl]() {
+           oauthManager->handleCallbackUrl(activationUrl);
+       });
+   }
    ImmichApi *immichApi = new ImmichApi(authManager, app);
    AlbumModel *albumModel = new AlbumModel(app);
    TimelineModel *timelineModel = new TimelineModel(app);

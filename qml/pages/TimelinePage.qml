@@ -23,14 +23,8 @@ Page {
 
  function refresh() {
      timelineModel.clear()
-     timelineModel.setLoading(true)
-     var isFavorite = activeFilter === "favorites"
-     timelineModel.setFavoriteFilter(isFavorite)
-     immichApi.fetchTimelineBuckets(isFavorite, sortOrder)
- }
-
- function applyFilter() {
-     timelineModel.clear()
+     // Not a nice way to avoid collapsing of the structure after the model is cleared
+     flickable.contentY = 0
      timelineModel.setLoading(true)
      var isFavorite = activeFilter === "favorites"
      timelineModel.setFavoriteFilter(isFavorite)
@@ -160,7 +154,7 @@ Page {
                          onClicked: {
                              if (page.activeFilter !== modelData.id) {
                                  page.activeFilter = modelData.id
-                                 page.applyFilter()
+                                 page.refresh()
                              }
                          }
                      }
@@ -187,7 +181,7 @@ Page {
 
                      onClicked: {
                          page.sortOrder = page.sortOrder === "desc" ? "asc" : "desc"
-                         page.applyFilter()
+                         page.refresh()
                      }
                  }
              }

@@ -42,19 +42,12 @@ ApplicationWindow
             pageStack.push(Qt.resolvedUrl("pages/TimelinePage.qml"))
         }
         onLoginFailed: {
-            // No valid credentials, show login
-            pageStack.clear()
-            pageStack.push(Qt.resolvedUrl("pages/ServerPage.qml"))
-        }
-    }
-
-    Connections {
-        target: immichApi
-        onAssetsDeleted: {
-            timelineModel.removeAssets(assetIds)
-        }
-        onFavoritesToggled: {
-            timelineModel.updateFavorites(assetIds, isFavorite)
+            // Redirect to server page should happen only during automatic credentials check not when user interacts with it
+            var currentPage = pageStack.currentPage
+            if (!currentPage || !currentPage.objectName || currentPage.objectName !== "loginPage") {
+                pageStack.clear()
+                pageStack.push(Qt.resolvedUrl("pages/ServerPage.qml"))
+            }
         }
     }
 }
