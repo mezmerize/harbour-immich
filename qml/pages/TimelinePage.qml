@@ -504,7 +504,7 @@ Page {
                                                      var assetIndex = timelineModel.getAssetIndexById(modelData.id)
                                                      pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
                                                          "assetId": modelData.id,
-                                                         "isFavorite": modelData.isFavorite,
+                                                         "isFavorite": gridItem.isFavorite,
                                                          "isVideo": modelData.isVideo,
                                                          "thumbhash": modelData.thumbhash || "",
                                                          "currentIndex": assetIndex

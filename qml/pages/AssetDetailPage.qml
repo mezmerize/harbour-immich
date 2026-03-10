@@ -1,9 +1,15 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtFeedback 5.0
 import "../components"
 
 Page {
     id: page
+
+    ThemeEffect {
+        id: hapticFeedback
+        effect: ThemeEffect.Press
+    }
 
     property string assetId
     property bool isFavorite: false
@@ -286,10 +292,18 @@ Page {
         target: immichApi
         onAssetInfoReceived: {
             assetInfo = info
+            if (info.id === page.assetId && info.isFavorite !== undefined) {
+                page.isFavorite = info.isFavorite
+            }
         }
         onFavoritesToggled: {
             if (assetIds.indexOf(assetId) > -1) {
                 page.isFavorite = isFavorite
+                notification.show(isFavorite ?
+                     //% "Added asset to favorites"
+                     qsTrId("assetDetailPage.addedAssetToFavorites")
+                     //% "Removed asset from favorites"
+                     : qsTrId("assetDetailPage.removedAssetFromFavorites"))
             }
         }
         onAssetDownloaded: {

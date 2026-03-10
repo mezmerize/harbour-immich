@@ -1,10 +1,16 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtMultimedia 5.6
+import QtFeedback 5.0
 import "../components"
 
 Page {
    id: page
+
+   ThemeEffect {
+       id: hapticFeedback
+       effect: ThemeEffect.Press
+   }
 
    property string videoId
    property bool isFavorite: false
@@ -57,6 +63,7 @@ Page {
                //% "Download"
                text: qsTrId("videoPlayerPage.download")
                onClicked: {
+                   hapticFeedback.play()
                    immichApi.downloadAsset(videoId)
                    //% "Downloading..."
                    notification.show(qsTrId("videoPlayerPage.downloading"))
@@ -255,6 +262,9 @@ Page {
        onAssetInfoReceived: {
            if (info.id === videoId) {
                page.assetInfo = info
+               if (info.isFavorite !== undefined) {
+                   page.isFavorite = info.isFavorite
+               }
            }
        }
        onFavoritesToggled: {

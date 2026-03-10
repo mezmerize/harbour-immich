@@ -324,7 +324,7 @@ Page {
            DetailItem {
                //% "Version"
                label: qsTrId("settingsPage.version")
-               value: "0.1.0"
+               value: "0.1.1"
            }
 
            DetailItem {

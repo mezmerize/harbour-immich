@@ -244,9 +244,20 @@ Page {
                 : qsTrId("searchResultsPage.downloadingAssets").arg(page.selectedAssets.length))
        }
        onDeleteSelected: {
-           immichApi.deleteAssets(page.selectedAssets)
-           page.clearSelection()
+           var selectedIds = page.selectedAssets.slice()
+           deleteRemorse.execute(selectedIds.length > 1
+                //% "Deleting %1 assets
+                ? qsTrId("searchResultsPage.deletingAssets").arg(selectedIds.length)
+                //% "Deleting asset
+                : qsTrId("searchResultsPage.deletingAsset"), function() {
+                immichApi.deleteAssets(page.selectedAssets)
+                page.clearSelection()
+           })
        }
+   }
+
+   RemorsePopup {
+       id: deleteRemorse
    }
 
    ScrollToTopButton {

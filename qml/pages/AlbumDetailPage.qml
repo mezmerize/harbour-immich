@@ -536,14 +536,14 @@ Page {
                                               if (modelData.isVideo) {
                                                   pageStack.push(Qt.resolvedUrl("VideoPlayerPage.qml"), {
                                                       videoId: modelData.id,
-                                                      isFavorite: modelData.isFavorite,
+                                                      isFavorite: isFavorite,
                                                       currentIndex: modelData.assetIndex,
                                                       albumAssets: navAssets
                                                   })
                                               } else {
                                                   pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
                                                       assetId: modelData.id,
-                                                      isFavorite: modelData.isFavorite,
+                                                      isFavorite: isFavorite,
                                                       isVideo: modelData.isVideo,
                                                       thumbhash: modelData.thumbhash || "",
                                                       currentIndex: modelData.assetIndex,
@@ -671,9 +671,20 @@ Page {
                 : qsTrId("albumDetailPage.downloadingAssets").arg(page.selectedAssets.length))
       }
       onDeleteSelected: {
-          immichApi.deleteAssets(page.selectedAssets)
-          page.clearSelection()
+          var selectedIds = page.selectedAssets.slice()
+          deleteRemorse.execute(selectedIds.length > 1
+               //% "Deleting %1 assets
+               ? qsTrId("albumDetailPage.deletingAssets").arg(selectedIds.length)
+               //% "Deleting asset
+               : qsTrId("albumDetailPage.deletingAsset"), function() {
+               immichApi.deleteAssets(page.selectedAssets)
+               page.clearSelection()
+          })
       }
+  }
+
+  RemorsePopup {
+      id: deleteRemorse
   }
 
   ScrollToTopButton {
