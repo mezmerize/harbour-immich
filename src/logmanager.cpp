@@ -119,8 +119,10 @@ void LogManager::messageHandler(QtMsgType type, const QMessageLogContext &contex
     QString timestamp = QDateTime::currentDateTime().toString(QStringLiteral("HH:mm:ss.zzz"));
     QString entry = QStringLiteral("[%1] %2: %3").arg(timestamp, level, msg);
 
+#ifndef QT_NO_DEBUG_OUTPUT
     // Also print to stderr for development
     fprintf(stderr, "%s\n", entry.toLocal8Bit().constData());
+#endif
 
     if (s_instance) {
         s_instance->addEntry(entry);

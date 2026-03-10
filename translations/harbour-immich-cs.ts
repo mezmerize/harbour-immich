@@ -228,12 +228,12 @@
     <message id="albumDetailPage.deletedAsset">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="632"/>
         <source>Deleted asset</source>
-        <translation type="unfinished">Položka vymazána</translation>
+        <translation>Položka vymazána</translation>
     </message>
     <message id="albumDetailPage.deletedAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="634"/>
         <source>Deleted %1 assets</source>
-        <translation type="unfinished">%1 položek vymazáno</translation>
+        <translation>%1 položek vymazáno</translation>
     </message>
     <message id="albumDetailPage.downloadingAsset">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="669"/>
@@ -248,22 +248,22 @@
     <message id="albumDetailPage.deletingAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="677"/>
         <source>Deleting %1 assets</source>
-        <translation type="unfinished">%1 položek bude vymazáno</translation>
+        <translation>%1 položek bude vymazáno</translation>
     </message>
     <message id="albumDetailPage.deletingAsset">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="679"/>
         <source>Deleting asset</source>
-        <translation type="unfinished">Položka bude vymazána</translation>
+        <translation>Položka bude vymazána</translation>
     </message>
     <message id="albumInfoPage.editAlbum">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="17"/>
         <source>Edit album</source>
-        <translation type="unfinished">Upravit album</translation>
+        <translation>Upravit album</translation>
     </message>
     <message id="albumInfoPage.addUsers">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="29"/>
         <source>Add users</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat uživatele</translation>
     </message>
     <message id="albumInfoPage.albumInformation">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="57"/>
@@ -581,12 +581,12 @@
     <message id="assetDetailPage.download">
         <location filename="../qml/pages/AssetDetailPage.qml" line="80"/>
         <source>Download</source>
-        <translation type="unfinished">Stáhnout</translation>
+        <translation>Stáhnout</translation>
     </message>
     <message id="assetDetailPage.downloading">
         <location filename="../qml/pages/AssetDetailPage.qml" line="84"/>
         <source>Downloading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Stahuje se...</translation>
     </message>
     <message id="assetDetailPage.removeFromFavorites">
         <location filename="../qml/pages/AssetDetailPage.qml" line="91"/>
@@ -606,22 +606,22 @@
     <message id="assetDetailPage.addedAssetToFavorites">
         <location filename="../qml/pages/AssetDetailPage.qml" line="304"/>
         <source>Added asset to favorites</source>
-        <translation type="unfinished">Položka přidána mezi oblíbené</translation>
+        <translation>Položka přidána mezi oblíbené</translation>
     </message>
     <message id="assetDetailPage.removedAssetFromFavorites">
         <location filename="../qml/pages/AssetDetailPage.qml" line="306"/>
         <source>Removed asset from favorites</source>
-        <translation type="unfinished">Položka odebrána z oblíbených</translation>
+        <translation>Položka odebrána z oblíbených</translation>
     </message>
     <message id="assetDetailPage.downloaded">
         <location filename="../qml/pages/AssetDetailPage.qml" line="312"/>
         <source>Downloaded: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Staženo: %1</translation>
     </message>
     <message id="assetInfoPage.editAsset">
         <location filename="../qml/pages/AssetInfoPage.qml" line="18"/>
         <source>Edit Asset</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit položku</translation>
     </message>
     <message id="assetInfoPage.assetInformation">
         <location filename="../qml/pages/AssetInfoPage.qml" line="42"/>
@@ -1183,12 +1183,12 @@
     <message id="searchResultsPage.deletingAssets">
         <location filename="../qml/pages/SearchResultsPage.qml" line="250"/>
         <source>Deleting %1 assets</source>
-        <translation type="unfinished">%1 položek bude vymazáno</translation>
+        <translation>%1 položek bude vymazáno</translation>
     </message>
     <message id="searchResultsPage.deletingAsset">
         <location filename="../qml/pages/SearchResultsPage.qml" line="252"/>
         <source>Deleting asset</source>
-        <translation type="unfinished">Položka bude vymazána</translation>
+        <translation>Položka bude vymazána</translation>
     </message>
     <message id="serverPage.serverConfiguration">
         <location filename="../qml/pages/ServerPage.qml" line="20"/>
@@ -1369,7 +1369,7 @@
     <message id="settingsPage.serverStatisticsNotAvailable">
         <location filename="../qml/pages/SettingsPage.qml" line="231"/>
         <source>Server statistics are not available at the moment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Statistiky serveru momentálně nejsou dostupné.</translation>
     </message>
     <message id="settingsPage.totalPhotos">
         <location filename="../qml/pages/SettingsPage.qml" line="241"/>
@@ -1424,7 +1424,7 @@
     <message id="settingsPage.aboutServerNotAvailable">
         <location filename="../qml/pages/SettingsPage.qml" line="292"/>
         <source>Server version info is not available at the moment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace o verzi serveru momentálně není dostupná.</translation>
     </message>
     <message id="settingsPage.serverVersion">
         <location filename="../qml/pages/SettingsPage.qml" line="313"/>
@@ -1454,7 +1454,7 @@
     <message id="settingsPage.viewLogs">
         <location filename="../qml/pages/SettingsPage.qml" line="339"/>
         <source>View application logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit logy aplikace</translation>
     </message>
     <message id="settingsPage.applicationInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="351"/>
@@ -1620,17 +1620,17 @@
     <message id="videoPlayerPage.share">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="53"/>
         <source>Share</source>
-        <translation type="unfinished">Sdílet</translation>
+        <translation>Sdílet</translation>
     </message>
     <message id="videoPlayerPage.download">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="64"/>
         <source>Download</source>
-        <translation type="unfinished">Stáhnout</translation>
+        <translation>Stáhnout</translation>
     </message>
     <message id="videoPlayerPage.downloading">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="69"/>
         <source>Downloading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Stahuje se...</translation>
     </message>
     <message id="videoPlayerPage.removeFromFavorites">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="76"/>
@@ -1650,7 +1650,7 @@
     <message id="videoPlayerPage.downloaded">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="278"/>
         <source>Downloaded: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Staženo: %1</translation>
     </message>
     <message id="oauthPage.oauthLogin">
         <location filename="../qml/pages/OAuthPage.qml" line="24"/>
@@ -1670,7 +1670,7 @@
     <message id="oauthPage.cancel">
         <location filename="../qml/pages/OAuthPage.qml" line="58"/>
         <source>Cancel</source>
-        <translation type="unfinished">Storno</translation>
+        <translation>Storno</translation>
     </message>
     <message id="timelinePage.settings">
         <location filename="../qml/pages/TimelinePage.qml" line="49"/>
@@ -1887,82 +1887,82 @@
     <message id="editAssetDialog.title">
         <location filename="../qml/pages/EditAssetDialog.qml" line="32"/>
         <source>Edit Asset</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit položku</translation>
     </message>
     <message id="editAssetDialog.save">
         <location filename="../qml/pages/EditAssetDialog.qml" line="34"/>
         <source>Save</source>
-        <translation type="unfinished">Uložit</translation>
+        <translation>Uložit</translation>
     </message>
     <message id="editAssetDialog.description">
         <location filename="../qml/pages/EditAssetDialog.qml" line="41"/>
         <source>Description</source>
-        <translation type="unfinished">Popis</translation>
+        <translation>Popis</translation>
     </message>
     <message id="editAssetDialog.location">
         <location filename="../qml/pages/EditAssetDialog.qml" line="49"/>
         <source>Location</source>
-        <translation type="unfinished">Místo</translation>
+        <translation>Místo</translation>
     </message>
     <message id="editAssetDialog.latitude">
         <location filename="../qml/pages/EditAssetDialog.qml" line="56"/>
         <source>Latitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeměpisná šířka</translation>
     </message>
     <message id="editAssetDialog.longitude">
         <location filename="../qml/pages/EditAssetDialog.qml" line="69"/>
         <source>Longitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeměpisná délka</translation>
     </message>
     <message id="logViewerPage.entryCount">
         <location filename="../qml/pages/LogViewerPage.qml" line="10"/>
         <source>%1 log entries</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 záznamů v logu</translation>
     </message>
     <message id="logViewerPage.clearLogs">
         <location filename="../qml/pages/LogViewerPage.qml" line="28"/>
         <source>Clear logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Vymazat logy</translation>
     </message>
     <message id="logViewerPage.copyToClipboard">
         <location filename="../qml/pages/LogViewerPage.qml" line="34"/>
         <source>Copy to clipboard</source>
-        <translation type="unfinished">Kopírovat do schránky</translation>
+        <translation>Kopírovat do schránky</translation>
     </message>
     <message id="logViewerPage.title">
         <location filename="../qml/pages/LogViewerPage.qml" line="47"/>
         <source>Application Logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Logy aplikace</translation>
     </message>
     <message id="logViewerPage.currentSession">
         <location filename="../qml/pages/LogViewerPage.qml" line="52"/>
         <source>Current session</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuální běh</translation>
     </message>
     <message id="logViewerPage.previousSession">
         <location filename="../qml/pages/LogViewerPage.qml" line="89"/>
         <source>Previous session</source>
-        <translation type="unfinished"></translation>
+        <translation>Předchozí běh</translation>
     </message>
     <message id="logViewerPage.noPreviousLogs">
         <location filename="../qml/pages/LogViewerPage.qml" line="109"/>
         <source>No previous session logs available</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenalezeny žádné předchozí logy</translation>
     </message>
     <message id="userPickerPage.title">
         <location filename="../qml/pages/UserPickerPage.qml" line="21"/>
         <source>Add Users</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat uživatele</translation>
     </message>
     <message id="userPickerPage.noUsers">
         <location filename="../qml/pages/UserPickerPage.qml" line="39"/>
         <source>No users available to add</source>
-        <translation type="unfinished"></translation>
+        <translation>Nejsou k dispozici žádní uživatelé</translation>
     </message>
     <message id="userPickerPage.addSelected">
         <location filename="../qml/pages/UserPickerPage.qml" line="126"/>
         <source>Add selected users</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat zvolené uživatele</translation>
     </message>
 </context>
 </TS>

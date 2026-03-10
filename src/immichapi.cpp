@@ -676,7 +676,7 @@ void ImmichApi::fetchUsers()
 void ImmichApi::addUsersToAlbum(const QString &albumId, const QStringList &userIds)
 {
     qInfo() << "ImmichApi: Adding" << userIds.size() << "users to album:" << albumId;
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/albums") + albumId + QStringLiteral("/users"));
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/albums/") + albumId + QStringLiteral("/users"));
     QNetworkRequest request = createAuthenticatedRequest(url);
 
     QJsonArray albumUsers;

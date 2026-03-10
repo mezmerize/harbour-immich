@@ -162,7 +162,7 @@ QQuickImageResponse *ImmichImageProvider::requestImageResponse(const QString &id
    QStringList parts = id.split('/');
    if (parts.size() < 2) {
        qWarning() << "ImmichImageProvider: Invalid id format:" << id;
-       return nullptr;
+       return new ImmichImageResponse(QString(), QString(), requestedSize);
    }
 
    QString type = parts[0];
@@ -183,7 +183,7 @@ QQuickImageResponse *ImmichImageProvider::requestImageResponse(const QString &id
        url = m_authManager->serverUrl() + "/api/people/" + assetId + "/thumbnail";
    } else {
        qWarning() << "ImmichImageProvider: Unknown type:" << type;
-       return nullptr;
+       return new ImmichImageResponse(QString(), QString(), requestedSize);
    }
 
    qDebug() << "ImageProvider: Requesting" << type << "for" << assetId;

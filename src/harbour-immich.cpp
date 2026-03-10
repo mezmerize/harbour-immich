@@ -9,6 +9,7 @@
 #include <QQmlEngine>
 #include <QTranslator>
 #include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QDBusInterface>
 #include <QTimer>
 #include "authmanager.h"
@@ -41,11 +42,14 @@ int main(int argc, char *argv[])
    // Single instance - if already running forward url by DBus and exit
    QDBusConnection dbus = QDBusConnection::sessionBus();
    if (!dbus.registerService(QStringLiteral("org.harbour.immich"))) {
-       if (!activationUrl.isEmpty()) {
-           QDBusInterface iface(QStringLiteral("org.harbour.immich"), QStringLiteral("/oauth"), QStringLiteral("local.OAuthManager"), dbus);
-           iface.call(QStringLiteral("handleCallbackUrl"), activationUrl);
+       if (dbus.interface() && dbus.interface()->isServiceRegistered(QStringLiteral("org.harbour.immich")).value()) {
+          if (!activationUrl.isEmpty()) {
+              QDBusInterface iface(QStringLiteral("org.harbour.immich"), QStringLiteral("/oauth"), QStringLiteral("local.OAuthManager"), dbus);
+              iface.call(QStringLiteral("handleCallbackUrl"), activationUrl);
+          }
+          return 0;
        }
-       return 0;
+       qWarning() << "D-Bus service registration failed, continuing without single-instance protection";
    }
 
    LogManager *logManager = new LogManager(app);

@@ -5,6 +5,8 @@ QT += network multimedia dbus
 PKGCONFIG += sailfishsecrets sailfishapp
 INCLUDEPATH += /usr/include/Sailfish
 
+CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
+
 SOURCES += src/harbour-immich.cpp \
     src/immichapi.cpp \
     src/authmanager.cpp \
