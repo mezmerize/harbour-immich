@@ -1,10 +1,12 @@
 #include "settingsmanager.h"
+#include <QCoreApplication>
 #include <QStandardPaths>
 #include <QDir>
 #include <QDateTime>
 
 SettingsManager::SettingsManager(QObject *parent)
     : QObject(parent)
+    , m_settings(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + "/" + QCoreApplication::applicationName() + ".conf", QSettings::IniFormat)
 {
 }
 
