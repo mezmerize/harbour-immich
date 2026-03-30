@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QByteArray>
 
 class QNetworkAccessManager;
 class QNetworkReply;
@@ -45,6 +46,8 @@ private:
     AuthManager *m_authManager;
     SecureStorage *m_storage;
     QString m_serverUrl;
+    QString m_codeVerifier;
+    QString m_state;
     bool m_oauthEnabled;
     bool m_busy;
 
@@ -53,6 +56,9 @@ private:
     void handleOAuthCallback(const QString &callbackUrl);
     QString redirectUri() const;
     void raiseWindow();
+    void resetOAuthState();
+    static QString generateRandomString(int length);
+    static QString computeCodeChallenge(const QString &codeVerifier);
 };
 
 #endif // OAUTHMANAGER_H

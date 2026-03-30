@@ -65,7 +65,6 @@ Page {
         target: oauthManager
         onOauthLoginSucceeded: {
             authManager.checkStoredCredentials()
-            pageStack.clear()
         }
         onOauthLoginFailed: {
             pageStack.pop()

@@ -11,6 +11,8 @@
 #include <QDesktopServices>
 #include <QGuiApplication>
 #include <QWindow>
+#include <QCryptographicHash>
+#include <QDateTime>
 #include <QDebug>
 
 OAuthManager::OAuthManager(AuthManager *authManager, SecureStorage *storage, QObject *parent)
@@ -21,6 +23,7 @@ OAuthManager::OAuthManager(AuthManager *authManager, SecureStorage *storage, QOb
    , m_oauthEnabled(false)
    , m_busy(false)
 {
+    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
 }
 
 OAuthManager::~OAuthManager()
@@ -56,6 +59,30 @@ void OAuthManager::setOAuthEnabled(bool enabled)
 QString OAuthManager::redirectUri() const
 {
    return QStringLiteral("app.immich://oauth-callback");
+}
+
+QString OAuthManager::generateRandomString(int length)
+{
+    const QByteArray chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
+    QString result;
+    result.reserve(length);
+    for (int i = 0; i < length; ++i) {
+        result.append(chars.at(qrand() % chars.size()));
+    }
+    return result;
+}
+
+QString OAuthManager::computeCodeChallenge(const QString &codeVerifier)
+{
+    QByteArray hash = QCryptographicHash::hash(codeVerifier.toUtf8(), QCryptographicHash::Sha256);
+    return QString::fromLatin1(hash.toBase64(QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals));
+}
+
+void OAuthManager::resetOAuthState()
+{
+    m_codeVerifier.clear();
+    m_state.clear();
+    m_serverUrl.clear();
 }
 
 void OAuthManager::raiseWindow()
@@ -109,15 +136,18 @@ void OAuthManager::onServerConfigReplyFinished()
 void OAuthManager::startOAuthLogin(const QString &serverUrl)
 {
    m_serverUrl = serverUrl;
+   m_codeVerifier = generateRandomString(128);
+   m_state = generateRandomString(32);
    setBusy(true);
 
    QUrl url(serverUrl + QStringLiteral("/api/oauth/authorize"));
    QNetworkRequest request(url);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-   request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
 
    QJsonObject json;
    json["redirectUri"] = redirectUri();
+   json["codeChallenge"] = computeCodeChallenge(m_codeVerifier);
+   json["state"] = m_state;
 
    QNetworkReply *reply = m_networkManager->post(request, QJsonDocument(json).toJson());
    connect(reply, &QNetworkReply::finished, this, &OAuthManager::onAuthorizeReplyFinished);
@@ -126,6 +156,7 @@ void OAuthManager::startOAuthLogin(const QString &serverUrl)
 void OAuthManager::cancelOAuthLogin()
 {
     if (m_busy) {
+        resetOAuthState();
         setBusy(false);
         emit oauthLoginFailed(QStringLiteral("Login cancelled"));
     }
@@ -135,12 +166,27 @@ void OAuthManager::handleCallbackUrl(const QString &url)
 {
     qDebug() << "OAuthManager: Received callback URL";
 
-    if (!m_busy) {
+    raiseWindow();
+
+    if (m_serverUrl.isEmpty() || m_codeVerifier.isEmpty() || m_state.isEmpty() || !m_busy) {
         qWarning() << "OAuthManager: Received callback but no OAuth login in progress";
+        setBusy(false);
+        emit oauthLoginFailed(QStringLiteral("OAuth session expired. Please try again."));
         return;
     }
 
-    raiseWindow();
+    QUrl callbackUrl(url);
+    QUrlQuery query(callbackUrl);
+    QString callbackState = query.queryItemValue(QStringLiteral("state"));
+
+    if (!callbackState.isEmpty() && callbackState != m_state) {
+        qWarning() << "OAuthManager: State mismatch - expected:" << m_state << "got:" << callbackState;
+        resetOAuthState();
+        setBusy(false);
+        emit oauthLoginFailed(QStringLiteral("OAuth state mismatch. Please try again."));
+        return;
+    }
+
     handleOAuthCallback(url);
 }
 
@@ -188,6 +234,8 @@ void OAuthManager::handleOAuthCallback(const QString &callbackUrl)
 
    QJsonObject json;
    json["url"] = callbackUrl;
+   json["codeVerifier"] = m_codeVerifier;
+   json["state"] = m_state;
 
    QNetworkReply *reply = m_networkManager->post(request, QJsonDocument(json).toJson());
    connect(reply, &QNetworkReply::finished, this, &OAuthManager::onCallbackReplyFinished);
@@ -198,6 +246,8 @@ void OAuthManager::onCallbackReplyFinished()
    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
    if (!reply) return;
 
+   QString serverUrl = m_serverUrl;
+   resetOAuthState();
    setBusy(false);
 
    if (reply->error() == QNetworkReply::NoError) {
@@ -213,7 +263,7 @@ void OAuthManager::onCallbackReplyFinished()
            if (!userEmail.isEmpty()) {
                m_storage->saveEmail(userEmail);
            }
-           m_storage->saveServerUrl(m_serverUrl);
+           m_storage->saveServerUrl(serverUrl);
 
            // Clear any stored password since this is OAuth
            m_storage->savePassword(QString());

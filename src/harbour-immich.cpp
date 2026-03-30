@@ -8,9 +8,8 @@
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QTranslator>
-#include <QDBusConnection>
-#include <QDBusConnectionInterface>
-#include <QDBusInterface>
+#include <QLocalServer>
+#include <QLocalSocket>
 #include <QTimer>
 #include "authmanager.h"
 #include "oauthmanager.h"
@@ -40,17 +39,18 @@ int main(int argc, char *argv[])
        }
    }
 
-   // Single instance - if already running forward url by DBus and exit
-   QDBusConnection dbus = QDBusConnection::sessionBus();
-   if (!dbus.registerService(QStringLiteral("org.harbour.immich"))) {
-       if (dbus.interface() && dbus.interface()->isServiceRegistered(QStringLiteral("org.harbour.immich")).value()) {
-          if (!activationUrl.isEmpty()) {
-              QDBusInterface iface(QStringLiteral("org.harbour.immich"), QStringLiteral("/oauth"), QStringLiteral("local.OAuthManager"), dbus);
-              iface.call(QStringLiteral("handleCallbackUrl"), activationUrl);
-          }
-          return 0;
+   const QString serverName = QStringLiteral("harbour-immich-instance");
+   {
+       QLocalSocket socket;
+       socket.connectToServer(serverName);
+       if (socket.waitForConnected(500)) {
+           if (!activationUrl.isEmpty()) {
+               socket.write(activationUrl.toUtf8());
+               socket.waitForBytesWritten(1000);
+           }
+           socket.disconnectFromServer();
+           return 0;
        }
-       qWarning() << "D-Bus service registration failed, continuing without single-instance protection";
    }
 
    LogManager *logManager = new LogManager(app);
@@ -73,7 +73,25 @@ int main(int argc, char *argv[])
 
    AuthManager *authManager = new AuthManager(secureStorage, app);
    OAuthManager *oauthManager = new OAuthManager(authManager, secureStorage, app);
-   dbus.registerObject(QStringLiteral("/oauth"), oauthManager, QDBusConnection::ExportAllSlots);
+
+   QLocalServer *localServer = new QLocalServer(app);
+   QLocalServer::removeServer(serverName);
+   if (!localServer->listen(serverName)) {
+       qWarning() << "Failed to start single instance server:" << localServer->errorString();
+   }
+   QObject::connect(localServer, &QLocalServer::newConnection, [localServer, oauthManager]() {
+       QLocalSocket *client = localServer->nextPendingConnection();
+       if (!client) return;
+       QObject::connect(client, &QLocalSocket::readyRead, [client, oauthManager]() {
+           QString url = QString::fromUtf8(client->readAll());
+           if (!url.isEmpty()) {
+               oauthManager->handleCallbackUrl(url);
+           }
+           client->deleteLater();
+       });
+       QObject::connect(client, &QLocalSocket::disconnected, client, &QLocalSocket::deleteLater);
+   });
+
    if (!activationUrl.isEmpty()) {
        QTimer::singleShot(0, [oauthManager, activationUrl]() {
            oauthManager->handleCallbackUrl(activationUrl);
