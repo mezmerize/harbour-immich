@@ -80,7 +80,7 @@ pkcon install-local harbour-immich-client.rpm
 
 Planned features:
 
-- Background automatic backup
+- Library support
 - Offline caching
 
 Known issues:
@@ -111,3 +111,4 @@ GPLv3
 - Immich project and contributors
 - Sailfish OS community
 - Frank Paul Silye (https://forum.sailfishos.org/u/frankps) - Norwegian translations and testing
+- 247 (https://forum.sailfishos.org/u/247) - Italian translations
