@@ -11,6 +11,7 @@
 #include <QLocalServer>
 #include <QLocalSocket>
 #include <QTimer>
+#include <QtQml>
 #include "authmanager.h"
 #include "oauthmanager.h"
 #include "immichapi.h"
@@ -97,6 +98,7 @@ int main(int argc, char *argv[])
            oauthManager->handleCallbackUrl(activationUrl);
        });
    }
+   qmlRegisterType<TimelineModel>("harbour.immich.models", 1, 0, "TimelineModel");
    ImmichApi *immichApi = new ImmichApi(authManager, app);
    AlbumModel *albumModel = new AlbumModel(authManager, app);
    TimelineModel *timelineModel = new TimelineModel(app);
@@ -130,11 +132,8 @@ int main(int argc, char *argv[])
    QObject::connect(authManager, &AuthManager::serverUrlChanged, [authManager, timelineModel]() {
        timelineModel->setServerUrl(authManager->serverUrl());
    });
-   QObject::connect(immichApi, &ImmichApi::timelineBucketsReceived, timelineModel, &TimelineModel::loadBuckets);
-   QObject::connect(immichApi, &ImmichApi::timelineBucketReceived, timelineModel, &TimelineModel::loadBucketAssets);
    QObject::connect(immichApi, &ImmichApi::favoritesToggled, timelineModel, &TimelineModel::updateFavorites);
    QObject::connect(immichApi, &ImmichApi::assetsDeleted, timelineModel, &TimelineModel::removeAssets);
-   QObject::connect(timelineModel, &TimelineModel::bucketLoadRequested, immichApi, &ImmichApi::fetchTimelineBucket);
 
    view->rootContext()->setContextProperty("authManager", authManager);
    view->rootContext()->setContextProperty("oauthManager", oauthManager);

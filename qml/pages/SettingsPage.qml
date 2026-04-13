@@ -55,6 +55,12 @@ Page {
 
        PullDownMenu {
            MenuItem {
+               //% "Library"
+               text: qsTrId("settingsPage.library")
+               onClicked: pageStack.push(Qt.resolvedUrl("LibraryPage.qml"))
+           }
+
+           MenuItem {
                //% "Search"
                text: qsTrId("settingsPage.search")
                onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"))
@@ -684,7 +690,7 @@ Page {
            DetailItem {
                //% "Version"
                label: qsTrId("settingsPage.version")
-               value: "0.2.3"
+               value: "0.3.0"
            }
 
            DetailItem {

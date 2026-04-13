@@ -9,4 +9,4 @@ MimeType=x-scheme-handler/app.immich;
 [X-Sailjail]
 OrganizationName=mezmerize
 ApplicationName=harbour-immich
-Permissions=Internet;Secrets;Pictures;Videos;UserDirs
+Permissions=Internet;Secrets;Pictures;Videos;UserDirs;MediaIndexing

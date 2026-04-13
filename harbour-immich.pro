@@ -41,6 +41,9 @@ INSTALLS += icons
 
 DISTFILES += qml/harbour-immich.qml \
     qml/components/AssetGridItem.qml \
+    qml/components/AssetGroupHelper.js \
+    qml/components/GroupedAssetGrid.qml \
+    qml/components/HeroImageRotator.qml \
     qml/components/DismissDragBackdrop.qml \
     qml/components/DownloadFolderDialog.qml \
     qml/components/FilterablePickerDialog.qml \
@@ -69,6 +72,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/LoginPage.qml \
     qml/pages/AlbumsPage.qml \
     qml/pages/AlbumDetailPage.qml \
+    qml/pages/LibraryPage.qml \
     qml/pages/SearchPage.qml \
     qml/pages/SettingsPage.qml \
     qml/pages/SharePage.qml \

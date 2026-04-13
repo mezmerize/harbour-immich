@@ -11,8 +11,10 @@ Page {
     property int bucketCount: timelineModel.bucketCount
 
     // Filter state
-    property string activeFilter: "all"  // all, favorites
-    property string sortOrder: "desc"    // desc, asc
+    property string activeFilter: "all"
+    property string sortOrder: "desc"
+    property string contextId: "timeline"
+    property var queryParams: ({})
 
     // Highlight state for scroll-to-asset
     property string highlightAssetId: ""
@@ -40,7 +42,18 @@ Page {
         timelineModel.setLoading(true)
         var isFavorite = activeFilter === "favorites"
         timelineModel.setFavoriteFilter(isFavorite)
-        immichApi.fetchTimelineBuckets(isFavorite, sortOrder)
+        var params = {
+            "visibility": "timeline",
+            "withStacked": "true",
+            "order": sortOrder
+        }
+        if (isFavorite) {
+            params["isFavorite"] = "true"
+        } else {
+            params["withPartners"] = "true"
+        }
+        queryParams = params
+        immichApi.fetchTimelineBuckets(contextId, queryParams)
     }
 
     function currentBucketLoadMargin() {
@@ -87,6 +100,12 @@ Page {
                 //% "Settings"
                 text: qsTrId("timelinePage.settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
+            }
+
+            MenuItem {
+                //% "Library"
+                text: qsTrId("timelinePage.library")
+                onClicked: pageStack.push(Qt.resolvedUrl("LibraryPage.qml"))
             }
 
             MenuItem {
@@ -516,6 +535,9 @@ Page {
 
     Connections {
         target: timelineModel
+        onBucketLoadRequested: {
+            immichApi.fetchTimelineBucket(page.contextId, timeBucket, page.queryParams)
+        }
         onScrollToAssetRequested: {
             pendingScrollAssetId = assetId
             pendingScrollBucketIndex = bucketIndex
@@ -543,10 +565,16 @@ Page {
     Connections {
         target: immichApi
         onTimelineBucketsReceived: {
+            if (context !== page.contextId) return
+            timelineModel.loadBuckets(buckets)
             timelineModel.setLoading(false)
             if (pendingScrollBucketIndex < 0) {
                 bucketsList.positionViewAtBeginning()
             }
+        }
+        onTimelineBucketReceived: {
+            if (context !== page.contextId) return
+            timelineModel.loadBucketAssets(timeBucket, bucketData)
         }
         onMemoriesReceived: {
             page.memoriesLoading = false

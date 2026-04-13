@@ -47,8 +47,8 @@ public:
     Q_INVOKABLE void fetchServerAbout();
     Q_INVOKABLE void createAlbum(const QString &albumName, const QString &description);
     Q_INVOKABLE void updateAlbum(const QString &albumId, const QString &albumName, const QString &description, bool isActivityEnabled = true, const QString &albumThumbnailAssetId = QString());
-    Q_INVOKABLE void fetchTimelineBuckets(bool isFavorite = false, const QString &order = QStringLiteral("desc"));
-    Q_INVOKABLE void fetchTimelineBucket(const QString &timeBucket, bool isFavorite = false);
+    Q_INVOKABLE void fetchTimelineBuckets(const QString &context, const QVariantMap &params);
+    Q_INVOKABLE void fetchTimelineBucket(const QString &context, const QString &timeBucket, const QVariantMap &params);
     Q_INVOKABLE QString serverUrl() const;
     Q_INVOKABLE void setVideoSource(QObject *videoItem, const QString &assetId);
     Q_INVOKABLE void checkExistingAssets(const QStringList &deviceAssetIds);
@@ -87,8 +87,8 @@ signals:
     void serverAboutReceived(const QJsonObject &about);
     void albumCreated(const QString &albumId, const QString &albumName);
     void albumUpdated(const QString &albumId, const QString &albumName, const QString &description, bool isActivityEnabled, const QString &albumThumbnailAssetId);
-    void timelineBucketsReceived(const QJsonArray &buckets);
-    void timelineBucketReceived(const QString &timeBucket, const QJsonObject &bucketData);
+    void timelineBucketsReceived(const QString &context, const QJsonArray &buckets);
+    void timelineBucketReceived(const QString &context, const QString &timeBucket, const QJsonObject &bucketData);
     void errorOccurred(const QString &error);
     void existingAssetsChecked(const QStringList &existingIds);
     void bulkUploadCheckCompleted(const QJsonArray &results);

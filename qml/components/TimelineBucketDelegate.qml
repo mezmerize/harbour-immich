@@ -12,6 +12,7 @@ Column {
     property int assetsPerRow
     property string highlightAssetId: ""
     property bool autoLoadAssets: true
+    property var assetModel: timelineModel
 
     // Public state (read by parent for scroll-to-asset)
     property var bucketData: null
@@ -64,34 +65,34 @@ Column {
     }
 
     function loadBucketData() {
-        if (dataLoaded || !timelineModel) return
-        bucketData = timelineModel.getBucketAt(bucketIndex)
+        if (dataLoaded || !assetModel) return
+        bucketData = assetModel.getBucketAt(bucketIndex)
         if (bucketIndex === 0) {
             isFirstOfMonth = true
         } else if (bucketData) {
-            var prevBucket = timelineModel.getBucketAt(bucketIndex - 1)
+            var prevBucket = assetModel.getBucketAt(bucketIndex - 1)
             isFirstOfMonth = prevBucket ? prevBucket.monthYear !== bucketData.monthYear : false
         }
         dataLoaded = true
     }
 
     function requestAssets() {
-        if (!timelineModel || !bucketData) return
-        if (!timelineModel.isBucketLoaded(bucketIndex)) {
-            timelineModel.requestBucketLoad(bucketIndex)
+        if (!assetModel || !bucketData) return
+        if (!assetModel.isBucketLoaded(bucketIndex)) {
+            assetModel.requestBucketLoad(bucketIndex)
         } else {
             loadAssets()
         }
     }
 
     function loadAssets() {
-        bucketSubGroups = timelineModel.getBucketSubGroups(bucketIndex)
+        bucketSubGroups = assetModel.getBucketSubGroups(bucketIndex)
         assetsLoaded = true
     }
 
     // Listen for bucket load completion
     Connections {
-        target: timelineModel
+        target: assetModel
         onBucketAssetsLoaded: {
             if (bucketIndex === bucketColumn.bucketIndex && !bucketColumn.assetsLoaded) {
                 if (bucketColumn.autoLoadAssets) {
@@ -101,7 +102,7 @@ Column {
         }
         onBucketDataUpdated: {
             if (bucketIndex === bucketColumn.bucketIndex && bucketColumn.assetsLoaded) {
-                bucketSubGroups = timelineModel.getBucketSubGroups(bucketColumn.bucketIndex)
+                bucketSubGroups = assetModel.getBucketSubGroups(bucketColumn.bucketIndex)
             }
         }
     }
@@ -189,9 +190,9 @@ Column {
                     color: "transparent"
 
                     property bool isSubGroupSelected: {
-                        if (!subGroupData || !subGroupData.assets || timelineModel.selectedCount === 0) return false
+                        if (!subGroupData || !subGroupData.assets || assetModel.selectedCount === 0) return false
                         for (var i = 0; i < subGroupData.assets.length; i++) {
-                            if (!timelineModel.isAssetSelected(subGroupData.assets[i].id)) {
+                            if (!assetModel.isAssetSelected(subGroupData.assets[i].id)) {
                                 return false
                             }
                         }
@@ -220,15 +221,15 @@ Column {
                             if (parent.isSubGroupSelected) {
                                 // Deselect all assets in this subgroup
                                 for (var i = 0; i < assets.length; i++) {
-                                    if (timelineModel.isAssetSelected(assets[i].id)) {
-                                        timelineModel.toggleSelection(bucketColumn.bucketIndex, assets[i].assetIndex)
+                                    if (assetModel.isAssetSelected(assets[i].id)) {
+                                        assetModel.toggleSelection(bucketColumn.bucketIndex, assets[i].assetIndex)
                                     }
                                 }
                             } else {
                                 // Select all assets in this subgroup
                                 for (var i = 0; i < assets.length; i++) {
-                                    if (!timelineModel.isAssetSelected(assets[i].id)) {
-                                        timelineModel.toggleSelection(bucketColumn.bucketIndex, assets[i].assetIndex)
+                                    if (!assetModel.isAssetSelected(assets[i].id)) {
+                                        assetModel.toggleSelection(bucketColumn.bucketIndex, assets[i].assetIndex)
                                     }
                                 }
                             }
@@ -250,8 +251,8 @@ Column {
                             assetId: modelData.id
                             isFavorite: modelData.isFavorite
                             isSelected: {
-                                timelineModel.selectedCount
-                                return timelineModel.isAssetSelected(modelData.id)
+                                assetModel.selectedCount
+                                return assetModel.isAssetSelected(modelData.id)
                             }
                             isVideo: modelData.isVideo
                             assetIndex: modelData.assetIndex
@@ -263,8 +264,8 @@ Column {
                             isHighlighted: bucketColumn.highlightAssetId === modelData.id
 
                             onClicked: {
-                                if (timelineModel.selectedCount > 0) {
-                                    timelineModel.toggleSelection(bucketColumn.bucketIndex, modelData.assetIndex)
+                                if (assetModel.selectedCount > 0) {
+                                    assetModel.toggleSelection(bucketColumn.bucketIndex, modelData.assetIndex)
                                 } else {
                                     var idx = modelData.globalIndex
                                     bucketColumn.assetClicked(modelData.id, gridItem.isFavorite, modelData.isVideo, modelData.thumbhash || "", idx, modelData.stackId || "", modelData.stackAssetCount || 0)
@@ -272,11 +273,11 @@ Column {
                             }
 
                             onPressAndHold: {
-                                timelineModel.toggleSelection(bucketColumn.bucketIndex, modelData.assetIndex)
+                                assetModel.toggleSelection(bucketColumn.bucketIndex, modelData.assetIndex)
                             }
 
                             onAddToSelection: {
-                                timelineModel.toggleSelection(bucketColumn.bucketIndex, modelData.assetIndex)
+                                assetModel.toggleSelection(bucketColumn.bucketIndex, modelData.assetIndex)
                             }
                         }
                     }

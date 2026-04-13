@@ -91,6 +91,12 @@ Page {
           }
 
           MenuItem {
+              //% "Library"
+              text: qsTrId("albumsPage.library")
+              onClicked: pageStack.push(Qt.resolvedUrl("LibraryPage.qml"))
+          }
+
+          MenuItem {
               //% "Search"
               text: qsTrId("albumsPage.search")
               onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"))

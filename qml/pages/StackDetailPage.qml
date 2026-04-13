@@ -601,7 +601,7 @@ Page {
         onStackDeleted: {
             if (stackId === page.stackId) {
                 // Refresh timeline and go back
-                immichApi.fetchTimelineBuckets()
+                immichApi.fetchTimelineBuckets("timeline", {"visibility": "timeline", "withStacked": "true", "order": "desc", "withPartners": "true"})
                 pageStack.pop()
             }
         }
