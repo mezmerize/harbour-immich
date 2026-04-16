@@ -312,6 +312,7 @@ Page {
         allAreFavorites: timelineModel.selectedCount > 0 && timelineModel.areAllSelectedFavorites()
         hasAnyFavorites: timelineModel.selectedCount > 0 && timelineModel.areAnySelectedFavorites()
         canStack: timelineModel.selectedCount > 1 && !timelineModel.isAnySelectedAStack()
+        showArchive: true
 
         onStackSelected: {
             var selectedIds = timelineModel.getSelectedAssetIds()

@@ -21,6 +21,12 @@ Item {
     property bool canStack: false
     property string activeMenuType: ""
 
+    // Page context flags
+    property bool showArchive: false
+    property bool isArchivePage: false
+    property bool isTrashPage: false
+    property bool isLockedFolderPage: false
+
     signal addToFavorites()
     signal removeFromFavorites()
     signal share()
@@ -29,6 +35,11 @@ Item {
     signal clearSelection()
     signal download()
     signal deleteSelected()
+    signal moveToArchive()
+    signal removeFromArchive()
+    signal moveToLockedFolder()
+    signal removeFromLockedFolder()
+    signal restoreFromTrash()
 
     function showContextMenu(menuType) {
         if (activeMenuType === menuType) {
@@ -98,7 +109,7 @@ Item {
         z: 3
     }
 
-    // Buttons
+    // Buttons - trash folder mode
     Row {
         anchors.top: parent.top
         anchors.left: parent.left
@@ -107,6 +118,108 @@ Item {
         anchors.leftMargin: Theme.horizontalPageMargin
         anchors.rightMargin: Theme.horizontalPageMargin
         z: 3
+        visible: isTrashPage
+
+        IconButton {
+            width: parent.width / 3
+            height: parent.height
+            icon.source: "image://theme/icon-m-backup"
+
+            onClicked: {
+                actionFeedback.play()
+                restoreFromTrash()
+            }
+        }
+
+        IconButton {
+            width: parent.width / 3
+            height: parent.height
+            icon.source: "image://theme/icon-m-delete"
+
+            onClicked: {
+                actionFeedback.play()
+                deleteSelected()
+            }
+        }
+
+        IconButton {
+            width: parent.width / 3
+            height: parent.height
+            icon.source: "image://theme/icon-m-dismiss"
+
+            onClicked: {
+                actionFeedback.play()
+                clearSelection()
+            }
+        }
+    }
+
+    // Buttons - locked folder mode
+    Row {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: contentHeight
+        anchors.leftMargin: Theme.horizontalPageMargin
+        anchors.rightMargin: Theme.horizontalPageMargin
+        z: 3
+        visible: isLockedFolderPage
+
+        IconButton {
+            width: parent.width / 4
+            height: parent.height
+            icon.source: "image://theme/icon-m-cloud-download"
+
+            onClicked: {
+                actionFeedback.play()
+                download()
+            }
+        }
+
+        IconButton {
+            width: parent.width / 4
+            height: parent.height
+            icon.source: "image://theme/icon-m-delete"
+
+            onClicked: {
+                actionFeedback.play()
+                deleteSelected()
+            }
+        }
+
+        IconButton {
+            width: parent.width / 4
+            height: parent.height
+            icon.source: "image://theme/icon-m-device-lock"
+
+            onClicked: {
+                actionFeedback.play()
+                removeFromLockedFolder()
+            }
+        }
+
+        IconButton {
+            width: parent.width / 4
+            height: parent.height
+            icon.source: "image://theme/icon-m-dismiss"
+
+            onClicked: {
+                actionFeedback.play()
+                clearSelection()
+            }
+        }
+    }
+
+    // Buttons - normal mode
+    Row {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: contentHeight
+        anchors.leftMargin: Theme.horizontalPageMargin
+        anchors.rightMargin: Theme.horizontalPageMargin
+        z: 3
+        visible: !isTrashPage && !isLockedFolderPage
 
         IconButton {
             width: parent.width / 4
@@ -180,6 +293,44 @@ Item {
             BackgroundItem {
                 width: parent.width
                 height: Theme.itemSizeSmall
+                visible: activeMenuType === "add" && showArchive && !isArchivePage
+                highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
+
+                Label {
+                    anchors.centerIn: parent
+                    //% "Move to archive"
+                    text: qsTrId("selectionActionBar.moveToArchive")
+                    color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
+                }
+
+                onClicked: {
+                    activeMenuType = ""
+                    moveToArchive()
+                }
+            }
+
+            BackgroundItem {
+                width: parent.width
+                height: Theme.itemSizeSmall
+                visible: activeMenuType === "add" && !isLockedFolderPage && showArchive
+                highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
+
+                Label {
+                    anchors.centerIn: parent
+                    //% "Move to locked folder"
+                    text: qsTrId("selectionActionBar.moveToLockedFolder")
+                    color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
+                }
+
+                onClicked: {
+                    activeMenuType = ""
+                    moveToLockedFolder()
+                }
+            }
+
+            BackgroundItem {
+                width: parent.width
+                height: Theme.itemSizeSmall
                 visible: activeMenuType === "add"
                 highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
 
@@ -212,6 +363,44 @@ Item {
                 onClicked: {
                     activeMenuType = ""
                     stackSelected()
+                }
+            }
+
+            BackgroundItem {
+                width: parent.width
+                height: Theme.itemSizeSmall
+                visible: activeMenuType === "more" && isArchivePage
+                highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
+
+                Label {
+                    anchors.centerIn: parent
+                    //% "Remove from archive"
+                    text: qsTrId("selectionActionBar.removeFromArchive")
+                    color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
+                }
+
+                onClicked: {
+                    activeMenuType = ""
+                    removeFromArchive()
+                }
+            }
+
+            BackgroundItem {
+                width: parent.width
+                height: Theme.itemSizeSmall
+                visible: activeMenuType === "more" && isLockedFolderPage
+                highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
+
+                Label {
+                    anchors.centerIn: parent
+                    //% "Remove from locked folder"
+                    text: qsTrId("selectionActionBar.removeFromLockedFolder")
+                    color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
+                }
+
+                onClicked: {
+                    activeMenuType = ""
+                    removeFromLockedFolder()
                 }
             }
 
