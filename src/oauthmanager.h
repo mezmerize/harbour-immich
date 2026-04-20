@@ -33,7 +33,9 @@ signals:
     void oauthLoginFailed(const QString &error);
 
 private slots:
+#ifndef HARBOUR_BUILD
     void onServerConfigReplyFinished();
+#endif
     void onAuthorizeReplyFinished();
     void onCallbackReplyFinished();
 
