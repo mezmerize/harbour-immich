@@ -110,6 +110,13 @@ void ImmichApi::searchByParameters(const QVariantMap &searchParams)
         }
     };
 
+    // Helper: copy string param that may be empty
+    auto copyStringAllowEmpty = [&](const QString &key) {
+        if (searchParams.contains(key)) {
+            json[key] = searchParams[key].toString();
+        }
+    };
+
     // Helper: copy bool param
     auto copyBool = [&](const QString &key) {
         if (searchParams.contains(key))
@@ -132,14 +139,14 @@ void ImmichApi::searchByParameters(const QVariantMap &searchParams)
     }
 
     // Place
-    copyString("state");
-    copyString("country");
+    copyStringAllowEmpty("state");
+    copyStringAllowEmpty("country");
     copyString("city");
 
     // Camera
-    copyString("make");
-    copyString("model");
-    copyString("lensModel");
+    copyStringAllowEmpty("make");
+    copyStringAllowEmpty("model");
+    copyStringAllowEmpty("lensModel");
 
     // Date range
     copyString("takenAfter");

@@ -7,6 +7,10 @@ INCLUDEPATH += /usr/include/Sailfish
 
 CONFIG(release, debug|release): DEFINES += QT_NO_DEBUG_OUTPUT
 
+harbour {
+    DEFINES += HARBOUR_BUILD
+}
+
 SOURCES += src/harbour-immich.cpp \
     src/backupdatabase.cpp \
     src/backupmanager.cpp \

@@ -15,44 +15,44 @@
 #include <QDebug>
 
 OAuthManager::OAuthManager(AuthManager *authManager, QObject *parent)
-   : QObject(parent)
-   , m_networkManager(new QNetworkAccessManager(this))
-   , m_authManager(authManager)
-   , m_oauthEnabled(false)
-   , m_busy(false)
+    : QObject(parent)
+    , m_networkManager(new QNetworkAccessManager(this))
+    , m_authManager(authManager)
+    , m_oauthEnabled(false)
+    , m_busy(false)
 {
     qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
 }
 
 bool OAuthManager::oauthEnabled() const
 {
-   return m_oauthEnabled;
+    return m_oauthEnabled;
 }
 
 bool OAuthManager::busy() const
 {
-   return m_busy;
+    return m_busy;
 }
 
 void OAuthManager::setBusy(bool busy)
 {
-   if (m_busy != busy) {
-       m_busy = busy;
-       emit busyChanged();
-   }
+    if (m_busy != busy) {
+        m_busy = busy;
+        emit busyChanged();
+    }
 }
 
 void OAuthManager::setOAuthEnabled(bool enabled)
 {
-   if (m_oauthEnabled != enabled) {
-       m_oauthEnabled = enabled;
-       emit oauthEnabledChanged();
-   }
+    if (m_oauthEnabled != enabled) {
+        m_oauthEnabled = enabled;
+        emit oauthEnabledChanged();
+    }
 }
 
 QString OAuthManager::redirectUri() const
 {
-   return QStringLiteral("app.immich://oauth-callback");
+    return QStringLiteral("app.immich://oauth-callback");
 }
 
 QString OAuthManager::generateRandomString(int length)
@@ -81,70 +81,76 @@ void OAuthManager::resetOAuthState()
 
 void OAuthManager::raiseWindow()
 {
-   const auto windows = QGuiApplication::allWindows();
-   if (!windows.isEmpty()) {
-       QWindow *window = windows.first();
-       window->raise();
-       window->requestActivate();
-   }
+    const auto windows = QGuiApplication::allWindows();
+    if (!windows.isEmpty()) {
+        QWindow *window = windows.first();
+        window->raise();
+        window->requestActivate();
+    }
 }
 
 void OAuthManager::checkOAuthAvailability(const QString &serverUrl)
 {
-   m_serverUrl = serverUrl;
-   setOAuthEnabled(false);
+#ifdef HARBOUR_BUILD
+    Q_UNUSED(serverUrl)
+    setOAuthEnabled(false);
+    return;
+#else
+    m_serverUrl = serverUrl;
+    setOAuthEnabled(false);
 
-   QUrl url(serverUrl + QStringLiteral("/api/oauth/authorize"));
-   QNetworkRequest request(url);
-   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QUrl url(serverUrl + QStringLiteral("/api/oauth/authorize"));
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-   QJsonObject json;
-   json["redirectUri"] = redirectUri();
+    QJsonObject json;
+    json["redirectUri"] = redirectUri();
 
-   QNetworkReply *reply = m_networkManager->post(request, QJsonDocument(json).toJson());
-   connect(reply, &QNetworkReply::finished, this, &OAuthManager::onServerConfigReplyFinished);
+    QNetworkReply *reply = m_networkManager->post(request, QJsonDocument(json).toJson());
+    connect(reply, &QNetworkReply::finished, this, &OAuthManager::onServerConfigReplyFinished);
 }
 
 void OAuthManager::onServerConfigReplyFinished()
 {
-   QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
-   if (!reply) return;
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+    if (!reply) return;
 
-   if (reply->error() == QNetworkReply::NoError) {
-       QByteArray response = reply->readAll();
-       QJsonDocument doc = QJsonDocument::fromJson(response);
-       QJsonObject obj = doc.object();
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray response = reply->readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QJsonObject obj = doc.object();
 
-       if (obj.contains("url") && !obj["url"].toString().isEmpty()) {
-           setOAuthEnabled(true);
-       } else {
-           setOAuthEnabled(false);
-       }
-   } else {
-       setOAuthEnabled(false);
-   }
+        if (obj.contains("url") && !obj["url"].toString().isEmpty()) {
+            setOAuthEnabled(true);
+        } else {
+            setOAuthEnabled(false);
+        }
+    } else {
+        setOAuthEnabled(false);
+    }
 
-   reply->deleteLater();
+    reply->deleteLater();
 }
+#endif
 
 void OAuthManager::startOAuthLogin(const QString &serverUrl)
 {
-   m_serverUrl = serverUrl;
-   m_codeVerifier = generateRandomString(128);
-   m_state = generateRandomString(32);
-   setBusy(true);
+    m_serverUrl = serverUrl;
+    m_codeVerifier = generateRandomString(128);
+    m_state = generateRandomString(32);
+    setBusy(true);
 
-   QUrl url(serverUrl + QStringLiteral("/api/oauth/authorize"));
-   QNetworkRequest request(url);
-   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QUrl url(serverUrl + QStringLiteral("/api/oauth/authorize"));
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-   QJsonObject json;
-   json["redirectUri"] = redirectUri();
-   json["codeChallenge"] = computeCodeChallenge(m_codeVerifier);
-   json["state"] = m_state;
+    QJsonObject json;
+    json["redirectUri"] = redirectUri();
+    json["codeChallenge"] = computeCodeChallenge(m_codeVerifier);
+    json["state"] = m_state;
 
-   QNetworkReply *reply = m_networkManager->post(request, QJsonDocument(json).toJson());
-   connect(reply, &QNetworkReply::finished, this, &OAuthManager::onAuthorizeReplyFinished);
+    QNetworkReply *reply = m_networkManager->post(request, QJsonDocument(json).toJson());
+    connect(reply, &QNetworkReply::finished, this, &OAuthManager::onAuthorizeReplyFinished);
 }
 
 void OAuthManager::cancelOAuthLogin()
@@ -186,92 +192,92 @@ void OAuthManager::handleCallbackUrl(const QString &url)
 
 void OAuthManager::onAuthorizeReplyFinished()
 {
-   QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
-   if (!reply) return;
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+    if (!reply) return;
 
-   if (reply->error() == QNetworkReply::NoError) {
-       QByteArray response = reply->readAll();
-       QJsonDocument doc = QJsonDocument::fromJson(response);
-       QJsonObject obj = doc.object();
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray response = reply->readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QJsonObject obj = doc.object();
 
-       QString oauthUrl = obj["url"].toString();
-       if (!oauthUrl.isEmpty()) {
-           QDesktopServices::openUrl(QUrl(oauthUrl));
-       } else {
-           setBusy(false);
-           emit oauthLoginFailed("OAuth URL not received from server");
-       }
-   } else {
-       setBusy(false);
-       QString errorString = reply->errorString();
-       QByteArray response = reply->readAll();
-       QJsonDocument doc = QJsonDocument::fromJson(response);
+        QString oauthUrl = obj["url"].toString();
+        if (!oauthUrl.isEmpty()) {
+            QDesktopServices::openUrl(QUrl(oauthUrl));
+        } else {
+            setBusy(false);
+            emit oauthLoginFailed("OAuth URL not received from server");
+        }
+    } else {
+        setBusy(false);
+        QString errorString = reply->errorString();
+        QByteArray response = reply->readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(response);
 
-       if (!doc.isNull()) {
-           QJsonObject obj = doc.object();
-           if (obj.contains("message")) {
-               errorString = obj["message"].toString();
-           }
-       }
+        if (!doc.isNull()) {
+            QJsonObject obj = doc.object();
+            if (obj.contains("message")) {
+                errorString = obj["message"].toString();
+            }
+        }
 
-       emit oauthLoginFailed(errorString);
-   }
+        emit oauthLoginFailed(errorString);
+    }
 
-   reply->deleteLater();
+    reply->deleteLater();
 }
 
 void OAuthManager::handleOAuthCallback(const QString &callbackUrl)
 {
-   QUrl url(m_serverUrl + QStringLiteral("/api/oauth/callback"));
-   QNetworkRequest request(url);
-   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QUrl url(m_serverUrl + QStringLiteral("/api/oauth/callback"));
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-   QJsonObject json;
-   json["url"] = callbackUrl;
-   json["codeVerifier"] = m_codeVerifier;
-   json["state"] = m_state;
+    QJsonObject json;
+    json["url"] = callbackUrl;
+    json["codeVerifier"] = m_codeVerifier;
+    json["state"] = m_state;
 
-   QNetworkReply *reply = m_networkManager->post(request, QJsonDocument(json).toJson());
-   connect(reply, &QNetworkReply::finished, this, &OAuthManager::onCallbackReplyFinished);
+    QNetworkReply *reply = m_networkManager->post(request, QJsonDocument(json).toJson());
+    connect(reply, &QNetworkReply::finished, this, &OAuthManager::onCallbackReplyFinished);
 }
 
 void OAuthManager::onCallbackReplyFinished()
 {
-   QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
-   if (!reply) return;
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+    if (!reply) return;
 
-   QString serverUrl = m_serverUrl;
-   resetOAuthState();
-   setBusy(false);
+    QString serverUrl = m_serverUrl;
+    resetOAuthState();
+    setBusy(false);
 
-   if (reply->error() == QNetworkReply::NoError) {
-       QByteArray response = reply->readAll();
-       QJsonDocument doc = QJsonDocument::fromJson(response);
-       QJsonObject obj = doc.object();
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray response = reply->readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QJsonObject obj = doc.object();
 
-       QString accessToken = obj["accessToken"].toString();
-       QString userEmail = obj["userEmail"].toString();
+        QString accessToken = obj["accessToken"].toString();
+        QString userEmail = obj["userEmail"].toString();
 
-       if (!accessToken.isEmpty()) {
-           m_authManager->setOAuthCredentials(serverUrl, accessToken, userEmail);
-           emit oauthLoginSucceeded();
-       } else {
-           emit oauthLoginFailed("No access token received from OAuth callback");
-       }
-   } else {
-       QString errorString = reply->errorString();
-       QByteArray response = reply->readAll();
-       QJsonDocument doc = QJsonDocument::fromJson(response);
+        if (!accessToken.isEmpty()) {
+            m_authManager->setOAuthCredentials(serverUrl, accessToken, userEmail);
+            emit oauthLoginSucceeded();
+        } else {
+            emit oauthLoginFailed("No access token received from OAuth callback");
+        }
+    } else {
+        QString errorString = reply->errorString();
+        QByteArray response = reply->readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(response);
 
-       if (!doc.isNull()) {
-           QJsonObject obj = doc.object();
-           if (obj.contains("message")) {
-               errorString = obj["message"].toString();
-           }
-       }
+        if (!doc.isNull()) {
+            QJsonObject obj = doc.object();
+            if (obj.contains("message")) {
+                errorString = obj["message"].toString();
+            }
+        }
 
-       emit oauthLoginFailed(errorString);
-   }
+        emit oauthLoginFailed(errorString);
+    }
 
-   reply->deleteLater();
+    reply->deleteLater();
 }

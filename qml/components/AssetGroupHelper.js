@@ -48,10 +48,12 @@ function computeDateRange(parsed) {
         var dd = d.getDate(), mm = d.getMonth() + 1, yyyy = d.getFullYear()
         return (dd < 10 ? "0" + dd : dd) + "." + (mm < 10 ? "0" + mm : mm) + "." + yyyy
     }
-    if (sorted[0].dateObj.getTime() === sorted[sorted.length - 1].dateObj.getTime()) {
-        return fmt(sorted[0].dateObj)
+    var first = sorted[0].dateObj
+    var last = sorted[sorted.length - 1].dateObj
+    if (first.getFullYear() === last.getFullYear() && first.getMonth() === last.getMonth() && first.getDate() === last.getDate()) {
+        return fmt(first)
     }
-    return fmt(sorted[0].dateObj) + " — " + fmt(sorted[sorted.length - 1].dateObj)
+    return fmt(first) + " - " + fmt(last)
 }
 
 function groupByMonthAndDate(parsed) {
@@ -59,8 +61,7 @@ function groupByMonthAndDate(parsed) {
     for (var g = 0; g < parsed.length; g++) {
         var asset = parsed[g], d = asset.dateObj
         var monthKey = d.getFullYear() + "-" + (d.getMonth() + 1)
-        var months = ["January", "February", "March", "April", "May", "June",
-                      "July", "August", "September", "October", "November", "December"]
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         var monthLabel = months[d.getMonth()] + " " + d.getFullYear()
         var dateKey = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
         var dd = d.getDate(), mm = d.getMonth() + 1, yyyy = d.getFullYear()

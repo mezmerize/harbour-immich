@@ -1,3 +1,5 @@
+%bcond_with harbour
+
 Name:       harbour-immich
 
 Summary:    Immich client for Sailfish OS
@@ -28,12 +30,21 @@ A native Immich client for Sailfish OS that allows you to browse, view, and mana
 
 %build
 
+%if %{with harbour}
+%qmake5 CONFIG+=harbour
+%else
 %qmake5
+%endif
 
 %make_build
 
 %install
 %qmake5_install
+
+%if %{with harbour}
+sed -i 's|Exec=harbour-immich %%u|Exec=harbour-immich|' %{buildroot}%{_datadir}/applications/%{name}.desktop
+sed -i '/^MimeType=/d' %{buildroot}%{_datadir}/applications/%{name}.desktop
+%endif
 
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \

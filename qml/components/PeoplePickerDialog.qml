@@ -43,13 +43,23 @@ Dialog {
        return set
    }
 
+   signal requestViewportCheck()
+   Timer {
+       id: viewportCheckTimer
+       interval: 50
+       onTriggered: peoplePickerDialog.requestViewportCheck()
+   }
+
    canAccept: true
+
+   Component.onCompleted: viewportCheckTimer.restart()
 
    onAccepted: {
        // selectedPeople is already updated during interaction
    }
 
    SilicaFlickable {
+       id: flickable
        anchors.fill: parent
        contentHeight: column.height
 
@@ -74,6 +84,7 @@ Dialog {
 
                onTextChanged: {
                    peoplePickerDialog.filterText = text
+                   viewportCheckTimer.restart()
                }
 
                EnterKey.iconSource: "image://theme/icon-m-enter-close"
@@ -88,10 +99,10 @@ Dialog {
 
                Label {
                    text: selectedPeople.length > 0
-                         //% "%1 selected"
-                         ? qsTrId("peoplePickerDialog.selected").arg(selectedPeople.length)
-                         //% "Tap to select people"
-                         : qsTrId("peoplePickerDialog.tapToSelect")
+                       //% "%1 selected"
+                       ? qsTrId("peoplePickerDialog.selected").arg(selectedPeople.length)
+                       //% "Tap to select people"
+                       : qsTrId("peoplePickerDialog.tapToSelect")
                    font.pixelSize: Theme.fontSizeExtraSmall
                    color: Theme.secondaryColor
                }
@@ -137,10 +148,33 @@ Dialog {
                    model: peoplePickerDialog.filteredModel
 
                    BackgroundItem {
+                       id: personDelegate
                        width: peopleGrid.itemSize
                        height: peopleGrid.itemSize + Theme.paddingMedium + Theme.fontSizeTiny
 
                        property bool isSelected: peoplePickerDialog.selectedSet[modelData.personId] === true
+                       property bool thumbnailTriggered: false
+
+                       function checkViewport() {
+                           if (thumbnailTriggered || !visible) return
+                           var mapped = mapToItem(flickable.contentItem, 0, 0)
+                           var itemY = mapped.y
+                           if (itemY + height > flickable.contentY - height && itemY < flickable.contentY + flickable.height + height) {
+                               thumbnailTriggered = true
+                           }
+                       }
+
+                       Connections {
+                           target: flickable
+                           onContentYChanged: personDelegate.checkViewport()
+                       }
+
+                       Connections {
+                           target: peoplePickerDialog
+                           onRequestViewportCheck: personDelegate.checkViewport()
+                       }
+
+                       onVisibleChanged: if (visible) checkViewport()
 
                        Column {
                            anchors.fill: parent
@@ -158,7 +192,7 @@ Dialog {
                                    id: personImage
                                    anchors.fill: parent
                                    anchors.margins: 2
-                                   source: modelData.thumbnailId ? "image://immich/person/" + modelData.thumbnailId : ""
+                                   source: personDelegate.thumbnailTriggered && modelData.thumbnailId ? "image://immich/person/" + modelData.thumbnailId : ""
                                    fillMode: Image.PreserveAspectCrop
                                    asynchronous: true
                                    layer.enabled: true
@@ -248,7 +282,10 @@ Dialog {
                    font.pixelSize: Theme.fontSizeSmall
                }
 
-               onClicked: expanded = !expanded
+               onClicked: {
+                   expanded = !expanded
+                   viewportCheckTimer.restart()
+               }
            }
 
            // Empty state when no people or search results

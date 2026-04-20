@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
    app->setOrganizationName("mezmerize");
    app->setApplicationName("harbour-immich");
 
+#ifndef HARBOUR_BUILD
    // Check for URL scheme activation argument (app.immich://oauth-callback?...)
    QString activationUrl;
    for (int i = 1; i < argc; ++i) {
@@ -53,6 +54,7 @@ int main(int argc, char *argv[])
            return 0;
        }
    }
+#endif
 
    LogManager *logManager = new LogManager(app);
    qInstallMessageHandler(LogManager::messageHandler);
@@ -75,6 +77,7 @@ int main(int argc, char *argv[])
    AuthManager *authManager = new AuthManager(secureStorage, app);
    OAuthManager *oauthManager = new OAuthManager(authManager, app);
 
+#ifndef HARBOUR_BUILD
    QLocalServer *localServer = new QLocalServer(app);
    QLocalServer::removeServer(serverName);
    if (!localServer->listen(serverName)) {
@@ -98,6 +101,7 @@ int main(int argc, char *argv[])
            oauthManager->handleCallbackUrl(activationUrl);
        });
    }
+#endif
    qmlRegisterType<TimelineModel>("harbour.immich.models", 1, 0, "TimelineModel");
    ImmichApi *immichApi = new ImmichApi(authManager, app);
    AlbumModel *albumModel = new AlbumModel(authManager, app);

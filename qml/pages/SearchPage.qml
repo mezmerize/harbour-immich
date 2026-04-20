@@ -115,10 +115,10 @@ Page {
        }
 
        // Place
-       if (stateData.index > 0 && stateData.value) {
+       if (stateData.index > 0) {
            params.state = stateData.value
        }
-       if (countryData.index > 0 && countryData.value) {
+       if (countryData.index > 0) {
            params.country = countryData.value
        }
        if (cityData.index > 0 && cityData.value) {
@@ -126,13 +126,13 @@ Page {
        }
 
        // Camera
-       if (cameraMakeData.index > 0 && cameraMakeData.value) {
+       if (cameraMakeData.index > 0) {
            params.make = cameraMakeData.value
        }
-       if (cameraModelData.index > 0 && cameraModelData.value) {
+       if (cameraModelData.index > 0) {
            params.model = cameraModelData.value
        }
-       if (lensModelData.index > 0 && lensModelData.value) {
+       if (lensModelData.index > 0) {
            params.lensModel = lensModelData.value
        }
 
