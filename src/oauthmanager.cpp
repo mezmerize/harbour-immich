@@ -130,8 +130,8 @@ void OAuthManager::onServerConfigReplyFinished()
     }
 
     reply->deleteLater();
-}
 #endif
+}
 
 void OAuthManager::startOAuthLogin(const QString &serverUrl)
 {
