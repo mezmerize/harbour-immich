@@ -58,93 +58,113 @@
         <translation>Před %1 roky</translation>
     </message>
     <message id="peoplePickerDialog.selectPeople">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="9"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="10"/>
         <source>Select People</source>
         <translation>Vybrat osoby</translation>
     </message>
     <message id="peoplePickerDialog.done">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="63"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="61"/>
         <source>Done</source>
         <translation>Hotovo</translation>
     </message>
     <message id="peoplePickerDialog.cancel">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="65"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="63"/>
         <source>Cancel</source>
         <translation>Storno</translation>
     </message>
     <message id="peoplePickerDialog.filterName">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="73"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="71"/>
         <source>Filter by name...</source>
         <translation>Filtrovat podle jména...</translation>
     </message>
     <message id="peoplePickerDialog.selected">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="92"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="91"/>
         <source>%1 selected</source>
         <translation>%1 vybráno</translation>
     </message>
     <message id="peoplePickerDialog.tapToSelect">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="94"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="93"/>
         <source>Tap to select people</source>
         <translation>Klepnutím vyberete osoby</translation>
     </message>
     <message id="peoplePickerDialog.clear">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="108"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="107"/>
         <source>Clear selection</source>
         <oldsource>Clear selection.</oldsource>
         <translation>Vymazat výběr</translation>
     </message>
     <message id="peoplePickerDialog.unknown">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="209"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="231"/>
         <source>Unknown</source>
         <translation>Neznámý</translation>
     </message>
     <message id="peoplePickerDialog.showLess">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="244"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="266"/>
         <source>Show less</source>
         <translation>Zobrazit méně</translation>
     </message>
     <message id="peoplePickerDialog.showMore">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="246"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="268"/>
         <source>Show more (%1 more)</source>
         <translation>Zobrazit více (dalších %1)</translation>
     </message>
     <message id="peoplePickerDialog.noPeople">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="260"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="285"/>
         <source>No people available</source>
         <translation>Žádné osoby</translation>
     </message>
     <message id="peoplePickerDialog.noMatches">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="262"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="287"/>
         <source>No matches found</source>
         <translation>Nenalezeny žádné shody</translation>
     </message>
     <message id="selectionActionBar.stack">
-        <location filename="../qml/components/SelectionActionBar.qml" line="208"/>
+        <location filename="../qml/components/SelectionActionBar.qml" line="359"/>
         <source>Stack</source>
         <translation>Seskupit</translation>
     </message>
     <message id="selectionActionBar.addToAlbum">
-        <location filename="../qml/components/SelectionActionBar.qml" line="189"/>
+        <location filename="../qml/components/SelectionActionBar.qml" line="340"/>
         <source>Add to album</source>
         <translation>Přidat do alba</translation>
     </message>
+    <message id="selectionActionBar.moveToArchive">
+        <location filename="../qml/components/SelectionActionBar.qml" line="302"/>
+        <source>Move to archive</source>
+        <translation>Přesunout do archivu</translation>
+    </message>
+    <message id="selectionActionBar.moveToLockedFolder">
+        <location filename="../qml/components/SelectionActionBar.qml" line="321"/>
+        <source>Move to locked folder</source>
+        <translation>Přesunout do uzamčené složky</translation>
+    </message>
+    <message id="selectionActionBar.removeFromArchive">
+        <location filename="../qml/components/SelectionActionBar.qml" line="378"/>
+        <source>Remove from archive</source>
+        <translation>Odebrat z archivu</translation>
+    </message>
+    <message id="selectionActionBar.removeFromLockedFolder">
+        <location filename="../qml/components/SelectionActionBar.qml" line="397"/>
+        <source>Remove from locked folder</source>
+        <translation>Odebrat z uzamčené složky</translation>
+    </message>
     <message id="selectionActionBar.clear">
-        <location filename="../qml/components/SelectionActionBar.qml" line="227"/>
+        <location filename="../qml/components/SelectionActionBar.qml" line="416"/>
         <source>Clear selection</source>
         <translation>Vymazat výběr</translation>
     </message>
     <message id="selectionActionBar.download">
-        <location filename="../qml/components/SelectionActionBar.qml" line="246"/>
+        <location filename="../qml/components/SelectionActionBar.qml" line="435"/>
         <source>Download</source>
         <translation>Stáhnout</translation>
     </message>
     <message id="selectionActionBar.delete">
-        <location filename="../qml/components/SelectionActionBar.qml" line="265"/>
+        <location filename="../qml/components/SelectionActionBar.qml" line="454"/>
         <source>Delete</source>
         <translation>Odstranit</translation>
     </message>
     <message id="selectionActionBar.selected">
-        <location filename="../qml/components/SelectionActionBar.qml" line="94"/>
+        <location filename="../qml/components/SelectionActionBar.qml" line="105"/>
         <source>%1 selected</source>
         <translation>%1 vybráno</translation>
     </message>
@@ -180,83 +200,95 @@
         <translation>Vše zazálohováno</translation>
     </message>
     <message id="albumDetailPage.refresh">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="183"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="92"/>
         <source>Refresh</source>
         <translation>Obnovit</translation>
     </message>
     <message id="albumDetailPage.information">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="192"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="101"/>
         <source>Information</source>
         <translation>Informace</translation>
     </message>
     <message id="albumDetailPage.share">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="202"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="111"/>
         <source>Share album</source>
         <translation>Sdílet album</translation>
     </message>
     <message id="albumDetailPage.asset">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="377"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="181"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="230"/>
         <source>1 asset</source>
         <translation>1 položka</translation>
     </message>
     <message id="albumDetailPage.showOldestFirst">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="214"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="123"/>
         <source>Show oldest first</source>
         <translation>Seřadit od nejstarších</translation>
     </message>
     <message id="albumDetailPage.showNewestFirst">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="216"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="125"/>
         <source>Show newest first</source>
         <translation>Seřadit od nejnovějších</translation>
     </message>
     <message id="albumDetailPage.assets">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="379"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="183"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="230"/>
         <source>%1 assets</source>
         <oldsource>%1 asset(s)</oldsource>
         <translation>%1 položek</translation>
     </message>
     <message id="albumDetailPage.noAssets">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="584"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="445"/>
         <source>No assets in this album</source>
         <translation>V tomto albu nejsou žádné položky</translation>
     </message>
     <message id="albumDetailPage.addedToFavorites">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="625"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="484"/>
         <source>Added to favorites</source>
         <translation>Přidáno mezi oblíbené</translation>
     </message>
     <message id="albumDetailPage.removedFromFavorites">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="627"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="486"/>
         <source>Removed from favorites</source>
         <translation>Odstraněno z oblíbených</translation>
     </message>
     <message id="albumDetailPage.deletedAsset">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="634"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="493"/>
         <source>Deleted asset</source>
         <translation>Položka vymazána</translation>
     </message>
     <message id="albumDetailPage.deletedAssets">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="636"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="495"/>
         <source>Deleted %1 assets</source>
         <translation>%1 položek vymazáno</translation>
     </message>
+    <message id="albumDetailPage.movedToArchive">
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="507"/>
+        <source>Moved to archive</source>
+        <translation>Přesunuto do archivu</translation>
+    </message>
+    <message id="albumDetailPage.movedToLockedFolder">
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="510"/>
+        <source>Moved to locked folder</source>
+        <translation>Přesunuto do uzamčené složky</translation>
+    </message>
     <message id="albumDetailPage.downloadingAsset">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="677"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="548"/>
         <source>Downloading asset...</source>
         <translation>Stahuji položku...</translation>
     </message>
     <message id="albumDetailPage.downloadingAssets">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="679"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="550"/>
         <source>Downloading %1 assets...</source>
         <translation>Stahuji %1 položek...</translation>
     </message>
     <message id="albumDetailPage.deletingAssets">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="685"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="556"/>
         <source>Deleting %1 assets</source>
         <translation>%1 položek bude vymazáno</translation>
     </message>
     <message id="albumDetailPage.deletingAsset">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="687"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="558"/>
         <source>Deleting asset</source>
         <translation>Položka bude vymazána</translation>
     </message>
@@ -450,40 +482,40 @@
         <translation>Žádná alba</translation>
     </message>
     <message id="albumsPage.sortAlbumName">
-        <location filename="../qml/pages/AlbumsPage.qml" line="260"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="266"/>
         <source>Album title</source>
         <oldsource>Album name</oldsource>
         <translation>Jméno alba</translation>
     </message>
     <message id="albumsPage.sortAssetCount">
-        <location filename="../qml/pages/AlbumsPage.qml" line="262"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="268"/>
         <source>Number of assets</source>
         <translation>Počet položek</translation>
     </message>
     <message id="albumsPage.sortUpdatedAt">
-        <location filename="../qml/pages/AlbumsPage.qml" line="264"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="270"/>
         <source>Last modified</source>
         <translation>Naposledy upraveno</translation>
     </message>
     <message id="albumsPage.sortCreatedAt">
-        <location filename="../qml/pages/AlbumsPage.qml" line="266"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="272"/>
         <source>Created date</source>
         <translation>Datum vytvoření</translation>
     </message>
     <message id="albumsPage.sortEndDate">
-        <location filename="../qml/pages/AlbumsPage.qml" line="256"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="262"/>
         <source>Most recent photo</source>
         <oldsource>Most recent</oldsource>
         <translation>Nejnovější</translation>
     </message>
     <message id="albumsPage.sortStartDate">
-        <location filename="../qml/pages/AlbumsPage.qml" line="258"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="264"/>
         <source>Oldest photo</source>
         <oldsource>Oldest</oldsource>
         <translation>Nejstarší</translation>
     </message>
     <message id="albumsPage.albums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="117"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="123"/>
         <source>Albums</source>
         <translation>Alba</translation>
     </message>
@@ -493,144 +525,149 @@
         <translation>Nastavení</translation>
     </message>
     <message id="albumsPage.search">
-        <location filename="../qml/pages/AlbumsPage.qml" line="95"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="101"/>
         <source>Search</source>
         <translation>Hledání</translation>
     </message>
     <message id="albumsPage.timeline">
-        <location filename="../qml/pages/AlbumsPage.qml" line="101"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="107"/>
         <source>Timeline</source>
         <translation>Časová osa</translation>
     </message>
     <message id="albumsPage.refresh">
-        <location filename="../qml/pages/AlbumsPage.qml" line="107"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="113"/>
         <source>Refresh</source>
         <translation>Obnovení</translation>
     </message>
     <message id="albumsPage.sortBy">
-        <location filename="../qml/pages/AlbumsPage.qml" line="251"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="257"/>
         <source>Sort by</source>
         <translation>Seřadit podle</translation>
     </message>
     <message id="albumsPage.filter">
-        <location filename="../qml/pages/AlbumsPage.qml" line="283"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="289"/>
         <source>Filter albums...</source>
         <translation>Filtrovat alba...</translation>
     </message>
     <message id="albumsPage.filterAll">
-        <location filename="../qml/pages/AlbumsPage.qml" line="137"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="143"/>
         <source>All</source>
         <translation>Vše</translation>
     </message>
+    <message id="albumsPage.library">
+        <location filename="../qml/pages/AlbumsPage.qml" line="95"/>
+        <source>Library</source>
+        <translation>Knihovna</translation>
+    </message>
     <message id="albumsPage.filterShared">
-        <location filename="../qml/pages/AlbumsPage.qml" line="139"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="145"/>
         <source>Shared</source>
         <translation>Sdílené</translation>
     </message>
     <message id="albumsPage.filterMyAlbums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="141"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="147"/>
         <source>My albums</source>
         <translation>Moje alba</translation>
     </message>
     <message id="albumsPage.asset">
-        <location filename="../qml/pages/AlbumsPage.qml" line="346"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="352"/>
         <source>1 asset</source>
         <translation>1 položka</translation>
     </message>
     <message id="albumsPage.assets">
-        <location filename="../qml/pages/AlbumsPage.qml" line="348"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="354"/>
         <source>%1 assets</source>
         <oldsource>%1 asset(s)</oldsource>
         <translation>%1 položek</translation>
     </message>
     <message id="albumsPage.owned">
-        <location filename="../qml/pages/AlbumsPage.qml" line="357"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="363"/>
         <source>Owned</source>
         <translation>Vlastněno</translation>
     </message>
     <message id="albumsPage.sharedBy">
-        <location filename="../qml/pages/AlbumsPage.qml" line="359"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="365"/>
         <source>Shared by %1</source>
         <translation>Sdíleno od %1</translation>
     </message>
     <message id="albumsPage.noAlbums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="394"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="400"/>
         <source>No albums</source>
         <translation>Žádná alba</translation>
     </message>
     <message id="albumsPage.noSharedAlbums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="396"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="402"/>
         <source>No shared albums</source>
         <translation>Žádná sdílená alba</translation>
     </message>
     <message id="albumsPage.noSharedWithMeAlbums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="398"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="404"/>
         <source>No albums shared with you</source>
         <translation>Žádná alba sdílená s vámi nejsou k dispozici</translation>
     </message>
     <message id="albumsPage.noMyAlbums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="400"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="406"/>
         <source>No personal albums</source>
         <translation>Žádná vlastní alba</translation>
     </message>
     <message id="albumsPage.noAllAlbumsHint">
-        <location filename="../qml/pages/AlbumsPage.qml" line="412"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="418"/>
         <source>Pull down to refresh or create albums in Immich</source>
         <translation>Potáhnutím obnovíte nebo vytvořte alba na Immichi</translation>
     </message>
     <message id="albumsPage.noSharedAlbumsHint">
-        <location filename="../qml/pages/AlbumsPage.qml" line="414"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="420"/>
         <source>Shared albums will appear here</source>
         <oldsource>Albums shared with you will appear here</oldsource>
         <translation>Sdílená alba se objeví zde</translation>
     </message>
     <message id="albumsPage.noSharedWithMeAlbumsHint">
-        <location filename="../qml/pages/AlbumsPage.qml" line="416"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="422"/>
         <source>Albums shared with you will appear here</source>
         <translation>Alba sdílená s vámi se objeví zde</translation>
     </message>
     <message id="albumsPage.noMyAlbumsHint">
-        <location filename="../qml/pages/AlbumsPage.qml" line="418"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="424"/>
         <source>Create an album in Immich to see it here</source>
         <translation>Vytvořte album na Immichi abyste jej viděli zde</translation>
     </message>
     <message id="assetDetailPage.downloading">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="331"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="332"/>
         <source>Downloading...</source>
         <translation>Stahuje se...</translation>
     </message>
     <message id="assetDetailPage.releaseToClose">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="110"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="111"/>
         <source>Release to close</source>
         <translation>Puštěním zavřete</translation>
     </message>
     <message id="assetDetailPage.dragToClose">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="112"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="113"/>
         <source>Drag to close</source>
         <translation>Tažením zavřete</translation>
     </message>
     <message id="assetDetailPage.failed">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="190"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="191"/>
         <source>Failed to load image</source>
         <translation>Chyba při stahování obrázku</translation>
     </message>
     <message id="assetDetailPage.removingFromAlbum">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="378"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="381"/>
         <source>Removing from album</source>
         <translation>Odstraňuje se z alba</translation>
     </message>
     <message id="assetDetailPage.addedAssetToFavorites">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="437"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="440"/>
         <source>Added asset to favorites</source>
         <translation>Položka přidána mezi oblíbené</translation>
     </message>
     <message id="assetDetailPage.removedAssetFromFavorites">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="439"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="442"/>
         <source>Removed asset from favorites</source>
         <translation>Položka odebrána z oblíbených</translation>
     </message>
     <message id="assetDetailPage.downloaded">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="445"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="448"/>
         <source>Downloaded to: %1</source>
         <oldsource>Downloaded: %1</oldsource>
         <translation>Staženo do: %1</translation>
@@ -1228,474 +1265,479 @@
         <translation>Vložte prosím platnou URL (např. http://192.168.1.100:2283)</translation>
     </message>
     <message id="settingsPage.search">
-        <location filename="../qml/pages/SettingsPage.qml" line="59"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="65"/>
         <source>Search</source>
         <translation>Hledání</translation>
     </message>
     <message id="settingsPage.albums">
-        <location filename="../qml/pages/SettingsPage.qml" line="65"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="71"/>
         <source>Albums</source>
         <translation>Alba</translation>
     </message>
     <message id="settingsPage.timeline">
-        <location filename="../qml/pages/SettingsPage.qml" line="71"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="77"/>
         <source>Timeline</source>
         <translation>Časová osa</translation>
     </message>
     <message id="settingsPage.settings">
-        <location filename="../qml/pages/SettingsPage.qml" line="83"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="89"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
     <message id="settingsPage.display">
-        <location filename="../qml/pages/SettingsPage.qml" line="88"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="94"/>
         <source>Display</source>
         <translation>Zobrazení</translation>
     </message>
     <message id="settingsPage.assetsPerRow">
-        <location filename="../qml/pages/SettingsPage.qml" line="94"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="100"/>
         <source>Assets per row (portrait)</source>
         <translation>Počet položek na řádku (portrét)</translation>
     </message>
     <message id="settingsPage.detailQuality">
-        <location filename="../qml/pages/SettingsPage.qml" line="109"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="115"/>
         <source>Detail viewer quality</source>
         <translation>Kvalita zobrazení detailu položky</translation>
     </message>
     <message id="settingsPage.detailQualityInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="111"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="117"/>
         <source>Controls image quality when viewing photos in full screen. Preview is faster and uses less data, Original shows the full resolution image.</source>
         <translation>Ovládá kvalitu obrázku při zobrazení v režimu celé obrazovky. Náhled je rychlejší a využívá méně dat, Originál zobrazuje obrázek v jeho úplné velikosti.</translation>
     </message>
     <message id="settingsPage.detailQualityPreview">
-        <location filename="../qml/pages/SettingsPage.qml" line="115"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="121"/>
         <source>Preview (faster, less data)</source>
         <translation>Náhled (rychlejší, méně dat)</translation>
     </message>
     <message id="settingsPage.detailQualityOriginal">
-        <location filename="../qml/pages/SettingsPage.qml" line="117"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="123"/>
         <source>Original (full resolution)</source>
         <translation>Originál (úplná velikost)</translation>
     </message>
     <message id="settingsPage.showMemoriesBar">
-        <location filename="../qml/pages/SettingsPage.qml" line="129"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="135"/>
         <source>Show memories bar</source>
         <translation>Zobrazit vzpomínky</translation>
     </message>
     <message id="settingsPage.showMemoriesBarInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="131"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="137"/>
         <source>Display memories at the top of the timeline.</source>
         <oldsource>Display memories at the top of the timeline</oldsource>
         <translation>Zobrazit vzpomínky na vrchní straně časové osy.</translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSize">
-        <location filename="../qml/pages/SettingsPage.qml" line="140"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="146"/>
         <source>Memories thumbnail size</source>
         <translation>Velikost náhledů vzpomínek</translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSizeInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="142"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="148"/>
         <source>Controls appearance size of the memory thumbnails on Timeline page.</source>
         <translation>Ovládá velikost zobrazených náhledů vzpomínek na stránce s časovou osou.</translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSizeSmall">
-        <location filename="../qml/pages/SettingsPage.qml" line="147"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="153"/>
         <source>Small</source>
         <translation>Malé</translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSizeMedium">
-        <location filename="../qml/pages/SettingsPage.qml" line="149"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="155"/>
         <source>Medium</source>
         <translation>Střední</translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSizeLarge">
-        <location filename="../qml/pages/SettingsPage.qml" line="151"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="157"/>
         <source>Large</source>
         <translation>Velké</translation>
     </message>
     <message id="settingsPage.scrollToTopPosition">
-        <location filename="../qml/pages/SettingsPage.qml" line="162"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="168"/>
         <source>Scroll to top button position</source>
         <translation>Pozice tlačítka pro vrácení na začátek</translation>
     </message>
     <message id="settingsPage.scrollToTopPositionInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="164"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="170"/>
         <source>Controls position of the scroll to top button on the pages which display assets in lists exceeding the viewport height.</source>
         <translation>Ovládá pozici tlačítka pro vrácení na začátek na stránkách které zobrazují položky v dlouhých seznamech jejichž velikost může být delší než výška displeje.</translation>
     </message>
     <message id="settingsPage.scrollToTopPositionLeft">
-        <location filename="../qml/pages/SettingsPage.qml" line="174"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="180"/>
         <source>Left</source>
         <translation>Vlevo</translation>
     </message>
     <message id="settingsPage.scrollToTopPositionCenter">
-        <location filename="../qml/pages/SettingsPage.qml" line="176"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="182"/>
         <source>Center</source>
         <translation>Uprostřed</translation>
     </message>
     <message id="settingsPage.scrollToTopPositionRight">
-        <location filename="../qml/pages/SettingsPage.qml" line="178"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="184"/>
         <source>Right</source>
         <translation>Vpravo</translation>
     </message>
     <message id="settingsPage.cover">
-        <location filename="../qml/pages/SettingsPage.qml" line="190"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="196"/>
         <source>Cover</source>
         <translation>Karta</translation>
     </message>
     <message id="settingsPage.coverShowAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="195"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="201"/>
         <source>Show assets on cover</source>
         <translation>Zobrazit snímky na kartě</translation>
     </message>
     <message id="settingsPage.coverShowAssetsInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="197"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="203"/>
         <source>Display photos on the app cover instead of the default icon.</source>
         <translation>Zobrazit snímky na kartě aplikace namísto základní ikony.</translation>
     </message>
     <message id="settingsPage.coverSlideshow">
-        <location filename="../qml/pages/SettingsPage.qml" line="206"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="212"/>
         <source>Slideshow rotation</source>
         <translation>Rotace snímků</translation>
     </message>
     <message id="settingsPage.coverSlideshowInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="208"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="214"/>
         <source>Continuously rotate through images while the cover is visible. When off, the image changes only once when the app is minimized.</source>
         <translation>Dokud je karta viditelná rotovat mezi snímky. Pokud je toto nastavení vypnuto, snímek se změní pouze při minimalizaci aplikace.</translation>
     </message>
     <message id="settingsPage.downloads">
-        <location filename="../qml/pages/SettingsPage.qml" line="218"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="224"/>
         <source>Downloads</source>
         <translation>Stahování</translation>
     </message>
     <message id="settingsPage.downloadsFolder">
-        <location filename="../qml/pages/SettingsPage.qml" line="223"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="229"/>
         <source>Downloads folder</source>
         <translation>Složka pro stažené soubory</translation>
     </message>
     <message id="settingsPage.downloadsFolderInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="226"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="232"/>
         <source>Folder where downloaded photos and videos will be saved.</source>
         <translation>Složka do které budou uloženy vaše stažené fotky a videa.</translation>
     </message>
     <message id="settingsPage.backup">
-        <location filename="../qml/pages/SettingsPage.qml" line="234"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="240"/>
         <source>Backup</source>
         <translation>Zálohování</translation>
     </message>
     <message id="settingsPage.backupEnabled">
-        <location filename="../qml/pages/SettingsPage.qml" line="239"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="245"/>
         <source>Automatic backup</source>
         <translation>Automatické zálohování</translation>
     </message>
     <message id="settingsPage.backupEnabledInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="241"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="247"/>
         <source>Automatically back up photos and videos from selected folders to your Immich server.</source>
         <translation>Automaticky zálohovat fotky a videa z vybraných složek na váš Immich server.</translation>
     </message>
     <message id="settingsPage.backingUp">
-        <location filename="../qml/pages/SettingsPage.qml" line="273"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="279"/>
         <source>Backing up: %1</source>
         <translation>Zálohuje se: %1</translation>
     </message>
     <message id="settingsPage.backupActive">
-        <location filename="../qml/pages/SettingsPage.qml" line="277"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="283"/>
         <source>Backup active</source>
         <translation>Zálohování zapnuto</translation>
     </message>
     <message id="settingsPage.backupIdle">
-        <location filename="../qml/pages/SettingsPage.qml" line="280"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="286"/>
         <source>Backup idle</source>
         <translation>Zálohování neaktivní</translation>
     </message>
     <message id="settingsPage.backedUpCount">
-        <location filename="../qml/pages/SettingsPage.qml" line="315"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="321"/>
         <source>Backed up: %1</source>
         <translation>Zálohuje se: %1</translation>
     </message>
     <message id="settingsPage.pendingCount">
-        <location filename="../qml/pages/SettingsPage.qml" line="322"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="328"/>
         <source>Pending: %1</source>
         <translation>Zbývající: %1</translation>
     </message>
     <message id="settingsPage.failedCount">
-        <location filename="../qml/pages/SettingsPage.qml" line="329"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="335"/>
         <source>Failed: %1</source>
         <translation>Chybné: %1</translation>
     </message>
     <message id="settingsPage.watchedFolders">
-        <location filename="../qml/pages/SettingsPage.qml" line="359"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="365"/>
         <source>Watched folders</source>
         <translation>Zálohované složky</translation>
     </message>
     <message id="settingsPage.foldersSelected">
-        <location filename="../qml/pages/SettingsPage.qml" line="366"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="372"/>
         <source>%1 folder(s) selected</source>
         <translation>Vybráno %1 složek</translation>
     </message>
     <message id="settingsPage.backupPhotosOnCellular">
-        <location filename="../qml/pages/SettingsPage.qml" line="377"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="383"/>
         <source>Back up photos on cellular</source>
         <translation>Zálohovat fotky přes mobilní data</translation>
     </message>
     <message id="settingsPage.backupPhotosOnCellularInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="379"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="385"/>
         <source>Allow photo backup when not connected to Wi-Fi.</source>
         <translation>Povolit zálohování fotek i pokud nejste připojení k síti Wi-Fi.</translation>
     </message>
     <message id="settingsPage.backupVideosOnCellular">
-        <location filename="../qml/pages/SettingsPage.qml" line="389"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="395"/>
         <source>Back up videos on cellular</source>
         <translation>Zálohovat videa přes mobilní data</translation>
     </message>
     <message id="settingsPage.backupVideosOnCellularInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="391"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="397"/>
         <source>Allow video backup when not connected to Wi-Fi.</source>
         <translation>Povolit zálohování videí i pokud nejste připojení k síti Wi-Fi.</translation>
     </message>
     <message id="settingsPage.backupOnlyWhileCharging">
-        <location filename="../qml/pages/SettingsPage.qml" line="401"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="407"/>
         <source>Only while charging</source>
         <translation>Pouze během nabíjení</translation>
     </message>
     <message id="settingsPage.backupOnlyWhileChargingInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="403"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="409"/>
         <source>Only run backup when the device is connected to a charger.</source>
         <translation>Zálohovat pouze pokud je zařízení připojené k nabíječce.</translation>
     </message>
     <message id="settingsPage.backupDeleteAfter">
-        <location filename="../qml/pages/SettingsPage.qml" line="413"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="419"/>
         <source>Delete after backup</source>
         <translation>Vymazat po zálohování</translation>
     </message>
     <message id="settingsPage.backupDeleteAfterInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="415"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="421"/>
         <source>Remove photos and videos from device after successful backup.</source>
         <translation>Odstranit fotky a videa ze zařízení po úspěšném zálohování.</translation>
     </message>
     <message id="settingsPage.backupAutoDisable">
-        <location filename="../qml/pages/SettingsPage.qml" line="425"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="431"/>
         <source>Auto-disable after backup</source>
         <translation>Automatické vypnutí po zálohování</translation>
     </message>
     <message id="settingsPage.backupAutoDisableInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="427"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="433"/>
         <source>Automatically turn off backup after all pending files have been uploaded.</source>
         <translation>Automaticky vypnout zálohování poté co jsou všechny zbývající soubory zazálohované.</translation>
     </message>
     <message id="settingsPage.backupScanInterval">
-        <location filename="../qml/pages/SettingsPage.qml" line="450"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="456"/>
         <source>Scan interval</source>
         <translation>Interval kontroly</translation>
     </message>
     <message id="settingsPage.backupScanIntervalInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="452"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="458"/>
         <source>How often to scan for new files. Shorter intervals may impact battery life.</source>
         <translation>Jak často vyhledávat nové soubory. Kratší intervaly mohou mít negativní vliv na baterii.</translation>
     </message>
     <message id="settingsPage.backupScanInterval30">
-        <location filename="../qml/pages/SettingsPage.qml" line="463"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="469"/>
         <source>30 minutes</source>
         <translation>30 minut</translation>
     </message>
     <message id="settingsPage.backupScanInterval60">
-        <location filename="../qml/pages/SettingsPage.qml" line="468"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="474"/>
         <source>1 hour</source>
         <translation>1 hodina</translation>
     </message>
     <message id="settingsPage.backupScanInterval240">
-        <location filename="../qml/pages/SettingsPage.qml" line="473"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="479"/>
         <source>4 hours</source>
         <translation>6 hodin {4 ?}</translation>
     </message>
     <message id="settingsPage.backupScanInterval480">
-        <location filename="../qml/pages/SettingsPage.qml" line="478"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="484"/>
         <source>8 hours</source>
         <translation>6 hodin {8 ?}</translation>
     </message>
     <message id="settingsPage.backupFromDate">
-        <location filename="../qml/pages/SettingsPage.qml" line="488"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="494"/>
         <source>Back up files from</source>
         <translation>Zálohovat od data</translation>
     </message>
     <message id="settingsPage.backupFromDateAll">
-        <location filename="../qml/pages/SettingsPage.qml" line="490"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="496"/>
         <source>All files (no limit)</source>
         <translation>Všechny (bez omezení)</translation>
     </message>
     <message id="settingsPage.backupFromDateInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="510"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="516"/>
         <source>Only back up files modified after this date. Long press to clear.</source>
         <translation>Zálohovat pouze soubory upravené po tomto datu. Dlouhým podržením vypnete.</translation>
     </message>
     <message id="settingsPage.backupSkipVerification">
-        <location filename="../qml/pages/SettingsPage.qml" line="437"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="443"/>
         <source>Skip asset verification</source>
         <translation>Přeskočit ověření položek</translation>
     </message>
+    <message id="settingsPage.library">
+        <location filename="../qml/pages/SettingsPage.qml" line="59"/>
+        <source>Library</source>
+        <translation>Knihovna</translation>
+    </message>
     <message id="settingsPage.backupSkipVerificationInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="439"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="445"/>
         <source>Skip checking of assets against the server before uploading. Faster scanning, but duplicates are only detected by the server during upload.</source>
         <translation>Přeskočit ověření položek oproti serveru před nahráváním. Skenování je rychlejší, ale dupllikáty jsou odhaleny až na serveru během nahrávání.</translation>
     </message>
     <message id="settingsPage.backupScanNow">
-        <location filename="../qml/pages/SettingsPage.qml" line="523"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="529"/>
         <source>Scan now</source>
         <translation>Hledat nové</translation>
     </message>
     <message id="settingsPage.backupRetryFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="529"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="535"/>
         <source>Retry failed</source>
         <translation>Znovu zkusit chybné</translation>
     </message>
     <message id="settingsPage.backupClearDb">
-        <location filename="../qml/pages/SettingsPage.qml" line="540"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="546"/>
         <source>Clear backup database</source>
         <translation>Vymazat databázi záloh</translation>
     </message>
     <message id="settingsPage.backupClearDbRemorse">
-        <location filename="../qml/pages/SettingsPage.qml" line="544"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="550"/>
         <source>Clearing backup database</source>
         <translation>Databáze záloh se maže</translation>
     </message>
     <message id="settingsPage.account">
-        <location filename="../qml/pages/SettingsPage.qml" line="552"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="558"/>
         <source>Account</source>
         <translation>Účet</translation>
     </message>
     <message id="settingsPage.server">
-        <location filename="../qml/pages/SettingsPage.qml" line="557"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="563"/>
         <source>Server</source>
         <translation>Server</translation>
     </message>
     <message id="settingsPage.email">
-        <location filename="../qml/pages/SettingsPage.qml" line="563"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="569"/>
         <source>Email</source>
         <translation>Email</translation>
     </message>
     <message id="settingsPage.logout">
-        <location filename="../qml/pages/SettingsPage.qml" line="570"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="576"/>
         <source>Logout</source>
         <translation>Odhlásit se</translation>
     </message>
     <message id="settingsPage.loggingOut">
-        <location filename="../qml/pages/SettingsPage.qml" line="573"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="579"/>
         <source>Logging out</source>
         <translation>Odhlašuje se</translation>
     </message>
     <message id="settingsPage.serverStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="583"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="589"/>
         <source>Server Statistics</source>
         <translation>Statistiky serveru</translation>
     </message>
     <message id="settingsPage.serverStatisticsNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="591"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="597"/>
         <source>Server statistics are not available at the moment.</source>
         <translation>Statistiky serveru momentálně nejsou dostupné.</translation>
     </message>
     <message id="settingsPage.totalPhotos">
-        <location filename="../qml/pages/SettingsPage.qml" line="601"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="607"/>
         <source>Total photos</source>
         <translation>Celkový počet fotek</translation>
     </message>
     <message id="settingsPage.totalPhotosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="603"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="609"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message id="settingsPage.totalVideos">
-        <location filename="../qml/pages/SettingsPage.qml" line="609"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="615"/>
         <source>Total videos</source>
         <translation>Celkový počet videí</translation>
     </message>
     <message id="settingsPage.totalVideosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="611"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="617"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message id="settingsPage.storageUsed">
-        <location filename="../qml/pages/SettingsPage.qml" line="617"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="623"/>
         <source>Storage used</source>
         <translation>Obsazené místo</translation>
     </message>
     <message id="settingsPage.storageUsedLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="619"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="625"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message id="settingsPage.totalAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="625"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="631"/>
         <source>Total assets</source>
         <translation>Celkový počet položek</translation>
     </message>
     <message id="settingsPage.totalAssetsLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="627"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="633"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message id="settingsPage.refreshStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="633"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="639"/>
         <source>Refresh statistics</source>
         <translation>Obnovit statistiky</translation>
     </message>
     <message id="settingsPage.aboutServer">
-        <location filename="../qml/pages/SettingsPage.qml" line="644"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="650"/>
         <source>About Server</source>
         <translation>O serveru</translation>
     </message>
     <message id="settingsPage.aboutServerNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="652"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="658"/>
         <source>Server version info is not available at the moment.</source>
         <translation>Informace o verzi serveru momentálně není dostupná.</translation>
     </message>
     <message id="settingsPage.serverVersion">
-        <location filename="../qml/pages/SettingsPage.qml" line="673"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="679"/>
         <source>Server version</source>
         <translation>Verze serveru</translation>
     </message>
     <message id="settingsPage.serverVersionLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="675"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="681"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message id="settingsPage.aboutApplication">
-        <location filename="../qml/pages/SettingsPage.qml" line="681"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="687"/>
         <source>About Application</source>
         <translation>O aplikaci</translation>
     </message>
     <message id="settingsPage.version">
-        <location filename="../qml/pages/SettingsPage.qml" line="686"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="692"/>
         <source>Version</source>
         <translation>Verze</translation>
     </message>
     <message id="settingsPage.loadedAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="692"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="698"/>
         <source>Loaded assets</source>
         <translation>Počet aktuálně načtených položek</translation>
     </message>
     <message id="settingsPage.viewLogs">
-        <location filename="../qml/pages/SettingsPage.qml" line="699"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="705"/>
         <source>View application logs</source>
         <translation>Zobrazit logy aplikace</translation>
     </message>
     <message id="settingsPage.applicationInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="711"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="717"/>
         <source>Harbour Immich - A native Immich client for Sailfish OS</source>
         <translation>Harbour Immich - Nativní Immich klient pro Sailfish OS</translation>
     </message>
     <message id="settingsPage.serverSyncResult">
-        <location filename="../qml/pages/SettingsPage.qml" line="731"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="737"/>
         <source>Verified: %1 already on server, %2 new to upload</source>
         <oldsource>Server check: %1 already backed up, %2 pending</oldsource>
         <translation>Ověřeno: %1 již na serveru, %2 zbývajících</translation>
     </message>
     <message id="settingsPage.dbCleared">
-        <location filename="../qml/pages/SettingsPage.qml" line="735"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="741"/>
         <source>Backup database cleared</source>
         <translation>Databáze záloh byla vymazána</translation>
     </message>
     <message id="settingsPage.mediaTypesFetchFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="739"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="745"/>
         <source>Could not fetch supported media types from server. Backup disabled.</source>
         <translation>Nebylo možno získat podporované formáty medií ze serveru. Zálohování bylo vypnuto.</translation>
     </message>
@@ -2059,132 +2101,147 @@
         <translation>Storno</translation>
     </message>
     <message id="timelinePage.settings">
-        <location filename="../qml/pages/TimelinePage.qml" line="88"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="101"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
+    <message id="timelinePage.library">
+        <location filename="../qml/pages/TimelinePage.qml" line="107"/>
+        <source>Library</source>
+        <translation>Knihovna</translation>
+    </message>
     <message id="timelinePage.search">
-        <location filename="../qml/pages/TimelinePage.qml" line="94"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="113"/>
         <source>Search</source>
         <translation>Hledání</translation>
     </message>
     <message id="timelinePage.albums">
-        <location filename="../qml/pages/TimelinePage.qml" line="100"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="119"/>
         <source>Albums</source>
         <translation>Alba</translation>
     </message>
     <message id="timelinePage.upload">
-        <location filename="../qml/pages/TimelinePage.qml" line="106"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="125"/>
         <source>Upload</source>
         <translation>Nahrát</translation>
     </message>
     <message id="timelinePage.refresh">
-        <location filename="../qml/pages/TimelinePage.qml" line="112"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="131"/>
         <source>Refresh</source>
         <translation>Obnovení</translation>
     </message>
     <message id="timelinePage.timeline">
-        <location filename="../qml/pages/TimelinePage.qml" line="127"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="146"/>
         <source>Timeline</source>
         <translation>Časová osa</translation>
     </message>
     <message id="timelinePage.loading">
-        <location filename="../qml/pages/TimelinePage.qml" line="230"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="249"/>
         <source>Loading timeline...</source>
         <translation>Načítá se časová osa...</translation>
     </message>
     <message id="timelinePage.noFavoritesLabel">
-        <location filename="../qml/pages/TimelinePage.qml" line="260"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="279"/>
         <source>No favorites yet</source>
         <translation>Žádné oblíbené</translation>
     </message>
     <message id="timelinePage.noAssetsLabel">
-        <location filename="../qml/pages/TimelinePage.qml" line="262"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="281"/>
         <source>No assets yet</source>
         <translation>Žádné položky</translation>
     </message>
     <message id="timelinePage.noFavoritesInfo">
-        <location filename="../qml/pages/TimelinePage.qml" line="274"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="293"/>
         <source>Long-press an asset and add it to favorites to see it here</source>
         <translation>Dlouhým podržením položky ji lze přidat mezi oblíbené</translation>
     </message>
     <message id="timelinePage.noAssetsInfo">
-        <location filename="../qml/pages/TimelinePage.qml" line="276"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="295"/>
         <source>Upload or import assets in Immich to start building your timeline</source>
         <translation>Nahrajte nebo naimportujte položky na Immich abyste začali tvořit vaši časovou osu</translation>
     </message>
     <message id="timelinePage.downloadingAsset">
-        <location filename="../qml/pages/TimelinePage.qml" line="333"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="353"/>
         <source>Downloading asset...</source>
         <translation>Stahuje se položka...</translation>
     </message>
     <message id="timelinePage.downloadingAssets">
-        <location filename="../qml/pages/TimelinePage.qml" line="335"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="355"/>
         <source>Downloading %1 assets...</source>
         <translation>Stahuje se %1 položek...</translation>
     </message>
     <message id="timelinePage.deletingAsset">
-        <location filename="../qml/pages/TimelinePage.qml" line="341"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="361"/>
         <source>Deleting asset</source>
         <translation>Položka bude vymazána</translation>
     </message>
     <message id="timelinePage.deletingAssets">
-        <location filename="../qml/pages/TimelinePage.qml" line="343"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="363"/>
         <source>Deleting %1 assets</source>
         <translation>%1 položek bude vymazáno</translation>
     </message>
     <message id="timelinePage.deletedAsset">
-        <location filename="../qml/pages/TimelinePage.qml" line="566"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="611"/>
         <source>Deleted asset</source>
         <translation>Položka vymazána</translation>
     </message>
     <message id="timelinePage.deletedAssets">
-        <location filename="../qml/pages/TimelinePage.qml" line="568"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="613"/>
         <source>Deleted %1 assets</source>
         <translation>%1 položek vymazáno</translation>
     </message>
     <message id="timelinePage.addedAssetToFavorites">
-        <location filename="../qml/pages/TimelinePage.qml" line="583"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="628"/>
         <source>Added asset to favorites</source>
         <translation>Položka přidána mezi oblíbené</translation>
     </message>
     <message id="timelinePage.addedAssetsToFavorites">
-        <location filename="../qml/pages/TimelinePage.qml" line="585"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="630"/>
         <source>Added %1 assets to favorites</source>
         <translation>Přidáno %1 položek mezi oblíbené</translation>
     </message>
     <message id="timelinePage.removedAssetFromFavorites">
-        <location filename="../qml/pages/TimelinePage.qml" line="587"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="632"/>
         <source>Removed asset from favorites</source>
         <translation>Položka odebrána z oblíbených</translation>
     </message>
     <message id="timelinePage.removedAssetsFromFavorites">
-        <location filename="../qml/pages/TimelinePage.qml" line="589"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="634"/>
         <source>Removed %1 assets from favorites</source>
         <translation>%1 položek odebráno z oblíbených</translation>
     </message>
     <message id="timelinePage.stackCreated">
-        <location filename="../qml/pages/TimelinePage.qml" line="604"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="649"/>
         <source>Stack created</source>
         <translation>Seskupení vytvořeno</translation>
     </message>
     <message id="timelinePage.stackDeleted">
-        <location filename="../qml/pages/TimelinePage.qml" line="609"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="654"/>
         <source>Stack removed</source>
         <translation>Seskupení odstraněno</translation>
     </message>
+    <message id="timelinePage.movedToArchive">
+        <location filename="../qml/pages/TimelinePage.qml" line="660"/>
+        <source>Moved to archive</source>
+        <translation>Přesunuto do archivu</translation>
+    </message>
+    <message id="timelinePage.movedToLockedFolder">
+        <location filename="../qml/pages/TimelinePage.qml" line="663"/>
+        <source>Moved to locked folder</source>
+        <translation>Přesunout do uzamčené složky</translation>
+    </message>
     <message id="timelinePage.downloaded">
-        <location filename="../qml/pages/TimelinePage.qml" line="572"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="617"/>
         <source>Downloaded to: %1</source>
         <translation>Staženo do: %1</translation>
     </message>
     <message id="timelinePage.addedToAlbum">
-        <location filename="../qml/pages/TimelinePage.qml" line="577"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="622"/>
         <source>Added asset(s) to album</source>
         <translation>Přidáno do alba</translation>
     </message>
     <message id="timelinePage.createdAlbum">
-        <location filename="../qml/pages/TimelinePage.qml" line="593"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="638"/>
         <source>Created album: %1</source>
         <translation>Vytvořeno album: %1</translation>
     </message>
@@ -2279,12 +2336,12 @@
         <translation>Nenalezeny žádné předchozí logy</translation>
     </message>
     <message id="timelineBucketDelegate.item">
-        <location filename="../qml/components/TimelineBucketDelegate.qml" line="148"/>
+        <location filename="../qml/components/TimelineBucketDelegate.qml" line="149"/>
         <source>1 item</source>
         <translation>1 položka</translation>
     </message>
     <message id="timelineBucketDelegate.items">
-        <location filename="../qml/components/TimelineBucketDelegate.qml" line="150"/>
+        <location filename="../qml/components/TimelineBucketDelegate.qml" line="151"/>
         <source>%1 items</source>
         <translation>%1 položek</translation>
     </message>
@@ -2478,6 +2535,171 @@
         <source>Current selection:</source>
         <oldsource>Current selection: </oldsource>
         <translation>Aktuální výběr:</translation>
+    </message>
+    <message id="archivedPage.refresh">
+        <location filename="../qml/pages/ArchivedPage.qml" line="44"/>
+        <source>Refresh</source>
+        <translation>Obnovit</translation>
+    </message>
+    <message id="archivedPage.archived">
+        <location filename="../qml/pages/ArchivedPage.qml" line="54"/>
+        <source>Archived</source>
+        <translation>Archiv</translation>
+    </message>
+    <message id="archivedPage.noAssets">
+        <location filename="../qml/pages/ArchivedPage.qml" line="114"/>
+        <source>No archived assets</source>
+        <translation>Žádné archivované položky</translation>
+    </message>
+    <message id="archivedPage.deletingAssets">
+        <location filename="../qml/pages/ArchivedPage.qml" line="153"/>
+        <source>Deleting %1 assets</source>
+        <translation>%1 položek bude vymazáno</translation>
+    </message>
+    <message id="archivedPage.deletingAsset">
+        <location filename="../qml/pages/ArchivedPage.qml" line="155"/>
+        <source>Deleting asset</source>
+        <translation>Položka bude vymazána</translation>
+    </message>
+    <message id="archivedPage.removedFromArchive">
+        <location filename="../qml/pages/ArchivedPage.qml" line="203"/>
+        <source>Removed from archive</source>
+        <translation>Odebráno z archivu</translation>
+    </message>
+    <message id="libraryPage.settings">
+        <location filename="../qml/pages/LibraryPage.qml" line="14"/>
+        <source>Settings</source>
+        <translation>Nastavení</translation>
+    </message>
+    <message id="libraryPage.search">
+        <location filename="../qml/pages/LibraryPage.qml" line="20"/>
+        <source>Search</source>
+        <translation>Hledání</translation>
+    </message>
+    <message id="libraryPage.albums">
+        <location filename="../qml/pages/LibraryPage.qml" line="26"/>
+        <source>Albums</source>
+        <translation>Alba</translation>
+    </message>
+    <message id="libraryPage.timeline">
+        <location filename="../qml/pages/LibraryPage.qml" line="32"/>
+        <source>Timeline</source>
+        <translation>Časová osa</translation>
+    </message>
+    <message id="libraryPage.library">
+        <location filename="../qml/pages/LibraryPage.qml" line="43"/>
+        <source>Library</source>
+        <translation>Knihovna</translation>
+    </message>
+    <message id="libraryPage.archived">
+        <location filename="../qml/pages/LibraryPage.qml" line="56"/>
+        <source>Archived</source>
+        <translation>Archiv</translation>
+    </message>
+    <message id="libraryPage.sharedLinks">
+        <location filename="../qml/pages/LibraryPage.qml" line="58"/>
+        <source>Shared Links</source>
+        <translation>Sdílené odkazy</translation>
+    </message>
+    <message id="libraryPage.trash">
+        <location filename="../qml/pages/LibraryPage.qml" line="60"/>
+        <source>Trash</source>
+        <translation>Koš</translation>
+    </message>
+    <message id="libraryPage.people">
+        <location filename="../qml/pages/LibraryPage.qml" line="62"/>
+        <source>People</source>
+        <translation>Osoby</translation>
+    </message>
+    <message id="libraryPage.places">
+        <location filename="../qml/pages/LibraryPage.qml" line="64"/>
+        <source>Places</source>
+        <translation>Místa</translation>
+    </message>
+    <message id="libraryPage.onThisDevice">
+        <location filename="../qml/pages/LibraryPage.qml" line="66"/>
+        <source>On This Device</source>
+        <translation>Na tomto zařízení</translation>
+    </message>
+    <message id="libraryPage.folders">
+        <location filename="../qml/pages/LibraryPage.qml" line="68"/>
+        <source>Folders</source>
+        <translation>Složky</translation>
+    </message>
+    <message id="libraryPage.lockedFolder">
+        <location filename="../qml/pages/LibraryPage.qml" line="70"/>
+        <source>Locked Folder</source>
+        <translation>Uzamčená složka</translation>
+    </message>
+    <message id="libraryPage.partners">
+        <location filename="../qml/pages/LibraryPage.qml" line="72"/>
+        <source>Partners</source>
+        <translation>Partneři</translation>
+    </message>
+    <message id="trashPage.refresh">
+        <location filename="../qml/pages/TrashPage.qml" line="44"/>
+        <source>Refresh</source>
+        <translation>Obnovit</translation>
+    </message>
+    <message id="trashPage.restoreAll">
+        <location filename="../qml/pages/TrashPage.qml" line="50"/>
+        <source>Restore all</source>
+        <translation>Obnovit vše</translation>
+    </message>
+    <message id="trashPage.restoringAll">
+        <location filename="../qml/pages/TrashPage.qml" line="55"/>
+        <source>Restoring all items from trash</source>
+        <translation>Všechny položky v koši budou obnoveny</translation>
+    </message>
+    <message id="trashPage.emptyTrash">
+        <location filename="../qml/pages/TrashPage.qml" line="63"/>
+        <source>Empty trash</source>
+        <translation>Vysypat koš</translation>
+    </message>
+    <message id="trashPage.emptyingTrash">
+        <location filename="../qml/pages/TrashPage.qml" line="68"/>
+        <source>Permanently deleting all trashed items</source>
+        <translation>Všechny soubory v koši budou trvale smazány</translation>
+    </message>
+    <message id="trashPage.trash">
+        <location filename="../qml/pages/TrashPage.qml" line="80"/>
+        <source>Trash</source>
+        <translation>Koš</translation>
+    </message>
+    <message id="trashPage.autoDeleteInfo">
+        <location filename="../qml/pages/TrashPage.qml" line="114"/>
+        <source>Trashed items will be permanently deleted after 30 days</source>
+        <translation>Položky v koši budou trvale smazány po 30 dnech</translation>
+    </message>
+    <message id="trashPage.noAssets">
+        <location filename="../qml/pages/TrashPage.qml" line="187"/>
+        <source>Trash is empty</source>
+        <translation>Koš je prázdný</translation>
+    </message>
+    <message id="trashPage.deletingAssets">
+        <location filename="../qml/pages/TrashPage.qml" line="206"/>
+        <source>Deleting %1 assets</source>
+        <translation>%1 položek bude vymazáno</translation>
+    </message>
+    <message id="trashPage.deletingAsset">
+        <location filename="../qml/pages/TrashPage.qml" line="208"/>
+        <source>Deleting asset</source>
+        <translation>Položka bude vymazána</translation>
+    </message>
+    <message id="trashPage.restored">
+        <location filename="../qml/pages/TrashPage.qml" line="248"/>
+        <source>Restored from trash</source>
+        <translation>Obnoveno z koše</translation>
+    </message>
+    <message id="trashPage.emptied">
+        <location filename="../qml/pages/TrashPage.qml" line="254"/>
+        <source>Trash emptied</source>
+        <translation>Koš vysypán</translation>
+    </message>
+    <message id="trashPage.allRestored">
+        <location filename="../qml/pages/TrashPage.qml" line="259"/>
+        <source>All items restored</source>
+        <translation>Všechny položky obnoveny</translation>
     </message>
 </context>
 </TS>
