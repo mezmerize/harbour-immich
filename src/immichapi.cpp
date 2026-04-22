@@ -980,31 +980,6 @@ void ImmichApi::setVideoSource(QObject *videoItem, const QString &assetId)
     player->setMedia(QMediaContent(request));
 }
 
-void ImmichApi::checkExistingAssets(const QStringList &deviceAssetIds)
-{
-    qInfo() << "ImmichApi: Checking" << deviceAssetIds.size() << "assets against server";
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/assets/exist"));
-    QNetworkRequest request = createAuthenticatedRequest(url);
-
-    QJsonObject json;
-    json["deviceAssetIds"] = toJsonStringArray(deviceAssetIds);
-    json["deviceId"] = QStringLiteral("harbour-immich");
-
-    QJsonDocument doc(json);
-    QNetworkReply *reply = m_networkManager->post(request, doc.toJson());
-    connectReply(reply, [this](const QByteArray &response) {
-        QJsonDocument doc = QJsonDocument::fromJson(response);
-        QJsonObject obj = doc.object();
-        QJsonArray existingArray = obj["existingIds"].toArray();
-        QStringList existingIds;
-        for (const QJsonValue &val : existingArray) {
-            existingIds.append(val.toString());
-        }
-        qInfo() << "ImmichApi: Server reports" << existingIds.size() << "existing assets";
-        emit existingAssetsChecked(existingIds);
-    });
-}
-
 void ImmichApi::bulkUploadCheck(const QJsonArray &assets)
 {
     qInfo() << "ImmichApi: Bulk upload check for" << assets.size() << "assets";
@@ -1071,5 +1046,63 @@ void ImmichApi::deleteStack(const QString &stackId)
     connectReply(reply, [this, savedStackId](const QByteArray &) {
         qInfo() << "ImmichApi: Stack deleted:" << savedStackId;
         emit stackDeleted(savedStackId);
+    });
+}
+
+void ImmichApi::changeAssetVisibility(const QStringList &assetIds, const QString &visibility)
+{
+    qInfo() << "ImmichApi: Changing visibility to" << visibility << "for" << assetIds.size() << "assets";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/assets"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    json["ids"] = toJsonStringArray(assetIds);
+    json["visibility"] = visibility;
+    QJsonDocument doc(json);
+
+    QNetworkReply *reply = m_networkManager->put(request, doc.toJson());
+    QStringList savedIds = assetIds;
+    QString savedVisibility = visibility;
+    connectReply(reply, [this, savedIds, savedVisibility](const QByteArray &) {
+        emit assetVisibilityChanged(savedIds, savedVisibility);
+    });
+}
+
+void ImmichApi::restoreFromTrash(const QStringList &assetIds)
+{
+    qInfo() << "ImmichApi: Restoring" << assetIds.size() << "assets from trash";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/trash/restore/assets"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    json["ids"] = toJsonStringArray(assetIds);
+    QJsonDocument doc(json);
+
+    QNetworkReply *reply = m_networkManager->post(request, doc.toJson());
+    QStringList savedIds = assetIds;
+    connectReply(reply, [this, savedIds](const QByteArray &) {
+        emit trashRestored(savedIds);
+    });
+}
+
+void ImmichApi::emptyTrash()
+{
+    qInfo() << "ImmichApi: Emptying trash";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/trash/empty"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->post(request, QByteArray());
+    connectReply(reply, [this](const QByteArray &) {
+        emit trashEmptied();
+    });
+}
+
+void ImmichApi::restoreAllTrash()
+{
+    qInfo() << "ImmichApi: Restoring all trash";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/trash/restore"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->post(request, QByteArray());
+    connectReply(reply, [this](const QByteArray &) {
+        emit allTrashRestored();
     });
 }

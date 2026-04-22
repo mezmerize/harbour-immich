@@ -22,6 +22,7 @@ Page {
     property string thumbhash: ""
     property string currentThumbhash: assetInfo && assetInfo.thumbhash ? assetInfo.thumbhash : thumbhash
     property int pendingNavigationIndex: -1
+    property bool isLockedAsset: false
 
     // Zoom + pan state
     property real imageScale: 1.0
@@ -310,7 +311,7 @@ Page {
                 anchors.centerIn: parent
                 width: parent.width
 
-                property int buttonCount: albumId ? 6 : 5
+                property int buttonCount: isLockedAsset ? 3 : (albumId ? 6 : 5)
 
                 IconButton {
                     width: parent.width / actionRow.buttonCount
@@ -335,6 +336,7 @@ Page {
                 IconButton {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-share"
+                    visible: !isLockedAsset
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("SharePage.qml"), {
                             shareType: "INDIVIDUAL",
@@ -356,6 +358,7 @@ Page {
                 IconButton {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-whereami"
+                    visible: !isLockedAsset
                     onClicked: {
                         var assetDate = ""
                         if (assetInfo) {

@@ -365,6 +365,16 @@ Page {
                     timelineModel.clearSelection()
             })
         }
+        onMoveToArchive: {
+            var selectedIds = timelineModel.getSelectedAssetIds()
+            immichApi.changeAssetVisibility(selectedIds, "archive")
+            timelineModel.clearSelection()
+        }
+        onMoveToLockedFolder: {
+            var selectedIds = timelineModel.getSelectedAssetIds()
+            immichApi.changeAssetVisibility(selectedIds, "locked")
+            timelineModel.clearSelection()
+        }
     }
 
     ScrollToTopButton {
@@ -589,6 +599,12 @@ Page {
             timelineModel.setLoading(false)
             notification.showError(error)
         }
+        onTrashRestored: {
+            page.refresh()
+        }
+        onAllTrashRestored: {
+            page.refresh()
+        }
         onAssetsDeleted: {
             notification.show(assetIds.length === 1
                 //% "Deleted asset"
@@ -636,6 +652,16 @@ Page {
         onStackDeleted: {
             //% "Stack removed"
             notification.show(qsTrId("timelinePage.stackDeleted"))
+            page.refresh()
+        }
+        onAssetVisibilityChanged: {
+            if (visibility === "archive") {
+                //% "Moved to archive"
+                notification.show(qsTrId("timelinePage.movedToArchive"))
+            } else if (visibility === "locked") {
+                //% "Moved to locked folder"
+                notification.show(qsTrId("timelinePage.movedToLockedFolder"))
+            }
             page.refresh()
         }
     }

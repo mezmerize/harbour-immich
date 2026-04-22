@@ -46,11 +46,14 @@ INSTALLS += icons
 DISTFILES += qml/harbour-immich.qml \
     qml/components/AssetGridItem.qml \
     qml/components/AssetGroupHelper.js \
+    qml/components/EmptyState.qml \
+    qml/components/FilterHelper.js \
     qml/components/GroupedAssetGrid.qml \
     qml/components/HeroImageRotator.qml \
     qml/components/DismissDragBackdrop.qml \
     qml/components/DownloadFolderDialog.qml \
     qml/components/FilterablePickerDialog.qml \
+    qml/components/LoadingIndicator.qml \
     qml/components/MemoriesBar.qml \
     qml/components/NotificationBanner.qml \
     qml/components/PeoplePickerDialog.qml \
@@ -76,6 +79,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/LoginPage.qml \
     qml/pages/AlbumsPage.qml \
     qml/pages/AlbumDetailPage.qml \
+    qml/pages/ArchivedPage.qml \
     qml/pages/LibraryPage.qml \
     qml/pages/SearchPage.qml \
     qml/pages/SettingsPage.qml \
@@ -83,11 +87,10 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/ShareResultPage.qml \
     qml/pages/StackDetailPage.qml \
     qml/pages/TimelinePage.qml \
+    qml/pages/TrashPage.qml \
     qml/pages/UploadPage.qml \
     qml/pages/VideoPlayerPage.qml \
     icons/cover-icon.png \
-    rpm/harbour-immich.changes.in \
-    rpm/harbour-immich.changes.run.in \
     rpm/harbour-immich.spec \
     translations/*.ts \
     harbour-immich.desktop

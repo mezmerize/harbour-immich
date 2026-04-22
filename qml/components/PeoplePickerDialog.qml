@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtGraphicalEffects 1.0
+import "FilterHelper.js" as FilterHelper
 
 Dialog {
    id: peoplePickerDialog
@@ -18,21 +19,7 @@ Dialog {
    property bool expanded: false
 
    // Filtered model
-   property var filteredModel: {
-       if (!filterText || filterText.length === 0) {
-           return model
-       }
-       var lowerFilter = filterText.toLowerCase()
-       var result = []
-       for (var i = 0; i < model.length; i++) {
-           var item = model[i]
-           var name = item.name || ""
-           if (name.toLowerCase().indexOf(lowerFilter) !== -1) {
-               result.push(item)
-           }
-       }
-       return result
-   }
+   property var filteredModel: FilterHelper.filterByField(model, filterText, "name")
 
    // Internal selection state
    property var selectedSet: {
@@ -44,6 +31,7 @@ Dialog {
    }
 
    signal requestViewportCheck()
+
    Timer {
        id: viewportCheckTimer
        interval: 50

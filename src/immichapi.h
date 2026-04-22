@@ -51,13 +51,14 @@ public:
     Q_INVOKABLE void fetchTimelineBucket(const QString &context, const QString &timeBucket, const QVariantMap &params);
     Q_INVOKABLE QString serverUrl() const;
     Q_INVOKABLE void setVideoSource(QObject *videoItem, const QString &assetId);
-    Q_INVOKABLE void checkExistingAssets(const QStringList &deviceAssetIds);
     Q_INVOKABLE void bulkUploadCheck(const QJsonArray &assets);
     Q_INVOKABLE void getStack(const QString &stackId);
     Q_INVOKABLE void createStack(const QStringList &assetIds);
     Q_INVOKABLE void deleteStack(const QString &stackId);
-
-    // Shared upload multipart builder
+    Q_INVOKABLE void changeAssetVisibility(const QStringList &assetIds, const QString &visibility);
+    Q_INVOKABLE void restoreFromTrash(const QStringList &assetIds);
+    Q_INVOKABLE void emptyTrash();
+    Q_INVOKABLE void restoreAllTrash();
     static QHttpMultiPart* buildUploadMultiPart(QFile *file, const QFileInfo &fileInfo);
 
 signals:
@@ -90,12 +91,15 @@ signals:
     void timelineBucketsReceived(const QString &context, const QJsonArray &buckets);
     void timelineBucketReceived(const QString &context, const QString &timeBucket, const QJsonObject &bucketData);
     void errorOccurred(const QString &error);
-    void existingAssetsChecked(const QStringList &existingIds);
     void bulkUploadCheckCompleted(const QJsonArray &results);
     void stackReceived(const QString &stackId, const QJsonArray &assets);
     void stackCreated(const QString &stackId);
     void stackDeleted(const QString &stackId);
     void authenticationRequired();
+    void assetVisibilityChanged(const QStringList &assetIds, const QString &visibility);
+    void trashRestored(const QStringList &assetIds);
+    void trashEmptied();
+    void allTrashRestored();
 
 private slots:
     void onSearchByParametersReplyFinished();
