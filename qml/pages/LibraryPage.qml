@@ -52,6 +52,8 @@ Page {
 
                 Repeater {
                     model: [
+                        //% "Favorites"
+                        { title: qsTrId("libraryPage.favorites"), icon: "image://theme/icon-m-favorite", page: "FavoritesPage.qml" },
                         //% "Archived"
                         { title: qsTrId("libraryPage.archived"), icon: "image://theme/icon-m-file-archive-folder", page: "ArchivedPage.qml" },
                         //% "Shared Links"

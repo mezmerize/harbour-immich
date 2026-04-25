@@ -70,6 +70,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/AssetInfoPage.qml \
     qml/pages/EditAlbumDialog.qml \
     qml/pages/EditAssetDialog.qml \
+    qml/pages/FavoritesPage.qml \
     qml/pages/FolderPickerPage.qml \
     qml/pages/LogViewerPage.qml \
     qml/pages/MemoryDetailPage.qml \

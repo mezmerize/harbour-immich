@@ -176,6 +176,8 @@ Page {
     LoadingIndicator {
         anchors.fill: bucketsList
         loading: trashModel.loading && trashModel.bucketCount === 0
+        //% "Loading trashed assets..."
+        message: qsTrId("trashPage.loading")
     }
 
     // Empty state

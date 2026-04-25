@@ -8,23 +8,20 @@ Page {
 
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
     property real cellSize: width / assetsPerRow
-    property string activeFilter: "all"
     property string sortOrder: "desc"
-    property string contextId: "archive"
-    property var queryParams: ({"visibility": "archive", "order": sortOrder})
+    property string contextId: "favorites"
+    property var queryParams: ({"isFavorite": "true", "withStacked": "true", "order": sortOrder})
     property var heroAssetIds: []
     property bool heroInitialized: false
 
     TimelineModel {
-        id: archiveModel
+        id: favoritesModel
     }
 
     function refresh() {
-        var params = {"visibility": "archive", "order": sortOrder}
-        if (activeFilter === "favorites") params["isFavorite"] = "true"
-        queryParams = params
-        archiveModel.clear()
-        archiveModel.setLoading(true)
+        queryParams = {"isFavorite": "true", "withStacked": "true", "order": sortOrder}
+        favoritesModel.clear()
+        favoritesModel.setLoading(true)
         heroInitialized = false
         immichApi.fetchTimelineBuckets(contextId, queryParams)
     }
@@ -32,10 +29,10 @@ Page {
     function updateHeroIds() {
         if (heroInitialized) return
         var ids = []
-        var bucketCount = archiveModel.getBucketCount()
+        var bucketCount = favoritesModel.getBucketCount()
         for (var b = 0; b < bucketCount && ids.length < 5; b++) {
-            if (!archiveModel.isBucketLoaded(b)) continue
-            var assets = archiveModel.getBucketAssets(b)
+            if (!favoritesModel.isBucketLoaded(b)) continue
+            var assets = favoritesModel.getBucketAssets(b)
             for (var a = 0; a < assets.length && ids.length < 5; a++) {
                 if (!assets[a].isVideo) ids.push(assets[a].id)
             }
@@ -62,15 +59,25 @@ Page {
         anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
         clip: true
         cacheBuffer: Math.max(height * 2, 2000)
-        model: archiveModel
+        model: favoritesModel
 
         PullDownMenu {
-            enabled: archiveModel.selectedCount === 0
-
             MenuItem {
                 //% "Refresh"
-                text: qsTrId("archivedPage.refresh")
+                text: qsTrId("favoritesPage.refresh")
                 onClicked: page.refresh()
+            }
+
+            MenuItem {
+                text: page.sortOrder === "desc"
+                    //% "Show oldest first"
+                    ? qsTrId("favoritesPage.showOldestFirst")
+                    //% "Show newest first"
+                    : qsTrId("favoritesPage.showNewestFirst")
+                onClicked: {
+                    page.sortOrder = page.sortOrder === "desc" ? "asc" : "desc"
+                    page.refresh()
+                }
             }
         }
 
@@ -97,8 +104,8 @@ Page {
 
                     Label {
                         width: parent.width
-                        //% "Archived"
-                        text: qsTrId("archivedPage.archived")
+                        //% "Favorites"
+                        text: qsTrId("favoritesPage.favorites")
                         font.pixelSize: Theme.fontSizeExtraLarge
                         font.bold: true
                         color: Theme.primaryColor
@@ -106,11 +113,11 @@ Page {
                     }
 
                     Label {
-                        text: archiveModel.totalCount === 1
+                        text: favoritesModel.totalCount === 1
                             //% "1 asset"
-                            ? qsTrId("archivedPage.asset")
+                            ? qsTrId("favoritesPage.asset")
                             //% "%1 assets"
-                            : qsTrId("archivedPage.assets").arg(archiveModel.totalCount)
+                            : qsTrId("favoritesPage.assets").arg(favoritesModel.totalCount)
                         font.pixelSize: Theme.fontSizeExtraSmall
                         color: Theme.secondaryHighlightColor
                     }
@@ -122,20 +129,7 @@ Page {
                 visible: heroAssetIds.length === 0
 
                 PageHeader {
-                    title: qsTrId("archivedPage.archived")
-                }
-            }
-
-            TimelineFilterBar {
-                activeFilter: page.activeFilter
-                sortOrder: page.sortOrder
-                onFilterActivated: {
-                    page.activeFilter = filter
-                    page.refresh()
-                }
-                onSortOrderToggled: {
-                    page.sortOrder = order
-                    page.refresh()
+                    title: qsTrId("favoritesPage.favorites")
                 }
             }
 
@@ -148,10 +142,10 @@ Page {
         delegate: TimelineBucketDelegate {
             width: bucketsList.width
             bucketIndex: index
-            bucketKey: archiveModel.getBucketTimeBucket(index)
+            bucketKey: favoritesModel.getBucketTimeBucket(index)
             cellSize: page.cellSize
             assetsPerRow: page.assetsPerRow
-            assetModel: archiveModel
+            assetModel: favoritesModel
 
             onAssetClicked: {
                 pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
@@ -180,9 +174,9 @@ Page {
             top: bucketsList.top
             topMargin: heroAssetIds.length > 0 ? page.height / 2 : 0
         }
-        loading: archiveModel.loading && archiveModel.bucketCount === 0
-        //% "Loading archived assets..."
-        message: qsTrId("archivedPage.loading")
+        loading: favoritesModel.loading && favoritesModel.bucketCount === 0
+        //% "Loading favorites..."
+        message: qsTrId("favoritesPage.loading")
     }
 
     // Empty state
@@ -194,10 +188,10 @@ Page {
             top: bucketsList.top
             topMargin: heroAssetIds.length > 0 ? page.height / 2 : 0
         }
-        visible: !archiveModel.loading && archiveModel.totalCount === 0
-        iconSource: "image://theme/icon-m-file-archive-folder"
-        //% "No archived assets"
-        message: qsTrId("archivedPage.noAssets")
+        visible: !favoritesModel.loading && favoritesModel.totalCount === 0
+        iconSource: "image://theme/icon-m-favorite"
+        //% "No favorite assets"
+        message: qsTrId("favoritesPage.noAssets")
     }
 
     SelectionActionBar {
@@ -205,47 +199,44 @@ Page {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        visible: archiveModel.selectedCount > 0
-        selectedCount: archiveModel.selectedCount
-        allAreFavorites: archiveModel.selectedCount > 0 && archiveModel.areAllSelectedFavorites()
+        visible: favoritesModel.selectedCount > 0
+        selectedCount: favoritesModel.selectedCount
+        allAreFavorites: true
+        hasSelectedOtherOwner: favoritesModel.selectedCount > 0 && favoritesModel.hasSelectedOtherOwner()
         showArchive: true
-        isArchivePage: true
 
-        onAddToFavorites: immichApi.toggleFavorite(archiveModel.getSelectedAssetIds(), true)
-        onRemoveFromFavorites: immichApi.toggleFavorite(archiveModel.getSelectedAssetIds(), false)
+        onRemoveFromFavorites: immichApi.toggleFavorite(favoritesModel.getSelectedAssetIds(), false)
         onShare: {
             pageStack.push(Qt.resolvedUrl("SharePage.qml"), {
-                assetIds: archiveModel.getSelectedAssetIds(),
+                assetIds: favoritesModel.getSelectedAssetIds(),
                 shareType: "INDIVIDUAL"
             })
         }
         onAddToAlbum: {
             pageStack.push(Qt.resolvedUrl("AlbumPickerPage.qml"), {
-                assetIds: archiveModel.getSelectedAssetIds()
+                assetIds: favoritesModel.getSelectedAssetIds()
             })
         }
-        onClearSelection: archiveModel.clearSelection()
+        onClearSelection: favoritesModel.clearSelection()
         onDownload: {
-            var ids = archiveModel.getSelectedAssetIds()
+            var ids = favoritesModel.getSelectedAssetIds()
             for (var i = 0; i < ids.length; i++) {
                 immichApi.downloadAsset(ids[i])
             }
-            archiveModel.clearSelection()
+            favoritesModel.clearSelection()
         }
         onDeleteSelected: {
-            var selectedIds = archiveModel.getSelectedAssetIds()
+            var selectedIds = favoritesModel.getSelectedAssetIds()
             deleteRemorse.execute(selectedIds.length > 1
                 //% "Deleting %1 assets"
-                ? qsTrId("archivedPage.deletingAssets").arg(selectedIds.length)
+                ? qsTrId("favoritesPage.deletingAssets").arg(selectedIds.length)
                 //% "Deleting asset"
-                : qsTrId("archivedPage.deletingAsset"), function() {
+                : qsTrId("favoritesPage.deletingAsset"), function() {
                     immichApi.deleteAssets(selectedIds)
-                    archiveModel.clearSelection()
+                    favoritesModel.clearSelection()
             })
         }
-        onRemoveFromArchive: {
-            immichApi.changeAssetVisibility(archiveModel.getSelectedAssetIds(), "timeline")
-        }
+        onMoveToArchive: immichApi.changeAssetVisibility(favoritesModel.getSelectedAssetIds(), "archive")
     }
 
     RemorsePopup {
@@ -260,11 +251,12 @@ Page {
 
     NotificationBanner {
         id: notification
-        anchors.bottom: archiveModel.selectedCount > 0 ? selectionActionBar.top : parent.bottom
+        anchors.bottom: favoritesModel.selectedCount > 0 ? selectionActionBar.top : parent.bottom
     }
 
     Component.onCompleted: {
-        archiveModel.setServerUrl(authManager.serverUrl)
+        favoritesModel.setServerUrl(authManager.serverUrl)
+        favoritesModel.setUserId(authManager.userId)
         page.refresh()
     }
 
@@ -272,28 +264,21 @@ Page {
         target: immichApi
         onTimelineBucketsReceived: {
             if (context !== page.contextId) return
-            archiveModel.loadBuckets(buckets)
-            archiveModel.setLoading(false)
-            if (archiveModel.getBucketCount() > 0) {
-                archiveModel.requestBucketLoad(0)
+            favoritesModel.loadBuckets(buckets)
+            favoritesModel.setLoading(false)
+            if (favoritesModel.getBucketCount() > 0) {
+                favoritesModel.requestBucketLoad(0)
             }
         }
         onTimelineBucketReceived: {
             if (context !== page.contextId) return
-            archiveModel.loadBucketAssets(timeBucket, bucketData)
+            favoritesModel.loadBucketAssets(timeBucket, bucketData)
             page.updateHeroIds()
         }
         onFavoritesToggled: {
-            archiveModel.updateFavorites(assetIds, isFavorite)
-            archiveModel.clearSelection()
-        }
-        onAssetVisibilityChanged: {
-            if (visibility === "timeline") {
-                //% "Removed from archive"
-                notification.show(qsTrId("archivedPage.removedFromArchive"))
-                page.refresh()
-            }
-            archiveModel.clearSelection()
+            favoritesModel.updateFavorites(assetIds, isFavorite)
+            favoritesModel.clearSelection()
+            if (!isFavorite) page.refresh()
         }
         onAssetsDeleted: {
             page.refresh()
@@ -301,7 +286,7 @@ Page {
     }
 
     Connections {
-        target: archiveModel
+        target: favoritesModel
         onBucketLoadRequested: {
             immichApi.fetchTimelineBucket(page.contextId, timeBucket, page.queryParams)
         }

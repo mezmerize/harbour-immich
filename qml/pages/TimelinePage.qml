@@ -224,81 +224,39 @@ Page {
         VerticalScrollDecorator {}
     }
 
-    Item {
-        anchors.left: bucketsList.left
-        anchors.right: bucketsList.right
-        anchors.top: bucketsList.top
-        anchors.topMargin: bucketsList.headerItem ? bucketsList.headerItem.height : 0
-        anchors.bottom: bucketsList.bottom
-        visible: timelineModel.loading && bucketCount === 0
-
-        Column {
-            width: parent.width
-            spacing: Theme.paddingMedium
-            anchors.centerIn: parent
-
-            BusyIndicator {
-                anchors.horizontalCenter: parent.horizontalCenter
-                size: BusyIndicatorSize.Large
-                running: parent.parent.visible
-            }
-
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                //% "Loading timeline..."
-                text: qsTrId("timelinePage.loading")
-                color: Theme.secondaryHighlightColor
-            }
+    LoadingIndicator {
+        anchors {
+            left: bucketsList.left
+            right: bucketsList.right
+            top: bucketsList.top
+            topMargin: bucketsList.headerItem ? bucketsList.headerItem.height : 0
+            bottom: bucketsList.bottom
         }
+        loading: timelineModel.loading && bucketCount === 0
+        //% "Loading timeline..."
+        message: qsTrId("timelinePage.loading")
     }
 
-    Item {
-        anchors.left: bucketsList.left
-        anchors.right: bucketsList.right
-        anchors.top: bucketsList.top
-        anchors.topMargin: bucketsList.headerItem ? bucketsList.headerItem.height : 0
-        anchors.bottom: bucketsList.bottom
-        visible: !timelineModel.loading && bucketCount === 0
-
-        Column {
-            width: parent.width
-            spacing: Theme.paddingLarge
-            anchors.centerIn: parent
-
-            Icon {
-                anchors.horizontalCenter: parent.horizontalCenter
-                source: page.activeFilter === "favorites" ? "image://theme/icon-m-favorite" : "image://theme/icon-m-image"
-                color: Theme.highlightColor
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                text: page.activeFilter === "favorites"
-                    //% "No favorites yet"
-                    ? qsTrId("timelinePage.noFavoritesLabel")
-                    //% "No assets yet"
-                    : qsTrId("timelinePage.noAssetsLabel")
-                font.pixelSize: Theme.fontSizeLarge
-                color: Theme.highlightColor
-                wrapMode: Text.WordWrap
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                text: page.activeFilter === "favorites"
-                    //% "Long-press an asset and add it to favorites to see it here"
-                    ? qsTrId("timelinePage.noFavoritesInfo")
-                    //% "Upload or import assets in Immich to start building your timeline"
-                    : qsTrId("timelinePage.noAssetsInfo")
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.secondaryHighlightColor
-                wrapMode: Text.WordWrap
-                horizontalAlignment: Text.AlignHCenter
-            }
+    EmptyState {
+        anchors {
+            left: bucketsList.left
+            right: bucketsList.right
+            top: bucketsList.top
+            topMargin: bucketsList.headerItem ? bucketsList.headerItem.height : 0
+            bottom: bucketsList.bottom
         }
+        visible: !timelineModel.loading && bucketCount === 0
+        iconSource: page.activeFilter === "favorites" ? "image://theme/icon-m-favorite" : "image://theme/icon-m-image"
+        message: page.activeFilter === "favorites"
+            //% "No favorites yet"
+            ? qsTrId("timelinePage.noFavoritesLabel")
+            //% "No assets yet"
+            : qsTrId("timelinePage.noAssetsLabel")
+        hint: page.activeFilter === "favorites"
+            //% "Long-press an asset and add it to favorites to see it here"
+            ? qsTrId("timelinePage.noFavoritesInfo")
+            //% "Upload or import assets in Immich to start building your timeline"
+            : qsTrId("timelinePage.noAssetsInfo")
     }
 
     // Selection action bar

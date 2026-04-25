@@ -248,19 +248,6 @@ Page {
                 }
             }
 
-            // Loading indicator
-            Item {
-                width: parent.width
-                height: page.loading ? Theme.itemSizeLarge : 0
-                visible: page.loading
-
-                BusyIndicator {
-                    anchors.centerIn: parent
-                    running: page.loading
-                    size: BusyIndicatorSize.Large
-                }
-            }
-
             // Grouped assets
             Repeater {
                 model: groupedAssets
@@ -424,29 +411,19 @@ Page {
         VerticalScrollDecorator {}
     }
 
+    // Loading
+    LoadingIndicator {
+        anchors.fill: flickable
+        loading: page.loading && allAssets.length === 0
+    }
+
     // Empty state
-    Item {
+    EmptyState {
         anchors.fill: flickable
         visible: !page.loading && allAssets.length === 0
-
-        Column {
-            anchors.centerIn: parent
-            spacing: Theme.paddingLarge
-
-            Icon {
-                anchors.horizontalCenter: parent.horizontalCenter
-                source: "image://theme/icon-m-folder"
-                color: Theme.highlightColor
-            }
-
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                //% "No assets in this album"
-                text: qsTrId("albumDetailPage.noAssets")
-                color: Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeMedium
-            }
-        }
+        iconSource: "image://theme/icon-m-folder"
+        //% "No assets in this album"
+        message: qsTrId("albumDetailPage.noAssets")
     }
 
     Component.onCompleted: {
