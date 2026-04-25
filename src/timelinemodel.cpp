@@ -131,6 +131,7 @@ void TimelineModel::loadBucketAssets(const QString &timeBucket, const QJsonObjec
     QJsonArray thumbhashArr = bucketData[QStringLiteral("thumbhash")].toArray();
     QJsonArray durationArr = bucketData[QStringLiteral("duration")].toArray();
     QJsonArray stackArr = bucketData[QStringLiteral("stack")].toArray();
+    QJsonArray ownerIdArr = bucketData[QStringLiteral("ownerId")].toArray();
 
     int count = ids.size();
     bucket.assets.reserve(count);
@@ -143,6 +144,7 @@ void TimelineModel::loadBucketAssets(const QString &timeBucket, const QJsonObjec
         asset.createdAt = QDateTime::fromString(fileCreatedAtArr[i].toString(), Qt::ISODate);
         asset.thumbhash = i < thumbhashArr.size() ? thumbhashArr[i].toString() : QString();
         asset.duration = i < durationArr.size() ? durationArr[i].toString() : QString();
+        asset.ownerId = i < ownerIdArr.size() ? ownerIdArr[i].toString() : QString();
 
         // Parse stack info: null means not a stack, array has id + assetCount
         if (i < stackArr.size() && stackArr[i].isArray()) {
@@ -290,6 +292,7 @@ QVariantList TimelineModel::getBucketAssets(int bucketIndex) const
         assetMap[QStringLiteral("duration")] = asset.duration;
         assetMap[QStringLiteral("stackId")] = asset.stackId;
         assetMap[QStringLiteral("stackAssetCount")] = asset.stackAssetCount;
+        assetMap[QStringLiteral("ownerId")] = asset.ownerId;
         assetMap[QStringLiteral("assetIndex")] = assetIndex++;
         result.append(assetMap);
     }
@@ -490,6 +493,31 @@ bool TimelineModel::isAnySelectedAStack() const
     return false;
 }
 
+bool TimelineModel::hasSelectedOtherOwner() const
+{
+    if (m_userId.isEmpty() || m_selectedIds.isEmpty())
+        return false;
+
+    for (const QString &assetId : m_selectedIds) {
+        auto it = m_assetIndex.find(assetId);
+        if (it != m_assetIndex.end()) {
+            int bucketIdx = it.value().first;
+            int assetIdx = it.value().second;
+            if (bucketIdx < m_buckets.size() && assetIdx < m_buckets.at(bucketIdx).assets.size()) {
+                const QString &ownerId = m_buckets.at(bucketIdx).assets.at(assetIdx).ownerId;
+                if (!ownerId.isEmpty() && ownerId != m_userId)
+                    return true;
+            }
+        }
+    }
+    return false;
+}
+
+void TimelineModel::setUserId(const QString &userId)
+{
+    m_userId = userId;
+}
+
 QVariantMap TimelineModel::getAssetByAssetIndex(int assetIndex) const
 {
     QVariantMap result;
@@ -516,6 +544,7 @@ QVariantMap TimelineModel::getAssetByAssetIndex(int assetIndex) const
     result[QStringLiteral("stackId")] = asset.stackId;
     result[QStringLiteral("stackAssetCount")] = asset.stackAssetCount;
     result[QStringLiteral("thumbhash")] = asset.thumbhash;
+    result[QStringLiteral("ownerId")] = asset.ownerId;
     return result;
 }
 

@@ -231,6 +231,7 @@ Page {
 
     Component.onCompleted: {
         trashModel.setServerUrl(authManager.serverUrl)
+        trashModel.setUserId(authManager.userId)
         page.refresh()
     }
 

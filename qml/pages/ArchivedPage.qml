@@ -208,6 +208,7 @@ Page {
         visible: archiveModel.selectedCount > 0
         selectedCount: archiveModel.selectedCount
         allAreFavorites: archiveModel.selectedCount > 0 && archiveModel.areAllSelectedFavorites()
+        hasSelectedOtherOwner: archiveModel.selectedCount > 0 && archiveModel.hasSelectedOtherOwner()
         showArchive: true
         isArchivePage: true
 
@@ -265,6 +266,7 @@ Page {
 
     Component.onCompleted: {
         archiveModel.setServerUrl(authManager.serverUrl)
+        archiveModel.setUserId(authManager.userId)
         page.refresh()
     }
 

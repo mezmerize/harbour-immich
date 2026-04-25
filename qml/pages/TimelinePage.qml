@@ -269,7 +269,8 @@ Page {
         selectedCount: timelineModel.selectedCount
         allAreFavorites: timelineModel.selectedCount > 0 && timelineModel.areAllSelectedFavorites()
         hasAnyFavorites: timelineModel.selectedCount > 0 && timelineModel.areAnySelectedFavorites()
-        canStack: timelineModel.selectedCount > 1 && !timelineModel.isAnySelectedAStack()
+        canStack: timelineModel.selectedCount > 1 && !timelineModel.isAnySelectedAStack() && !timelineModel.hasSelectedOtherOwner()
+        hasSelectedOtherOwner: timelineModel.selectedCount > 0 && timelineModel.hasSelectedOtherOwner()
         showArchive: true
 
         onStackSelected: {

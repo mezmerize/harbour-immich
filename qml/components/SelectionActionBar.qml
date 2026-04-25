@@ -26,6 +26,7 @@ Item {
     property bool isArchivePage: false
     property bool isTrashPage: false
     property bool isLockedFolderPage: false
+    property bool hasSelectedOtherOwner: false
 
     signal addToFavorites()
     signal removeFromFavorites()
@@ -210,6 +211,51 @@ Item {
         }
     }
 
+    // Buttons - different owner mode
+    Row {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: contentHeight
+        anchors.leftMargin: Theme.horizontalPageMargin
+        anchors.rightMargin: Theme.horizontalPageMargin
+        z: 3
+        visible: hasSelectedOtherOwner
+
+        IconButton {
+            width: parent.width / 3
+            height: parent.height
+            icon.source: "image://theme/icon-m-share"
+
+            onClicked: {
+                actionFeedback.play()
+                share()
+            }
+        }
+
+        IconButton {
+            width: parent.width / 3
+            height: parent.height
+            icon.source: "image://theme/icon-m-add"
+
+            onClicked: {
+                actionFeedback.play()
+                addToAlbum()
+            }
+        }
+
+        IconButton {
+            width: parent.width / 3
+            height: parent.height
+            icon.source: "image://theme/icon-m-other?" + (activeMenuType === "more" ? Theme.highlightColor : Theme.primaryColor)
+
+            onClicked: {
+                actionFeedback.play()
+                showContextMenu("more")
+            }
+        }
+    }
+
     // Buttons - normal mode
     Row {
         anchors.top: parent.top
@@ -219,7 +265,7 @@ Item {
         anchors.leftMargin: Theme.horizontalPageMargin
         anchors.rightMargin: Theme.horizontalPageMargin
         z: 3
-        visible: !isTrashPage && !isLockedFolderPage
+        visible: !isTrashPage && !isLockedFolderPage && !hasSelectedOtherOwner
 
         IconButton {
             width: parent.width / 4
@@ -293,7 +339,7 @@ Item {
             BackgroundItem {
                 width: parent.width
                 height: Theme.itemSizeSmall
-                visible: activeMenuType === "add" && showArchive && !isArchivePage
+                visible: activeMenuType === "add" && showArchive && !isArchivePage && !hasSelectedOtherOwner
                 highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
 
                 Label {
@@ -312,7 +358,7 @@ Item {
             BackgroundItem {
                 width: parent.width
                 height: Theme.itemSizeSmall
-                visible: activeMenuType === "add" && !isLockedFolderPage && showArchive
+                visible: activeMenuType === "add" && !isLockedFolderPage && showArchive && !hasSelectedOtherOwner
                 highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
 
                 Label {
@@ -369,7 +415,7 @@ Item {
             BackgroundItem {
                 width: parent.width
                 height: Theme.itemSizeSmall
-                visible: activeMenuType === "more" && isArchivePage
+                visible: activeMenuType === "more" && isArchivePage && !hasSelectedOtherOwner
                 highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
 
                 Label {
@@ -388,7 +434,7 @@ Item {
             BackgroundItem {
                 width: parent.width
                 height: Theme.itemSizeSmall
-                visible: activeMenuType === "more" && isLockedFolderPage
+                visible: activeMenuType === "more" && isLockedFolderPage && !hasSelectedOtherOwner
                 highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
 
                 Label {
@@ -445,7 +491,7 @@ Item {
             BackgroundItem {
                 width: parent.width
                 height: Theme.itemSizeSmall
-                visible: activeMenuType === "more"
+                visible: activeMenuType === "more" && !hasSelectedOtherOwner
                 highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
 
                 Label {

@@ -10,6 +10,7 @@
 
 struct TimelineAsset {
    QString id;
+   QString ownerId;
    bool isFavorite;
    bool isVideo;
    QDateTime createdAt;
@@ -80,6 +81,8 @@ public:
    Q_INVOKABLE bool areAllSelectedFavorites() const;
    Q_INVOKABLE bool areAnySelectedFavorites() const;
    Q_INVOKABLE bool isAnySelectedAStack() const;
+   Q_INVOKABLE bool hasSelectedOtherOwner() const;
+   Q_INVOKABLE void setUserId(const QString &userId);
 
    // Asset updates
    Q_INVOKABLE void updateFavorites(const QStringList &assetIds, bool isFavorite);
@@ -127,6 +130,7 @@ private:
    int m_totalCount;
    bool m_loading;
    QString m_serverUrl;
+   QString m_userId;
    bool m_isFavoriteFilter;
 
    void rebuildAssetIndex();

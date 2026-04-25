@@ -133,8 +133,12 @@ int main(int argc, char *argv[])
 
    // Timeline model connections
    timelineModel->setServerUrl(authManager->serverUrl());
+   timelineModel->setUserId(authManager->userId());
    QObject::connect(authManager, &AuthManager::serverUrlChanged, [authManager, timelineModel]() {
        timelineModel->setServerUrl(authManager->serverUrl());
+   });
+   QObject::connect(authManager, &AuthManager::userIdChanged, [authManager, timelineModel]() {
+       timelineModel->setUserId(authManager->userId());
    });
    QObject::connect(immichApi, &ImmichApi::favoritesToggled, timelineModel, &TimelineModel::updateFavorites);
    QObject::connect(immichApi, &ImmichApi::assetsDeleted, timelineModel, &TimelineModel::removeAssets);

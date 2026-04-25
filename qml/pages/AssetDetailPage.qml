@@ -23,6 +23,7 @@ Page {
     property string currentThumbhash: assetInfo && assetInfo.thumbhash ? assetInfo.thumbhash : thumbhash
     property int pendingNavigationIndex: -1
     property bool isLockedAsset: false
+    property bool isOwnedByOther: assetInfo ? (assetInfo.ownerId !== undefined && assetInfo.ownerId !== authManager.userId) : false
 
     // Zoom + pan state
     property real imageScale: 1.0
@@ -94,6 +95,12 @@ Page {
         } else {
             console.warn("AssetDetailPage: Invalid asset data at index", assetIndex)
         }
+    }
+
+    function getButtonCount() {
+        if (isLockedAsset || isOwnedByOther) return 3
+        if (albumId) return 6
+        return 5
     }
 
     allowedOrientations: Orientation.All
@@ -311,11 +318,12 @@ Page {
                 anchors.centerIn: parent
                 width: parent.width
 
-                property int buttonCount: isLockedAsset ? 3 : (albumId ? 6 : 5)
+                property int buttonCount: page.getButtonCount()
 
                 IconButton {
                     width: parent.width / actionRow.buttonCount
                     icon.source: isFavorite ? "image://theme/icon-m-favorite-selected" : "image://theme/icon-m-favorite"
+                    visible: !isOwnedByOther
                     onClicked: {
                         hapticFeedback.play()
                         immichApi.toggleFavorite([assetId], !isFavorite)
@@ -358,7 +366,7 @@ Page {
                 IconButton {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-whereami"
-                    visible: !isLockedAsset
+                    visible: !isLockedAsset && !isOwnedByOther
                     onClicked: {
                         var assetDate = ""
                         if (assetInfo) {
