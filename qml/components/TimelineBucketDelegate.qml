@@ -105,6 +105,11 @@ Column {
                 bucketSubGroups = assetModel.getBucketSubGroups(bucketColumn.bucketIndex)
             }
         }
+        onBucketLoadsIdle: {
+            if (!bucketColumn.assetsLoaded && bucketColumn.autoLoadAssets) {
+                bucketColumn.requestAssets()
+            }
+        }
     }
 
     // Helper for height estimation (used by both placeholders)

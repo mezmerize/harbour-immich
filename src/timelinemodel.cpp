@@ -7,6 +7,7 @@
 
 namespace {
 const int MaxConcurrentBucketLoads = 2;
+const int MaxQueuedBucketLoads = 4;
 }
 
 TimelineModel::TimelineModel(QObject *parent)
@@ -201,6 +202,13 @@ void TimelineModel::requestBucketLoad(int bucketIndex)
     if (bucketIndex == m_pendingScrollBucketIndex) {
         m_bucketLoadQueue.prepend(bucketIndex);
     } else {
+        while (m_bucketLoadQueue.size() >= MaxQueuedBucketLoads) {
+            int droppedIndex = m_bucketLoadQueue.dequeue();
+            if (droppedIndex == m_pendingScrollBucketIndex) {
+                m_bucketLoadQueue.prepend(droppedIndex);
+                break;
+            }
+        }
         m_bucketLoadQueue.enqueue(bucketIndex);
     }
 }
@@ -236,6 +244,9 @@ void TimelineModel::processQueuedBucketLoads()
             continue;
 
         dispatchBucketLoad(bucketIndex);
+    }
+    if (m_activeBucketLoads == 0 && m_bucketLoadQueue.isEmpty()) {
+        emit bucketLoadsIdle();
     }
 }
 

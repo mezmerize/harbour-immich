@@ -116,6 +116,7 @@ signals:
    void bucketDataUpdated(int bucketIndex);
    void scrollToAssetRequested(const QString &assetId, int bucketIndex, int assetIndexInBucket);
    void bucketAssetsLoaded(int bucketIndex);
+   void bucketLoadsIdle();
 
 private:
    QList<TimelineBucket> m_buckets;
