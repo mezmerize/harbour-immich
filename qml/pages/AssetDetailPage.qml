@@ -337,7 +337,7 @@ Page {
                         hapticFeedback.play()
                         immichApi.downloadAsset(assetId)
                         //% "Downloading..."
-                        notification.show(qsTrId("assetDetailPage.downloading"))
+                        notification.show(qsTrId("notification.downloading"))
                     }
                 }
 
@@ -445,15 +445,15 @@ Page {
                 page.isFavorite = isFavorite
                 notification.show(isFavorite ?
                      //% "Added asset to favorites"
-                     qsTrId("assetDetailPage.addedAssetToFavorites")
+                     qsTrId("notification.addedAssetToFavorites")
                      //% "Removed asset from favorites"
-                     : qsTrId("assetDetailPage.removedAssetFromFavorites"))
+                     : qsTrId("notification.removedAssetFromFavorites"))
             }
         }
         onAssetDownloaded: {
             if (assetId === page.assetId) {
                 //% "Downloaded to: %1"
-                notification.show(qsTrId("assetDetailPage.downloaded").arg(filePath))
+                notification.show(qsTrId("notification.downloaded").arg(filePath))
             }
         }
         onAssetsRemovedFromAlbum: {

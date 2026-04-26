@@ -175,31 +175,31 @@ Page {
        PullDownMenu {
            MenuItem {
                //% "Settings"
-               text: qsTrId("searchPage.settings")
+               text: qsTrId("pullDownMenu.settings")
                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
            }
 
            MenuItem {
                //% "Albums"
-               text: qsTrId("searchPage.albums")
+               text: qsTrId("pullDownMenu.albums")
                onClicked: pageStack.push(Qt.resolvedUrl("AlbumsPage.qml"))
            }
 
            MenuItem {
                //% "Timeline"
-               text: qsTrId("searchPage.timeline")
+               text: qsTrId("pullDownMenu.timeline")
                onClicked: pageStack.replaceAbove(null, Qt.resolvedUrl("TimelinePage.qml"))
            }
 
            MenuItem {
                //% "Clear search filters"
-               text: qsTrId("searchPage.clearFilters")
+               text: qsTrId("pullDownMenu.clearFilters")
                onClicked: searchPage.clearFilters()
            }
 
            MenuItem {
                //% "Search assets"
-               text: qsTrId("searchPage.searchAction")
+               text: qsTrId("pullDownMenu.searchAction")
                onClicked: searchPage.performSearch()
            }
        }

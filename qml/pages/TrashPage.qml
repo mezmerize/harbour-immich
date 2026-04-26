@@ -41,18 +41,18 @@ Page {
 
             MenuItem {
                 //% "Refresh"
-                text: qsTrId("trashPage.refresh")
+                text: qsTrId("pullDownMenu.refresh")
                 onClicked: page.refresh()
             }
 
             MenuItem {
                 //% "Restore all"
-                text: qsTrId("trashPage.restoreAll")
+                text: qsTrId("pullDownMenu.restoreAll")
                 visible: trashModel.totalCount > 0
                 onClicked: {
                     remorse.execute(
                         //% "Restoring all items from trash"
-                        qsTrId("trashPage.restoringAll"), function() {
+                        qsTrId("notification.restoringAll"), function() {
                         immichApi.restoreAllTrash()
                     })
                 }
@@ -60,12 +60,12 @@ Page {
 
             MenuItem {
                 //% "Empty trash"
-                text: qsTrId("trashPage.emptyTrash")
+                text: qsTrId("pullDownMenu.emptyTrash")
                 visible: trashModel.totalCount > 0
                 onClicked: {
                     remorse.execute(
                         //% "Permanently deleting all trashed items"
-                        qsTrId("trashPage.emptyingTrash"), function() {
+                        qsTrId("notification.emptyingTrash"), function() {
                         immichApi.emptyTrash()
                     })
                 }
@@ -205,9 +205,9 @@ Page {
             var selectedIds = trashModel.getSelectedAssetIds()
             remorse.execute(selectedIds.length > 1
                 //% "Deleting %1 assets"
-                ? qsTrId("trashPage.deletingAssets").arg(selectedIds.length)
+                ? qsTrId("notification.deletingAssets").arg(selectedIds.length)
                 //% "Deleting asset"
-                : qsTrId("trashPage.deletingAsset"), function() {
+                : qsTrId("notification.deletingAsset"), function() {
                 immichApi.deleteAssets(selectedIds)
                 trashModel.clearSelection()
             })
@@ -248,22 +248,27 @@ Page {
         }
         onTrashRestored: {
             //% "Restored from trash"
-            notification.show(qsTrId("trashPage.restored"))
+            notification.show(qsTrId("notification.restored"))
             trashModel.clearSelection()
             page.refresh()
         }
         onTrashEmptied: {
             //% "Trash emptied"
-            notification.show(qsTrId("trashPage.emptied"))
+            notification.show(qsTrId("notification.emptied"))
             page.refresh()
         }
         onAllTrashRestored: {
             //% "All items restored"
-            notification.show(qsTrId("trashPage.allRestored"))
+            notification.show(qsTrId("notification.allRestored"))
             page.refresh()
         }
         onAssetsDeleted: {
             page.refresh()
+            notification.show(assetIds.length === 1
+                //% "Deleted asset"
+                ? qsTrId("notification.deletedAsset")
+                //% "Deleted %1 assets"
+                : qsTrId("notification.deletedAssets").arg(assetIds.length))
         }
     }
 

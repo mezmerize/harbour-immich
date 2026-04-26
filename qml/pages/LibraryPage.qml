@@ -11,25 +11,25 @@ Page {
         PullDownMenu {
             MenuItem {
                 //% "Settings"
-                text: qsTrId("libraryPage.settings")
+                text: qsTrId("pullDownMenu.settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
             }
 
             MenuItem {
                 //% "Search"
-                text: qsTrId("libraryPage.search")
+                text: qsTrId("pullDownMenu.search")
                 onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"))
             }
 
             MenuItem {
                 //% "Albums"
-                text: qsTrId("libraryPage.albums")
+                text: qsTrId("pullDownMenu.albums")
                 onClicked: pageStack.push(Qt.resolvedUrl("AlbumsPage.qml"))
             }
 
             MenuItem {
                 //% "Timeline"
-                text: qsTrId("libraryPage.timeline")
+                text: qsTrId("pullDownMenu.timeline")
                 onClicked: pageStack.replaceAbove(null, Qt.resolvedUrl("TimelinePage.qml"))
             }
         }

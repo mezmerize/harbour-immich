@@ -98,37 +98,37 @@ Page {
         PullDownMenu {
             MenuItem {
                 //% "Settings"
-                text: qsTrId("timelinePage.settings")
+                text: qsTrId("pullDownMenu.settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
             }
 
             MenuItem {
                 //% "Library"
-                text: qsTrId("timelinePage.library")
+                text: qsTrId("pullDownMenu.library")
                 onClicked: pageStack.push(Qt.resolvedUrl("LibraryPage.qml"))
             }
 
             MenuItem {
                 //% "Search"
-                text: qsTrId("timelinePage.search")
+                text: qsTrId("pullDownMenu.search")
                 onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"))
             }
 
             MenuItem {
                 //% "Albums"
-                text: qsTrId("timelinePage.albums")
+                text: qsTrId("pullDownMenu.albums")
                 onClicked: pageStack.push(Qt.resolvedUrl("AlbumsPage.qml"))
             }
 
             MenuItem {
                 //% "Upload"
-                text: qsTrId("timelinePage.upload")
+                text: qsTrId("pullDownMenu.upload")
                 onClicked: pageStack.push(Qt.resolvedUrl("UploadPage.qml"))
             }
 
             MenuItem {
                 //% "Refresh"
-                text: qsTrId("timelinePage.refresh")
+                text: qsTrId("pullDownMenu.refresh")
                 onClicked: {
                     page.refresh()
                     page.memoriesLoading = true
@@ -309,17 +309,17 @@ Page {
             timelineModel.clearSelection()
             notification.show(selectedIds.length === 1
                 //% "Downloading asset..."
-                ? qsTrId("timelinePage.downloadingAsset")
+                ? qsTrId("notification.downloadingAsset")
                 //% "Downloading %1 assets..."
-                : qsTrId("timelinePage.downloadingAssets").arg(selectedIds.length))
+                : qsTrId("notification.downloadingAssets").arg(selectedIds.length))
         }
         onDeleteSelected: {
             var selectedIds = timelineModel.getSelectedAssetIds()
             deleteRemorse.execute(selectedIds.length === 1
                 //% "Deleting asset"
-                ? qsTrId("timelinePage.deletingAsset")
+                ? qsTrId("notification.deletingAsset")
                 //% "Deleting %1 assets"
-                : qsTrId("timelinePage.deletingAssets").arg(selectedIds.length), function() {
+                : qsTrId("notification.deletingAssets").arg(selectedIds.length), function() {
                     immichApi.deleteAssets(selectedIds)
                     timelineModel.clearSelection()
             })
@@ -567,34 +567,34 @@ Page {
         onAssetsDeleted: {
             notification.show(assetIds.length === 1
                 //% "Deleted asset"
-                ? qsTrId("timelinePage.deletedAsset")
+                ? qsTrId("notification.deletedAsset")
                 //% "Deleted %1 assets"
-                : qsTrId("timelinePage.deletedAssets").arg(assetIds.length))
+                : qsTrId("notification.deletedAssets").arg(assetIds.length))
         }
         onAssetDownloaded: {
             //% "Downloaded to: %1"
-            notification.show(qsTrId("timelinePage.downloaded").arg(filePath))
+            notification.show(qsTrId("notification.downloaded").arg(filePath))
         }
         onAssetsAddedToAlbum: {
             timelineModel.clearSelection()
             //% "Added asset(s) to album"
-            notification.show(qsTrId("timelinePage.addedToAlbum"))
+            notification.show(qsTrId("notification.addedToAlbum"))
         }
         onFavoritesToggled: {
             timelineModel.clearSelection()
             notification.show(isFavorite ? (assetIds.length === 1
                 //% "Added asset to favorites"
-                ? qsTrId("timelinePage.addedAssetToFavorites")
+                ? qsTrId("notification.addedAssetToFavorites")
                 //% "Added %1 assets to favorites"
-                : qsTrId("timelinePage.addedAssetsToFavorites").arg(assetIds.length)) : (assetIds.length === 1
+                : qsTrId("notification.addedAssetsToFavorites").arg(assetIds.length)) : (assetIds.length === 1
                 //% "Removed asset from favorites"
-                ? qsTrId("timelinePage.removedAssetFromFavorites")
+                ? qsTrId("notification.removedAssetFromFavorites")
                 //% "Removed %1 assets from favorites"
-                : qsTrId("timelinePage.removedAssetsFromFavorites").arg(assetIds.length)))
+                : qsTrId("notification.removedAssetsFromFavorites").arg(assetIds.length)))
         }
         onAlbumCreated: {
             //% "Created album: %1"
-            notification.show(qsTrId("timelinePage.createdAlbum").arg(albumName))
+            notification.show(qsTrId("notification.createdAlbum").arg(albumName))
             // Refresh albums list
             immichApi.fetchAlbums()
         }
@@ -605,21 +605,21 @@ Page {
         }
         onStackCreated: {
             //% "Stack created"
-            notification.show(qsTrId("timelinePage.stackCreated"))
+            notification.show(qsTrId("notification.stackCreated"))
             page.refresh()
         }
         onStackDeleted: {
             //% "Stack removed"
-            notification.show(qsTrId("timelinePage.stackDeleted"))
+            notification.show(qsTrId("notification.stackDeleted"))
             page.refresh()
         }
         onAssetVisibilityChanged: {
             if (visibility === "archive") {
                 //% "Moved to archive"
-                notification.show(qsTrId("timelinePage.movedToArchive"))
+                notification.show(qsTrId("notification.movedToArchive"))
             } else if (visibility === "locked") {
                 //% "Moved to locked folder"
-                notification.show(qsTrId("timelinePage.movedToLockedFolder"))
+                notification.show(qsTrId("notification.movedToLockedFolder"))
             }
             page.refresh()
         }

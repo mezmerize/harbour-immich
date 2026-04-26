@@ -445,7 +445,7 @@ Page {
                             if (asset) {
                                 immichApi.downloadAsset(asset.id)
                                 //% "Downloading..."
-                                notification.show(qsTrId("stackDetailPage.downloading"))
+                                notification.show(qsTrId("notification.downloading"))
                             }
                         }
                     }
@@ -586,16 +586,16 @@ Page {
                 page.isFavorite = isFavorite
                 notification.show(isFavorite ?
                     //% "Added to favorites"
-                    qsTrId("stackDetailPage.addedToFavorites")
+                    qsTrId("notification.addedToFavorites")
                     //% "Removed from favorites"
-                    : qsTrId("stackDetailPage.removedFromFavorites"))
+                    : qsTrId("notification.removedFromFavorites"))
             }
         }
         onAssetDownloaded: {
             var current = page.getCurrentAsset()
             if (current && assetId === current.id) {
                 //% "Downloaded to: %1"
-                notification.show(qsTrId("stackDetailPage.downloaded").arg(filePath))
+                notification.show(qsTrId("notification.downloaded").arg(filePath))
             }
         }
         onStackDeleted: {

@@ -28,7 +28,7 @@ Page {
        PullDownMenu {
            MenuItem {
                //% "Information"
-               text: qsTrId("videoPlayerPage.information")
+               text: qsTrId("pullDownMenu.information")
                onClicked: {
                    pageStack.push(Qt.resolvedUrl("AssetInfoPage.qml"), {
                        assetId: videoId,
@@ -39,7 +39,7 @@ Page {
 
            MenuItem {
                //% "Show in timeline"
-               text: qsTrId("videoPlayerPage.showInTimeline")
+               text: qsTrId("pullDownMenu.showInTimeline")
                onClicked: {
                    pageStack.pop(pageStack.find(function(p) {
                        return p.objectName === "timelinePage"
@@ -50,7 +50,7 @@ Page {
 
            MenuItem {
                //% "Share"
-               text: qsTrId("videoPlayerPage.share")
+               text: qsTrId("pullDownMenu.share")
                onClicked: {
                    pageStack.push(Qt.resolvedUrl("SharePage.qml"), {
                        shareType: "INDIVIDUAL",
@@ -61,21 +61,21 @@ Page {
 
            MenuItem {
                //% "Download"
-               text: qsTrId("videoPlayerPage.download")
+               text: qsTrId("pullDownMenu.download")
                onClicked: {
                    hapticFeedback.play()
                    immichApi.downloadAsset(videoId)
                    //% "Downloading..."
-                   notification.show(qsTrId("videoPlayerPage.downloading"))
+                   notification.show(qsTrId("notification.downloading"))
                }
            }
 
            MenuItem {
                text: isFavorite
                      //% "Remove from favorites"
-                     ? qsTrId("videoPlayerPage.removeFromFavorites")
+                     ? qsTrId("pullDownMenu.removeFromFavorites")
                        //% "Add to favorites"
-                     : qsTrId("videoPlayerPage.addToFavorites")
+                     : qsTrId("pullDownMenu.addToFavorites")
                onClicked: {
                    hapticFeedback.play()
                    immichApi.toggleFavorite([videoId], !isFavorite)
@@ -342,7 +342,7 @@ Page {
        onAssetDownloaded: {
            if (assetId === page.videoId) {
                //% "Downloaded to: %1"
-               notification.show(qsTrId("videoPlayerPage.downloaded").arg(filePath))
+               notification.show(qsTrId("notification.downloaded").arg(filePath))
            }
        }
    }

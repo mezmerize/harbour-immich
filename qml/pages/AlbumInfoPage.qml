@@ -14,7 +14,7 @@ Page {
        PullDownMenu {
            MenuItem {
                //% "Edit album"
-               text: qsTrId("albumInfoPage.editAlbum")
+               text: qsTrId("pullDownMenu.editAlbum")
                visible: !!(albumInfo && albumInfo.owner && albumInfo.owner.id === authManager.userId)
                onClicked: {
                    pageStack.push(Qt.resolvedUrl("EditAlbumDialog.qml"), {

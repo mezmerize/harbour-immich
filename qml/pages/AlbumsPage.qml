@@ -86,31 +86,31 @@ Page {
       PullDownMenu {
           MenuItem {
               //% "Settings"
-              text: qsTrId("albumsPage.settings")
+              text: qsTrId("pullDownMenu.settings")
               onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
           }
 
           MenuItem {
               //% "Library"
-              text: qsTrId("albumsPage.library")
+              text: qsTrId("pullDownMenu.library")
               onClicked: pageStack.push(Qt.resolvedUrl("LibraryPage.qml"))
           }
 
           MenuItem {
               //% "Search"
-              text: qsTrId("albumsPage.search")
+              text: qsTrId("pullDownMenu.search")
               onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"))
           }
 
           MenuItem {
               //% "Timeline"
-              text: qsTrId("albumsPage.timeline")
+              text: qsTrId("pullDownMenu.timeline")
               onClicked: pageStack.replaceAbove(null, Qt.resolvedUrl("TimelinePage.qml"))
           }
 
           MenuItem {
               //% "Refresh"
-              text: qsTrId("albumsPage.refresh")
+              text: qsTrId("pullDownMenu.refresh")
               onClicked: page.applyFilter()
           }
       }

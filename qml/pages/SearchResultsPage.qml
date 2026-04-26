@@ -77,7 +77,7 @@ Page {
        PullDownMenu {
            MenuItem {
                //% "Refresh"
-               text: qsTrId("searchResultsPage.refresh")
+               text: qsTrId("pullDownMenu.refresh")
                onClicked: {
                    searchResultsModel.clear()
                    searchBusy.running = true
@@ -202,9 +202,9 @@ Page {
            }
            notification.show(isFavorite
                 //% "Added to favorites"
-                ? qsTrId("searchResultsPage.addedToFavorites")
+                ? qsTrId("notification.addedToFavorites")
                 //% "Removed from favorites"
-                : qsTrId("searchResultsPage.removedFromFavorites"))
+                : qsTrId("notification.removedFromFavorites"))
        }
    }
 
@@ -239,17 +239,17 @@ Page {
            page.clearSelection()
            notification.show(page.selectedAssets.length === 1
                 //% "Downloading asset..."
-                ? qsTrId("searchResultsPage.downloadingAsset")
+                ? qsTrId("notification.downloadingAsset")
                 //% "Downloading %1 assets..."
-                : qsTrId("searchResultsPage.downloadingAssets").arg(page.selectedAssets.length))
+                : qsTrId("notification.downloadingAssets").arg(page.selectedAssets.length))
        }
        onDeleteSelected: {
            var selectedIds = page.selectedAssets.slice()
            deleteRemorse.execute(selectedIds.length > 1
                 //% "Deleting %1 assets
-                ? qsTrId("searchResultsPage.deletingAssets").arg(selectedIds.length)
+                ? qsTrId("notification.deletingAssets").arg(selectedIds.length)
                 //% "Deleting asset
-                : qsTrId("searchResultsPage.deletingAsset"), function() {
+                : qsTrId("notification.deletingAsset"), function() {
                 immichApi.deleteAssets(page.selectedAssets)
                 page.clearSelection()
            })

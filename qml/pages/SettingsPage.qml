@@ -56,25 +56,25 @@ Page {
        PullDownMenu {
            MenuItem {
                //% "Library"
-               text: qsTrId("settingsPage.library")
+               text: qsTrId("pullDownMenu.library")
                onClicked: pageStack.push(Qt.resolvedUrl("LibraryPage.qml"))
            }
 
            MenuItem {
                //% "Search"
-               text: qsTrId("settingsPage.search")
+               text: qsTrId("pullDownMenu.search")
                onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"))
            }
 
            MenuItem {
                //% "Albums"
-               text: qsTrId("settingsPage.albums")
+               text: qsTrId("pullDownMenu.albums")
                onClicked: pageStack.push(Qt.resolvedUrl("AlbumsPage.qml"))
            }
 
            MenuItem {
                //% "Timeline"
-               text: qsTrId("settingsPage.timeline")
+               text: qsTrId("pullDownMenu.timeline")
                onClicked: pageStack.replaceAbove(null, Qt.resolvedUrl("TimelinePage.qml"))
            }
        }
@@ -734,15 +734,15 @@ Page {
        target: backupManager
        onServerSyncComplete: {
            //% "Verified: %1 already on server, %2 new to upload"
-           notification.show(qsTrId("settingsPage.serverSyncResult").arg(matched).arg(pending))
+           notification.show(qsTrId("notification.serverSyncResult").arg(matched).arg(pending))
        }
        onDatabaseCleared: {
            //% "Backup database cleared"
-           notification.show(qsTrId("settingsPage.dbCleared"))
+           notification.show(qsTrId("notification.dbCleared"))
        }
        onMediaTypesFetchFailed: {
            //% "Could not fetch supported media types from server. Backup disabled.
-           notification.showError(qsTrId("settingsPage.mediaTypesFetchFailed"))
+           notification.showError(qsTrId("notification.mediaTypesFetchFailed"))
        }
    }
 

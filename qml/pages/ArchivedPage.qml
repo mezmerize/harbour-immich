@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.immich.models 1.0
 import "../components"
+import "../components/TimelineHelper.js" as TimelineHelper
 
 Page {
     id: page
@@ -31,15 +32,7 @@ Page {
 
     function updateHeroIds() {
         if (heroInitialized) return
-        var ids = []
-        var bucketCount = archiveModel.getBucketCount()
-        for (var b = 0; b < bucketCount && ids.length < 5; b++) {
-            if (!archiveModel.isBucketLoaded(b)) continue
-            var assets = archiveModel.getBucketAssets(b)
-            for (var a = 0; a < assets.length && ids.length < 5; a++) {
-                if (!assets[a].isVideo) ids.push(assets[a].id)
-            }
-        }
+        var ids = TimelineHelper.getHeroIds(archiveModel)
         if (ids.length > 0) {
             heroAssetIds = ids
             heroInitialized = true
@@ -69,7 +62,7 @@ Page {
 
             MenuItem {
                 //% "Refresh"
-                text: qsTrId("archivedPage.refresh")
+                text: qsTrId("pullDownMenu.refresh")
                 onClicked: page.refresh()
             }
         }
@@ -232,14 +225,19 @@ Page {
                 immichApi.downloadAsset(ids[i])
             }
             archiveModel.clearSelection()
+            notification.show(ids.length === 1
+                //% "Downloading asset..."
+                ? qsTrId("notification.downloadingAsset")
+                //% "Downloading %1 assets..."
+                : qsTrId("notification.downloadingAssets").arg(ids.length))
         }
         onDeleteSelected: {
             var selectedIds = archiveModel.getSelectedAssetIds()
             deleteRemorse.execute(selectedIds.length > 1
                 //% "Deleting %1 assets"
-                ? qsTrId("archivedPage.deletingAssets").arg(selectedIds.length)
+                ? qsTrId("notification.deletingAssets").arg(selectedIds.length)
                 //% "Deleting asset"
-                : qsTrId("archivedPage.deletingAsset"), function() {
+                : qsTrId("notification.deletingAsset"), function() {
                     immichApi.deleteAssets(selectedIds)
                     archiveModel.clearSelection()
             })
@@ -288,17 +286,34 @@ Page {
         onFavoritesToggled: {
             archiveModel.updateFavorites(assetIds, isFavorite)
             archiveModel.clearSelection()
+            notification.show(isFavorite ? (assetIds.length === 1
+                //% "Added asset to favorites"
+                ? qsTrId("notification.addedAssetToFavorites")
+                //% "Added %1 assets to favorites"
+                : qsTrId("notification.addedAssetsToFavorites").arg(assetIds.length)) : (assetIds.length === 1
+                //% "Removed asset from favorites"
+                ? qsTrId("notification.removedAssetFromFavorites")
+                //% "Removed %1 assets from favorites"
+                : qsTrId("notification.removedAssetsFromFavorites").arg(assetIds.length)))
         }
         onAssetVisibilityChanged: {
             if (visibility === "timeline") {
                 //% "Removed from archive"
-                notification.show(qsTrId("archivedPage.removedFromArchive"))
-                page.refresh()
+                notification.show(qsTrId("notification.removedFromArchive"))
+            } else if (visibility === "locked") {
+                //% "Moved to locked folder"
+                notification.show(qsTrId("notification.movedToLockedFolder"))
             }
             archiveModel.clearSelection()
+            page.refresh()
         }
         onAssetsDeleted: {
             page.refresh()
+            notification.show(assetIds.length === 1
+                //% "Deleted asset"
+                ? qsTrId("notification.deletedAsset")
+                //% "Deleted %1 assets"
+                : qsTrId("notification.deletedAssets").arg(assetIds.length))
         }
     }
 

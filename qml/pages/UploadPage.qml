@@ -94,7 +94,7 @@ Page {
           visible: uploadState === "uploading"
           MenuItem {
               //% "Cancel upload"
-              text: qsTrId("uploadPage.cancel")
+              text: qsTrId("pullDownMenu.cancel")
               onClicked: {
                   immichApi.cancelUpload()
                   uploadState = "complete"

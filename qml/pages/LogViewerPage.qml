@@ -25,13 +25,13 @@ Page {
       PullDownMenu {
           MenuItem {
               //% "Clear logs"
-              text: qsTrId("logViewerPage.clearLogs")
+              text: qsTrId("pullDownMenu.clearLogs")
               onClicked: logManager.clear()
           }
 
           MenuItem {
               //% "Copy to clipboard"
-              text: qsTrId("logViewerPage.copyToClipboard")
+              text: qsTrId("pullDownMenu.copyToClipboard")
               onClicked: {
                   Clipboard.text = logManager.logs.join("\n")
               }

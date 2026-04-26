@@ -14,7 +14,7 @@ Page {
        PullDownMenu {
            MenuItem {
                //% "Copy to clipboard"
-               text: qsTrId("shareResultPage.copyToClipboard")
+               text: qsTrId("pullDownMenu.copyToClipboard")
                onClicked: {
                    Clipboard.text = shareUrl
                }
@@ -22,7 +22,7 @@ Page {
 
            MenuItem {
                //% "Open in browser"
-               text: qsTrId("shareResultPage.openInBrowser")
+               text: qsTrId("pullDownMenu.openInBrowser")
                onClicked: {
                    Qt.openUrlExternally(shareUrl)
                }
