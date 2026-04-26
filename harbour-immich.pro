@@ -62,6 +62,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/SelectionActionBar.qml \
     qml/components/TimelineBucketDelegate.qml \
     qml/components/TimelineFilterBar.qml \
+    qml/components/TimelineHelper.js \
     qml/components/ZoomSwipeArea.qml \
     qml/cover/CoverPage.qml \
     qml/pages/AlbumInfoPage.qml \
