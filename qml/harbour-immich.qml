@@ -48,6 +48,8 @@ ApplicationWindow
     Component {
         id: loadingPageComponent
         Page {
+            objectName: "loadingPage"
+
             BusyIndicator {
                 anchors.centerIn: parent
                 size: BusyIndicatorSize.Large
@@ -71,13 +73,18 @@ ApplicationWindow
     Connections {
         target: authManager
         onLoginSucceeded: {
-            pageStack.clear()
-            pageStack.push(Qt.resolvedUrl("pages/TimelinePage.qml"))
+            var currentPage = pageStack.currentPage
+            var pageName = currentPage && currentPage.objectName ? currentPage.objectName : ""
+            if (pageName === "loadingPage" || pageName === "loginPage") {
+                pageStack.clear()
+                pageStack.push(Qt.resolvedUrl("pages/TimelinePage.qml"))
+            }
         }
         onLoginFailed: {
             // Redirect to server page should happen only during automatic credentials check not when user interacts with it
             var currentPage = pageStack.currentPage
-            if (!currentPage || !currentPage.objectName || currentPage.objectName !== "loginPage") {
+            var pageName = currentPage && currentPage.objectName ? currentPage.objectName : ""
+            if (pageName === "loadingPage" || pageName === "") {
                 pageStack.clear()
                 pageStack.push(Qt.resolvedUrl("pages/ServerPage.qml"))
             }

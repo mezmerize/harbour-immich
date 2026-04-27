@@ -386,7 +386,7 @@ Page {
                     onClicked: {
                         hapticFeedback.play()
                         //% "Removing from album"
-                        removeRemorse.execute(qsTrId("assetDetailPage.removingFromAlbum"), function() {
+                        removeRemorse.execute(qsTrId("notification.removingFromAlbum"), function() {
                             immichApi.removeAssetsFromAlbum(albumId, [assetId])
                         })
                     }

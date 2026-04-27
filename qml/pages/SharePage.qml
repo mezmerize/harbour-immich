@@ -17,7 +17,6 @@ Dialog {
     property string selectedRole: "editor"
     property bool usersLoaded: false
     property var allUsers: []
-    property bool hasError: false
 
     canAccept: false  // Prevent normal dialog acceptance
 
@@ -67,14 +66,14 @@ Dialog {
 
     function startRemoveUser(uid) {
         //% "Removing user"
-        remorseItem.execute(qsTrId("sharePage.removingUser"), function() {
+        remorseItem.execute(qsTrId("notification.removingUser"), function() {
             immichApi.removeAlbumUser(dialog.albumId, uid)
         })
     }
 
     function startLeaveAlbum() {
         //% "Leaving album"
-        remorseItem.execute(qsTrId("sharePage.leavingAlbum"), function() {
+        remorseItem.execute(qsTrId("notification.leavingAlbum"), function() {
             immichApi.removeAlbumUser(dialog.albumId, authManager.userId)
         })
     }
@@ -413,14 +412,13 @@ Dialog {
                 placeholderText: label
             }
 
-            TextField {
+            PasswordField {
                 id: passwordField
                 width: parent.width
                 //% "Password (optional)"
                 label: qsTrId("sharePage.password")
                 //% "Enter password to protect share"
                 placeholderText: qsTrId("sharePage.passwordPlaceholder")
-                echoMode: TextInput.Password
 
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
                 EnterKey.onClicked: focus = false
@@ -433,8 +431,12 @@ Dialog {
                 label: qsTrId("sharePage.customShareUrl")
                 //% "Optional custom URL slug"
                 placeholderText: qsTrId("sharePage.customShareUrlPlaceholder")
-                color: dialog.hasError ? Theme.errorColor : Theme.primaryColor
-                onTextChanged: dialog.hasError = false
+                color: slugField.acceptableInput ? Theme.primaryColor : Theme.errorColor
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
+
+                validator: RegExpValidator {
+                    regExp: /^(?:[A-Za-z0-9._~!$&'()*+,;=:@\-\s]|%[0-9A-Fa-f]{2})*$/
+                }
 
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
                 EnterKey.onClicked: focus = false
@@ -442,12 +444,44 @@ Dialog {
 
             Label {
                 x: Theme.horizontalPageMargin
-                width: parent.width -2 * Theme.horizontalPageMargin
-                visible: slugField.text.length > 0
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                visible: slugField.text !== "" && slugField.acceptableInput
                 text: immichApi.serverUrl() + "/s/" + slugField.text
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.secondaryHighlightColor
                 wrapMode: Text.WrapAnywhere
+            }
+
+            Rectangle {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                height: errorLabel.height + Theme.paddingMedium * 2
+                radius: Theme.paddingSmall
+                color: Theme.rgba(Theme.errorColor, 0.2)
+                visible: !slugField.acceptableInput
+
+                Row {
+                    anchors.centerIn: parent
+                    spacing: Theme.paddingMedium
+                    width: parent.width - Theme.paddingMedium * 2
+
+                    Icon {
+                        source: "image://theme/icon-s-warning"
+                        color: Theme.errorColor
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Label {
+                        id: errorLabel
+                        width: parent.width - parent.spacing - Theme.iconSizeSmall
+                        wrapMode: Text.WordWrap
+                        color: Theme.errorColor
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        //% "Please enter a valid custom share URL"
+                        text: qsTrId("sharePage.customShareUrlError")
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
             }
 
             ComboBox {
@@ -545,53 +579,10 @@ Dialog {
                 anchors.horizontalCenter: parent.horizontalCenter
                 //% "Create Share link"
                 text: qsTrId("sharePage.createShareLinkButton")
-                enabled: assetIds.length > 0 || albumId
+                enabled: (assetIds.length > 0 || albumId) && slugField.acceptableInput
                 onClicked: {
-                    var path = String(slugField.text).trim()
-                    if (path.charAt(path.length - 1) === "/") {
-                        path = path.substring(0, path.length - 1)
-                    }
-
-                    // Validate URL path
-                    var pathPattern = /^(?:[A-Za-z0-9._~!$&'()*+,;=:@\-\s]|%[0-9A-Fa-f]{2})*$/
-                    if (!pathPattern.test(path)) {
-                        dialog.hasError = true
-                        return
-                    }
                     var ids = shareType === "INDIVIDUAL" ? assetIds : albumId
                     immichApi.createSharedLink(shareType, ids, passwordField.text, expirationCombo.getExpiresAt(), allowDownloadSwitch.checked, allowUploadSwitch.checked, showMetadataSwitch.checked, descriptionField.text, slugField.text)
-                }
-            }
-
-            Rectangle {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                height: errorLabel.height + Theme.paddingMedium * 2
-                radius: Theme.paddingSmall
-                color: Theme.rgba(Theme.errorColor, 0.2)
-                visible: dialog.hasError
-
-                Row {
-                    anchors.centerIn: parent
-                    spacing: Theme.paddingMedium
-                    width: parent.width - Theme.paddingMedium * 2
-
-                    Icon {
-                        source: "image://theme/icon-s-warning"
-                        color: Theme.errorColor
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
-                    Label {
-                        id: errorLabel
-                        width: parent.width - parent.spacing - Theme.iconSizeSmall
-                        wrapMode: Text.WordWrap
-                        color: Theme.errorColor
-                        font.pixelSize: Theme.fontSizeSmall
-                        //% "Please enter a valid custom share URL"
-                        text: qsTrId("sharePage.customShareUrlError")
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
                 }
             }
 

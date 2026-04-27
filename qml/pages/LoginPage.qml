@@ -51,14 +51,13 @@ Page {
                 text: authManager.email || ""
             }
 
-            TextField {
+            PasswordField {
                 id: passwordField
                 width: parent.width
                 //% "Password"
                 label: qsTrId("loginPage.password")
                 //% "Enter password"
                 placeholderText: qsTrId("loginPage.passwordPlaceholder")
-                echoMode: TextInput.Password
                 EnterKey.enabled: emailField.text.length > 0 && text.length > 0
                 EnterKey.iconSource: "image://theme/icon-m-enter-accept"
                 EnterKey.onClicked: loginButton.clicked()

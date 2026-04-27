@@ -502,7 +502,7 @@ Page {
                         onClicked: {
                             hapticFeedback.play()
                             //% "Unstacking"
-                            unstackRemorse.execute(qsTrId("stackDetailPage.unstacking"), function() {
+                            unstackRemorse.execute(qsTrId("notification.unstacking"), function() {
                                 immichApi.deleteStack(page.stackId)
                             })
                         }

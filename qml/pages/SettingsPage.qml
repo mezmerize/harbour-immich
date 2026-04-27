@@ -547,7 +547,7 @@ Page {
                color: "#ff4444"
                onClicked: {
                    //% "Clearing backup database"
-                   remorse.execute(qsTrId("settingsPage.backupClearDbRemorse"), function() {
+                   remorse.execute(qsTrId("notification.backupClearDbRemorse"), function() {
                        backupManager.clearDatabase()
                    })
                }
@@ -576,7 +576,7 @@ Page {
                text: qsTrId("settingsPage.logout")
                onClicked: {
                    //% "Logging out"
-                   remorse.execute(qsTrId("settingsPage.loggingOut"), function() {
+                   remorse.execute(qsTrId("notification.loggingOut"), function() {
                        authManager.logout()
                        pageStack.clear()
                        pageStack.push(Qt.resolvedUrl("ServerPage.qml"))
