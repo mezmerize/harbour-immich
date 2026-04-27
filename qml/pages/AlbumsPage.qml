@@ -374,7 +374,9 @@ Page {
               pageStack.push(Qt.resolvedUrl("AlbumDetailPage.qml"), {
                   albumId: albumId,
                   albumName: albumName,
-                  assetCount: assetCount
+                  albumDescription: albumDescription || "",
+                  albumStartDate: startDate || "",
+                  albumEndDate: endDate || ""
               })
           }
       }

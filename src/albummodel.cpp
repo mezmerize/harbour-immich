@@ -33,6 +33,8 @@ QVariant AlbumModel::data(const QModelIndex &index, int role) const
         return album.ownerId;
     case AlbumNameRole:
         return album.albumName;
+    case DescriptionRole:
+        return album.description;
     case AlbumThumbnailAssetIdRole:
         return album.albumThumbnailAssetId;
     case AssetCountRole:
@@ -62,6 +64,7 @@ QHash<int, QByteArray> AlbumModel::roleNames() const
     roles[IdRole] = "albumId";
     roles[OwnerIdRole] = "ownerId";
     roles[AlbumNameRole] = "albumName";
+    roles[DescriptionRole] = "albumDescription";
     roles[AlbumThumbnailAssetIdRole] = "albumThumbnailAssetId";
     roles[AssetCountRole] = "assetCount";
     roles[CreatedAtRole] = "createdAt";
@@ -97,6 +100,7 @@ void AlbumModel::loadAlbums(const QJsonArray &albumsJson)
         album.id = obj["id"].toString();
         album.ownerId = obj["ownerId"].toString();
         album.albumName = obj["albumName"].toString();
+        album.description = obj["description"].toString();
         album.albumThumbnailAssetId = obj["albumThumbnailAssetId"].toString();
         album.assetCount = obj["assetCount"].toInt();
         album.createdAt = obj["createdAt"].toString();

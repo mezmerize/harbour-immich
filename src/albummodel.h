@@ -10,6 +10,7 @@ struct Album {
     QString id;
     QString ownerId;
     QString albumName;
+    QString description;
     QString albumThumbnailAssetId;
     int assetCount;
     QString createdAt;
@@ -29,6 +30,7 @@ public:
     enum AlbumRoles {
         IdRole = Qt::UserRole + 1,
         AlbumNameRole,
+        DescriptionRole,
         AlbumThumbnailAssetIdRole,
         AssetCountRole,
         CreatedAtRole,
