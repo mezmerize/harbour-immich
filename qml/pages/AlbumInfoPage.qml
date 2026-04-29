@@ -2,152 +2,171 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Page {
-   id: page
+    id: page
 
-   property string albumId
-   property var albumInfo
+    property string albumId
+    property var albumInfo
 
-   SilicaFlickable {
-       anchors.fill: parent
-       contentHeight: column.height
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: column.height
 
-       PullDownMenu {
-           MenuItem {
-               //% "Edit album"
-               text: qsTrId("pullDownMenu.editAlbum")
-               visible: !!(albumInfo && albumInfo.owner && albumInfo.owner.id === authManager.userId)
-               onClicked: {
-                   pageStack.push(Qt.resolvedUrl("EditAlbumDialog.qml"), {
-                       albumId: page.albumId,
-                       albumName: albumInfo ? albumInfo.albumName : "",
-                       albumDescription: albumInfo && albumInfo.description ? albumInfo.description : "",
-                       isActivityEnabled: albumInfo && albumInfo.isActivityEnabled !== undefined ? albumInfo.isActivityEnabled : true,
-                       albumThumbnailAssetId: albumInfo && albumInfo.albumThumbnailAssetId ? albumInfo.albumThumbnailAssetId : "",
-                       albumAssets: albumInfo && albumInfo.assets ? albumInfo.assets : []
-                   })
-               }
-           }
-       }
+        PullDownMenu {
+            MenuItem {
+                //% "Edit album"
+                text: qsTrId("pullDownMenu.editAlbum")
+                visible: !!(albumInfo && albumInfo.owner && albumInfo.owner.id === authManager.userId)
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("EditAlbumDialog.qml"), {
+                        albumId: page.albumId,
+                        albumName: !!albumInfo && albumInfo.albumName ? albumInfo.albumName : "",
+                        albumDescription: !!albumInfo && albumInfo.description ? albumInfo.description : "",
+                        isActivityEnabled: !!albumInfo && albumInfo.isActivityEnabled !== undefined ? albumInfo.isActivityEnabled : true,
+                        albumThumbnailAssetId: !!albumInfo && albumInfo.albumThumbnailAssetId ? albumInfo.albumThumbnailAssetId : "",
+                        albumAssets: !!albumInfo && albumInfo.assets ? albumInfo.assets : []
+                    })
+                }
+            }
+        }
 
-       Column {
-           id: column
-           width: page.width
-           spacing: Theme.paddingMedium
+        Column {
+            id: column
+            width: page.width
+            spacing: Theme.paddingMedium
 
-           PageHeader {
-               //% "Album Information"
-               title: qsTrId("albumInfoPage.albumInformation")
-           }
+            PageHeader {
+                //% "Album Information"
+                title: qsTrId("albumInfoPage.albumInformation")
+            }
 
-           DetailItem {
-               //% "Album name"
-               label: qsTrId("albumInfoPage.albumName")
-               value: albumInfo ? albumInfo.albumName : ""
-           }
+            DetailItem {
+                //% "Album name"
+                label: qsTrId("albumInfoPage.albumName")
+                value: !!albumInfo ? albumInfo.albumName : ""
+            }
 
-           DetailItem {
-               //% "Description"
-               label: qsTrId("albumInfoPage.description")
-               //% "No description"
-               value: albumInfo && albumInfo.description ? albumInfo.description : qsTrId("albumInfoPage.noDescription")
-           }
+            DetailItem {
+                //% "Description"
+                label: qsTrId("albumInfoPage.description")
+                //% "No description"
+                value: !!(albumInfo && albumInfo.description) ? albumInfo.description : qsTrId("albumInfoPage.noDescription")
+            }
 
-           DetailItem {
-               //% "Created"
-               label: qsTrId("albumInfoPage.created")
-               value: albumInfo ? Qt.formatDateTime(new Date(albumInfo.createdAt), "dd.MM.yyyy hh:mm") : ""
-           }
+            DetailItem {
+                //% "Created"
+                label: qsTrId("albumInfoPage.created")
+                value: !!albumInfo ? Qt.formatDateTime(new Date(albumInfo.createdAt), "dd.MM.yyyy hh:mm") : ""
+            }
 
-           DetailItem {
-               //% "Updated"
-               label: qsTrId("albumInfoPage.updated")
-               value: albumInfo ? Qt.formatDateTime(new Date(albumInfo.updatedAt), "dd.MM.yyyy hh:mm") : ""
-           }
+            DetailItem {
+                //% "Updated"
+                label: qsTrId("albumInfoPage.updated")
+                value: !!albumInfo ? Qt.formatDateTime(new Date(albumInfo.updatedAt), "dd.MM.yyyy hh:mm") : ""
+            }
 
-           DetailItem {
-               //% "Owner"
-               label: qsTrId("albumInfoPage.owner")
-               value: albumInfo && albumInfo.owner ? albumInfo.owner.name : ""
-           }
+            DetailItem {
+                //% "Asset count"
+                label: qsTrId("albumInfoPage.assetCount")
+                value: !!albumInfo ? albumInfo.assetCount : ""
+            }
 
-           DetailItem {
-               //% "Asset count"
-               label: qsTrId("albumInfoPage.assetCount")
-               value: albumInfo ? albumInfo.assetCount : ""
-           }
+            SectionHeader {
+                //% "Owner"
+                text: qsTrId("assetInfoPage.owner")
+                visible: !!(albumInfo && albumInfo.owner)
+            }
 
-           SectionHeader {
-               //% "Shared with"
-               text: qsTrId("albumInfoPage.sharedWith")
-               visible: !!(albumInfo && albumInfo.albumUsers && albumInfo.albumUsers.length > 0)
-           }
+            DetailItem {
+                visible: !!(albumInfo && albumInfo.owner && albumInfo.owner.name)
+                //% "Name"
+                label: qsTrId("albumInfoPage.ownerName")
+                value: !!(albumInfo && albumInfo.owner) ? albumInfo.owner.name : ""
+            }
 
-           Repeater {
-               model: albumInfo && albumInfo.albumUsers ? albumInfo.albumUsers : []
+            DetailItem {
+                visible: !!(albumInfo && albumInfo.owner && albumInfo.owner.email)
+                //% "Email"
+                label: qsTrId("albumInfoPage.ownerEmail")
+                value: !!(albumInfo && albumInfo.owner) ? albumInfo.owner.email : ""
+            }
 
-               DetailItem {
-                   label: modelData.user ? modelData.user.name : ""
-                   value: modelData.role ? (modelData.role === "editor"
+            SectionHeader {
+                //% "Shared with"
+                text: qsTrId("albumInfoPage.sharedWith")
+                visible: !!(albumInfo && albumInfo.albumUsers && albumInfo.albumUsers.length > 0)
+            }
+
+            Repeater {
+                model: !!(albumInfo && albumInfo.albumUsers) ? albumInfo.albumUsers : []
+
+                DetailItem {
+                    label: modelData.user ? modelData.user.name : ""
+                    value: modelData.role ? (modelData.role === "editor"
                         //% "Editor"
                         ? qsTrId("albumInfoPage.roleEditor")
                         //% "Viewer"
                         : qsTrId("albumInfoPage.roleViewer")) : ""
-               }
-           }
+                }
+            }
 
-           SectionHeader {
-               //% "Sharing"
-               text: qsTrId("albumInfoPage.sharing")
-               visible: !!(albumInfo && albumInfo.shared)
-           }
+            SectionHeader {
+                //% "Sharing"
+                text: qsTrId("albumInfoPage.sharing")
+                visible: !!(albumInfo && (albumInfo.shared || albumInfo.isActivityEnabled))
+            }
 
-           DetailItem {
-               visible: !!(albumInfo && albumInfo.shared)
-               //% "Shared"
-               label: qsTrId("albumInfoPage.shared")
-               value: albumInfo && albumInfo.shared
-                      //% "Yes"
-                      ? qsTrId("albumInfoPage.sharedYes")
-                      //% "No"
-                      : qsTrId("albumInfoPage.sharedNo")
-           }
+            DetailItem {
+                visible: !!(albumInfo && albumInfo.shared)
+                //% "Shared"
+                label: qsTrId("albumInfoPage.shared")
+                value: !!(albumInfo && albumInfo.shared)
+                    //% "Yes"
+                    ? qsTrId("albumInfoPage.sharedYes")
+                    //% "No"
+                    : qsTrId("albumInfoPage.sharedNo")
+            }
 
-           DetailItem {
-               //% "Comments and likes"
-               label: qsTrId("albumInfoPage.commentsAndLikes")
-               value: albumInfo && albumInfo.isActivityEnabled
-                      //% "Enabled"
-                      ? qsTrId("albumInfoPage.activityEnabled")
-                      //% "Disabled"
-                      : qsTrId("albumInfoPage.activityDisabled")
-           }
-       }
+            DetailItem {
+                //% "Comments and likes"
+                label: qsTrId("albumInfoPage.commentsAndLikes")
+                value: !!(albumInfo && albumInfo.isActivityEnabled)
+                    //% "Enabled"
+                    ? qsTrId("albumInfoPage.activityEnabled")
+                    //% "Disabled"
+                    : qsTrId("albumInfoPage.activityDisabled")
+            }
 
-       VerticalScrollDecorator {}
-   }
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+        }
 
-   Component.onCompleted: {
-       if (albumId) {
-           immichApi.fetchAlbumDetails(albumId)
-       }
-   }
+        VerticalScrollDecorator {}
+    }
 
-   Connections {
-       target: immichApi
-       onAlbumDetailsReceived: {
-           if (details && details.id === page.albumId) {
-               albumInfo = details
-           }
-       }
-       onAlbumUpdated: {
-           if (albumId === page.albumId) {
-               var updated = albumInfo
-               updated.albumName = albumName
-               updated.description = description
-               updated.isActivityEnabled = isActivityEnabled
-               updated.albumThumbnailAssetId = albumThumbnailAssetId
-               albumInfo = updated
-           }
-       }
-   }
+    Component.onCompleted: {
+        if (albumId) {
+            immichApi.fetchAlbumDetails(albumId)
+        }
+    }
+
+    Connections {
+        target: immichApi
+        onAlbumDetailsReceived: {
+            if (details && details.id === page.albumId) {
+                albumInfo = details
+            }
+        }
+        onAlbumUpdated: {
+            if (albumId === page.albumId) {
+                var updated = albumInfo
+                updated.albumName = albumName
+                updated.description = description
+                updated.isActivityEnabled = isActivityEnabled
+                updated.albumThumbnailAssetId = albumThumbnailAssetId
+                albumInfo = updated
+            }
+        }
+    }
 }

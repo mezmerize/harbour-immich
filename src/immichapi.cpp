@@ -96,6 +96,24 @@ void ImmichApi::fetchAlbumDetails(const QString &albumId)
     });
 }
 
+void ImmichApi::fetchAlbumsForAsset(const QString &assetId)
+{
+    qInfo() << "ImmichApi: Fetching albums for asset:" << assetId;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/albums"));
+    QUrlQuery query;
+    query.addQueryItem(QStringLiteral("assetId"), assetId);
+    url.setQuery(query);
+
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QString savedAssetId = assetId;
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this, savedAssetId](const QByteArray &response) {
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        qInfo() << "ImmichApi: Albums for asset received, count:" << doc.array().size();
+        emit assetAlbumsReceived(savedAssetId, doc.array());
+    });
+}
+
 void ImmichApi::searchByParameters(const QVariantMap &searchParams)
 {
     QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/search/metadata"));

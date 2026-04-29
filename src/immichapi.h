@@ -59,6 +59,7 @@ public:
     Q_INVOKABLE void restoreFromTrash(const QStringList &assetIds);
     Q_INVOKABLE void emptyTrash();
     Q_INVOKABLE void restoreAllTrash();
+    Q_INVOKABLE void fetchAlbumsForAsset(const QString &assetId);
     static QHttpMultiPart* buildUploadMultiPart(QFile *file, const QFileInfo &fileInfo);
 
 signals:
@@ -100,6 +101,7 @@ signals:
     void trashRestored(const QStringList &assetIds);
     void trashEmptied();
     void allTrashRestored();
+    void assetAlbumsReceived(const QString &assetId, const QJsonArray &albums);
 
 private slots:
     void onSearchByParametersReplyFinished();

@@ -7,15 +7,19 @@ Page {
 
     property string assetId
     property var assetInfo
+    property var assetAlbums: []
+    property bool isOwnedByOther: assetInfo ? (assetInfo.ownerId !== undefined && assetInfo.ownerId !== authManager.userId) : false
 
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
 
         PullDownMenu {
+            enabled: !isOwnedByOther
+
             MenuItem {
                 //% "Edit Asset"
-                text: qsTrId("assetInfoPage.editAsset")
+                text: qsTrId("pullDownMenu.editAsset")
                 onClicked: {
                     var currentDesc = assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.description ? assetInfo.exifInfo.description : ""
                     var hasLoc = assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.latitude ? true : false
@@ -45,72 +49,72 @@ Page {
             DetailItem {
                 //% "Description"
                 label: qsTrId("assetInfoPage.description")
-                value: assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.description ? assetInfo.exifInfo.description : ""
+                value: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.description) ? assetInfo.exifInfo.description : ""
             }
 
             DetailItem {
                 //% "File name"
                 label: qsTrId("assetInfoPage.fileNme")
-                value: assetInfo ? assetInfo.originalFileName : ""
+                value: !!(assetInfo && assetInfo.originalFileName) ? assetInfo.originalFileName : ""
             }
 
             DetailItem {
                 //% "Created"
                 label: qsTrId("assetInfoPage.created")
-                value: assetInfo ? Qt.formatDateTime(new Date(assetInfo.fileCreatedAt), "dd.MM.yyyy hh:mm") : ""
+                value: !!(assetInfo && assetInfo.fileCreatedAt) ? Qt.formatDateTime(new Date(assetInfo.fileCreatedAt), "dd.MM.yyyy hh:mm") : ""
             }
 
             DetailItem {
                 //% "Modified"
                 label: qsTrId("assetInfoPage.modified")
-                value: assetInfo ? Qt.formatDateTime(new Date(assetInfo.fileModifiedAt), "dd.MM.yyyy hh:mm") : ""
+                value: !!(assetInfo && assetInfo.fileModifiedAt) ? Qt.formatDateTime(new Date(assetInfo.fileModifiedAt), "dd.MM.yyyy hh:mm") : ""
             }
 
             DetailItem {
                 //% "Type"
                 label: qsTrId("assetInfoPage.type")
-                value: assetInfo ? assetInfo.type : ""
+                value: !!(assetInfo && assetInfo.type) ? assetInfo.type : ""
             }
 
             SectionHeader {
                 //% "EXIF Information"
                 text: qsTrId("assetInfoPage.exifInformation")
-                visible: !!(assetInfo && assetInfo.exifInfo)
+                visible: !!(assetInfo && assetInfo.exifInfo && (assetInfo.exifInfo.make || assetInfo.exifInfo.fNumber || assetInfo.exifInfo.exposureTime || assetInfo.exifInfo.iso || assetInfo.exifInfo.focalLength))
             }
 
             DetailItem {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.make)
                 //% "Camera"
                 label: qsTrId("assetInfoPage.camera")
-                value: assetInfo && assetInfo.exifInfo ? (assetInfo.exifInfo.make + " " + assetInfo.exifInfo.model) : ""
+                value: !!(assetInfo && assetInfo.exifInfo) ? (assetInfo.exifInfo.make + " " + assetInfo.exifInfo.model) : ""
             }
 
             DetailItem {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.fNumber)
                 //% "Aperture"
                 label: qsTrId("assetInfoPage.aperture")
-                value: assetInfo && assetInfo.exifInfo ? "f/" + assetInfo.exifInfo.fNumber : ""
+                value: !!(assetInfo && assetInfo.exifInfo) ? "f/" + assetInfo.exifInfo.fNumber : ""
             }
 
             DetailItem {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.exposureTime)
                 //% "Exposure time"
                 label: qsTrId("assetInfoPage.exposureTime")
-                value: assetInfo && assetInfo.exifInfo ? assetInfo.exifInfo.exposureTime + "s" : ""
+                value: !!(assetInfo && assetInfo.exifInfo) ? assetInfo.exifInfo.exposureTime + "s" : ""
             }
 
             DetailItem {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.iso)
                 //% "ISO"
                 label: qsTrId("assetInfoPage.iso")
-                value: assetInfo && assetInfo.exifInfo ? assetInfo.exifInfo.iso : ""
+                value: !!(assetInfo && assetInfo.exifInfo) ? assetInfo.exifInfo.iso : ""
             }
 
             DetailItem {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.focalLength)
                 //% "Focal length"
                 label: qsTrId("assetInfoPage.focalLength")
-                value: assetInfo && assetInfo.exifInfo ? assetInfo.exifInfo.focalLength + "mm" : ""
+                value: !!(assetInfo && assetInfo.exifInfo) ? assetInfo.exifInfo.focalLength + "mm" : ""
             }
 
             SectionHeader {
@@ -219,21 +223,21 @@ Page {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.latitude)
                 //% "Coordinates"
                 label: qsTrId("assetInfoPage.coordinates")
-                value: assetInfo && assetInfo.exifInfo ? assetInfo.exifInfo.latitude.toFixed(6) + ", " + assetInfo.exifInfo.longitude.toFixed(6) : ""
+                value: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.latitude) ? assetInfo.exifInfo.latitude.toFixed(6) + ", " + assetInfo.exifInfo.longitude.toFixed(6) : ""
             }
 
             DetailItem {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.city)
                 //% "City"
                 label: qsTrId("assetInfoPage.city")
-                value: assetInfo && assetInfo.exifInfo ? assetInfo.exifInfo.city : ""
+                value: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.city) ? assetInfo.exifInfo.city : ""
             }
 
             DetailItem {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.country)
                 //% "Country"
                 label: qsTrId("assetInfoPage.country")
-                value: assetInfo && assetInfo.exifInfo ? assetInfo.exifInfo.country : ""
+                value: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.country) ? assetInfo.exifInfo.country : ""
             }
 
             Button {
@@ -247,13 +251,154 @@ Page {
                     }
                 }
             }
+
+            SectionHeader {
+                //% "Owner"
+                text: qsTrId("assetInfoPage.owner")
+                visible: !!(assetInfo && assetInfo.owner)
+            }
+
+            DetailItem {
+                visible: !!(assetInfo && assetInfo.owner && assetInfo.owner.name)
+                //% "Name"
+                label: qsTrId("assetInfoPage.ownerName")
+                value: !!(assetInfo && assetInfo.owner) ? assetInfo.owner.name : ""
+            }
+
+            DetailItem {
+                visible: !!(assetInfo && assetInfo.owner && assetInfo.owner.email)
+                //% "Email"
+                label: qsTrId("assetInfoPage.ownerEmail")
+                value: !!(assetInfo && assetInfo.owner) ? assetInfo.owner.email : ""
+            }
+
+            SectionHeader {
+                //% "Albums"
+                text: qsTrId("assetInfoPage.albums")
+                visible: assetAlbums.length > 0
+            }
+
+            Repeater {
+                model: assetAlbums
+
+                BackgroundItem {
+                    id: albumItem
+                    width: parent.width
+                    height: Theme.itemSizeMedium
+
+                    Row {
+                        anchors {
+                            fill: parent
+                            leftMargin: Theme.horizontalPageMargin
+                            rightMargin: Theme.horizontalPageMargin
+                        }
+                        spacing: Theme.paddingMedium
+
+                        Image {
+                            id: albumThumbnail
+                            width: Theme.itemSizeMedium
+                            height: Theme.itemSizeMedium
+                            source: modelData.albumThumbnailAssetId ? "image://immich/thumbnail/" + modelData.albumThumbnailAssetId : ""
+                            fillMode: Image.PreserveAspectCrop
+                            asynchronous: true
+
+                            Rectangle {
+                                anchors.fill: parent
+                                color: Theme.rgba(Theme.highlightBackgroundColor, 0.2)
+                                visible: albumThumbnail.status !== Image.Ready
+                            }
+
+                            Image {
+                                anchors.centerIn: parent
+                                source: "image://theme/icon-m-image"
+                                visible: albumThumbnail.status !== Image.Ready
+                            }
+                        }
+
+                        Column {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: parent.width - albumThumbnail.width - Theme.paddingMedium
+
+                            Label {
+                                width: parent.width
+                                text: modelData.albumName || ""
+                                color: albumItem.highlighted ? Theme.highlightColor : Theme.primaryColor
+                                truncationMode: TruncationMode.Fade
+                            }
+
+                            Row {
+                                spacing: Theme.paddingSmall
+
+                                Label {
+                                    text: modelData.assetCount === 1
+                                        //% "1 asset"
+                                        ? qsTrId("assetInfoPage.asset")
+                                        //% "%1 assets"
+                                        : qsTrId("assetInfoPage.assets").arg(modelData.assetCount || 0)
+                                    color: albumItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
+                                    font.pixelSize: Theme.fontSizeSmall
+                                }
+
+                                Rectangle {
+                                    width: sharedLabel.width + Theme.paddingSmall * 2
+                                    height: sharedLabel.height + Theme.paddingSmall
+                                    radius: Theme.paddingSmall / 2
+                                    color: Theme.rgba(Theme.highlightBackgroundColor, 0.2)
+                                    visible: modelData.shared
+                                    anchors.verticalCenter: parent.verticalCenter
+
+                                    Label {
+                                        id: sharedLabel
+                                        anchors.centerIn: parent
+                                        //% "Shared"
+                                        text: qsTrId("assetInfoPage.shared")
+                                        font.pixelSize: Theme.fontSizeExtraSmall
+                                        color: Theme.highlightColor
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("AlbumDetailPage.qml"), {
+                            albumId: modelData.id,
+                            albumName: modelData.albumName || "",
+                            albumDescription: modelData.description || "",
+                            albumStartDate: modelData.startDate || "",
+                            albumEndDate: modelData.endDate || ""
+                        })
+                    }
+                }
+            }
+
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
         }
 
         VerticalScrollDecorator {}
     }
 
+    Component.onCompleted: {
+        if (assetId) {
+            immichApi.fetchAlbumsForAsset(assetId)
+        }
+    }
+
     Connections {
         target: immichApi
+        onAlbumUpdated: {
+            if (assetId) {
+                immichApi.fetchAlbumsForAsset(assetId)
+            }
+        }
+        onAssetAlbumsReceived: {
+            if (assetId === page.assetId) {
+                page.assetAlbums = albums
+            }
+        }
         onAssetUpdated: {
             if (assetId === page.assetId && page.assetInfo) {
                 var info = page.assetInfo

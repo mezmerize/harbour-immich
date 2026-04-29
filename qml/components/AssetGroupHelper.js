@@ -32,7 +32,9 @@ function pickHeroIds(parsed, maxCount) {
     for (var h = 0; h < parsed.length; h++) indices.push(h)
     for (var s = indices.length - 1; s > 0; s--) {
         var j = Math.floor(Math.random() * (s + 1))
-        var tmp = indices[s]; indices[s] = indices[j]; indices[j] = tmp
+        var tmp = indices[s]
+        indices[s] = indices[j]
+        indices[j] = tmp
     }
     for (var k = 0; k < indices.length && heroIds.length < maxCount; k++) {
         if (!parsed[indices[k]].isVideo) heroIds.push(parsed[indices[k]].id)
