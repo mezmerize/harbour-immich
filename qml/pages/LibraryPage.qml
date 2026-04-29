@@ -105,7 +105,7 @@ Page {
                             }
                         }
 
-                        onClicked: if (modelData.page === "ArchivedPage.qml" || modelData.page === "TrashPage.qml") pageStack.push(Qt.resolvedUrl(modelData.page))
+                        onClicked: if (modelData.page === "FavoritesPage.qml" || modelData.page === "ArchivedPage.qml" || modelData.page === "TrashPage.qml") pageStack.push(Qt.resolvedUrl(modelData.page))
                     }
                 }
             }
