@@ -131,22 +131,22 @@
     <message id="selectionActionBar.moveToArchive">
         <location filename="../qml/components/SelectionActionBar.qml" line="348"/>
         <source>Move to archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytt til arkiv</translation>
     </message>
     <message id="selectionActionBar.moveToLockedFolder">
         <location filename="../qml/components/SelectionActionBar.qml" line="367"/>
         <source>Move to locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytt til låst mappe</translation>
     </message>
     <message id="selectionActionBar.removeFromArchive">
         <location filename="../qml/components/SelectionActionBar.qml" line="424"/>
         <source>Remove from archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern fra arkiv</translation>
     </message>
     <message id="selectionActionBar.removeFromLockedFolder">
         <location filename="../qml/components/SelectionActionBar.qml" line="443"/>
         <source>Remove from locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern fra låst mappe</translation>
     </message>
     <message id="selectionActionBar.clear">
         <location filename="../qml/components/SelectionActionBar.qml" line="462"/>
@@ -214,18 +214,18 @@
         <location filename="../qml/pages/TimelinePage.qml" line="131"/>
         <location filename="../qml/pages/TrashPage.qml" line="44"/>
         <source>Refresh</source>
-        <translation type="unfinished">Last på nytt</translation>
+        <translation>Last på nytt</translation>
     </message>
     <message id="pullDownMenu.information">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="82"/>
         <location filename="../qml/pages/VideoPlayerPage.qml" line="31"/>
         <source>Information</source>
-        <translation type="unfinished">Informasjon</translation>
+        <translation>Informasjon</translation>
     </message>
     <message id="pullDownMenu.shareAlbum">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="92"/>
         <source>Share album</source>
-        <translation type="unfinished">Del album</translation>
+        <translation>Del album</translation>
     </message>
     <message id="albumDetailPage.assets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="150"/>
@@ -237,12 +237,12 @@
     <message id="albumDetailPage.loading">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="275"/>
         <source>Loading album assets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster albuminnhold...</translation>
     </message>
     <message id="albumDetailPage.noFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="291"/>
         <source>No favorite assets in this album</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen favoritter i dette albumet</translation>
     </message>
     <message id="albumDetailPage.noAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="293"/>
@@ -255,14 +255,14 @@
         <location filename="../qml/pages/AssetDetailPage.qml" line="448"/>
         <location filename="../qml/pages/TimelinePage.qml" line="587"/>
         <source>Added asset to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagt til i favoritter</translation>
     </message>
     <message id="notification.addedAssetsToFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="331"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="293"/>
         <location filename="../qml/pages/TimelinePage.qml" line="589"/>
         <source>Added %1 assets to favorites</source>
-        <translation type="unfinished">La %1 objekter til Favoritter</translation>
+        <translation>La %1 objekter til Favoritter</translation>
     </message>
     <message id="notification.removedAssetFromFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="333"/>
@@ -271,7 +271,7 @@
         <location filename="../qml/pages/FavoritesPage.qml" line="282"/>
         <location filename="../qml/pages/TimelinePage.qml" line="591"/>
         <source>Removed asset from favorites</source>
-        <translation type="unfinished">Fjernet objekt fra Favoritter</translation>
+        <translation>Fjernet objekt fra Favoritter</translation>
     </message>
     <message id="notification.removedAssetsFromFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="335"/>
@@ -279,7 +279,7 @@
         <location filename="../qml/pages/FavoritesPage.qml" line="284"/>
         <location filename="../qml/pages/TimelinePage.qml" line="593"/>
         <source>Removed %1 assets from favorites</source>
-        <translation type="unfinished">Fjernet %1 objekter fra Favoritter</translation>
+        <translation>Fjernet %1 objekter fra Favoritter</translation>
     </message>
     <message id="notification.deletedAsset">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="341"/>
@@ -288,7 +288,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="570"/>
         <location filename="../qml/pages/TrashPage.qml" line="269"/>
         <source>Deleted asset</source>
-        <translation type="unfinished">Slettet objekt</translation>
+        <translation>Slettet objekt</translation>
     </message>
     <message id="notification.deletedAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="343"/>
@@ -297,14 +297,14 @@
         <location filename="../qml/pages/TimelinePage.qml" line="572"/>
         <location filename="../qml/pages/TrashPage.qml" line="271"/>
         <source>Deleted %1 assets</source>
-        <translation type="unfinished">Slettet %1 objekter</translation>
+        <translation>Slettet %1 objekter</translation>
     </message>
     <message id="notification.movedToArchive">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="353"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="299"/>
         <location filename="../qml/pages/TimelinePage.qml" line="619"/>
         <source>Moved to archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Flyttet til arkiv</translation>
     </message>
     <message id="notification.movedToLockedFolder">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="356"/>
@@ -312,7 +312,7 @@
         <location filename="../qml/pages/FavoritesPage.qml" line="302"/>
         <location filename="../qml/pages/TimelinePage.qml" line="622"/>
         <source>Moved to locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Flyttet til låst mappe</translation>
     </message>
     <message id="notification.downloadingAsset">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="404"/>
@@ -321,7 +321,7 @@
         <location filename="../qml/pages/SearchResultsPage.qml" line="242"/>
         <location filename="../qml/pages/TimelinePage.qml" line="312"/>
         <source>Downloading asset...</source>
-        <translation type="unfinished">Laster ned objekt...</translation>
+        <translation>Laster ned objekt...</translation>
     </message>
     <message id="notification.downloadingAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="406"/>
@@ -330,7 +330,7 @@
         <location filename="../qml/pages/SearchResultsPage.qml" line="244"/>
         <location filename="../qml/pages/TimelinePage.qml" line="314"/>
         <source>Downloading %1 assets...</source>
-        <translation type="unfinished">Laster ned %1 objekter...</translation>
+        <translation>Laster ned %1 objekter...</translation>
     </message>
     <message id="notification.deletingAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="412"/>
@@ -340,7 +340,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="322"/>
         <location filename="../qml/pages/TrashPage.qml" line="208"/>
         <source>Deleting %1 assets</source>
-        <translation type="unfinished">Sletter %1 objekter</translation>
+        <translation>Sletter %1 objekter</translation>
     </message>
     <message id="notification.deletingAsset">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="414"/>
@@ -350,7 +350,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="320"/>
         <location filename="../qml/pages/TrashPage.qml" line="210"/>
         <source>Deleting asset</source>
-        <translation type="unfinished">Sletter objekt</translation>
+        <translation>Sletter objekt</translation>
     </message>
     <message id="albumInfoPage.albumInformation">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="39"/>
@@ -385,7 +385,7 @@
     <message id="pullDownMenu.editAlbum">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="17"/>
         <source>Edit album</source>
-        <translation type="unfinished">Rediger album</translation>
+        <translation>Rediger album</translation>
     </message>
     <message id="albumInfoPage.assetCount">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="69"/>
@@ -396,17 +396,17 @@
         <location filename="../qml/pages/AlbumInfoPage.qml" line="75"/>
         <location filename="../qml/pages/AssetInfoPage.qml" line="257"/>
         <source>Owner</source>
-        <translation type="unfinished">Eier</translation>
+        <translation>Eier</translation>
     </message>
     <message id="albumInfoPage.ownerName">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="82"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Navn</translation>
     </message>
     <message id="albumInfoPage.ownerEmail">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="89"/>
         <source>Email</source>
-        <translation type="unfinished">E-post</translation>
+        <translation>E-post</translation>
     </message>
     <message id="albumInfoPage.sharedWith">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="95"/>
@@ -585,14 +585,14 @@
         <location filename="../qml/pages/SearchPage.qml" line="178"/>
         <location filename="../qml/pages/TimelinePage.qml" line="101"/>
         <source>Settings</source>
-        <translation type="unfinished">Innstillinger</translation>
+        <translation>Innstillinger</translation>
     </message>
     <message id="pullDownMenu.library">
         <location filename="../qml/pages/AlbumsPage.qml" line="95"/>
         <location filename="../qml/pages/SettingsPage.qml" line="59"/>
         <location filename="../qml/pages/TimelinePage.qml" line="107"/>
         <source>Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliotek</translation>
     </message>
     <message id="pullDownMenu.search">
         <location filename="../qml/pages/AlbumsPage.qml" line="101"/>
@@ -600,7 +600,7 @@
         <location filename="../qml/pages/SettingsPage.qml" line="65"/>
         <location filename="../qml/pages/TimelinePage.qml" line="113"/>
         <source>Search</source>
-        <translation type="unfinished">Søk</translation>
+        <translation>Søk</translation>
     </message>
     <message id="pullDownMenu.timeline">
         <location filename="../qml/pages/AlbumsPage.qml" line="107"/>
@@ -608,7 +608,7 @@
         <location filename="../qml/pages/SearchPage.qml" line="190"/>
         <location filename="../qml/pages/SettingsPage.qml" line="77"/>
         <source>Timeline</source>
-        <translation type="unfinished">Tidslinje</translation>
+        <translation>Tidslinje</translation>
     </message>
     <message id="albumsPage.sortStartDate">
         <location filename="../qml/pages/AlbumsPage.qml" line="264"/>
@@ -728,12 +728,12 @@
         <location filename="../qml/pages/StackDetailPage.qml" line="448"/>
         <location filename="../qml/pages/VideoPlayerPage.qml" line="69"/>
         <source>Downloading...</source>
-        <translation type="unfinished">Laster ned...</translation>
+        <translation>Laster ned...</translation>
     </message>
     <message id="notification.removingFromAlbum">
         <location filename="../qml/pages/AssetDetailPage.qml" line="389"/>
         <source>Removing from album</source>
-        <translation type="unfinished">Fjerner fra album</translation>
+        <translation>Fjerner fra album</translation>
     </message>
     <message id="notification.downloaded">
         <location filename="../qml/pages/AssetDetailPage.qml" line="456"/>
@@ -741,12 +741,12 @@
         <location filename="../qml/pages/TimelinePage.qml" line="576"/>
         <location filename="../qml/pages/VideoPlayerPage.qml" line="345"/>
         <source>Downloaded to: %1</source>
-        <translation type="unfinished">Lastet ned til: %1</translation>
+        <translation>Lastet ned til: %1</translation>
     </message>
     <message id="pullDownMenu.editAsset">
         <location filename="../qml/pages/AssetInfoPage.qml" line="22"/>
         <source>Edit Asset</source>
-        <translation type="unfinished">Rediger objekt</translation>
+        <translation>Rediger objekt</translation>
     </message>
     <message id="assetInfoPage.assetInformation">
         <location filename="../qml/pages/AssetInfoPage.qml" line="46"/>
@@ -847,32 +847,32 @@
     <message id="assetInfoPage.ownerName">
         <location filename="../qml/pages/AssetInfoPage.qml" line="264"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Navn</translation>
     </message>
     <message id="assetInfoPage.ownerEmail">
         <location filename="../qml/pages/AssetInfoPage.qml" line="271"/>
         <source>Email</source>
-        <translation type="unfinished">E-post</translation>
+        <translation>E-post</translation>
     </message>
     <message id="assetInfoPage.albums">
         <location filename="../qml/pages/AssetInfoPage.qml" line="277"/>
         <source>Albums</source>
-        <translation type="unfinished">Album</translation>
+        <translation>Album</translation>
     </message>
     <message id="assetInfoPage.asset">
         <location filename="../qml/pages/AssetInfoPage.qml" line="335"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 objekt</translation>
+        <translation>1 objekt</translation>
     </message>
     <message id="assetInfoPage.assets">
         <location filename="../qml/pages/AssetInfoPage.qml" line="337"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 objekter</translation>
+        <translation>%1 objekter</translation>
     </message>
     <message id="assetInfoPage.shared">
         <location filename="../qml/pages/AssetInfoPage.qml" line="354"/>
         <source>Shared</source>
-        <translation type="unfinished">Delt</translation>
+        <translation>Delt</translation>
     </message>
     <message id="loginPage.loginTitle">
         <location filename="../qml/pages/LoginPage.qml" line="26"/>
@@ -974,12 +974,12 @@
     <message id="pullDownMenu.clearFilters">
         <location filename="../qml/pages/SearchPage.qml" line="196"/>
         <source>Clear search filters</source>
-        <translation type="unfinished">Tøm søkefiltre</translation>
+        <translation>Tøm søkefiltre</translation>
     </message>
     <message id="pullDownMenu.searchAction">
         <location filename="../qml/pages/SearchPage.qml" line="202"/>
         <source>Search assets</source>
-        <translation type="unfinished">Søk i objekter</translation>
+        <translation>Søk i objekter</translation>
     </message>
     <message id="searchPage.search">
         <location filename="../qml/pages/SearchPage.qml" line="214"/>
@@ -1288,13 +1288,13 @@
         <location filename="../qml/pages/SearchResultsPage.qml" line="205"/>
         <location filename="../qml/pages/StackDetailPage.qml" line="589"/>
         <source>Added to favorites</source>
-        <translation type="unfinished">Lagt til favoritter</translation>
+        <translation>Lagt til Favoritter</translation>
     </message>
     <message id="notification.removedFromFavorites">
         <location filename="../qml/pages/SearchResultsPage.qml" line="207"/>
         <location filename="../qml/pages/StackDetailPage.qml" line="591"/>
         <source>Removed from favorites</source>
-        <translation type="unfinished">Fjernet fra favoritter</translation>
+        <translation>Fjernet fra Favoritter</translation>
     </message>
     <message id="serverPage.serverConfiguration">
         <location filename="../qml/pages/ServerPage.qml" line="20"/>
@@ -1615,27 +1615,27 @@
     <message id="notification.backupClearDbRemorse">
         <location filename="../qml/pages/SettingsPage.qml" line="550"/>
         <source>Clearing backup database</source>
-        <translation type="unfinished">Nullstiller sikkerhetskopidatabasen</translation>
+        <translation>Nullstiller sikkerhetskopidatabasen</translation>
     </message>
     <message id="notification.loggingOut">
         <location filename="../qml/pages/SettingsPage.qml" line="579"/>
         <source>Logging out</source>
-        <translation type="unfinished">Logger ut</translation>
+        <translation>Logger ut</translation>
     </message>
     <message id="notification.serverSyncResult">
         <location filename="../qml/pages/SettingsPage.qml" line="737"/>
         <source>Verified: %1 already on server, %2 new to upload</source>
-        <translation type="unfinished">Verifisert: %1 finnes allerede på serveren, %2 nye skal lastes opp</translation>
+        <translation>Verifisert: %1 finnes allerede på serveren, %2 nye skal lastes opp</translation>
     </message>
     <message id="notification.dbCleared">
         <location filename="../qml/pages/SettingsPage.qml" line="741"/>
         <source>Backup database cleared</source>
-        <translation type="unfinished">Sikkerhetskopidatabasen er tømt</translation>
+        <translation>Sikkerhetskopidatabasen er tømt</translation>
     </message>
     <message id="notification.mediaTypesFetchFailed">
         <location filename="../qml/pages/SettingsPage.qml" line="745"/>
         <source>Could not fetch supported media types from server. Backup disabled.</source>
-        <translation type="unfinished">Kunne ikke hente støttede medietyper fra serveren. Sikkerhetskopiering er deaktivert.</translation>
+        <translation>Kunne ikke hente støttede medietyper fra serveren. Sikkerhetskopiering er deaktivert.</translation>
     </message>
     <message id="settingsPage.backupSkipVerification">
         <location filename="../qml/pages/SettingsPage.qml" line="443"/>
@@ -1817,12 +1817,12 @@
     <message id="notification.removingUser">
         <location filename="../qml/pages/SharePage.qml" line="69"/>
         <source>Removing user</source>
-        <translation type="unfinished">Fjerner bruker</translation>
+        <translation>Fjerner bruker</translation>
     </message>
     <message id="notification.leavingAlbum">
         <location filename="../qml/pages/SharePage.qml" line="76"/>
         <source>Leaving album</source>
-        <translation type="unfinished">Forlater album</translation>
+        <translation>Forlater album</translation>
     </message>
     <message id="sharePage.albumAccessNotOwner">
         <location filename="../qml/pages/SharePage.qml" line="125"/>
@@ -2043,7 +2043,7 @@
     <message id="pullDownMenu.openInBrowser">
         <location filename="../qml/pages/ShareResultPage.qml" line="25"/>
         <source>Open in browser</source>
-        <translation type="unfinished">Åpne i nettleser</translation>
+        <translation>Åpne i nettleser</translation>
     </message>
     <message id="shareResultPage.shareLinkCreated">
         <location filename="../qml/pages/ShareResultPage.qml" line="39"/>
@@ -2073,27 +2073,27 @@
     <message id="pullDownMenu.showInTimeline">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="42"/>
         <source>Show in timeline</source>
-        <translation type="unfinished">Vis i tidslinje</translation>
+        <translation>Vis i tidslinje</translation>
     </message>
     <message id="pullDownMenu.share">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="53"/>
         <source>Share</source>
-        <translation type="unfinished">Del</translation>
+        <translation>Del</translation>
     </message>
     <message id="pullDownMenu.download">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="64"/>
         <source>Download</source>
-        <translation type="unfinished">Last ned</translation>
+        <translation>Last ned</translation>
     </message>
     <message id="pullDownMenu.removeFromFavorites">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="76"/>
         <source>Remove from favorites</source>
-        <translation type="unfinished">Fjern fra favoritter</translation>
+        <translation>Fjern fra favoritter</translation>
     </message>
     <message id="pullDownMenu.addToFavorites">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="78"/>
         <source>Add to favorites</source>
-        <translation type="unfinished">Legg til favoritter</translation>
+        <translation>Legg til favoritter</translation>
     </message>
     <message id="videoPlayerPage.failed">
         <location filename="../qml/pages/VideoPlayerPage.qml" line="301"/>
@@ -2123,7 +2123,7 @@
     <message id="pullDownMenu.upload">
         <location filename="../qml/pages/TimelinePage.qml" line="125"/>
         <source>Upload</source>
-        <translation type="unfinished">Last opp</translation>
+        <translation>Last opp</translation>
     </message>
     <message id="timelinePage.timeline">
         <location filename="../qml/pages/TimelinePage.qml" line="146"/>
@@ -2158,22 +2158,22 @@
     <message id="notification.addedToAlbum">
         <location filename="../qml/pages/TimelinePage.qml" line="581"/>
         <source>Added asset(s) to album</source>
-        <translation type="unfinished">La til objekt(er) til album</translation>
+        <translation>La til objekt(er) til album</translation>
     </message>
     <message id="notification.createdAlbum">
         <location filename="../qml/pages/TimelinePage.qml" line="597"/>
         <source>Created album: %1</source>
-        <translation type="unfinished">Opprettet album: %1</translation>
+        <translation>Opprettet album: %1</translation>
     </message>
     <message id="notification.stackCreated">
         <location filename="../qml/pages/TimelinePage.qml" line="608"/>
         <source>Stack created</source>
-        <translation type="unfinished">Stabel opprettet</translation>
+        <translation>Stabel opprettet</translation>
     </message>
     <message id="notification.stackDeleted">
         <location filename="../qml/pages/TimelinePage.qml" line="613"/>
         <source>Stack removed</source>
-        <translation type="unfinished">Stabel fjernet</translation>
+        <translation>Stabel fjernet</translation>
     </message>
     <message id="editAlbumDialog.editAlbum">
         <location filename="../qml/pages/EditAlbumDialog.qml" line="33"/>
@@ -2238,13 +2238,13 @@
     <message id="pullDownMenu.clearLogs">
         <location filename="../qml/pages/LogViewerPage.qml" line="28"/>
         <source>Clear logs</source>
-        <translation type="unfinished">Tøm logger</translation>
+        <translation>Tøm logger</translation>
     </message>
     <message id="pullDownMenu.copyToClipboard">
         <location filename="../qml/pages/LogViewerPage.qml" line="34"/>
         <location filename="../qml/pages/ShareResultPage.qml" line="17"/>
         <source>Copy to clipboard</source>
-        <translation type="unfinished">Kopier til utklippstavle</translation>
+        <translation>Kopier til utklippstavle</translation>
     </message>
     <message id="logViewerPage.title">
         <location filename="../qml/pages/LogViewerPage.qml" line="47"/>
@@ -2324,7 +2324,7 @@
     <message id="pullDownMenu.cancel">
         <location filename="../qml/pages/UploadPage.qml" line="97"/>
         <source>Cancel upload</source>
-        <translation type="unfinished">Avbryt opplasting</translation>
+        <translation>Avbryt opplasting</translation>
     </message>
     <message id="uploadPage.title">
         <location filename="../qml/pages/UploadPage.qml" line="112"/>
@@ -2405,7 +2405,7 @@
     <message id="notification.unstacking">
         <location filename="../qml/pages/StackDetailPage.qml" line="505"/>
         <source>Unstacking</source>
-        <translation type="unfinished">Spre stabel</translation>
+        <translation>Spre stabel</translation>
     </message>
     <message id="downloadFolderDialog.accept">
         <location filename="../qml/components/DownloadFolderDialog.qml" line="36"/>
@@ -2450,32 +2450,32 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="94"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="118"/>
         <source>Archived</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkivert</translation>
     </message>
     <message id="archivedPage.asset">
         <location filename="../qml/pages/ArchivedPage.qml" line="104"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 objekt</translation>
+        <translation>1 objekt</translation>
     </message>
     <message id="archivedPage.assets">
         <location filename="../qml/pages/ArchivedPage.qml" line="106"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 objekter</translation>
+        <translation>%1 objekter</translation>
     </message>
     <message id="archivedPage.loading">
         <location filename="../qml/pages/ArchivedPage.qml" line="178"/>
         <source>Loading archived assets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster inn arkiverte objekter...</translation>
     </message>
     <message id="archivedPage.noAssets">
         <location filename="../qml/pages/ArchivedPage.qml" line="193"/>
         <source>No archived assets</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen arkiverte objekter</translation>
     </message>
     <message id="notification.removedFromArchive">
         <location filename="../qml/pages/ArchivedPage.qml" line="302"/>
         <source>Removed from archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjernet fra arkiv</translation>
     </message>
     <message id="pullDownMenu.albums">
         <location filename="../qml/pages/LibraryPage.qml" line="26"/>
@@ -2483,153 +2483,153 @@
         <location filename="../qml/pages/SettingsPage.qml" line="71"/>
         <location filename="../qml/pages/TimelinePage.qml" line="119"/>
         <source>Albums</source>
-        <translation type="unfinished">Album</translation>
+        <translation>Album</translation>
     </message>
     <message id="libraryPage.library">
         <location filename="../qml/pages/LibraryPage.qml" line="43"/>
         <source>Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliotek</translation>
     </message>
     <message id="libraryPage.favorites">
         <location filename="../qml/pages/LibraryPage.qml" line="56"/>
         <source>Favorites</source>
-        <translation type="unfinished">Favoritter</translation>
+        <translation>Favoritter</translation>
     </message>
     <message id="libraryPage.archived">
         <location filename="../qml/pages/LibraryPage.qml" line="58"/>
         <source>Archived</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkivert</translation>
     </message>
     <message id="libraryPage.sharedLinks">
         <location filename="../qml/pages/LibraryPage.qml" line="60"/>
         <source>Shared Links</source>
-        <translation type="unfinished"></translation>
+        <translation>Delte lenker</translation>
     </message>
     <message id="libraryPage.trash">
         <location filename="../qml/pages/LibraryPage.qml" line="62"/>
         <source>Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Søppelbøtte</translation>
     </message>
     <message id="libraryPage.people">
         <location filename="../qml/pages/LibraryPage.qml" line="64"/>
         <source>People</source>
-        <translation type="unfinished">Personer</translation>
+        <translation>Personer</translation>
     </message>
     <message id="libraryPage.places">
         <location filename="../qml/pages/LibraryPage.qml" line="66"/>
         <source>Places</source>
-        <translation type="unfinished"></translation>
+        <translation>Steder</translation>
     </message>
     <message id="libraryPage.onThisDevice">
         <location filename="../qml/pages/LibraryPage.qml" line="68"/>
         <source>On This Device</source>
-        <translation type="unfinished"></translation>
+        <translation>På denne enheten</translation>
     </message>
     <message id="libraryPage.folders">
         <location filename="../qml/pages/LibraryPage.qml" line="70"/>
         <source>Folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapper</translation>
     </message>
     <message id="libraryPage.lockedFolder">
         <location filename="../qml/pages/LibraryPage.qml" line="72"/>
         <source>Locked Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Låst mappe</translation>
     </message>
     <message id="libraryPage.partners">
         <location filename="../qml/pages/LibraryPage.qml" line="74"/>
         <source>Partners</source>
-        <translation type="unfinished"></translation>
+        <translation>Partnere</translation>
     </message>
     <message id="pullDownMenu.restoreAll">
         <location filename="../qml/pages/TrashPage.qml" line="50"/>
         <source>Restore all</source>
-        <translation type="unfinished"></translation>
+        <translation>Gjenopprett alt</translation>
     </message>
     <message id="notification.restoringAll">
         <location filename="../qml/pages/TrashPage.qml" line="55"/>
         <source>Restoring all items from trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Gjenoppretter objekter fra søppelbøtte</translation>
     </message>
     <message id="pullDownMenu.emptyTrash">
         <location filename="../qml/pages/TrashPage.qml" line="63"/>
         <source>Empty trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Tøm søppelbøtte</translation>
     </message>
     <message id="notification.emptyingTrash">
         <location filename="../qml/pages/TrashPage.qml" line="68"/>
         <source>Permanently deleting all trashed items</source>
-        <translation type="unfinished"></translation>
+        <translation>Sletter alle elementer i papirkurven permanent</translation>
     </message>
     <message id="trashPage.trash">
         <location filename="../qml/pages/TrashPage.qml" line="80"/>
         <source>Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Søppelbøtte</translation>
     </message>
     <message id="trashPage.autoDeleteInfo">
         <location filename="../qml/pages/TrashPage.qml" line="114"/>
         <source>Trashed items will be permanently deleted after 30 days</source>
-        <translation type="unfinished"></translation>
+        <translation>Innholdet i søppelbøtten slettes automatisk etter 30 dager</translation>
     </message>
     <message id="trashPage.loading">
         <location filename="../qml/pages/TrashPage.qml" line="180"/>
         <source>Loading trashed assets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster objekter i papirkurven...</translation>
     </message>
     <message id="trashPage.noAssets">
         <location filename="../qml/pages/TrashPage.qml" line="189"/>
         <source>Trash is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Søppelbøtten er tom</translation>
     </message>
     <message id="notification.restored">
         <location filename="../qml/pages/TrashPage.qml" line="251"/>
         <source>Restored from trash</source>
-        <translation type="unfinished"></translation>
+        <translation>Gjenopprettet fra søppelbøtten</translation>
     </message>
     <message id="notification.emptied">
         <location filename="../qml/pages/TrashPage.qml" line="257"/>
         <source>Trash emptied</source>
-        <translation type="unfinished"></translation>
+        <translation>Søppelbøtten er tømt</translation>
     </message>
     <message id="notification.allRestored">
         <location filename="../qml/pages/TrashPage.qml" line="262"/>
         <source>All items restored</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle objekter er gjenopprettet</translation>
     </message>
     <message id="pullDownMenu.showOldestFirst">
         <location filename="../qml/pages/FavoritesPage.qml" line="67"/>
         <source>Show oldest first</source>
-        <translation type="unfinished">Vis eldste først</translation>
+        <translation>Vis eldste først</translation>
     </message>
     <message id="pullDownMenu.showNewestFirst">
         <location filename="../qml/pages/FavoritesPage.qml" line="69"/>
         <source>Show newest first</source>
-        <translation type="unfinished">Vis nyeste først</translation>
+        <translation>Vis nyeste først</translation>
     </message>
     <message id="favoritesPage.favorites">
         <location filename="../qml/pages/FavoritesPage.qml" line="101"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="125"/>
         <source>Favorites</source>
-        <translation type="unfinished">Favoritter</translation>
+        <translation>Favoritter</translation>
     </message>
     <message id="favoritesPage.asset">
         <location filename="../qml/pages/FavoritesPage.qml" line="111"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 objekt</translation>
+        <translation>1 objekt</translation>
     </message>
     <message id="favoritesPage.assets">
         <location filename="../qml/pages/FavoritesPage.qml" line="113"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 objekter</translation>
+        <translation>%1 objekter</translation>
     </message>
     <message id="favoritesPage.loading">
         <location filename="../qml/pages/FavoritesPage.qml" line="172"/>
         <source>Loading favorites...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster favoritter...</translation>
     </message>
     <message id="favoritesPage.noAssets">
         <location filename="../qml/pages/FavoritesPage.qml" line="187"/>
         <source>No favorite assets</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen favoritter</translation>
     </message>
 </context>
 </TS>
