@@ -25,6 +25,21 @@ BuildRequires:  desktop-file-utils
 %description
 A native Immich client for Sailfish OS that allows you to browse, view, and manage your photos stored on an Immich server.
 
+%if 0%{?_chum}
+Title: Immich
+Type: desktop-application
+DeveloperName: Zdeněk Vaník (mezmerize)
+Categories:
+ - AudioVideo
+Custom:
+  Repo: https://github.com/mezmerize/harbour-immich
+PackageIcon: https://raw.githubusercontent.com/mezmerize/harbour-immich/main/icons/172x172/harbour-immich.png
+Links:
+  Homepage: https://github.com/mezmerize/harbour-immich
+  Bugtracker: https://github.com/mezmerize/harbour-immich/issues
+  Help: https://github.com/mezmerize/harbour-immich/discussions
+%endif
+
 %prep
 %setup -q -n %{name}-%{version}
 
