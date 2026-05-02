@@ -4,7 +4,7 @@ Name:       harbour-immich
 
 Summary:    Immich client for Sailfish OS
 Version:    0.3.0
-Release:    1
+Release:    1%{?with_harbour:.harbour}
 Group:      Applications/Multimedia
 License:    GPLv3
 URL:        https://github.com/mezmerize/harbour-immich
