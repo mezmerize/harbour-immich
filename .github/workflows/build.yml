@@ -46,6 +46,14 @@ jobs:
            mb2 -t SailfishOS-$OS_VERSION-${{ matrix.arch }} build $HARBOUR_FLAG ;
            sudo cp -r RPMS/*.rpm /share/output"
 
+     - name: Rename RPMs (harbour build)
+       if: matrix.flavour == 'harbour'
+       run: |
+         cd output
+         for f in *.rpm; do
+           mv "$f" "${f%.rpm}-jollaHarbour.rpm"
+         done
+
      - name: Upload RPM (${{ matrix.flavour }}-${{ matrix.arch }})
        uses: actions/upload-artifact@v4
        with:
