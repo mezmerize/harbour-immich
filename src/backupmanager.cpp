@@ -52,36 +52,41 @@ BackupManager::BackupManager(AuthManager *authManager, SettingsManager *settings
     , m_statsDirty(true)
     , m_mediaTypesFetched(false)
     , m_pendingStartAfterMediaTypes(false)
+    , m_cancelRequested(false)
+    , m_backupCycleActive(false)
 {
-    m_scanTimer->setInterval(m_settingsManager->backupScanInterval() * 60 * 1000);
+    int intervalMinutes = m_settingsManager->backupScanInterval();
+    if (intervalMinutes > 0) {
+        m_scanTimer->setInterval(intervalMinutes * 60 * 1000);
+    }
     m_scanTimer->setSingleShot(false);
-    connect(m_scanTimer, &QTimer::timeout, this, &BackupManager::onScanTimer);
+    connect(m_scanTimer, &QTimer::timeout, this, &BackupManager::scanNow);
 
     connect(m_settingsManager, &SettingsManager::backupScanIntervalChanged, this, [this]() {
-        int intervalMs = m_settingsManager->backupScanInterval() * 60 * 1000;
-        m_scanTimer->setInterval(intervalMs);
-        qInfo() << "BackupManager: Scan interval changed to" << m_settingsManager->backupScanInterval() << "minutes";
+        int minutes = m_settingsManager->backupScanInterval();
+        if (minutes > 0) {
+            m_scanTimer->setInterval(minutes * 60 * 1000);
+            if (m_running && !m_scanTimer->isActive()) {
+                m_scanTimer->start();
+            }
+        } else {
+            m_scanTimer->stop();
+        }
+        qInfo() << "BackupManager: Backup interval changed to" << (minutes > 0 ? QString::number(minutes) + "minutes" : "manual only");
     });
 
     connect(m_settingsManager, &SettingsManager::backupFoldersChanged, this, [this]() {
         if(m_running) {
-            qInfo() << "BackupManager: Watched folders changed, re-scanning";
+            qInfo() << "BackupManager: Watched folders changed, checking for changes";
             watchDirectories();
-            scanNow();
+            checkForChanges();
         }
     });
 
     connect(m_settingsManager, &SettingsManager::backupFromDateChanged, this, [this]() {
         if (m_running) {
-            qInfo() << "BackupManager: Backup from date changed, re-scanning";
-            scanNow();
-        }
-    });
-
-    connect(m_settingsManager, &SettingsManager::backupSkipVerificationChanged, this, [this]() {
-        if (m_running) {
-            qInfo() << "BackupManager: Skip verification changed, re-scanning";
-            scanNow();
+            qInfo() << "BackupManager: Backup from date changed, checking for changes";
+            checkForChanges();
         }
     });
 
@@ -218,7 +223,7 @@ bool BackupManager::syncing() const
 
 bool BackupManager::backgroundActive() const
 {
-    return m_uploading || m_syncing;
+    return m_backupCycleActive;
 }
 
 BackupDatabase* BackupManager::database() const
@@ -259,8 +264,12 @@ void BackupManager::startScanningAfterMediaTypes()
     connect(delayTimer, &QTimer::timeout, this, [this, delayTimer]() {
         delayTimer->deleteLater();
         if (m_running) {
-            scanNow();
-            m_scanTimer->start();
+            if (m_settingsManager->backupScanInterval() > 0) {
+                scanNow();
+                m_scanTimer->start();
+            } else {
+                checkForChanges();
+            }
         }
     });
     delayTimer->start();
@@ -272,6 +281,7 @@ void BackupManager::stopBackup()
 
     qInfo() << "BackupManager: Stopping backup service";
     m_running = false;
+    m_backupCycleActive = false;
     m_scanTimer->stop();
     m_processTimer->stop();
     m_dirChangeDebounce->stop();
@@ -281,6 +291,14 @@ void BackupManager::stopBackup()
         m_currentUploadReply->abort();
     }
     m_uploading = false;
+
+    if (m_syncing) {
+        m_syncing = false;
+        m_syncBatchesPending = 0;
+        m_syncDeviceAssetToPath.clear();
+        m_syncMatchedIds.clear();
+        emit syncingChanged();
+    }
 
     // Clear file watcher
     QStringList dirs = m_fileWatcher->directories();
@@ -292,12 +310,20 @@ void BackupManager::stopBackup()
     m_currentProgress = 0;
     emit currentFileChanged();
     emit currentProgressChanged();
+    emit backgroundActiveChanged();
     emit runningChanged();
 }
 
 void BackupManager::scanNow()
 {
     if (!m_running) return;
+    m_cancelRequested = false;
+
+    if (!m_backupCycleActive) {
+        m_backupCycleActive = true;
+        emit backgroundActiveChanged();
+    }
+
     if (m_syncing) {
         qInfo() << "BackupManager: Scan skipped - verification in progress";
         return;
@@ -494,6 +520,125 @@ void BackupManager::clearDatabase()
     }
 }
 
+void BackupManager::cancelBackup()
+{
+    if (!m_backupCycleActive) return;
+
+    qInfo() << "Cancelling backup operation";
+
+    m_processTimer->stop();
+    m_cancelRequested = true;
+
+    // Cancel verification if in progress
+    if (m_syncing) {
+        m_syncing = false;
+        m_syncBatchesPending = 0;
+        m_syncDeviceAssetToPath.clear();
+        m_syncMatchedIds.clear();
+        emit syncingChanged();
+    }
+
+    // Cancel upload if in progress
+    if (m_uploading && m_currentUploadReply && !m_currentUploadReply->isFinished()) {
+        m_currentUploadReply->abort();
+    }
+
+    m_backupCycleActive = false;
+    emit backgroundActiveChanged();
+}
+
+void BackupManager::checkForChanges()
+{
+    if (!m_running) return;
+    if (!m_mediaTypesFetched) return;
+    if (m_syncing) {
+        qInfo() << "BackupManager: Check for changes postponed - verification in progress";
+        return;
+    }
+
+    QStringList folders = m_settingsManager->backupFolders();
+    qint64 fromDateMs = m_settingsManager->backupFromDateMs();
+
+    qInfo() << "BackupManager: Checking for file changes";
+
+    int added = 0;
+    for (const QString &folder : folders) {
+        QDir dir(folder);
+        if (!dir.exists()) continue;
+
+        QDirIterator it(folder, QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+        while (it.hasNext()) {
+            it.next();
+            QFileInfo fi = it.fileInfo();
+            QString suffix = fi.suffix().toLower();
+
+            if (!isMediaFile(suffix)) continue;
+
+            QString filePath = fi.absoluteFilePath();
+            qint64 fileMod = fi.lastModified().toMSecsSinceEpoch();
+
+            // Skip files older than the configured date
+            if (fromDateMs > 0 && fileMod < fromDateMs) continue;
+
+            if (!m_database->hasFile(filePath)) {
+                if (m_database->addFile(filePath, fi.size(), fileMod)) {
+                    added++;
+                }
+            }
+        }
+    }
+
+    // Prune all tracked files that are no longer valid
+    auto isInWatchedFolder = [&folders](const QString &path) {
+        for (const QString &folder : folders) {
+            if (path.startsWith(folder)) return true;
+        }
+        return false;
+    };
+    auto isValidTrackedFile = [&isInWatchedFolder, fromDateMs](const QString &path) {
+        if (!isInWatchedFolder(path)) return false;
+        if (!QFile::exists(path)) return false;
+        if (fromDateMs > 0) {
+            qint64 fileMod = QFileInfo(path).lastModified().toMSecsSinceEpoch();
+            if (fileMod < fromDateMs) return false;
+        }
+        return true;
+    };
+
+    int removed = 0;
+    QStringList pendingPaths = m_database->pendingFiles(100000);
+    for (const QString &path : pendingPaths) {
+        if (!isValidTrackedFile(path)) {
+            m_database->removeFile(path);
+            removed++;
+        }
+    }
+    QStringList failedPaths = m_database->failedFiles();
+    for (const QString &path : failedPaths) {
+        if (!isValidTrackedFile(path)) {
+            m_database->removeFile(path);
+            removed++;
+        }
+    }
+    QStringList backedUpPaths = m_database->backedUpFiles();
+    for (const QString &path : backedUpPaths) {
+        if (!isValidTrackedFile(path)) {
+            m_database->removeFile(path);
+            removed++;
+        }
+    }
+
+    if (removed > 0) {
+        qInfo() << "BackupManager: Pruned" << removed << "files (deleted, outside folders, or outside date range)";
+    }
+    if (added > 0) {
+        qInfo() << "BackupManager: Added" << added << "new files as pending";
+    }
+    if (added > 0 || removed > 0) {
+        invalidateStats(removed > 0);
+    }
+}
+
 void BackupManager::verifyNewFiles(const QStringList &newFilePaths)
 {
     m_syncing = true;
@@ -533,8 +678,6 @@ void BackupManager::verifyNewFiles(const QStringList &newFilePaths)
         emit syncingChanged();
         return;
     }
-
-    qInfo() << "BackupManager: Verifying" << allAssets.size() << "files against server";
 
     // Send in batches of 500
     static const int BATCH_SIZE = 500;
@@ -588,8 +731,10 @@ void BackupManager::onBulkUploadCheckCompleted(const QJsonArray &results)
         for (auto it = m_syncDeviceAssetToPath.constBegin(); it != m_syncDeviceAssetToPath.constEnd(); ++it) {
             if (!m_syncMatchedIds.contains(it.key())) {
                 QFileInfo fi(it.value());
-                if (fi.exists() && !m_database->hasFile(it.value())) {
-                    m_database->addFile(it.value(), fi.size(), fi.lastModified().toMSecsSinceEpoch());
+                if (fi.exists()) {
+                    if (!m_database->hasFile(it.value())) {
+                        m_database->addFile(it.value(), fi.size(), fi.lastModified().toMSecsSinceEpoch());
+                    }
                     m_syncPending++;
                 }
             }
@@ -612,11 +757,6 @@ void BackupManager::onBulkUploadCheckCompleted(const QJsonArray &results)
     }
 }
 
-void BackupManager::onScanTimer()
-{
-    scanNow();
-}
-
 void BackupManager::onDirectoryChanged(const QString &path)
 {
     // Collect changed paths and debounce - avoids scanning on every rapid change
@@ -626,45 +766,8 @@ void BackupManager::onDirectoryChanged(const QString &path)
 
 void BackupManager::onDebouncedDirectoryChange()
 {
-    if (!m_running) {
-        m_pendingDirChanges.clear();
-        return;
-    }
-
-    QStringList folders = m_settingsManager->backupFolders();
-    int newFiles = 0;
-
-    for (const QString &path : m_pendingDirChanges) {
-        for (const QString &folder : folders) {
-            if (path.startsWith(folder) || folder.startsWith(path)) {
-                QDir dir(path);
-                if (!dir.exists()) continue;
-
-                QFileInfoList entries = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
-                for (const QFileInfo &fi : entries) {
-                    QString suffix = fi.suffix().toLower();
-                    if (!isMediaFile(suffix)) continue;
-
-                    QString filePath = fi.absoluteFilePath();
-                    if (!m_database->hasFile(filePath)) {
-                        if (m_database->addFile(filePath, fi.size(),
-                                                fi.lastModified().toMSecsSinceEpoch())) {
-                            newFiles++;
-                        }
-                    }
-                }
-                break;
-            }
-        }
-    }
-
     m_pendingDirChanges.clear();
-
-    if (newFiles > 0) {
-        qInfo() << "BackupManager: Detected" << newFiles << "new file(s) from directory changes";
-        invalidateStats();
-        scheduleProcessQueue();
-    }
+    checkForChanges();
 }
 
 void BackupManager::onNetworkStateChanged(bool isOnline)
@@ -681,6 +784,10 @@ void BackupManager::processQueue()
     QStringList pending = m_database->pendingFiles(1);
     if (pending.isEmpty()) {
         qDebug() << "BackupManager: No pending files";
+        if (m_backupCycleActive) {
+            m_backupCycleActive = false;
+            emit backgroundActiveChanged();
+        }
         if (m_settingsManager->backupAutoDisable()) {
             qInfo() << "BackupManager: All files backed up, auto-disabling backup";
             setEnabled(false);
@@ -723,7 +830,6 @@ void BackupManager::uploadFile(const QString &filePath)
     m_currentProgress = 0;
     emit currentFileChanged();
     emit currentProgressChanged();
-    emit backgroundActiveChanged();
 
     m_database->setStatus(filePath, BackupDatabase::Uploading);
 
@@ -768,7 +874,6 @@ void BackupManager::onUploadFinished(QNetworkReply *reply, const QString &filePa
 {
     m_currentUploadReply = nullptr;
     m_uploading = false;
-    emit backgroundActiveChanged();
 
     if (reply->error() == QNetworkReply::NoError) {
         QByteArray response = reply->readAll();
@@ -880,6 +985,10 @@ void BackupManager::invalidateStats(bool includeBackupStatus)
 
 void BackupManager::scheduleProcessQueue()
 {
+    if (m_cancelRequested) {
+        m_cancelRequested = false;
+        return;
+    }
     if (m_running && !m_uploading && !m_syncing && !m_processTimer->isActive()) {
         m_processTimer->start();
     }

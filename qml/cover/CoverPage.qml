@@ -340,15 +340,10 @@ CoverBackground {
     Connections {
         target: authManager
         onIsAuthenticatedChanged: {
-            if (authManager.isAuthenticated) {
-                immichApi.fetchMemories()
+            if (!authManager.isAuthenticated) {
+                coverMemories = []
+                clearCoverImages()
             }
-        }
-    }
-
-    Component.onCompleted: {
-        if (authManager.isAuthenticated) {
-            immichApi.fetchMemories()
         }
     }
 }

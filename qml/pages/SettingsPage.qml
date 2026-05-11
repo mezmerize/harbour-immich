@@ -449,21 +449,27 @@ Page {
                }
            }
 
-           // Scan interval
+           // Backup interval
            ComboBox {
                visible: settingsManager.backupEnabled
-               //% "Scan interval"
+               //% "Backup interval"
                label: qsTrId("settingsPage.backupScanInterval")
-               //% "How often to scan for new files. Shorter intervals may impact battery life."
+               //% "How often to run a backup cycle. Shorter intervals may impact battery life. Selecting manual only will require triggering the backup manually by the button below."
                description: qsTrId("settingsPage.backupScanIntervalInfo")
                currentIndex: {
                    var mins = settingsManager.backupScanInterval
-                   if (mins <= 30) return 0
-                   if (mins <= 60) return 1
-                   if (mins <= 240) return 2
-                   return 3
+                   if (mins <= 0) return 0
+                   if (mins <= 30) return 1
+                   if (mins <= 60) return 2
+                   if (mins <= 240) return 3
+                   return 4
                }
                menu: ContextMenu {
+                   MenuItem {
+                       //% "Manual only"
+                       text: qsTrId("settingsPage.backupScanIntervalManual")
+                       onClicked: settingsManager.backupScanInterval = 0
+                   }
                    MenuItem {
                        //% "30 minutes"
                        text: qsTrId("settingsPage.backupScanInterval30")
@@ -519,29 +525,35 @@ Page {
                wrapMode: Text.WordWrap
            }
 
-           Row {
-              anchors.horizontalCenter: parent.horizontalCenter
-              spacing: Theme.paddingMedium
-              visible: settingsManager.backupEnabled
+           Button {
+               anchors.horizontalCenter: parent.horizontalCenter
+               visible: settingsManager.backupEnabled
+               text: backupManager.backgroundActive
+                   //% "Cancel backup"
+                   ? qsTrId("settingsPage.cancelBackup")
+                   //% "Scan and backup now"
+                   : qsTrId("settingsPage.scanNow")
+               onClicked: {
+                   if (backupManager.backgroundActive) {
+                       backupManager.cancelBackup()
+                   } else {
+                       backupManager.scanNow()
+                   }
+               }
+           }
 
-              Button {
-                  //% "Scan now"
-                  text: qsTrId("settingsPage.backupScanNow")
-                  onClicked: backupManager.scanNow()
-              }
-
-              Button {
-                  //% "Retry failed"
-                  text: qsTrId("settingsPage.backupRetryFailed")
-                  enabled: backupManager.failedCount > 0
-                  onClicked: backupManager.retryFailed()
-              }
+           Button {
+               //% "Retry failed"
+               text: qsTrId("settingsPage.backupRetryFailed")
+               enabled: backupManager.failedCount > 0
+               onClicked: backupManager.retryFailed()
            }
 
            // Clear database button
            Button {
                anchors.horizontalCenter: parent.horizontalCenter
                visible: settingsManager.backupEnabled
+               enabled: !backupManager.backgroundActive
                //% "Clear backup database"
                text: qsTrId("settingsPage.backupClearDb")
                color: "#ff4444"
@@ -690,7 +702,7 @@ Page {
            DetailItem {
                //% "Version"
                label: qsTrId("settingsPage.version")
-               value: "0.3.0"
+               value: "0.3.1"
            }
 
            DetailItem {

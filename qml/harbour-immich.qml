@@ -11,9 +11,9 @@ ApplicationWindow
     // Background backup job - wakes the device periodically to scan and upload
     BackgroundJob {
         id: backupJob
-        enabled: settingsManager.backupEnabled && authManager.isAuthenticated
+        enabled: settingsManager.backupEnabled && authManager.isAuthenticated && settingsManager.backupScanInterval > 0
         frequency: {
-            var mins = settingsManager.backupInterval
+            var mins = settingsManager.backupScanInterval
             if (mins <= 30) return BackgroundJob.ThirtyMinutes
             if (mins <= 60) return BackgroundJob.OneHour
             if (mins <= 240) return BackgroundJob.FourHours

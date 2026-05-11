@@ -59,6 +59,7 @@ public:
     Q_INVOKABLE void startBackup();
     Q_INVOKABLE void stopBackup();
     Q_INVOKABLE void scanNow();
+    Q_INVOKABLE void cancelBackup();
     Q_INVOKABLE void retryFailed();
     Q_INVOKABLE bool isAssetBackedUp(const QString &remoteAssetId) const;
     Q_INVOKABLE void registerManualUpload(const QString &filePath, const QString &remoteAssetId);
@@ -85,7 +86,6 @@ signals:
     void fileBackupFailed(const QString &filePath, const QString &error);
 
 private slots:
-    void onScanTimer();
     void onDirectoryChanged(const QString &path);
     void onNetworkStateChanged(bool isOnline);
     void onDebouncedDirectoryChange();
@@ -133,6 +133,7 @@ private:
     void onUploadFinished(QNetworkReply *reply, const QString &filePath);
     void onBulkUploadCheckCompleted(const QJsonArray &results);
     void verifyNewFiles(const QStringList &newFilePaths);
+    void checkForChanges();
     void refreshStats();
     void refreshBackedUpCache();
     void invalidateStats(bool includeBackupStatus = false);
@@ -156,6 +157,8 @@ private:
     QStringList m_videoExtensions;
     bool m_mediaTypesFetched;
     bool m_pendingStartAfterMediaTypes;
+    bool m_cancelRequested;
+    bool m_backupCycleActive;
 };
 
 #endif

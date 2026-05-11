@@ -1574,71 +1574,88 @@
     </message>
     <message id="settingsPage.backupScanInterval">
         <location filename="../qml/pages/SettingsPage.qml" line="456"/>
-        <source>Scan interval</source>
+        <source>Backup interval</source>
+        <oldsource>Scan interval</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanIntervalInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="458"/>
-        <source>How often to scan for new files. Shorter intervals may impact battery life.</source>
+        <source>How often to run a backup cycle. Shorter intervals may impact battery life. Selecting manual only will require triggering the backup manually by the button below.</source>
+        <oldsource>How often to scan for new files. Shorter intervals may impact battery life.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.backupScanIntervalManual">
+        <location filename="../qml/pages/SettingsPage.qml" line="470"/>
+        <source>Manual only</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanInterval30">
-        <location filename="../qml/pages/SettingsPage.qml" line="469"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="475"/>
         <source>30 minutes</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanInterval60">
-        <location filename="../qml/pages/SettingsPage.qml" line="474"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="480"/>
         <source>1 hour</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanInterval240">
-        <location filename="../qml/pages/SettingsPage.qml" line="479"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="485"/>
         <source>4 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanInterval480">
-        <location filename="../qml/pages/SettingsPage.qml" line="484"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="490"/>
         <source>8 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupFromDate">
-        <location filename="../qml/pages/SettingsPage.qml" line="494"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="500"/>
         <source>Back up files from</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupFromDateAll">
-        <location filename="../qml/pages/SettingsPage.qml" line="496"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="502"/>
         <source>All files (no limit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupFromDateInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="516"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="522"/>
         <source>Only back up files modified after this date. Long press to clear.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settingsPage.cancelBackup">
+        <location filename="../qml/pages/SettingsPage.qml" line="533"/>
+        <source>Cancel backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.scanNow">
+        <location filename="../qml/pages/SettingsPage.qml" line="535"/>
+        <source>Scan and backup now</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="notification.backupClearDbRemorse">
-        <location filename="../qml/pages/SettingsPage.qml" line="550"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="562"/>
         <source>Clearing backup database</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.loggingOut">
-        <location filename="../qml/pages/SettingsPage.qml" line="579"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="591"/>
         <source>Logging out</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.serverSyncResult">
-        <location filename="../qml/pages/SettingsPage.qml" line="737"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="749"/>
         <source>Verified: %1 already on server, %2 new to upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.dbCleared">
-        <location filename="../qml/pages/SettingsPage.qml" line="741"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="753"/>
         <source>Backup database cleared</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.mediaTypesFetchFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="745"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="757"/>
         <source>Could not fetch supported media types from server. Backup disabled.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1652,138 +1669,133 @@
         <source>Skip checking of assets against the server before uploading. Faster scanning, but duplicates are only detected by the server during upload.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="settingsPage.backupScanNow">
-        <location filename="../qml/pages/SettingsPage.qml" line="529"/>
-        <source>Scan now</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="settingsPage.backupRetryFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="535"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="547"/>
         <source>Retry failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupClearDb">
-        <location filename="../qml/pages/SettingsPage.qml" line="546"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="558"/>
         <source>Clear backup database</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.account">
-        <location filename="../qml/pages/SettingsPage.qml" line="558"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="570"/>
         <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.server">
-        <location filename="../qml/pages/SettingsPage.qml" line="563"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="575"/>
         <source>Server</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.email">
-        <location filename="../qml/pages/SettingsPage.qml" line="569"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="581"/>
         <source>Email</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.logout">
-        <location filename="../qml/pages/SettingsPage.qml" line="576"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="588"/>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.serverStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="589"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="601"/>
         <source>Server Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.serverStatisticsNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="597"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="609"/>
         <source>Server statistics are not available at the moment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalPhotos">
-        <location filename="../qml/pages/SettingsPage.qml" line="607"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="619"/>
         <source>Total photos</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalPhotosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="609"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="621"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalVideos">
-        <location filename="../qml/pages/SettingsPage.qml" line="615"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="627"/>
         <source>Total videos</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalVideosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="617"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="629"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.storageUsed">
-        <location filename="../qml/pages/SettingsPage.qml" line="623"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="635"/>
         <source>Storage used</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.storageUsedLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="625"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="637"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="631"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="643"/>
         <source>Total assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalAssetsLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="633"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="645"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.refreshStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="639"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="651"/>
         <source>Refresh statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.aboutServer">
-        <location filename="../qml/pages/SettingsPage.qml" line="650"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="662"/>
         <source>About Server</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.aboutServerNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="658"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="670"/>
         <source>Server version info is not available at the moment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.serverVersion">
-        <location filename="../qml/pages/SettingsPage.qml" line="679"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="691"/>
         <source>Server version</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.serverVersionLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="681"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="693"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.aboutApplication">
-        <location filename="../qml/pages/SettingsPage.qml" line="687"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="699"/>
         <source>About Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.version">
-        <location filename="../qml/pages/SettingsPage.qml" line="692"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="704"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.loadedAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="698"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="710"/>
         <source>Loaded assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.viewLogs">
-        <location filename="../qml/pages/SettingsPage.qml" line="705"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="717"/>
         <source>View application logs</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.applicationInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="717"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="729"/>
         <source>Harbour Immich - A native Immich client for Sailfish OS</source>
         <translation type="unfinished"></translation>
     </message>
