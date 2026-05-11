@@ -278,7 +278,7 @@ Page {
                               //% "Backing up: %1"
                               return qsTrId("settingsPage.backingUp").arg(backupManager.currentFile)
                           }
-                          if (backupManager.running) {
+                          if (backupManager.running && backupManager.backgroundActive) {
                               //% "Backup active"
                               return qsTrId("settingsPage.backupActive")
                           }
@@ -531,7 +531,7 @@ Page {
                text: backupManager.backgroundActive
                    //% "Cancel backup"
                    ? qsTrId("settingsPage.cancelBackup")
-                   //% "Scan and backup now"
+                   //% "Backup now"
                    : qsTrId("settingsPage.scanNow")
                onClicked: {
                    if (backupManager.backgroundActive) {

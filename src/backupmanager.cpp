@@ -54,6 +54,7 @@ BackupManager::BackupManager(AuthManager *authManager, SettingsManager *settings
     , m_pendingStartAfterMediaTypes(false)
     , m_cancelRequested(false)
     , m_backupCycleActive(false)
+    , m_retryOnly(false)
 {
     int intervalMinutes = m_settingsManager->backupScanInterval();
     if (intervalMinutes > 0) {
@@ -282,6 +283,8 @@ void BackupManager::stopBackup()
     qInfo() << "BackupManager: Stopping backup service";
     m_running = false;
     m_backupCycleActive = false;
+    m_retryOnly = false;
+    m_retryQueue.clear();
     m_scanTimer->stop();
     m_processTimer->stop();
     m_dirChangeDebounce->stop();
@@ -318,6 +321,8 @@ void BackupManager::scanNow()
 {
     if (!m_running) return;
     m_cancelRequested = false;
+    m_retryOnly = false;
+    m_retryQueue.clear();
 
     if (!m_backupCycleActive) {
         m_backupCycleActive = true;
@@ -402,6 +407,9 @@ void BackupManager::scanNow()
         if (!isValidTrackedFile(path)) {
             m_database->removeFile(path);
             removed++;
+        } else {
+            m_database->resetFile(path);
+            pendingToVerify.append(path);
         }
     }
     QStringList backedUpPaths = m_database->backedUpFiles();
@@ -457,8 +465,60 @@ void BackupManager::scanNow()
 
 void BackupManager::retryFailed()
 {
-    m_database->resetFailedFiles();
+    QStringList failedPaths = m_database->failedFiles();
+    if (failedPaths.isEmpty()) return;
+
+    QStringList folders = m_settingsManager->backupFolders();
+    qint64 fromDateMs = m_settingsManager->backupFromDateMs();
+    bool skipVerification = m_settingsManager->backupSkipVerification();
+
+    auto isInWatchedFolder = [&folders](const QString &path) {
+        for (const QString &folder : folders) {
+            if (path.startsWith(folder)) return true;
+        }
+        return false;
+    };
+
+    // Validate failed files against current settings
+    QStringList validPaths;
+    int pruned = 0;
+    for (const QString &path : failedPaths) {
+        if (!QFile::exists(path) || !isInWatchedFolder(path)) {
+            m_database->removeFile(path);
+            pruned++;
+            continue;
+        }
+        if (fromDateMs > 0) {
+            qint64 fileMod = QFileInfo(path).lastModified().toMSecsSinceEpoch();
+            if (fileMod < fromDateMs) {
+                m_database->removeFile(path);
+                pruned++;
+                continue;
+            }
+        }
+        validPaths.append(path);
+    }
+
+    if (pruned > 0) {
+        qInfo() << "BackupManager: Pruned" << pruned << "invalid failed files";
+    }
+
+    if (validPaths.isEmpty()) {
+        invalidateStats(pruned > 0);
+        return;
+    }
+
+    // Reset only the valid failed files to pending
+    for (const QString &path : validPaths) {
+        m_database->resetFile(path);
+    }
     invalidateStats();
+
+    qInfo() << "Retrying" << validPaths.size() << "failed files";
+
+    // Switch to retry only so process queue uploads only the subset of pending
+    m_retryOnly = true;
+    m_retryQueue = validPaths;
 
     if (!m_backupCycleActive) {
         m_backupCycleActive = true;
@@ -466,7 +526,11 @@ void BackupManager::retryFailed()
         emit backgroundActiveChanged();
     }
 
-    scheduleProcessQueue();
+    if (!skipVerification && m_authManager->isAuthenticated()) {
+        verifyNewFiles(validPaths);
+    } else {
+        scheduleProcessQueue();
+    }
 }
 
 bool BackupManager::isAssetBackedUp(const QString &remoteAssetId) const
@@ -550,6 +614,8 @@ void BackupManager::cancelBackup()
         m_currentUploadReply->abort();
     }
 
+    m_retryOnly = false;
+    m_retryQueue.clear();
     m_backupCycleActive = false;
     emit backgroundActiveChanged();
 }
@@ -788,21 +854,41 @@ void BackupManager::processQueue()
     if (!m_running || m_uploading || m_syncing) return;
     if (!m_authManager->isAuthenticated()) return;
 
-    QStringList pending = m_database->pendingFiles(1);
-    if (pending.isEmpty()) {
-        qDebug() << "BackupManager: No pending files";
-        if (m_backupCycleActive) {
-            m_backupCycleActive = false;
-            emit backgroundActiveChanged();
-        }
-        if (m_settingsManager->backupAutoDisable()) {
-            qInfo() << "BackupManager: All files backed up, auto-disabling backup";
-            setEnabled(false);
-        }
-        return;
-    }
+    QString filePath;
 
-    QString filePath = pending.first();
+    if (m_retryOnly) {
+        while (!m_retryQueue.isEmpty()) {
+            QString candidate = m_retryQueue.takeFirst();
+            if (QFile::exists(candidate) && m_database->fileStatus(candidate) == BackupDatabase::Pending) {
+                filePath = candidate;
+                break;
+            }
+        }
+        if (filePath.isEmpty()) {
+            qDebug() << "BackupManager: Retry queue complete";
+            m_retryOnly = false;
+            if (m_backupCycleActive) {
+                m_backupCycleActive = false;
+                emit backgroundActiveChanged();
+            }
+            return;
+        }
+    } else {
+        QStringList pending = m_database->pendingFiles(1);
+        if (pending.isEmpty()) {
+            qDebug() << "BackupManager: No pending files";
+            if (m_backupCycleActive) {
+                m_backupCycleActive = false;
+                emit backgroundActiveChanged();
+            }
+            if (m_settingsManager->backupAutoDisable()) {
+                qInfo() << "BackupManager: All files backed up, auto-disabling backup";
+                setEnabled(false);
+            }
+            return;
+        }
+        filePath = pending.first();
+    }
 
     // Check if file still exists
     QFileInfo fi(filePath);

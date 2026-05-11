@@ -155,10 +155,12 @@ private:
 
     QStringList m_photoExtensions;
     QStringList m_videoExtensions;
+    QStringList m_retryQueue;
     bool m_mediaTypesFetched;
     bool m_pendingStartAfterMediaTypes;
     bool m_cancelRequested;
     bool m_backupCycleActive;
+    bool m_retryOnly;
 };
 
 #endif

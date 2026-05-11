@@ -1626,8 +1626,9 @@
     </message>
     <message id="settingsPage.scanNow">
         <location filename="../qml/pages/SettingsPage.qml" line="535"/>
-        <source>Scan and backup now</source>
-        <translation>Skenovat a zálohovat</translation>
+        <source>Backup now</source>
+        <oldsource>Scan and backup now</oldsource>
+        <translation>Zálohovat</translation>
     </message>
     <message id="notification.backupClearDbRemorse">
         <location filename="../qml/pages/SettingsPage.qml" line="564"/>
