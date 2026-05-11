@@ -72,7 +72,7 @@ BackupManager::BackupManager(AuthManager *authManager, SettingsManager *settings
         } else {
             m_scanTimer->stop();
         }
-        qInfo() << "BackupManager: Backup interval changed to" << (minutes > 0 ? QString::number(minutes) + "minutes" : "manual only");
+        qInfo() << "BackupManager: Backup interval changed to" << (minutes > 0 ? QString::number(minutes) + " minutes" : "manual only");
     });
 
     connect(m_settingsManager, &SettingsManager::backupFoldersChanged, this, [this]() {
@@ -459,6 +459,13 @@ void BackupManager::retryFailed()
 {
     m_database->resetFailedFiles();
     invalidateStats();
+
+    if (!m_backupCycleActive) {
+        m_backupCycleActive = true;
+        m_cancelRequested = false;
+        emit backgroundActiveChanged();
+    }
+
     scheduleProcessQueue();
 }
 

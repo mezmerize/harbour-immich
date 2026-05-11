@@ -543,9 +543,11 @@ Page {
            }
 
            Button {
+               anchors.horizontalCenter: parent.horizontalCenter
+               visible: settingsManager.backupEnabled
                //% "Retry failed"
                text: qsTrId("settingsPage.backupRetryFailed")
-               enabled: backupManager.failedCount > 0
+               enabled: backupManager.failedCount > 0 && !backupManager.backgroundActive
                onClicked: backupManager.retryFailed()
            }
 

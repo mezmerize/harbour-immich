@@ -1630,27 +1630,27 @@
         <translation>Skenovat a zálohovat</translation>
     </message>
     <message id="notification.backupClearDbRemorse">
-        <location filename="../qml/pages/SettingsPage.qml" line="562"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="564"/>
         <source>Clearing backup database</source>
         <translation>Databáze záloh se maže</translation>
     </message>
     <message id="notification.loggingOut">
-        <location filename="../qml/pages/SettingsPage.qml" line="591"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="593"/>
         <source>Logging out</source>
         <translation>Odhlašuje se</translation>
     </message>
     <message id="notification.serverSyncResult">
-        <location filename="../qml/pages/SettingsPage.qml" line="749"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="751"/>
         <source>Verified: %1 already on server, %2 new to upload</source>
         <translation>Ověřeno: %1 již na serveru, %2 zbývajících</translation>
     </message>
     <message id="notification.dbCleared">
-        <location filename="../qml/pages/SettingsPage.qml" line="753"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="755"/>
         <source>Backup database cleared</source>
         <translation>Databáze záloh byla vymazána</translation>
     </message>
     <message id="notification.mediaTypesFetchFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="757"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="759"/>
         <source>Could not fetch supported media types from server. Backup disabled.</source>
         <translation>Nebylo možno získat podporované formáty medií ze serveru. Zálohování bylo vypnuto.</translation>
     </message>
@@ -1665,132 +1665,132 @@
         <translation>Přeskočit ověření položek oproti serveru před nahráváním. Skenování je rychlejší, ale dupllikáty jsou odhaleny až na serveru během nahrávání.</translation>
     </message>
     <message id="settingsPage.backupRetryFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="547"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="549"/>
         <source>Retry failed</source>
         <translation>Znovu zkusit chybné</translation>
     </message>
     <message id="settingsPage.backupClearDb">
-        <location filename="../qml/pages/SettingsPage.qml" line="558"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="560"/>
         <source>Clear backup database</source>
         <translation>Vymazat databázi záloh</translation>
     </message>
     <message id="settingsPage.account">
-        <location filename="../qml/pages/SettingsPage.qml" line="570"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="572"/>
         <source>Account</source>
         <translation>Účet</translation>
     </message>
     <message id="settingsPage.server">
-        <location filename="../qml/pages/SettingsPage.qml" line="575"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="577"/>
         <source>Server</source>
         <translation>Server</translation>
     </message>
     <message id="settingsPage.email">
-        <location filename="../qml/pages/SettingsPage.qml" line="581"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="583"/>
         <source>Email</source>
         <translation>Email</translation>
     </message>
     <message id="settingsPage.logout">
-        <location filename="../qml/pages/SettingsPage.qml" line="588"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="590"/>
         <source>Logout</source>
         <translation>Odhlásit se</translation>
     </message>
     <message id="settingsPage.serverStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="601"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="603"/>
         <source>Server Statistics</source>
         <translation>Statistiky serveru</translation>
     </message>
     <message id="settingsPage.serverStatisticsNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="609"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="611"/>
         <source>Server statistics are not available at the moment.</source>
         <translation>Statistiky serveru momentálně nejsou dostupné.</translation>
     </message>
     <message id="settingsPage.totalPhotos">
-        <location filename="../qml/pages/SettingsPage.qml" line="619"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="621"/>
         <source>Total photos</source>
         <translation>Celkový počet fotek</translation>
     </message>
     <message id="settingsPage.totalPhotosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="621"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="623"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message id="settingsPage.totalVideos">
-        <location filename="../qml/pages/SettingsPage.qml" line="627"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="629"/>
         <source>Total videos</source>
         <translation>Celkový počet videí</translation>
     </message>
     <message id="settingsPage.totalVideosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="629"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="631"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message id="settingsPage.storageUsed">
-        <location filename="../qml/pages/SettingsPage.qml" line="635"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="637"/>
         <source>Storage used</source>
         <translation>Obsazené místo</translation>
     </message>
     <message id="settingsPage.storageUsedLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="637"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="639"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message id="settingsPage.totalAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="643"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="645"/>
         <source>Total assets</source>
         <translation>Celkový počet položek</translation>
     </message>
     <message id="settingsPage.totalAssetsLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="645"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="647"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message id="settingsPage.refreshStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="651"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="653"/>
         <source>Refresh statistics</source>
         <translation>Obnovit statistiky</translation>
     </message>
     <message id="settingsPage.aboutServer">
-        <location filename="../qml/pages/SettingsPage.qml" line="662"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="664"/>
         <source>About Server</source>
         <translation>O serveru</translation>
     </message>
     <message id="settingsPage.aboutServerNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="670"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="672"/>
         <source>Server version info is not available at the moment.</source>
         <translation>Informace o verzi serveru momentálně není dostupná.</translation>
     </message>
     <message id="settingsPage.serverVersion">
-        <location filename="../qml/pages/SettingsPage.qml" line="691"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="693"/>
         <source>Server version</source>
         <translation>Verze serveru</translation>
     </message>
     <message id="settingsPage.serverVersionLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="693"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="695"/>
         <source>Loading...</source>
         <translation>Načítá se...</translation>
     </message>
     <message id="settingsPage.aboutApplication">
-        <location filename="../qml/pages/SettingsPage.qml" line="699"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="701"/>
         <source>About Application</source>
         <translation>O aplikaci</translation>
     </message>
     <message id="settingsPage.version">
-        <location filename="../qml/pages/SettingsPage.qml" line="704"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="706"/>
         <source>Version</source>
         <translation>Verze</translation>
     </message>
     <message id="settingsPage.loadedAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="710"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="712"/>
         <source>Loaded assets</source>
         <translation>Počet aktuálně načtených položek</translation>
     </message>
     <message id="settingsPage.viewLogs">
-        <location filename="../qml/pages/SettingsPage.qml" line="717"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="719"/>
         <source>View application logs</source>
         <translation>Zobrazit logy aplikace</translation>
     </message>
     <message id="settingsPage.applicationInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="729"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="731"/>
         <source>Harbour Immich - A native Immich client for Sailfish OS</source>
         <translation>Harbour Immich - Nativní Immich klient pro Sailfish OS</translation>
     </message>

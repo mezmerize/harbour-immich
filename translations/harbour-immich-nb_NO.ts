@@ -1630,27 +1630,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.backupClearDbRemorse">
-        <location filename="../qml/pages/SettingsPage.qml" line="562"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="564"/>
         <source>Clearing backup database</source>
         <translation>Nullstiller sikkerhetskopidatabasen</translation>
     </message>
     <message id="notification.loggingOut">
-        <location filename="../qml/pages/SettingsPage.qml" line="591"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="593"/>
         <source>Logging out</source>
         <translation>Logger ut</translation>
     </message>
     <message id="notification.serverSyncResult">
-        <location filename="../qml/pages/SettingsPage.qml" line="749"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="751"/>
         <source>Verified: %1 already on server, %2 new to upload</source>
         <translation>Verifisert: %1 finnes allerede på serveren, %2 nye skal lastes opp</translation>
     </message>
     <message id="notification.dbCleared">
-        <location filename="../qml/pages/SettingsPage.qml" line="753"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="755"/>
         <source>Backup database cleared</source>
         <translation>Sikkerhetskopidatabasen er tømt</translation>
     </message>
     <message id="notification.mediaTypesFetchFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="757"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="759"/>
         <source>Could not fetch supported media types from server. Backup disabled.</source>
         <translation>Kunne ikke hente støttede medietyper fra serveren. Sikkerhetskopiering er deaktivert.</translation>
     </message>
@@ -1665,132 +1665,132 @@
         <translation>Hopp over sjekk av filer mot serveren før opplasting. Dette gir raskere skanning, men duplikater oppdages først av serveren under selve opplastingen.</translation>
     </message>
     <message id="settingsPage.backupRetryFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="547"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="549"/>
         <source>Retry failed</source>
         <translation>Nytt forsøk feilet</translation>
     </message>
     <message id="settingsPage.backupClearDb">
-        <location filename="../qml/pages/SettingsPage.qml" line="558"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="560"/>
         <source>Clear backup database</source>
         <translation>Nullstill sikkerhetskopidatabasen</translation>
     </message>
     <message id="settingsPage.account">
-        <location filename="../qml/pages/SettingsPage.qml" line="570"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="572"/>
         <source>Account</source>
         <translation>Konto</translation>
     </message>
     <message id="settingsPage.server">
-        <location filename="../qml/pages/SettingsPage.qml" line="575"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="577"/>
         <source>Server</source>
         <translation>Server</translation>
     </message>
     <message id="settingsPage.email">
-        <location filename="../qml/pages/SettingsPage.qml" line="581"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="583"/>
         <source>Email</source>
         <translation>E-post</translation>
     </message>
     <message id="settingsPage.logout">
-        <location filename="../qml/pages/SettingsPage.qml" line="588"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="590"/>
         <source>Logout</source>
         <translation>Logg ut</translation>
     </message>
     <message id="settingsPage.serverStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="601"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="603"/>
         <source>Server Statistics</source>
         <translation>Serverstatistikk</translation>
     </message>
     <message id="settingsPage.serverStatisticsNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="609"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="611"/>
         <source>Server statistics are not available at the moment.</source>
         <translation>Serverstatistikk er ikke tilgjengelig for øyeblikket.</translation>
     </message>
     <message id="settingsPage.totalPhotos">
-        <location filename="../qml/pages/SettingsPage.qml" line="619"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="621"/>
         <source>Total photos</source>
         <translation>Totalt antall bilder</translation>
     </message>
     <message id="settingsPage.totalPhotosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="621"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="623"/>
         <source>Loading...</source>
         <translation>Laster...</translation>
     </message>
     <message id="settingsPage.totalVideos">
-        <location filename="../qml/pages/SettingsPage.qml" line="627"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="629"/>
         <source>Total videos</source>
         <translation>Totalt antall videoer</translation>
     </message>
     <message id="settingsPage.totalVideosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="629"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="631"/>
         <source>Loading...</source>
         <translation>Laster...</translation>
     </message>
     <message id="settingsPage.storageUsed">
-        <location filename="../qml/pages/SettingsPage.qml" line="635"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="637"/>
         <source>Storage used</source>
         <translation>Lagringsplass brukt</translation>
     </message>
     <message id="settingsPage.storageUsedLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="637"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="639"/>
         <source>Loading...</source>
         <translation>Laster...</translation>
     </message>
     <message id="settingsPage.totalAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="643"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="645"/>
         <source>Total assets</source>
         <translation>Totalt antall objekter</translation>
     </message>
     <message id="settingsPage.totalAssetsLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="645"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="647"/>
         <source>Loading...</source>
         <translation>Laster...</translation>
     </message>
     <message id="settingsPage.refreshStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="651"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="653"/>
         <source>Refresh statistics</source>
         <translation>Oppdater statistikk</translation>
     </message>
     <message id="settingsPage.aboutServer">
-        <location filename="../qml/pages/SettingsPage.qml" line="662"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="664"/>
         <source>About Server</source>
         <translation>Om server</translation>
     </message>
     <message id="settingsPage.aboutServerNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="670"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="672"/>
         <source>Server version info is not available at the moment.</source>
         <translation>Informasjon om serverversjon er ikke tilgjengelig for øyeblikket.</translation>
     </message>
     <message id="settingsPage.serverVersion">
-        <location filename="../qml/pages/SettingsPage.qml" line="691"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="693"/>
         <source>Server version</source>
         <translation>Server-versjon</translation>
     </message>
     <message id="settingsPage.serverVersionLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="693"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="695"/>
         <source>Loading...</source>
         <translation>Laster...</translation>
     </message>
     <message id="settingsPage.aboutApplication">
-        <location filename="../qml/pages/SettingsPage.qml" line="699"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="701"/>
         <source>About Application</source>
         <translation>Om applikasjon</translation>
     </message>
     <message id="settingsPage.version">
-        <location filename="../qml/pages/SettingsPage.qml" line="704"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="706"/>
         <source>Version</source>
         <translation>Versjon</translation>
     </message>
     <message id="settingsPage.loadedAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="710"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="712"/>
         <source>Loaded assets</source>
         <translation>Lastede objekter</translation>
     </message>
     <message id="settingsPage.viewLogs">
-        <location filename="../qml/pages/SettingsPage.qml" line="717"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="719"/>
         <source>View application logs</source>
         <translation>Vis applikasjonslogger</translation>
     </message>
     <message id="settingsPage.applicationInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="729"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="731"/>
         <source>Harbour Immich - A native Immich client for Sailfish OS</source>
         <translation>Harbour Immich – En Immich-klient for Sailfish OS</translation>
     </message>
