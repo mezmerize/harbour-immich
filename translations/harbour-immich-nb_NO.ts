@@ -1571,18 +1571,18 @@
         <location filename="../qml/pages/SettingsPage.qml" line="456"/>
         <source>Backup interval</source>
         <oldsource>Scan interval</oldsource>
-        <translation type="unfinished">Skanningsintervall</translation>
+        <translation>Backupintervall</translation>
     </message>
     <message id="settingsPage.backupScanIntervalInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="458"/>
         <source>How often to run a backup cycle. Shorter intervals may impact battery life. Selecting manual only will require triggering the backup manually by the button below.</source>
         <oldsource>How often to scan for new files. Shorter intervals may impact battery life.</oldsource>
-        <translation type="unfinished">Angi skanningsintervall for nye filer. Hyppig skanning bruker mer batteri.</translation>
+        <translation>Hvor ofte backup skal kjøres. Kortere intervaller kan påvirke batteritiden. Hvis du velger &quot;Kun manuelt&quot;, må backup startes manuelt med knappen nedenfor.</translation>
     </message>
     <message id="settingsPage.backupScanIntervalManual">
         <location filename="../qml/pages/SettingsPage.qml" line="470"/>
         <source>Manual only</source>
-        <translation type="unfinished"></translation>
+        <translation>Kun manuelt</translation>
     </message>
     <message id="settingsPage.backupScanInterval30">
         <location filename="../qml/pages/SettingsPage.qml" line="475"/>
@@ -1622,13 +1622,13 @@
     <message id="settingsPage.cancelBackup">
         <location filename="../qml/pages/SettingsPage.qml" line="533"/>
         <source>Cancel backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt backup</translation>
     </message>
     <message id="settingsPage.scanNow">
         <location filename="../qml/pages/SettingsPage.qml" line="535"/>
         <source>Backup now</source>
         <oldsource>Scan and backup now</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Kjør backup nå</translation>
     </message>
     <message id="notification.backupClearDbRemorse">
         <location filename="../qml/pages/SettingsPage.qml" line="564"/>
