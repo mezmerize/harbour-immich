@@ -92,6 +92,7 @@ Page {
            switch (searchTypeCombo.currentIndex) {
                case 0: // Context (smart search)
                    params.query = searchText
+                   params.isSmartSearch = true
                    break
                case 1: // Filename
                    params.originalFileName = searchText
@@ -100,8 +101,7 @@ Page {
                    params.description = searchText
                    break
                case 3: // OCR
-                   params.query = searchText
-                   params.withExif = true  // OCR results are in EXIF/smart search
+                   params.ocr = searchText
                    break
            }
        }

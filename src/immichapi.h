@@ -25,7 +25,7 @@ public:
     Q_INVOKABLE void fetchAlbums(const QString &shared = QString());
     Q_INVOKABLE void fetchAlbumDetails(const QString &albumId);
     Q_INVOKABLE void searchByParameters(const QVariantMap &searchParams);
-    Q_INVOKABLE void smartSearch(const QString &assetId);
+    Q_INVOKABLE void searchSmartByParameters(const QVariantMap &searchParams);
     Q_INVOKABLE void fetchPeople();
     Q_INVOKABLE void fetchSearchSuggestions(const QString &type);
     Q_INVOKABLE void toggleFavorite(const QStringList &assetIds, bool isFavorite);
@@ -118,6 +118,7 @@ private:
 
     QNetworkRequest createAuthenticatedRequest(const QUrl &url) const;
     void handleNetworkError(QNetworkReply *reply);
+    void populateBaseSearchParams(QJsonObject &json, const QVariantMap &searchParams);
     void uploadNextFile();
     void startAssetDownload(const QString &assetId, const QString &fileName);
 

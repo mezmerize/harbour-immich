@@ -21,6 +21,7 @@
 #include <QTimer>
 #include <QMediaPlayer>
 #include <QMediaContent>
+#include <QLocale>
 
 namespace {
 QJsonArray toJsonStringArray(const QStringList &values)
@@ -114,13 +115,8 @@ void ImmichApi::fetchAlbumsForAsset(const QString &assetId)
     });
 }
 
-void ImmichApi::searchByParameters(const QVariantMap &searchParams)
+void ImmichApi::populateBaseSearchParams(QJsonObject &json, const QVariantMap &searchParams)
 {
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/search/metadata"));
-    QNetworkRequest request = createAuthenticatedRequest(url);
-
-    QJsonObject json;
-
     // Helper: copy non-empty string param (with optional JSON key rename)
     auto copyString = [&](const QString &key, const QString &jsonKey = QString()) {
         if (searchParams.contains(key) && !searchParams[key].toString().isEmpty()) {
@@ -141,10 +137,8 @@ void ImmichApi::searchByParameters(const QVariantMap &searchParams)
             json[key] = searchParams[key].toBool();
     };
 
-    // Text search
-    copyString("query", "q");
-    copyString("originalFileName");
-    copyString("description");
+    // OCR
+    copyString("ocr");
 
     // People
     if (searchParams.contains("personIds")) {
@@ -180,16 +174,37 @@ void ImmichApi::searchByParameters(const QVariantMap &searchParams)
     copyBool("isNotInAlbum");
     copyBool("isFavorite");
 
-    // Sort order
-    json["order"] = searchParams.contains("order") ? searchParams["order"].toString() : QStringLiteral("desc");
-
     // Pagination
     if (searchParams.contains("page")) {
         json["page"] = searchParams["page"].toInt();
     }
     json["size"] = searchParams.contains("size") ? searchParams["size"].toInt() : 100;
 
+    json["withExif"] = "true";
+}
+
+void ImmichApi::searchByParameters(const QVariantMap &searchParams)
+{
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/search/metadata"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    populateBaseSearchParams(json, searchParams);
+
+    // Metadata specific fields
+    auto copyString = [&](const QString &key) {
+        if (searchParams.contains(key) && !searchParams[key].toString().isEmpty()) {
+            json[key] = searchParams[key].toString();
+        }
+    };
+    copyString("originalFileName");
+    copyString("description");
+
+    // Sort order
+    json["order"] = searchParams.contains("order") ? searchParams["order"].toString() : QStringLiteral("desc");
+
     QJsonDocument doc(json);
+    qInfo().noquote() << "ImmichApi: Fetching search for params:" << doc.toJson(QJsonDocument::Compact);
     QNetworkReply *reply = m_networkManager->post(request, doc.toJson());
     connect(reply, &QNetworkReply::finished, this, &ImmichApi::onSearchByParametersReplyFinished);
 }
@@ -211,6 +226,7 @@ void ImmichApi::onSearchByParametersReplyFinished()
                 results = assetsObj["items"].toArray();
             }
         }
+        qInfo() << "ImmichApi: Search results received, count:" << results.size();
         emit searchResultsReceived(results);
     } else {
         handleNetworkError(reply);
@@ -219,17 +235,29 @@ void ImmichApi::onSearchByParametersReplyFinished()
     reply->deleteLater();
 }
 
-void ImmichApi::smartSearch(const QString &assetId)
+void ImmichApi::searchSmartByParameters(const QVariantMap &searchParams)
 {
-    qInfo() << "ImmichApi: Smart search for:" << assetId;
     QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/search/smart"));
     QNetworkRequest request = createAuthenticatedRequest(url);
 
     QJsonObject json;
-    json["queryAssetId"] = assetId;
-    json["size"] = 100;
+    populateBaseSearchParams(json, searchParams);
+
+    // Smart search specific fields
+    auto copyString = [&](const QString &key) {
+        if (searchParams.contains(key) && !searchParams[key].toString().isEmpty()) {
+            json[key] = searchParams[key].toString();
+        }
+    };
+    copyString("query");
+    copyString("queryAssetId");
+
+    // Language
+    QString lang = QLocale::system().bcp47Name().section('-', 0, 0);
+    json["language"] = lang.isEmpty() ? QStringLiteral("en") : lang;
 
     QJsonDocument doc(json);
+    qInfo().noquote() << "ImmichApi: Fetching search (smart) for params:" << doc.toJson(QJsonDocument::Compact);
     QNetworkReply *reply = m_networkManager->post(request, doc.toJson());
     connect(reply, &QNetworkReply::finished, this, &ImmichApi::onSearchByParametersReplyFinished);
 }

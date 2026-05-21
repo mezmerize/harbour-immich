@@ -318,7 +318,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="404"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="230"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="222"/>
-        <location filename="../qml/pages/SearchResultsPage.qml" line="242"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="258"/>
         <location filename="../qml/pages/TimelinePage.qml" line="312"/>
         <source>Downloading asset...</source>
         <translation>Laster ned objekt...</translation>
@@ -327,7 +327,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="406"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="232"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="224"/>
-        <location filename="../qml/pages/SearchResultsPage.qml" line="244"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="260"/>
         <location filename="../qml/pages/TimelinePage.qml" line="314"/>
         <source>Downloading %1 assets...</source>
         <translation>Laster ned %1 objekter...</translation>
@@ -336,7 +336,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="412"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="238"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="230"/>
-        <location filename="../qml/pages/SearchResultsPage.qml" line="250"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="266"/>
         <location filename="../qml/pages/TimelinePage.qml" line="322"/>
         <location filename="../qml/pages/TrashPage.qml" line="208"/>
         <source>Deleting %1 assets</source>
@@ -346,7 +346,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="414"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="240"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="232"/>
-        <location filename="../qml/pages/SearchResultsPage.qml" line="252"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="268"/>
         <location filename="../qml/pages/TimelinePage.qml" line="320"/>
         <location filename="../qml/pages/TrashPage.qml" line="210"/>
         <source>Deleting asset</source>
@@ -1259,39 +1259,39 @@
         <translation>Ukjent</translation>
     </message>
     <message id="searchResultsPage.searchResults">
-        <location filename="../qml/pages/SearchResultsPage.qml" line="95"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="97"/>
         <source>Search Results</source>
         <translation>Søkeresultater</translation>
     </message>
     <message id="searchResultsPage.result">
-        <location filename="../qml/pages/SearchResultsPage.qml" line="98"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="100"/>
         <source>1 result</source>
         <translation>1 resultat</translation>
     </message>
     <message id="searchResultsPage.results">
-        <location filename="../qml/pages/SearchResultsPage.qml" line="100"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="102"/>
         <source>%1 results</source>
         <oldsource>%1 result(s)</oldsource>
         <translation>%1 resultater</translation>
     </message>
     <message id="searchResultsPage.noResults">
-        <location filename="../qml/pages/SearchResultsPage.qml" line="161"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="163"/>
         <source>No results found</source>
         <translation>Ingen treff</translation>
     </message>
     <message id="searchResultsPage.noResultsHint">
-        <location filename="../qml/pages/SearchResultsPage.qml" line="163"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="165"/>
         <source>Try adjusting your search filters</source>
         <translation>Forsøk å endre søkefiltrene</translation>
     </message>
     <message id="notification.addedToFavorites">
-        <location filename="../qml/pages/SearchResultsPage.qml" line="205"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="221"/>
         <location filename="../qml/pages/StackDetailPage.qml" line="589"/>
         <source>Added to favorites</source>
         <translation>Lagt til Favoritter</translation>
     </message>
     <message id="notification.removedFromFavorites">
-        <location filename="../qml/pages/SearchResultsPage.qml" line="207"/>
+        <location filename="../qml/pages/SearchResultsPage.qml" line="223"/>
         <location filename="../qml/pages/StackDetailPage.qml" line="591"/>
         <source>Removed from favorites</source>
         <translation>Fjernet fra Favoritter</translation>

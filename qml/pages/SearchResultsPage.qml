@@ -82,7 +82,9 @@ Page {
                    searchResultsModel.clear()
                    searchBusy.running = true
                    if (smartSearchAssetId !== "") {
-                       immichApi.smartSearch(smartSearchAssetId)
+                       immichApi.searchSmartByParameters({ "queryAssetId": smartSearchAssetId })
+                   } else if (searchParams.isSmartSearch) {
+                       immichApi.searchSmartByParameters(searchParams)
                    } else {
                        immichApi.searchByParameters(searchParams)
                    }
@@ -180,15 +182,29 @@ Page {
            searchBusy.running = false
            searchResultsModel.clear()
 
+           var items = []
            for (var i = 0; i < results.length; i++) {
                var asset = results[i]
-               searchResultsModel.append({
+               items.push({
                    assetId: asset.id,
                    isFavorite: asset.isFavorite || false,
                    isVideo: asset.type === "VIDEO",
                    thumbhash: asset.thumbhash || "",
-                   duration: asset.duration || ""
+                   duration: asset.duration || "",
+                   fileCreatedAt: asset.fileCreatedAt || asset.createdAt || ""
                })
+           }
+           // Sorting is done after results are received for smart search because there is no server side sorting
+           if (searchParams.isSmartSearch && smartSearchAssetId === "") {
+               var asc = searchParams.order === "asc"
+               items.sort(function(a, b) {
+                   if (a.fileCreatedAt < b.fileCreatedAt) return asc ? -1 : 1
+                   if (a.fileCreatedAt > b.fileCreatedAt) return asc ? 1 : -1
+                   return 0
+               })
+           }
+           for (var j = 0; j < items.length; j++) {
+               searchResultsModel.append(items[j])
            }
        }
 
@@ -274,14 +290,18 @@ Page {
    Component.onCompleted: {
        searchBusy.running = true
        if (smartSearchAssetId !== "") {
-           immichApi.smartSearch(smartSearchAssetId)
+           immichApi.searchSmartByParameters({ "queryAssetId": smartSearchAssetId })
        } else {
            if (personIds.length > 0) {
                var params = searchParams || {}
                params.personIds = personIds
                searchParams = params
            }
-           immichApi.searchByParameters(searchParams)
+           if (searchParams.isSmartSearch) {
+               immichApi.searchSmartByParameters(searchParams)
+           } else {
+               immichApi.searchByParameters(searchParams)
+           }
        }
    }
 }
