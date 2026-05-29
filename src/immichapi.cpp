@@ -1152,3 +1152,55 @@ void ImmichApi::restoreAllTrash()
         emit allTrashRestored();
     });
 }
+
+void ImmichApi::createPinCode(const QString &pin)
+{
+    qInfo() << "ImmichApi: Creating PIN code";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/auth/pin-code"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    json["pinCode"] = pin;
+    QJsonDocument doc(json);
+
+    QNetworkReply *reply = m_networkManager->post(request, doc.toJson());
+    connectReply(reply, [this](const QByteArray &) {
+        emit pinCodeCreated();
+    });
+}
+
+void ImmichApi::verifyPinCode(const QString &pin)
+{
+    qInfo() << "ImmichApi: Unlocking session with PIN code";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/auth/session/unlock"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    json["pinCode"] = pin;
+    QJsonDocument doc(json);
+
+    QNetworkReply *reply = m_networkManager->post(request, doc.toJson());
+    connect(reply, &QNetworkReply::finished, this, [this, reply]() {
+        bool success = reply->error() == QNetworkReply::NoError;
+        if (!success) {
+            qWarning() << "ImmichApi: Session unlock failed:" << reply->error() << reply->errorString() << "HTTP status:" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        }
+        emit pinCodeVerified(success);
+        reply->deleteLater();
+    });
+}
+
+void ImmichApi::fetchAuthStatus()
+{
+    qInfo() << "ImmichApi: Fetching auth status";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/auth/status"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this](const QByteArray &response) {
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QJsonObject obj = doc.object();
+        bool pinCodeExists = obj.value("pinCode").toBool(false);
+        qInfo() << "ImmichApi: Auth status - pinCode exists:" << pinCodeExists;
+        emit authStatusReceived(pinCodeExists);
+    });
+}

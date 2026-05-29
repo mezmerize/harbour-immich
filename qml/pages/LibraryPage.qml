@@ -53,30 +53,31 @@ Page {
                 Repeater {
                     model: [
                         //% "Favorites"
-                        { title: qsTrId("libraryPage.favorites"), icon: "image://theme/icon-m-favorite", page: "FavoritesPage.qml" },
+                        { title: qsTrId("libraryPage.favorites"), icon: "image://theme/icon-m-favorite", page: "FavoritesPage.qml", show: true },
                         //% "Archived"
-                        { title: qsTrId("libraryPage.archived"), icon: "image://theme/icon-m-file-archive-folder", page: "ArchivedPage.qml" },
+                        { title: qsTrId("libraryPage.archived"), icon: "image://theme/icon-m-file-archive-folder", page: "ArchivedPage.qml", show: true },
                         //% "Shared Links"
-                        { title: qsTrId("libraryPage.sharedLinks"), icon: "image://theme/icon-m-link", page: "SharedLinksPage.qml" },
+                        { title: qsTrId("libraryPage.sharedLinks"), icon: "image://theme/icon-m-link", page: "SharedLinksPage.qml", show: false },
                         //% "Trash"
-                        { title: qsTrId("libraryPage.trash"), icon: "image://theme/icon-m-delete", page: "TrashPage.qml" },
+                        { title: qsTrId("libraryPage.trash"), icon: "image://theme/icon-m-delete", page: "TrashPage.qml", show: true },
                         //% "People"
-                        { title: qsTrId("libraryPage.people"), icon: "image://theme/icon-m-people", page: "PeoplePage.qml" },
+                        { title: qsTrId("libraryPage.people"), icon: "image://theme/icon-m-people", page: "PeoplePage.qml", show: false },
                         //% "Places"
-                        { title: qsTrId("libraryPage.places"), icon: "image://theme/icon-m-location", page: "PlacesPage.qml" },
+                        { title: qsTrId("libraryPage.places"), icon: "image://theme/icon-m-location", page: "PlacesPage.qml", show: false },
                         //% "On This Device"
-                        { title: qsTrId("libraryPage.onThisDevice"), icon: "image://theme/icon-m-phone", page: "OnThisDevicePage.qml" },
+                        { title: qsTrId("libraryPage.onThisDevice"), icon: "image://theme/icon-m-phone", page: "OnThisDevicePage.qml", show: false },
                         //% "Folders"
-                        { title: qsTrId("libraryPage.folders"), icon: "image://theme/icon-m-folder", page: "FoldersPage.qml" },
+                        { title: qsTrId("libraryPage.folders"), icon: "image://theme/icon-m-folder", page: "FoldersPage.qml", show: false },
                         //% "Locked Folder"
-                        { title: qsTrId("libraryPage.lockedFolder"), icon: "image://theme/icon-m-device-lock", page: "LockedFolderPage.qml" },
+                        { title: qsTrId("libraryPage.lockedFolder"), icon: "image://theme/icon-m-device-lock", page: "LockedFolderPage.qml", show: true },
                         //% "Partners"
-                        { title: qsTrId("libraryPage.partners"), icon: "image://theme/icon-m-transfer", page: "PartnersPage.qml" }
+                        { title: qsTrId("libraryPage.partners"), icon: "image://theme/icon-m-transfer", page: "PartnersPage.qml", show: false }
                     ]
 
                     BackgroundItem {
                         width: (column.width - 2 * Theme.horizontalPageMargin - Theme.paddingMedium) / 2
                         height: Theme.itemSizeLarge * 1.2
+                        enabled: modelData.show
 
                         Rectangle {
                             anchors.fill: parent
@@ -105,7 +106,7 @@ Page {
                             }
                         }
 
-                        onClicked: if (modelData.page === "FavoritesPage.qml" || modelData.page === "ArchivedPage.qml" || modelData.page === "TrashPage.qml") pageStack.push(Qt.resolvedUrl(modelData.page))
+                        onClicked: if (modelData.show) pageStack.push(Qt.resolvedUrl(modelData.page))
                     }
                 }
             }

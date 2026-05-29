@@ -210,6 +210,7 @@
         <location filename="../qml/pages/AlbumsPage.qml" line="113"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="65"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="60"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="243"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="80"/>
         <location filename="../qml/pages/TimelinePage.qml" line="131"/>
         <location filename="../qml/pages/TrashPage.qml" line="44"/>
@@ -285,6 +286,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="341"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="314"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="292"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="485"/>
         <location filename="../qml/pages/TimelinePage.qml" line="570"/>
         <location filename="../qml/pages/TrashPage.qml" line="269"/>
         <source>Deleted asset</source>
@@ -294,6 +296,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="343"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="316"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="294"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="487"/>
         <location filename="../qml/pages/TimelinePage.qml" line="572"/>
         <location filename="../qml/pages/TrashPage.qml" line="271"/>
         <source>Deleted %1 assets</source>
@@ -318,6 +321,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="404"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="230"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="222"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="404"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="258"/>
         <location filename="../qml/pages/TimelinePage.qml" line="312"/>
         <source>Downloading asset...</source>
@@ -327,6 +331,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="406"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="232"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="224"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="406"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="260"/>
         <location filename="../qml/pages/TimelinePage.qml" line="314"/>
         <source>Downloading %1 assets...</source>
@@ -336,6 +341,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="412"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="238"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="230"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="412"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="266"/>
         <location filename="../qml/pages/TimelinePage.qml" line="322"/>
         <location filename="../qml/pages/TrashPage.qml" line="208"/>
@@ -346,6 +352,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="414"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="240"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="232"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="414"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="268"/>
         <location filename="../qml/pages/TimelinePage.qml" line="320"/>
         <location filename="../qml/pages/TrashPage.qml" line="210"/>
@@ -2643,6 +2650,68 @@
         <location filename="../qml/pages/FavoritesPage.qml" line="187"/>
         <source>No favorite assets</source>
         <translation>Žádné oblíbené položky</translation>
+    </message>
+    <message id="lockedFolderPage.confirmPin">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="56"/>
+        <source>Re-enter your 6-digit PIN to confirm</source>
+        <translation>Zadejte znovu váš šestimístný PIN pro potvrzení</translation>
+    </message>
+    <message id="lockedFolderPage.createNewPin">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="59"/>
+        <source>Create a 6-digit PIN for your locked folder</source>
+        <translation>Vytvořte šestimístný PIN pro vaši uzamčenou složku</translation>
+    </message>
+    <message id="lockedFolderPage.enterPin">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="62"/>
+        <source>Enter your 6-digit PIN to access the locked folder</source>
+        <translation>Vložte váš šestimístný PIN pro přístup do uzamčené složky</translation>
+    </message>
+    <message id="lockedFolderPage.lockedFolder">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="85"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="272"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="296"/>
+        <source>Locked Folder</source>
+        <translation>Uzamčená složka</translation>
+    </message>
+    <message id="notification.pinMismatch">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="201"/>
+        <source>PINs to do not match, try again</source>
+        <translation>PINy se neshodují, opakujte</translation>
+    </message>
+    <message id="lockedFolderPage.asset">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="282"/>
+        <source>1 asset</source>
+        <translation>1 položka</translation>
+    </message>
+    <message id="lockedFolderPage.assets">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="284"/>
+        <source>%1 assets</source>
+        <translation>%1 položek</translation>
+    </message>
+    <message id="lockedFolderPage.loading">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="357"/>
+        <source>Loading locked folder assets...</source>
+        <translation>Načítají se položky v uzamčené složce</translation>
+    </message>
+    <message id="lockedFolderPage.noAssets">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="372"/>
+        <source>Locked folder is empty</source>
+        <translation>Uzamčená složka je prázdná</translation>
+    </message>
+    <message id="notification.invalidPin">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="454"/>
+        <source>Invalid PIN</source>
+        <translation>Neplatný PIN</translation>
+    </message>
+    <message id="notification.pinCreated">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="459"/>
+        <source>PIN created successfully</source>
+        <translation>PIN byl úspěšně vytvořen</translation>
+    </message>
+    <message id="notification.removedFromLockedFolder">
+        <location filename="../qml/pages/LockedFolderPage.qml" line="495"/>
+        <source>Removed from locked folder</source>
+        <translation>Odstraněno z uzamčené složky</translation>
     </message>
 </context>
 </TS>

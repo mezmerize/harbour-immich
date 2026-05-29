@@ -60,6 +60,9 @@ public:
     Q_INVOKABLE void emptyTrash();
     Q_INVOKABLE void restoreAllTrash();
     Q_INVOKABLE void fetchAlbumsForAsset(const QString &assetId);
+    Q_INVOKABLE void createPinCode(const QString &pin);
+    Q_INVOKABLE void verifyPinCode(const QString &pin);
+    Q_INVOKABLE void fetchAuthStatus();
     static QHttpMultiPart* buildUploadMultiPart(QFile *file, const QFileInfo &fileInfo);
 
 signals:
@@ -102,6 +105,9 @@ signals:
     void trashEmptied();
     void allTrashRestored();
     void assetAlbumsReceived(const QString &assetId, const QJsonArray &albums);
+    void pinCodeCreated();
+    void pinCodeVerified(bool success);
+    void authStatusReceived(bool pinCodeExists);
 
 private slots:
     void onSearchByParametersReplyFinished();
