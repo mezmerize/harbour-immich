@@ -1244,6 +1244,16 @@ void BackupManager::onMediaTypesFetched(QNetworkReply *reply)
     reply->deleteLater();
 }
 
+QStringList BackupManager::supportedPhotoExtensions() const
+{
+    return m_photoExtensions;
+}
+
+QStringList BackupManager::supportedVideoExtensions() const
+{
+    return m_videoExtensions;
+}
+
 bool BackupManager::autoDisableAfterBackup() const
 {
     return m_settingsManager->backupAutoDisable();

@@ -65,6 +65,8 @@ public:
     Q_INVOKABLE void registerManualUpload(const QString &filePath, const QString &remoteAssetId);
     Q_INVOKABLE void handleServerDeletion(const QString &remoteAssetId);
     Q_INVOKABLE void clearDatabase();
+    Q_INVOKABLE QStringList supportedPhotoExtensions() const;
+    Q_INVOKABLE QStringList supportedVideoExtensions() const;
 
     BackupDatabase* database() const;
 
