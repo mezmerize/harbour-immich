@@ -26,6 +26,7 @@ class SettingsManager : public QObject
     Q_PROPERTY(bool coverShowAssets READ coverShowAssets WRITE setCoverShowAssets NOTIFY coverShowAssetsChanged)
     Q_PROPERTY(bool coverSlideshow READ coverSlideshow WRITE setCoverSlideshow NOTIFY coverSlideshowChanged)
     Q_PROPERTY(QString downloadFolder READ downloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged)
+    Q_PROPERTY(QStringList customBrowseFolders READ customBrowseFolders WRITE setCustomBrowseFolders NOTIFY customBrowseFoldersChanged)
 
 public:
     explicit SettingsManager(QObject *parent = nullptr);
@@ -90,7 +91,14 @@ public:
     QString downloadFolder() const;
     void setDownloadFolder(const QString &folder);
 
+    QStringList customBrowseFolders() const;
+    void setCustomBrowseFolders(const QStringList &folders);
+    Q_INVOKABLE void addCustomBrowseFolder(const QString &folder);
+    Q_INVOKABLE void removeCustomBrowseFolder(const QString &folder);
+    Q_INVOKABLE QStringList validCustomBrowseFolders();
+
     Q_INVOKABLE QString homePath() const;
+    Q_INVOKABLE bool folderExists(const QString &path) const;
 
 signals:
     void detailQualityChanged();
@@ -111,6 +119,7 @@ signals:
     void coverShowAssetsChanged();
     void coverSlideshowChanged();
     void downloadFolderChanged();
+    void customBrowseFoldersChanged();
 
 private:
     QSettings m_settings;

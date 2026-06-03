@@ -286,3 +286,53 @@ void SettingsManager::setDownloadFolder(const QString &folder)
         emit downloadFolderChanged();
     }
 }
+
+QStringList SettingsManager::customBrowseFolders() const
+{
+    return m_settings.value("customBrowseFolders", QStringList()).toStringList();
+}
+
+void SettingsManager::setCustomBrowseFolders(const QStringList &folders)
+{
+    if (customBrowseFolders() != folders) {
+        m_settings.setValue("customBrowseFolders", folders);
+        emit customBrowseFoldersChanged();
+    }
+}
+
+void SettingsManager::addCustomBrowseFolder(const QString &folder)
+{
+    QStringList folders = customBrowseFolders();
+    if (!folders.contains(folder)) {
+        folders.append(folder);
+        setCustomBrowseFolders(folders);
+    }
+}
+
+void SettingsManager::removeCustomBrowseFolder(const QString &folder)
+{
+    QStringList folders = customBrowseFolders();
+    if (folders.removeOne(folder)) {
+        setCustomBrowseFolders(folders);
+    }
+}
+
+QStringList SettingsManager::validCustomBrowseFolders()
+{
+    QStringList folders = customBrowseFolders();
+    QStringList valid;
+    for (const QString &folder : folders) {
+        if (QDir(folder).exists()) {
+            valid.append(folder);
+        }
+    }
+    if (valid != folders) {
+        setCustomBrowseFolders(valid);
+    }
+    return valid;
+}
+
+bool SettingsManager::folderExists(const QString &path) const
+{
+    return QDir(path).exists();
+}

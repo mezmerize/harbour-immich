@@ -149,14 +149,13 @@ Page {
                         BackgroundItem {
                             width: Theme.itemSizeLarge
                             height: Theme.itemSizeLarge
-                            visible: modelData !== -1
-                            enabled: modelData >= 0 || modelData === -2
+                            enabled: modelData !== -1
 
                             Rectangle {
                                 anchors.fill: parent
                                 radius: width / 2
                                 color: parent.highlighted ? Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity) : Theme.rgba(Theme.highlightBackgroundColor, 0.1)
-                                visible: modelData >= 0
+                                visible: modelData !== -1
                             }
 
                             Label {

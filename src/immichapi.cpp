@@ -1183,7 +1183,7 @@ void ImmichApi::verifyPinCode(const QString &pin)
     connect(reply, &QNetworkReply::finished, this, [this, reply]() {
         bool success = reply->error() == QNetworkReply::NoError;
         if (!success) {
-            qWarning() << "ImmichApi: Session unlock failed:" << reply->error() << reply->errorString() << "HTTP status:" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+            handleNetworkError(reply);
         }
         emit pinCodeVerified(success);
         reply->deleteLater();
