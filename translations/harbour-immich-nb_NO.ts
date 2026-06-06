@@ -2654,64 +2654,64 @@
     <message id="lockedFolderPage.confirmPin">
         <location filename="../qml/pages/LockedFolderPage.qml" line="56"/>
         <source>Re-enter your 6-digit PIN to confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Gjenta den 6-sifrede PIN-koden for å bekrefte</translation>
     </message>
     <message id="lockedFolderPage.createNewPin">
         <location filename="../qml/pages/LockedFolderPage.qml" line="59"/>
         <source>Create a 6-digit PIN for your locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Opprett en 6-sifret PIN-kode for den låste mappen din</translation>
     </message>
     <message id="lockedFolderPage.enterPin">
         <location filename="../qml/pages/LockedFolderPage.qml" line="62"/>
         <source>Enter your 6-digit PIN to access the locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppgi den 6-sifrede PIN-koden din for å få tilgang til den låste mappen</translation>
     </message>
     <message id="lockedFolderPage.lockedFolder">
         <location filename="../qml/pages/LockedFolderPage.qml" line="85"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="272"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="296"/>
         <source>Locked Folder</source>
-        <translation type="unfinished">Låst mappe</translation>
+        <translation>Låst mappe</translation>
     </message>
     <message id="notification.pinMismatch">
         <location filename="../qml/pages/LockedFolderPage.qml" line="201"/>
         <source>PINs to do not match, try again</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN-kodene stemmer ikke overens, prøv igjen</translation>
     </message>
     <message id="lockedFolderPage.asset">
         <location filename="../qml/pages/LockedFolderPage.qml" line="282"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 objekt</translation>
+        <translation>1 objekt</translation>
     </message>
     <message id="lockedFolderPage.assets">
         <location filename="../qml/pages/LockedFolderPage.qml" line="284"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 objekter</translation>
+        <translation>%1 objekter</translation>
     </message>
     <message id="lockedFolderPage.loading">
         <location filename="../qml/pages/LockedFolderPage.qml" line="357"/>
         <source>Loading locked folder assets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster inn innholdet i den låste mappen...</translation>
     </message>
     <message id="lockedFolderPage.noAssets">
         <location filename="../qml/pages/LockedFolderPage.qml" line="372"/>
         <source>Locked folder is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Den låste mappen er tom</translation>
     </message>
     <message id="notification.invalidPin">
         <location filename="../qml/pages/LockedFolderPage.qml" line="454"/>
         <source>Invalid PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig PIN</translation>
     </message>
     <message id="notification.pinCreated">
         <location filename="../qml/pages/LockedFolderPage.qml" line="459"/>
         <source>PIN created successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN-kode opprettet</translation>
     </message>
     <message id="notification.removedFromLockedFolder">
         <location filename="../qml/pages/LockedFolderPage.qml" line="495"/>
         <source>Removed from locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjernet fra den låste mappen</translation>
     </message>
 </context>
 </TS>
