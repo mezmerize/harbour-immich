@@ -2714,47 +2714,47 @@
         <translation>Odstraněno z uzamčené složky</translation>
     </message>
     <message id="pullDownMenu.addCustomFolder">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="116"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="117"/>
         <source>Add custom folder</source>
         <translation>Přidat vlastní složku</translation>
     </message>
     <message id="onThisDevicePage.title">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="131"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="132"/>
         <source>On This Device</source>
         <translation>Na tomto zařízení</translation>
     </message>
     <message id="notification.removeCustomFolder">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="145"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="146"/>
         <source>Removing folder</source>
         <translation>Odstraňuje se složka</translation>
     </message>
     <message id="onThisDevicePage.removeCustomFolder">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="251"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="252"/>
         <source>Remove folder</source>
         <translation>Odstranit složku</translation>
     </message>
     <message id="onThisDevicePage.empty">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="292"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="285"/>
         <source>No media files in this folder</source>
         <translation>Žádné multimediální soubory v této složce</translation>
     </message>
     <message id="onThisDevicePage.addFolderAccept">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="313"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="303"/>
         <source>Add Folder</source>
         <translation>Přidat složku</translation>
     </message>
     <message id="onThisDevicePage.folderPathPlaceholder">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="319"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="309"/>
         <source>Enter folder path</source>
         <translation>Vložte cestu ke složce</translation>
     </message>
     <message id="onThisDevicePage.folderPath">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="321"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="311"/>
         <source>Folder path</source>
         <translation>Cesta ke složce</translation>
     </message>
     <message id="onThisDevicePage.addFolderDescription">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="334"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="324"/>
         <source>Enter the full path to a folder on your device. The folder must exist.</source>
         <translation>Vložte úplnou cestu ke složce na vašem zařízení. Složka musí existovat.</translation>
     </message>

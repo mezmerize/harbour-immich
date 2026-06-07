@@ -2714,47 +2714,47 @@
         <translation>Fjernet fra den låste mappen</translation>
     </message>
     <message id="pullDownMenu.addCustomFolder">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="116"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="117"/>
         <source>Add custom folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="onThisDevicePage.title">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="131"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="132"/>
         <source>On This Device</source>
         <translation type="unfinished">På denne enheten</translation>
     </message>
     <message id="notification.removeCustomFolder">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="145"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="146"/>
         <source>Removing folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="onThisDevicePage.removeCustomFolder">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="251"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="252"/>
         <source>Remove folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="onThisDevicePage.empty">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="292"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="285"/>
         <source>No media files in this folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="onThisDevicePage.addFolderAccept">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="313"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="303"/>
         <source>Add Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="onThisDevicePage.folderPathPlaceholder">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="319"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="309"/>
         <source>Enter folder path</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="onThisDevicePage.folderPath">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="321"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="311"/>
         <source>Folder path</source>
         <translation type="unfinished">Mappebane</translation>
     </message>
     <message id="onThisDevicePage.addFolderDescription">
-        <location filename="../qml/pages/OnThisDevicePage.qml" line="334"/>
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="324"/>
         <source>Enter the full path to a folder on your device. The folder must exist.</source>
         <translation type="unfinished"></translation>
     </message>

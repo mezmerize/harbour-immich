@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Qt.labs.folderlistmodel 2.1
+import "../components"
 
 Page {
     id: page
@@ -202,7 +203,7 @@ Page {
                     Label {
                         width: parent.width
                         visible: showingRoots
-                        text: mediaRoots[index].path
+                        text: mediaRoots[index] ? mediaRoots[index].path : ""
                         color: listItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
                         font.pixelSize: Theme.fontSizeExtraSmall
                         truncationMode: TruncationMode.Fade
@@ -256,9 +257,11 @@ Page {
 
             onClicked: {
                 if (showingRoots) {
+                    var mediaRoot = mediaRoots[index]
+                    if (!mediaRoot) return
                     pageStack.push(Qt.resolvedUrl("OnThisDevicePage.qml"), {
-                        browsingFolder: mediaRoots[index].path,
-                        displayName: mediaRoots[index].name
+                        browsingFolder: mediaRoot.path,
+                        displayName: mediaRoot.name
                     })
                 } else if (listItem.isDir) {
                     var folderName = folderModel.get(index, "fileName")
@@ -274,25 +277,12 @@ Page {
         }
 
         // Empty state
-        Column {
-            width: parent.width
-            spacing: Theme.paddingLarge
+        EmptyState {
+            anchors.centerIn: parent
             visible: !showingRoots && (folderModel.count === 0 || !folderValid) && folderModel.status === FolderListModel.Ready
-            anchors.verticalCenter: parent.verticalCenter
-
-            Icon {
-                anchors.horizontalCenter: parent.horizontalCenter
-                source: "image://theme/icon-m-phone"
-                color: Theme.highlightColor
-            }
-
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                //% "No media files in this folder"
-                text: qsTrId("onThisDevicePage.empty")
-                color: Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeMedium
-            }
+            iconSource: "image://theme/icon-m-phone"
+            //% "No media files in this folder"
+            message: qsTrId("onThisDevicePage.empty")
         }
 
         VerticalScrollDecorator {}
