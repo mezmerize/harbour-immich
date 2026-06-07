@@ -210,7 +210,7 @@
         <location filename="../qml/pages/AlbumsPage.qml" line="113"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="65"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="60"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="243"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="242"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="80"/>
         <location filename="../qml/pages/TimelinePage.qml" line="131"/>
         <location filename="../qml/pages/TrashPage.qml" line="44"/>
@@ -286,7 +286,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="341"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="314"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="292"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="485"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="484"/>
         <location filename="../qml/pages/TimelinePage.qml" line="570"/>
         <location filename="../qml/pages/TrashPage.qml" line="269"/>
         <source>Deleted asset</source>
@@ -296,7 +296,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="343"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="316"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="294"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="487"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="486"/>
         <location filename="../qml/pages/TimelinePage.qml" line="572"/>
         <location filename="../qml/pages/TrashPage.qml" line="271"/>
         <source>Deleted %1 assets</source>
@@ -321,7 +321,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="404"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="230"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="222"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="404"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="403"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="258"/>
         <location filename="../qml/pages/TimelinePage.qml" line="312"/>
         <source>Downloading asset...</source>
@@ -331,7 +331,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="406"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="232"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="224"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="406"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="405"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="260"/>
         <location filename="../qml/pages/TimelinePage.qml" line="314"/>
         <source>Downloading %1 assets...</source>
@@ -341,7 +341,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="412"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="238"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="230"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="412"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="411"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="266"/>
         <location filename="../qml/pages/TimelinePage.qml" line="322"/>
         <location filename="../qml/pages/TrashPage.qml" line="208"/>
@@ -352,7 +352,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="414"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="240"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="232"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="414"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="413"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="268"/>
         <location filename="../qml/pages/TimelinePage.qml" line="320"/>
         <location filename="../qml/pages/TrashPage.qml" line="210"/>
@@ -2673,49 +2673,94 @@
     </message>
     <message id="lockedFolderPage.lockedFolder">
         <location filename="../qml/pages/LockedFolderPage.qml" line="85"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="272"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="296"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="271"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="295"/>
         <source>Locked Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.pinMismatch">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="201"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="200"/>
         <source>PINs to do not match, try again</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="lockedFolderPage.asset">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="282"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="281"/>
         <source>1 asset</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="lockedFolderPage.assets">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="284"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="283"/>
         <source>%1 assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="lockedFolderPage.loading">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="357"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="356"/>
         <source>Loading locked folder assets...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="lockedFolderPage.noAssets">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="372"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="371"/>
         <source>Locked folder is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.invalidPin">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="454"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="453"/>
         <source>Invalid PIN</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.pinCreated">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="459"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="458"/>
         <source>PIN created successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.removedFromLockedFolder">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="495"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="494"/>
         <source>Removed from locked folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pullDownMenu.addCustomFolder">
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="116"/>
+        <source>Add custom folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="onThisDevicePage.title">
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="131"/>
+        <source>On This Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.removeCustomFolder">
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="145"/>
+        <source>Removing folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="onThisDevicePage.removeCustomFolder">
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="251"/>
+        <source>Remove folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="onThisDevicePage.empty">
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="292"/>
+        <source>No media files in this folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="onThisDevicePage.addFolderAccept">
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="313"/>
+        <source>Add Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="onThisDevicePage.folderPathPlaceholder">
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="319"/>
+        <source>Enter folder path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="onThisDevicePage.folderPath">
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="321"/>
+        <source>Folder path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="onThisDevicePage.addFolderDescription">
+        <location filename="../qml/pages/OnThisDevicePage.qml" line="334"/>
+        <source>Enter the full path to a folder on your device. The folder must exist.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

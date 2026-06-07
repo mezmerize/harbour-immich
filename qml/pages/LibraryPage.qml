@@ -65,7 +65,7 @@ Page {
                         //% "Places"
                         { title: qsTrId("libraryPage.places"), icon: "image://theme/icon-m-location", page: "PlacesPage.qml", show: false },
                         //% "On This Device"
-                        { title: qsTrId("libraryPage.onThisDevice"), icon: "image://theme/icon-m-phone", page: "OnThisDevicePage.qml", show: false },
+                        { title: qsTrId("libraryPage.onThisDevice"), icon: "image://theme/icon-m-phone", page: "OnThisDevicePage.qml", show: true },
                         //% "Folders"
                         { title: qsTrId("libraryPage.folders"), icon: "image://theme/icon-m-folder", page: "FoldersPage.qml", show: false },
                         //% "Locked Folder"
@@ -77,7 +77,6 @@ Page {
                     BackgroundItem {
                         width: (column.width - 2 * Theme.horizontalPageMargin - Theme.paddingMedium) / 2
                         height: Theme.itemSizeLarge * 1.2
-                        enabled: modelData.show
 
                         Rectangle {
                             anchors.fill: parent

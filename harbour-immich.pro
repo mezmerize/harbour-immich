@@ -79,6 +79,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/SearchResultsPage.qml \
     qml/pages/ServerPage.qml \
     qml/pages/LoginPage.qml \
+    qml/pages/OnThisDevicePage.qml \
     qml/pages/AlbumsPage.qml \
     qml/pages/AlbumDetailPage.qml \
     qml/pages/ArchivedPage.qml \
