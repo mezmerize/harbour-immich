@@ -182,7 +182,7 @@
     <message id="coverPage.assetCount">
         <location filename="../qml/cover/CoverPage.qml" line="188"/>
         <source>%1 assets</source>
-        <translation>%1 objekter</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="coverPage.backingUp">
         <location filename="../qml/cover/CoverPage.qml" line="219"/>
@@ -203,7 +203,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="148"/>
         <location filename="../qml/pages/AlbumDetailPage.qml" line="198"/>
         <source>1 asset</source>
-        <translation>1 objekt</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="pullDownMenu.refresh">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="76"/>
@@ -233,7 +233,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="198"/>
         <source>%1 assets</source>
         <oldsource>%1 asset(s)</oldsource>
-        <translation>%1 objekter</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="albumDetailPage.loading">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="275"/>
@@ -248,7 +248,7 @@
     <message id="albumDetailPage.noAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="293"/>
         <source>No assets in this album</source>
-        <translation>Ingen objekter i dette albumet</translation>
+        <translation>Ingen mediefiler i dette albumet</translation>
     </message>
     <message id="notification.addedAssetToFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="329"/>
@@ -263,7 +263,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="293"/>
         <location filename="../qml/pages/TimelinePage.qml" line="589"/>
         <source>Added %1 assets to favorites</source>
-        <translation>La %1 objekter til Favoritter</translation>
+        <translation>La %1 mediefiler til Favoritter</translation>
     </message>
     <message id="notification.removedAssetFromFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="333"/>
@@ -272,7 +272,7 @@
         <location filename="../qml/pages/FavoritesPage.qml" line="282"/>
         <location filename="../qml/pages/TimelinePage.qml" line="591"/>
         <source>Removed asset from favorites</source>
-        <translation>Fjernet objekt fra Favoritter</translation>
+        <translation>Fjernet mediefil fra Favoritter</translation>
     </message>
     <message id="notification.removedAssetsFromFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="335"/>
@@ -280,7 +280,7 @@
         <location filename="../qml/pages/FavoritesPage.qml" line="284"/>
         <location filename="../qml/pages/TimelinePage.qml" line="593"/>
         <source>Removed %1 assets from favorites</source>
-        <translation>Fjernet %1 objekter fra Favoritter</translation>
+        <translation>Fjernet %1 mediefiler fra Favoritter</translation>
     </message>
     <message id="notification.deletedAsset">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="341"/>
@@ -290,7 +290,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="570"/>
         <location filename="../qml/pages/TrashPage.qml" line="269"/>
         <source>Deleted asset</source>
-        <translation>Slettet objekt</translation>
+        <translation>Slettet mediefil</translation>
     </message>
     <message id="notification.deletedAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="343"/>
@@ -300,7 +300,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="572"/>
         <location filename="../qml/pages/TrashPage.qml" line="271"/>
         <source>Deleted %1 assets</source>
-        <translation>Slettet %1 objekter</translation>
+        <translation>Slettet %1 mediefiler</translation>
     </message>
     <message id="notification.movedToArchive">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="353"/>
@@ -325,7 +325,7 @@
         <location filename="../qml/pages/SearchResultsPage.qml" line="258"/>
         <location filename="../qml/pages/TimelinePage.qml" line="312"/>
         <source>Downloading asset...</source>
-        <translation>Laster ned objekt...</translation>
+        <translation>Laster ned mediefil...</translation>
     </message>
     <message id="notification.downloadingAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="406"/>
@@ -335,7 +335,7 @@
         <location filename="../qml/pages/SearchResultsPage.qml" line="260"/>
         <location filename="../qml/pages/TimelinePage.qml" line="314"/>
         <source>Downloading %1 assets...</source>
-        <translation>Laster ned %1 objekter...</translation>
+        <translation>Laster ned %1 mediefiler...</translation>
     </message>
     <message id="notification.deletingAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="412"/>
@@ -346,7 +346,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="322"/>
         <location filename="../qml/pages/TrashPage.qml" line="208"/>
         <source>Deleting %1 assets</source>
-        <translation>Sletter %1 objekter</translation>
+        <translation>Sletter %1 mediefiler</translation>
     </message>
     <message id="notification.deletingAsset">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="414"/>
@@ -357,7 +357,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="320"/>
         <location filename="../qml/pages/TrashPage.qml" line="210"/>
         <source>Deleting asset</source>
-        <translation>Sletter objekt</translation>
+        <translation>Sletter mediefil</translation>
     </message>
     <message id="albumInfoPage.albumInformation">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="39"/>
@@ -397,7 +397,7 @@
     <message id="albumInfoPage.assetCount">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="69"/>
         <source>Asset count</source>
-        <translation>Antall objekter</translation>
+        <translation>Antall mediefiler</translation>
     </message>
     <message id="assetInfoPage.owner">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="75"/>
@@ -540,13 +540,13 @@
     <message id="albumPickerPage.asset">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="252"/>
         <source>1 asset</source>
-        <translation>1 objekt</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="albumPickerPage.assets">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="254"/>
         <source>%1 assets</source>
         <oldsource>%1 asset(s)</oldsource>
-        <translation>%1 objekter</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="albumPickerPage.noAlbumsMatch">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="273"/>
@@ -568,7 +568,7 @@
     <message id="albumsPage.sortAssetCount">
         <location filename="../qml/pages/AlbumsPage.qml" line="268"/>
         <source>Number of assets</source>
-        <translation>Antall objekter</translation>
+        <translation>Antall mediefiler</translation>
     </message>
     <message id="albumsPage.sortUpdatedAt">
         <location filename="../qml/pages/AlbumsPage.qml" line="270"/>
@@ -656,13 +656,13 @@
     <message id="albumsPage.asset">
         <location filename="../qml/pages/AlbumsPage.qml" line="352"/>
         <source>1 asset</source>
-        <translation>1 objekt</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="albumsPage.assets">
         <location filename="../qml/pages/AlbumsPage.qml" line="354"/>
         <source>%1 assets</source>
         <oldsource>%1 asset(s)</oldsource>
-        <translation>%1 objekter</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="albumsPage.owned">
         <location filename="../qml/pages/AlbumsPage.qml" line="363"/>
@@ -753,12 +753,12 @@
     <message id="pullDownMenu.editAsset">
         <location filename="../qml/pages/AssetInfoPage.qml" line="22"/>
         <source>Edit Asset</source>
-        <translation>Rediger objekt</translation>
+        <translation>Rediger mediefil</translation>
     </message>
     <message id="assetInfoPage.assetInformation">
         <location filename="../qml/pages/AssetInfoPage.qml" line="46"/>
         <source>Asset Information</source>
-        <translation>Informasjon om objektet</translation>
+        <translation>Informasjon om mediefilen</translation>
     </message>
     <message id="assetInfoPage.description">
         <location filename="../qml/pages/AssetInfoPage.qml" line="51"/>
@@ -869,12 +869,12 @@
     <message id="assetInfoPage.asset">
         <location filename="../qml/pages/AssetInfoPage.qml" line="335"/>
         <source>1 asset</source>
-        <translation>1 objekt</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="assetInfoPage.assets">
         <location filename="../qml/pages/AssetInfoPage.qml" line="337"/>
         <source>%1 assets</source>
-        <translation>%1 objekter</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="assetInfoPage.shared">
         <location filename="../qml/pages/AssetInfoPage.qml" line="354"/>
@@ -986,7 +986,7 @@
     <message id="pullDownMenu.searchAction">
         <location filename="../qml/pages/SearchPage.qml" line="202"/>
         <source>Search assets</source>
-        <translation>Søk i objekter</translation>
+        <translation>Søk i mediefiler</translation>
     </message>
     <message id="searchPage.search">
         <location filename="../qml/pages/SearchPage.qml" line="214"/>
@@ -1038,12 +1038,12 @@
     <message id="searchPage.searchInDescriptionPlaceholder">
         <location filename="../qml/pages/SearchPage.qml" line="250"/>
         <source>Search in asset descriptions</source>
-        <translation>Søk i objektbeskrivelser</translation>
+        <translation>Søk i mediefilbeskrivelser</translation>
     </message>
     <message id="searchPage.searchInOcrPlaceholder">
         <location filename="../qml/pages/SearchPage.qml" line="252"/>
         <source>Search text visible in assets</source>
-        <translation>Søk i synlig tekst i objektene</translation>
+        <translation>Søk i synlig tekst i mediefiler</translation>
     </message>
     <message id="searchPage.searchInPlaceholder">
         <location filename="../qml/pages/SearchPage.qml" line="254"/>
@@ -1238,7 +1238,7 @@
     <message id="searchPage.displayNotInAlbumInfo">
         <location filename="../qml/pages/SearchPage.qml" line="536"/>
         <source>Show only assets not in any album</source>
-        <translation>Vis kun objekter som ikke er i et album</translation>
+        <translation>Vis kun mediefiler som ikke er i et album</translation>
     </message>
     <message id="searchPage.displayIncludeArchived">
         <location filename="../qml/pages/SearchPage.qml" line="542"/>
@@ -1248,7 +1248,7 @@
     <message id="searchPage.displayIncludeArchivedInfo">
         <location filename="../qml/pages/SearchPage.qml" line="544"/>
         <source>Include archived assets in results</source>
-        <translation>Inkluder arkiverte objekter i søkeresultatene</translation>
+        <translation>Inkluder arkiverte mediefiler i søkeresultatene</translation>
     </message>
     <message id="searchPage.displayFavoritesOnly">
         <location filename="../qml/pages/SearchPage.qml" line="550"/>
@@ -1346,7 +1346,7 @@
     <message id="settingsPage.assetsPerRow">
         <location filename="../qml/pages/SettingsPage.qml" line="100"/>
         <source>Assets per row (portrait)</source>
-        <translation>Objekter per rad (portrett)</translation>
+        <translation>Mediefiler per rad (portrett)</translation>
     </message>
     <message id="settingsPage.detailQuality">
         <location filename="../qml/pages/SettingsPage.qml" line="115"/>
@@ -1412,7 +1412,7 @@
     <message id="settingsPage.scrollToTopPositionInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="170"/>
         <source>Controls position of the scroll to top button on the pages which display assets in lists exceeding the viewport height.</source>
-        <translation>Plassering av «gå til toppen»-knappen på sider som viser bilder og videoer i lister som er lengre enn skjermhøyden.</translation>
+        <translation>Plassering av «gå til toppen»-knappen på sider som viser mediefiler i lister som er lengre enn skjermhøyden.</translation>
     </message>
     <message id="settingsPage.scrollToTopPositionLeft">
         <location filename="../qml/pages/SettingsPage.qml" line="180"/>
@@ -1437,7 +1437,7 @@
     <message id="settingsPage.coverShowAssets">
         <location filename="../qml/pages/SettingsPage.qml" line="201"/>
         <source>Show assets on cover</source>
-        <translation>Vis antall objekter i forsidebildet</translation>
+        <translation>Vis antall mediefiler i forsidebildet</translation>
     </message>
     <message id="settingsPage.coverShowAssetsInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="203"/>
@@ -1745,7 +1745,7 @@
     <message id="settingsPage.totalAssets">
         <location filename="../qml/pages/SettingsPage.qml" line="645"/>
         <source>Total assets</source>
-        <translation>Totalt antall objekter</translation>
+        <translation>Totalt antall mediefiler</translation>
     </message>
     <message id="settingsPage.totalAssetsLoading">
         <location filename="../qml/pages/SettingsPage.qml" line="647"/>
@@ -1790,7 +1790,7 @@
     <message id="settingsPage.loadedAssets">
         <location filename="../qml/pages/SettingsPage.qml" line="712"/>
         <source>Loaded assets</source>
-        <translation>Lastede objekter</translation>
+        <translation>Lastede mediefiler</translation>
     </message>
     <message id="settingsPage.viewLogs">
         <location filename="../qml/pages/SettingsPage.qml" line="719"/>
@@ -2012,7 +2012,7 @@
     <message id="sharePage.showMetadataDescription">
         <location filename="../qml/pages/SharePage.qml" line="529"/>
         <source>Recipients can view metadata for shared assets</source>
-        <translation>Mottakere kan se detaljer om delte bilder og videoer</translation>
+        <translation>Mottakere kan se detaljer om delte mediefiler</translation>
     </message>
     <message id="sharePage.allowDownload">
         <location filename="../qml/pages/SharePage.qml" line="542"/>
@@ -2022,7 +2022,7 @@
     <message id="sharePage.allowDownloadDescription">
         <location filename="../qml/pages/SharePage.qml" line="544"/>
         <source>Recipients can download assets/albums from this share</source>
-        <translation>Mottakere kan laste ned bilder, videoer og album fra denne delingen</translation>
+        <translation>Mottakere kan laste ned mediefiler og album fra denne delingen</translation>
     </message>
     <message id="sharePage.allowUpload">
         <location filename="../qml/pages/SharePage.qml" line="552"/>
@@ -2032,18 +2032,18 @@
     <message id="sharePage.allowUploadDescription">
         <location filename="../qml/pages/SharePage.qml" line="554"/>
         <source>Recipients can upload assets/albums to this share</source>
-        <translation>Mottakere kan laste opp bilder, videoer og album til denne delingen</translation>
+        <translation>Mottakere kan laste opp mediefiler og album til denne delingen</translation>
     </message>
     <message id="sharePage.sharingAsset">
         <location filename="../qml/pages/SharePage.qml" line="563"/>
         <source>Sharing asset</source>
-        <translation>Deler objekt</translation>
+        <translation>Deler mediefil</translation>
     </message>
     <message id="sharePage.sharingAssets">
         <location filename="../qml/pages/SharePage.qml" line="565"/>
         <source>Sharing %1 assets</source>
         <oldsource>Sharing %1 asset(s)Sharing %1 asset(s)</oldsource>
-        <translation>Deler %1 objekter</translation>
+        <translation>Deler %1 mediefiler</translation>
     </message>
     <message id="sharePage.sharingAlbum">
         <location filename="../qml/pages/SharePage.qml" line="567"/>
@@ -2163,22 +2163,22 @@
     <message id="timelinePage.noAssetsLabel">
         <location filename="../qml/pages/TimelinePage.qml" line="254"/>
         <source>No assets yet</source>
-        <translation>Ingen objekter</translation>
+        <translation>Ingen mediefiler</translation>
     </message>
     <message id="timelinePage.noFavoritesInfo">
         <location filename="../qml/pages/TimelinePage.qml" line="257"/>
         <source>Long-press an asset and add it to favorites to see it here</source>
-        <translation>Hold inne et objekt og legg det til i favoritter for å se det her</translation>
+        <translation>Hold inne et mediefil og legg det til i Favoritter for å se det her</translation>
     </message>
     <message id="timelinePage.noAssetsInfo">
         <location filename="../qml/pages/TimelinePage.qml" line="259"/>
         <source>Upload or import assets in Immich to start building your timeline</source>
-        <translation>Last opp eller importer innhold i Immich for å starte tidslinjen din</translation>
+        <translation>Last opp eller importer mediefiler i Immich for å starte tidslinjen din</translation>
     </message>
     <message id="notification.addedToAlbum">
         <location filename="../qml/pages/TimelinePage.qml" line="581"/>
         <source>Added asset(s) to album</source>
-        <translation>La til objekt(er) til album</translation>
+        <translation>La til mediefil(er) til album</translation>
     </message>
     <message id="notification.createdAlbum">
         <location filename="../qml/pages/TimelinePage.qml" line="597"/>
@@ -2223,7 +2223,7 @@
     <message id="editAssetDialog.title">
         <location filename="../qml/pages/EditAssetDialog.qml" line="32"/>
         <source>Edit Asset</source>
-        <translation>Rediger objekt</translation>
+        <translation>Rediger mediefil</translation>
     </message>
     <message id="editAssetDialog.save">
         <location filename="../qml/pages/EditAssetDialog.qml" line="34"/>
@@ -2475,22 +2475,22 @@
     <message id="archivedPage.asset">
         <location filename="../qml/pages/ArchivedPage.qml" line="104"/>
         <source>1 asset</source>
-        <translation>1 objekt</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="archivedPage.assets">
         <location filename="../qml/pages/ArchivedPage.qml" line="106"/>
         <source>%1 assets</source>
-        <translation>%1 objekter</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="archivedPage.loading">
         <location filename="../qml/pages/ArchivedPage.qml" line="178"/>
         <source>Loading archived assets...</source>
-        <translation>Laster inn arkiverte objekter...</translation>
+        <translation>Laster inn arkiverte mediefiler...</translation>
     </message>
     <message id="archivedPage.noAssets">
         <location filename="../qml/pages/ArchivedPage.qml" line="193"/>
         <source>No archived assets</source>
-        <translation>Ingen arkiverte objekter</translation>
+        <translation>Ingen arkiverte mediefiler</translation>
     </message>
     <message id="notification.removedFromArchive">
         <location filename="../qml/pages/ArchivedPage.qml" line="302"/>
@@ -2593,7 +2593,7 @@
     <message id="trashPage.loading">
         <location filename="../qml/pages/TrashPage.qml" line="180"/>
         <source>Loading trashed assets...</source>
-        <translation>Laster objekter i papirkurven...</translation>
+        <translation>Laster mediefiler i papirkurven...</translation>
     </message>
     <message id="trashPage.noAssets">
         <location filename="../qml/pages/TrashPage.qml" line="189"/>
@@ -2634,12 +2634,12 @@
     <message id="favoritesPage.asset">
         <location filename="../qml/pages/FavoritesPage.qml" line="111"/>
         <source>1 asset</source>
-        <translation>1 objekt</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="favoritesPage.assets">
         <location filename="../qml/pages/FavoritesPage.qml" line="113"/>
         <source>%1 assets</source>
-        <translation>%1 objekter</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="favoritesPage.loading">
         <location filename="../qml/pages/FavoritesPage.qml" line="172"/>
@@ -2681,12 +2681,12 @@
     <message id="lockedFolderPage.asset">
         <location filename="../qml/pages/LockedFolderPage.qml" line="281"/>
         <source>1 asset</source>
-        <translation>1 objekt</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="lockedFolderPage.assets">
         <location filename="../qml/pages/LockedFolderPage.qml" line="283"/>
         <source>%1 assets</source>
-        <translation>%1 objekter</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="lockedFolderPage.loading">
         <location filename="../qml/pages/LockedFolderPage.qml" line="356"/>
