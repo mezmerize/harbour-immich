@@ -264,7 +264,7 @@ Page {
                     topMargin: Theme.paddingLarge
                 }
                 text: memoryTitle
-                color: Theme.primaryColor
+                color: Theme.lightPrimaryColor
                 font.pixelSize: Theme.fontSizeLarge
                 truncationMode: TruncationMode.Fade
             }
@@ -279,6 +279,7 @@ Page {
                     rightMargin: Theme.horizontalPageMargin
                 }
                 icon.source: "image://theme/icon-m-reset"
+                icon.color: Theme.lightPrimaryColor
                 visible: !draggingVertical
                 opacity: visible ? 1.0 : 0.0
                 Behavior on opacity { FadeAnimation { duration: 150 } }
@@ -328,7 +329,7 @@ Page {
                     topPadding: Theme.paddingMedium
                     //% "%1 / %2"
                     text: assets && assets.length > 0 ? qsTrId("memoryDetailPage.assetCounter").arg(currentIndex + 1).arg(assets.length) : ""
-                    color: Theme.secondaryColor
+                    color: Theme.lightSecondaryColor
                     font.pixelSize: Theme.fontSizeSmall
                 }
 
@@ -399,6 +400,7 @@ Page {
                     IconButton {
                         width: parent.width / actionRow.buttonCount
                         icon.source: slideshowRunning ? "image://theme/icon-m-pause" : "image://theme/icon-m-play"
+                        icon.color: Theme.lightPrimaryColor
                         visible: assets && assets.length > 1
                         onClicked: slideshowRunning = !slideshowRunning
                     }
@@ -406,6 +408,7 @@ Page {
                     IconButton {
                         width: parent.width / actionRow.buttonCount
                         icon.source: "image://theme/icon-m-search"
+                        icon.color: Theme.lightPrimaryColor
                         enabled: assets && assets.length > 0 && assets[currentIndex]
                         onClicked: {
                             var asset = assets[currentIndex]
@@ -421,6 +424,7 @@ Page {
                     IconButton {
                         width: parent.width / actionRow.buttonCount
                         icon.source: "image://theme/icon-m-whereami"
+                        icon.color: Theme.lightPrimaryColor
                         enabled: assets && assets.length > 0 && assets[currentIndex]
                         onClicked: {
                             var asset = assets[currentIndex]

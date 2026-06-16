@@ -253,7 +253,7 @@
     <message id="notification.addedAssetToFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="329"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="291"/>
-        <location filename="../qml/pages/AssetDetailPage.qml" line="448"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="456"/>
         <location filename="../qml/pages/TimelinePage.qml" line="587"/>
         <source>Added asset to favorites</source>
         <translation>Lagt til i favoritter</translation>
@@ -268,7 +268,7 @@
     <message id="notification.removedAssetFromFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="333"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="295"/>
-        <location filename="../qml/pages/AssetDetailPage.qml" line="450"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="458"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="282"/>
         <location filename="../qml/pages/TimelinePage.qml" line="591"/>
         <source>Removed asset from favorites</source>
@@ -731,20 +731,20 @@
         <translation>Kunne ikke laste inn bilde</translation>
     </message>
     <message id="notification.downloading">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="340"/>
-        <location filename="../qml/pages/StackDetailPage.qml" line="448"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="344"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="452"/>
         <location filename="../qml/pages/VideoPlayerPage.qml" line="69"/>
         <source>Downloading...</source>
         <translation>Laster ned...</translation>
     </message>
     <message id="notification.removingFromAlbum">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="389"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="397"/>
         <source>Removing from album</source>
         <translation>Fjerner fra album</translation>
     </message>
     <message id="notification.downloaded">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="456"/>
-        <location filename="../qml/pages/StackDetailPage.qml" line="598"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="464"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="606"/>
         <location filename="../qml/pages/TimelinePage.qml" line="576"/>
         <location filename="../qml/pages/VideoPlayerPage.qml" line="345"/>
         <source>Downloaded to: %1</source>
@@ -938,7 +938,7 @@
         <translation>Sveip for å lukke</translation>
     </message>
     <message id="memoryDetailPage.assetCounter">
-        <location filename="../qml/pages/MemoryDetailPage.qml" line="330"/>
+        <location filename="../qml/pages/MemoryDetailPage.qml" line="331"/>
         <source>%1 / %2</source>
         <translation>%1 / %2</translation>
     </message>
@@ -1293,13 +1293,13 @@
     </message>
     <message id="notification.addedToFavorites">
         <location filename="../qml/pages/SearchResultsPage.qml" line="221"/>
-        <location filename="../qml/pages/StackDetailPage.qml" line="589"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="597"/>
         <source>Added to favorites</source>
         <translation>Lagt til Favoritter</translation>
     </message>
     <message id="notification.removedFromFavorites">
         <location filename="../qml/pages/SearchResultsPage.qml" line="223"/>
-        <location filename="../qml/pages/StackDetailPage.qml" line="591"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="599"/>
         <source>Removed from favorites</source>
         <translation>Fjernet fra Favoritter</translation>
     </message>
@@ -2418,12 +2418,12 @@
         <translation>Sveip for å lukke</translation>
     </message>
     <message id="stackDetailPage.assetCounter">
-        <location filename="../qml/pages/StackDetailPage.qml" line="360"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="362"/>
         <source>%1 / %2</source>
         <translation>%1 / %2</translation>
     </message>
     <message id="notification.unstacking">
-        <location filename="../qml/pages/StackDetailPage.qml" line="505"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="513"/>
         <source>Unstacking</source>
         <translation>Spre stabel</translation>
     </message>

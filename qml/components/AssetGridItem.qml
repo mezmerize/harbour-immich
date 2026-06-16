@@ -136,7 +136,7 @@ BackgroundItem {
     }
 
     // Favorite icon
-    Icon {
+    OverlayIcon {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.margins: Theme.paddingSmall
@@ -147,7 +147,7 @@ BackgroundItem {
     }
 
     // Stack indicator
-    Icon {
+    OverlayIcon {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: Theme.paddingSmall
@@ -158,7 +158,7 @@ BackgroundItem {
     }
 
     // Backup status indicator
-    Icon {
+    OverlayIcon {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         anchors.margins: Theme.paddingSmall

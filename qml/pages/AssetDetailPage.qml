@@ -196,7 +196,7 @@ Page {
                     visible: assetImage.status === Image.Error
                     //% "Failed to load image"
                     text: qsTrId("assetDetailPage.failed")
-                    color: Theme.secondaryColor
+                    color: Theme.lightSecondaryColor
                 }
             }
 
@@ -257,6 +257,7 @@ Page {
                 leftMargin: Theme.horizontalPageMargin
             }
             icon.source: "image://theme/icon-m-about"
+            icon.color: Theme.lightPrimaryColor
             visible: !zoomed && !draggingVertical
             opacity: visible ? 1.0 : 0.0
             Behavior on opacity { FadeAnimation { duration: 150 } }
@@ -279,6 +280,7 @@ Page {
                 rightMargin: Theme.horizontalPageMargin
             }
             icon.source: "image://theme/icon-m-reset"
+            icon.color: Theme.lightPrimaryColor
             visible: !zoomed && !draggingVertical
             opacity: visible ? 1.0 : 0.0
             Behavior on opacity { FadeAnimation { duration: 150 } }
@@ -323,6 +325,7 @@ Page {
                 IconButton {
                     width: parent.width / actionRow.buttonCount
                     icon.source: isFavorite ? "image://theme/icon-m-favorite-selected" : "image://theme/icon-m-favorite"
+                    icon.color: Theme.lightPrimaryColor
                     visible: !isOwnedByOther
                     onClicked: {
                         hapticFeedback.play()
@@ -333,6 +336,7 @@ Page {
                 IconButton {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-cloud-download"
+                    icon.color: Theme.lightPrimaryColor
                     onClicked: {
                         hapticFeedback.play()
                         immichApi.downloadAsset(assetId)
@@ -344,6 +348,7 @@ Page {
                 IconButton {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-share"
+                    icon.color: Theme.lightPrimaryColor
                     visible: !isLockedAsset
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("SharePage.qml"), {
@@ -356,6 +361,7 @@ Page {
                 IconButton {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-search"
+                    icon.color: Theme.lightPrimaryColor
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("SearchResultsPage.qml"), {
                             smartSearchAssetId: assetId
@@ -366,6 +372,7 @@ Page {
                 IconButton {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-whereami"
+                    icon.color: Theme.lightPrimaryColor
                     visible: !isLockedAsset && !isOwnedByOther
                     onClicked: {
                         var assetDate = ""
@@ -383,6 +390,7 @@ Page {
                     width: parent.width / actionRow.buttonCount
                     visible: albumId !== ""
                     icon.source: "image://theme/icon-m-delete"
+                    icon.color: Theme.lightPrimaryColor
                     onClicked: {
                         hapticFeedback.play()
                         //% "Removing from album"

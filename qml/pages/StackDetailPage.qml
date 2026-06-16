@@ -286,6 +286,7 @@ Page {
                 }
                 icon.source: "image://theme/icon-m-about"
                 visible: !zoomed && !draggingVertical && stackLoaded
+                icon.color: Theme.lightPrimaryColor
                 opacity: visible ? 1.0 : 0.0
                 Behavior on opacity { FadeAnimation { duration: 150 } }
                 onClicked: {
@@ -310,6 +311,7 @@ Page {
                     rightMargin: Theme.horizontalPageMargin
                 }
                 icon.source: "image://theme/icon-m-reset"
+                icon.color: Theme.lightPrimaryColor
                 visible: !zoomed && !draggingVertical && stackLoaded
                 opacity: visible ? 1.0 : 0.0
                 Behavior on opacity { FadeAnimation { duration: 150 } }
@@ -358,7 +360,7 @@ Page {
                     topPadding: Theme.paddingMedium
                     //% "%1 / %2"
                     text: assets.length > 0 ? qsTrId("stackDetailPage.assetCounter").arg(currentIndex + 1).arg(assets.length) : ""
-                    color: Theme.secondaryColor
+                    color: Theme.lightSecondaryColor
                     font.pixelSize: Theme.fontSizeSmall
                 }
 
@@ -429,6 +431,7 @@ Page {
                     IconButton {
                         width: parent.width / actionRow.buttonCount
                         icon.source: isFavorite ? "image://theme/icon-m-favorite-selected" : "image://theme/icon-m-favorite"
+                        icon.color: Theme.lightPrimaryColor
                         onClicked: {
                             hapticFeedback.play()
                             immichApi.toggleFavorite([primaryAssetId], !isFavorite)
@@ -439,6 +442,7 @@ Page {
                     IconButton {
                         width: parent.width / actionRow.buttonCount
                         icon.source: "image://theme/icon-m-cloud-download"
+                        icon.color: Theme.lightPrimaryColor
                         onClicked: {
                             hapticFeedback.play()
                             var asset = getCurrentAsset()
@@ -454,6 +458,7 @@ Page {
                     IconButton {
                         width: parent.width / actionRow.buttonCount
                         icon.source: "image://theme/icon-m-share"
+                        icon.color: Theme.lightPrimaryColor
                         onClicked: {
                             var asset = getCurrentAsset()
                             if (asset) {
@@ -469,6 +474,7 @@ Page {
                     IconButton {
                         width: parent.width / actionRow.buttonCount
                         icon.source: "image://theme/icon-m-search"
+                        icon.color: Theme.lightPrimaryColor
                         onClicked: {
                             var asset = getCurrentAsset()
                             if (asset) {
@@ -483,6 +489,7 @@ Page {
                     IconButton {
                         width: parent.width / actionRow.buttonCount
                         icon.source: "image://theme/icon-m-whereami"
+                        icon.color: Theme.lightPrimaryColor
                         onClicked: {
                             var asset = getCurrentAsset()
                             if (asset) {
@@ -499,6 +506,7 @@ Page {
                     IconButton {
                         width: parent.width / actionRow.buttonCount
                         icon.source: "image://theme/icon-m-levels"
+                        icon.color: Theme.lightPrimaryColor
                         onClicked: {
                             hapticFeedback.play()
                             //% "Unstacking"
