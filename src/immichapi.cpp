@@ -1153,6 +1153,42 @@ void ImmichApi::restoreAllTrash()
     });
 }
 
+void ImmichApi::fetchUniqueFolderPaths()
+{
+    qInfo() << "ImmichApi: Fetching unique folder paths";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/view/folder/unique-paths"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this](const QByteArray &response) {
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QJsonArray paths = doc.array();
+        qInfo() << "ImmichApi: Unique folder paths received, count:" << paths.size();
+        emit uniqueFolderPathsReceived(paths);
+    });
+}
+
+void ImmichApi::fetchServerFolders(const QString &path)
+{
+    qInfo() << "ImmichApi: Fetching server folder assets, path:" << path;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/view/folder"));
+    QUrlQuery query;
+    query.addQueryItem(QStringLiteral("path"), path);
+    url.setQuery(query);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    QString savedPath = path;
+    connectReply(reply, [this, savedPath](const QByteArray &response) {
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QJsonArray items;
+        if (doc.isArray()) {
+            items = doc.array();
+        } else if (doc.isObject()) {
+            items.append(doc.object());
+        }
+        emit serverFoldersReceived(savedPath, items);
+    });
+}
+
 void ImmichApi::createPinCode(const QString &pin)
 {
     qInfo() << "ImmichApi: Creating PIN code";

@@ -60,6 +60,8 @@ public:
     Q_INVOKABLE void emptyTrash();
     Q_INVOKABLE void restoreAllTrash();
     Q_INVOKABLE void fetchAlbumsForAsset(const QString &assetId);
+    Q_INVOKABLE void fetchUniqueFolderPaths();
+    Q_INVOKABLE void fetchServerFolders(const QString &path);
     Q_INVOKABLE void createPinCode(const QString &pin);
     Q_INVOKABLE void verifyPinCode(const QString &pin);
     Q_INVOKABLE void fetchAuthStatus();
@@ -105,6 +107,8 @@ signals:
     void trashEmptied();
     void allTrashRestored();
     void assetAlbumsReceived(const QString &assetId, const QJsonArray &albums);
+    void uniqueFolderPathsReceived(const QJsonArray &paths);
+    void serverFoldersReceived(const QString &path, const QJsonArray &items);
     void pinCodeCreated();
     void pinCodeVerified(bool success);
     void authStatusReceived(bool pinCodeExists);

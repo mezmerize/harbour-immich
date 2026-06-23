@@ -84,6 +84,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/AlbumsPage.qml \
     qml/pages/AlbumDetailPage.qml \
     qml/pages/ArchivedPage.qml \
+    qml/pages/FoldersPage.qml \
     qml/pages/LibraryPage.qml \
     qml/pages/LockedFolderPage.qml \
     qml/pages/SearchPage.qml \

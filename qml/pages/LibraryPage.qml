@@ -67,7 +67,7 @@ Page {
                         //% "On This Device"
                         { title: qsTrId("libraryPage.onThisDevice"), icon: "image://theme/icon-m-phone", page: "OnThisDevicePage.qml", show: true },
                         //% "Folders"
-                        { title: qsTrId("libraryPage.folders"), icon: "image://theme/icon-m-folder", page: "FoldersPage.qml", show: false },
+                        { title: qsTrId("libraryPage.folders"), icon: "image://theme/icon-m-folder", page: "FoldersPage.qml", show: true },
                         //% "Locked Folder"
                         { title: qsTrId("libraryPage.lockedFolder"), icon: "image://theme/icon-m-device-lock", page: "LockedFolderPage.qml", show: true },
                         //% "Partners"

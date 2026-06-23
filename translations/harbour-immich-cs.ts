@@ -210,6 +210,7 @@
         <location filename="../qml/pages/AlbumsPage.qml" line="113"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="65"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="60"/>
+        <location filename="../qml/pages/FoldersPage.qml" line="89"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="242"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="80"/>
         <location filename="../qml/pages/TimelinePage.qml" line="131"/>
@@ -2757,6 +2758,31 @@
         <location filename="../qml/pages/OnThisDevicePage.qml" line="324"/>
         <source>Enter the full path to a folder on your device. The folder must exist.</source>
         <translation>Vložte úplnou cestu ke složce na vašem zařízení. Složka musí existovat.</translation>
+    </message>
+    <message id="foldersPage.folders">
+        <location filename="../qml/pages/FoldersPage.qml" line="96"/>
+        <source>Folders</source>
+        <translation>Složky</translation>
+    </message>
+    <message id="foldersPage.folderNumber">
+        <location filename="../qml/pages/FoldersPage.qml" line="160"/>
+        <source>1 folder</source>
+        <translation>1 složka</translation>
+    </message>
+    <message id="foldersPage.foldersNumber">
+        <location filename="../qml/pages/FoldersPage.qml" line="162"/>
+        <source>%1 folders</source>
+        <translation>%1 složek</translation>
+    </message>
+    <message id="foldersPage.loading">
+        <location filename="../qml/pages/FoldersPage.qml" line="201"/>
+        <source>Loading folders...</source>
+        <translation>Načítají se složky...</translation>
+    </message>
+    <message id="foldersPage.empty">
+        <location filename="../qml/pages/FoldersPage.qml" line="209"/>
+        <source>No items in this folder</source>
+        <translation>Tato složka je prázdná</translation>
     </message>
 </context>
 </TS>
