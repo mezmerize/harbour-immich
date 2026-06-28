@@ -1153,6 +1153,20 @@ void ImmichApi::restoreAllTrash()
     });
 }
 
+void ImmichApi::fetchCities()
+{
+    qInfo() << "ImmichApi: Fetching cities";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/search/cities"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this](const QByteArray &response) {
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QJsonArray cities = doc.array();
+        qInfo() << "ImmichApi: Cities received, count:" << cities.size();
+        emit citiesReceived(cities);
+    });
+}
+
 void ImmichApi::fetchUniqueFolderPaths()
 {
     qInfo() << "ImmichApi: Fetching unique folder paths";
