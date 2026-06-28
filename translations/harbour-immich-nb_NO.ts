@@ -2762,27 +2762,27 @@
     <message id="foldersPage.folders">
         <location filename="../qml/pages/FoldersPage.qml" line="96"/>
         <source>Folders</source>
-        <translation type="unfinished">Mapper</translation>
+        <translation>Mapper</translation>
     </message>
     <message id="foldersPage.folderNumber">
         <location filename="../qml/pages/FoldersPage.qml" line="160"/>
         <source>1 folder</source>
-        <translation type="unfinished"></translation>
+        <translation>1 mappe</translation>
     </message>
     <message id="foldersPage.foldersNumber">
         <location filename="../qml/pages/FoldersPage.qml" line="162"/>
         <source>%1 folders</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 mapper</translation>
     </message>
     <message id="foldersPage.loading">
         <location filename="../qml/pages/FoldersPage.qml" line="201"/>
         <source>Loading folders...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster inn mapper…</translation>
     </message>
     <message id="foldersPage.empty">
         <location filename="../qml/pages/FoldersPage.qml" line="209"/>
         <source>No items in this folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Det er ingen filer i denne mappen</translation>
     </message>
 </context>
 </TS>
