@@ -248,7 +248,9 @@ Page {
                     assetId: assetId,
                     isFavorite: isFavorite,
                     isVideo: isVideo,
-                    thumbhash: thumbhash
+                    thumbhash: thumbhash,
+                    assetModel: albumModel,
+                    currentIndex: currentIndex
                 })
             }
         }

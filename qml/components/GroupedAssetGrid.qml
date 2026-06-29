@@ -11,7 +11,7 @@ Column {
     property bool selectionMode: false
     property var selectedAssets: []
 
-    signal assetClicked(string assetId, bool isFavorite, bool isVideo, string thumbhash)
+    signal assetClicked(string assetId, bool isFavorite, bool isVideo, string thumbhash, int assetIndex)
     signal assetPressAndHold(string assetId)
     signal subGroupSelectToggled(var assets, bool allSelected)
 
@@ -108,7 +108,7 @@ Column {
                                     if (root.selectionMode) {
                                         root.assetPressAndHold(modelData.id)
                                     } else {
-                                        root.assetClicked(modelData.id, modelData.isFavorite, modelData.isVideo, modelData.thumbhash || "")
+                                        root.assetClicked(modelData.id, modelData.isFavorite, modelData.isVideo, modelData.thumbhash || "", modelData.assetIndex)
                                     }
                                 }
                                 onPressAndHold: root.assetPressAndHold(modelData.id)

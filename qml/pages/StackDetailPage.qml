@@ -11,13 +11,14 @@ Page {
     property bool primaryIsFavorite: false
     property string primaryThumbhash: ""
     property int timelineAssetIndex: -1
+    property var assetModel: timelineModel
 
     property var assets: []
     property int currentIndex: 0
     property bool stackLoaded: false
     property bool isFavorite: false
     property var assetInfo: null
-    property int totalTimelineAssets: timelineModel.totalCount
+    property int totalTimelineAssets: assetModel ? assetModel.totalCount : 0
     property int pendingTimelineIndex: -1
 
     // Zoom + pan state
@@ -68,7 +69,7 @@ Page {
     // Get timeline asset thumbnail for prev/next peek
     function getTimelineAssetSource(index) {
         if (index < 0 || index >= totalTimelineAssets) return ""
-        var asset = timelineModel.getAssetByAssetIndex(index)
+        var asset = assetModel ? assetModel.getAssetByAssetIndex(index) : null
         return asset && asset.id ? "image://immich/detail/" + asset.id : ""
     }
 
@@ -76,12 +77,12 @@ Page {
     function navigateToTimelineAsset(newTimelineIndex) {
         if (newTimelineIndex < 0 || newTimelineIndex >= totalTimelineAssets) return
 
-        var asset = timelineModel.getAssetByAssetIndex(newTimelineIndex)
+        var asset = assetModel.getAssetByAssetIndex(newTimelineIndex)
         if (!asset || !asset.id) {
-            var location = timelineModel.getAssetLocation(newTimelineIndex)
+            var location = assetModel.getAssetLocation(newTimelineIndex)
             if (location && location.bucketIndex !== undefined && location.bucketIndex >= 0) {
                 pendingTimelineIndex = newTimelineIndex
-                timelineModel.requestBucketLoad(location.bucketIndex)
+                assetModel.requestBucketLoad(location.bucketIndex)
             }
             return
         }
@@ -94,7 +95,8 @@ Page {
                 "primaryAssetId": asset.id,
                 "primaryIsFavorite": asset.isFavorite || false,
                 "primaryThumbhash": asset.thumbhash || "",
-                "timelineAssetIndex": newTimelineIndex
+                "timelineAssetIndex": newTimelineIndex,
+                "assetModel": page.assetModel
             }, PageStackAction.Immediate)
         } else {
             // Target is a regular asset — replace with AssetDetailPage
@@ -103,7 +105,8 @@ Page {
                 "isFavorite": asset.isFavorite || false,
                 "isVideo": asset.isVideo || false,
                 "thumbhash": asset.thumbhash || "",
-                "currentIndex": newTimelineIndex
+                "currentIndex": newTimelineIndex,
+                "assetModel": page.assetModel
             }, PageStackAction.Immediate)
         }
     }
@@ -537,12 +540,12 @@ Page {
     }
 
     Connections {
-        target: timelineModel
+        target: assetModel
         onBucketAssetsLoaded: {
             if (page.pendingTimelineIndex < 0) {
                 return
             }
-            var location = timelineModel.getAssetLocation(page.pendingTimelineIndex)
+            var location = assetModel.getAssetLocation(page.pendingTimelineIndex)
             if (location && location.bucketIndex === bucketIndex) {
                 var targetIndex = page.pendingTimelineIndex
                 page.pendingTimelineIndex = -1

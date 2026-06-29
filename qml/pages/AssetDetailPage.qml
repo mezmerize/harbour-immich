@@ -18,7 +18,8 @@ Page {
     property int currentIndex: -1
     property var albumAssets: null
     property string albumId: ""
-    property int totalAssets: albumAssets ? albumAssets.length : timelineModel.totalCount
+    property var assetModel: timelineModel
+    property int totalAssets: albumAssets ? albumAssets.length : (assetModel ? assetModel.totalCount : 0)
     property string thumbhash: ""
     property string currentThumbhash: assetInfo && assetInfo.thumbhash ? assetInfo.thumbhash : thumbhash
     property int pendingNavigationIndex: -1
@@ -42,7 +43,7 @@ Page {
 
     function getAssetSource(index) {
         if (index < 0 || index >= totalAssets) return ""
-        var asset = albumAssets ? albumAssets[index] : timelineModel.getAssetByAssetIndex(index)
+        var asset = albumAssets ? albumAssets[index] : (assetModel ? assetModel.getAssetByAssetIndex(index) : null)
         return asset && asset.id ? "image://immich/detail/" + asset.id : ""
     }
 
@@ -53,12 +54,12 @@ Page {
         panX = 0
         panY = 0
 
-        var asset = albumAssets ? albumAssets[assetIndex] : timelineModel.getAssetByAssetIndex(assetIndex)
+        var asset = albumAssets ? albumAssets[assetIndex] : assetModel.getAssetByAssetIndex(assetIndex)
         if (!albumAssets && (!asset || !asset.id)) {
-            var location = timelineModel.getAssetLocation(assetIndex)
+            var location = assetModel.getAssetLocation(assetIndex)
             if (location && location.bucketIndex !== undefined && location.bucketIndex >= 0) {
                 pendingNavigationIndex = assetIndex
-                timelineModel.requestBucketLoad(location.bucketIndex)
+                assetModel.requestBucketLoad(location.bucketIndex)
             }
             return
         }
@@ -70,7 +71,8 @@ Page {
                     "primaryAssetId": asset.id,
                     "primaryIsFavorite": asset.isFavorite || false,
                     "primaryThumbhash": asset.thumbhash || "",
-                    "timelineAssetIndex": assetIndex
+                    "timelineAssetIndex": assetIndex,
+                    "assetModel": page.assetModel
                 }, PageStackAction.Immediate)
                 return
             }
@@ -414,12 +416,12 @@ Page {
     }
 
     Connections {
-        target: albumAssets ? null : timelineModel
+        target: albumAssets ? null : assetModel
         onBucketAssetsLoaded: {
             if (page.pendingNavigationIndex < 0) {
                 return
             }
-            var location = timelineModel.getAssetLocation(page.pendingNavigationIndex)
+            var location = assetModel.getAssetLocation(page.pendingNavigationIndex)
             if (location && location.bucketIndex === bucketIndex) {
                 var targetIndex = page.pendingNavigationIndex
                 page.pendingNavigationIndex = -1

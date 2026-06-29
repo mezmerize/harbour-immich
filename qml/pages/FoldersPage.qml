@@ -179,11 +179,21 @@ Page {
 
             onClicked: {
                 if (item.isAsset) {
+                    var assetsOnly = []
+                    var assetIndex = -1
+                    for (var k = 0; k < page.folderItems.length; k++) {
+                        if (page.folderItems[k].isAsset) {
+                            if (page.folderItems[k].id === item.id) assetIndex = assetsOnly.length
+                            assetsOnly.push(page.folderItems[k])
+                        }
+                    }
                     pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
                         assetId: item.id,
                         isFavorite: item.isFavorite || false,
                         isVideo: item.isVideo || false,
-                        thumbhash: item.thumbhash || ""
+                        thumbhash: item.thumbhash || "",
+                        albumAssets: assetsOnly,
+                        currentIndex: assetIndex
                     })
                 } else {
                     page.navigateToFolder(item.path, item.name)

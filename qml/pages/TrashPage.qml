@@ -159,7 +159,9 @@ Page {
                     assetId: assetId,
                     isFavorite: false,
                     isVideo: isVideo,
-                    thumbhash: thumbhash
+                    thumbhash: thumbhash,
+                    assetModel: trashModel,
+                    currentIndex: currentIndex
                 })
             }
         }

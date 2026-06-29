@@ -329,7 +329,9 @@ Page {
                     isFavorite: isFavorite,
                     isVideo: isVideo,
                     thumbhash: thumbhash,
-                    isLockedAsset: true
+                    isLockedAsset: true,
+                    assetModel: lockedModel,
+                    currentIndex: currentIndex
                 })
             }
         }
