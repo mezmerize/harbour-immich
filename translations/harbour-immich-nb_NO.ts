@@ -2800,43 +2800,43 @@
         <location filename="../qml/pages/PlaceDetailPage.qml" line="123"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="161"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 mediefil</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="placeDetailPage.assets">
         <location filename="../qml/pages/PlaceDetailPage.qml" line="125"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="161"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 mediefiler</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="placeDetailPage.loading">
         <location filename="../qml/pages/PlaceDetailPage.qml" line="240"/>
         <source>Loading assets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster mediefiler…</translation>
     </message>
     <message id="placeDetailPage.noAssets">
         <location filename="../qml/pages/PlaceDetailPage.qml" line="255"/>
         <source>No assets</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen mediefiler</translation>
     </message>
     <message id="placesPage.places">
         <location filename="../qml/pages/PlacesPage.qml" line="47"/>
         <source>Places</source>
-        <translation type="unfinished">Steder</translation>
+        <translation>Steder</translation>
     </message>
     <message id="placesPage.filter">
         <location filename="../qml/pages/PlacesPage.qml" line="54"/>
         <source>Filter places...</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrer steder…</translation>
     </message>
     <message id="placesPage.loading">
         <location filename="../qml/pages/PlacesPage.qml" line="192"/>
         <source>Loading places...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster steder…</translation>
     </message>
     <message id="placesPage.noPlaces">
         <location filename="../qml/pages/PlacesPage.qml" line="201"/>
         <source>No places found</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen steder funnet</translation>
     </message>
 </context>
 </TS>
