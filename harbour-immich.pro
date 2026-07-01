@@ -56,7 +56,6 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/LoadingIndicator.qml \
     qml/components/MemoriesBar.qml \
     qml/components/NotificationBanner.qml \
-    qml/components/OverlayIcon.qml \
     qml/components/PeoplePickerDialog.qml \
     qml/components/QRCode.qml \
     qml/components/ScrollToTopButton.qml \
