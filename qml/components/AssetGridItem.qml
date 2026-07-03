@@ -23,15 +23,12 @@ BackgroundItem {
     }
 
     function formatDuration(dur) {
-        if (!dur || dur === "") return ""
-        // API returns duration as "H:MM:SS.ffffff"
-        var parts = dur.split(".")
-        var timePart = parts[0] // "H:MM:SS"
-        var segments = timePart.split(":")
-        if (segments.length < 3) return timePart
-        var h = parseInt(segments[0])
-        var m = parseInt(segments[1])
-        var s = parseInt(segments[2])
+        var ms = Number(dur)
+        if (isNaN(ms) || ms <= 0) return ""
+        var total = Math.floor(ms / 1000)
+        var h = Math.floor(total / 3600)
+        var m = Math.floor((total % 3600) / 60)
+        var s = total % 60
         if (h > 0) return h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s
         return m + ":" + (s < 10 ? "0" : "") + s
     }
