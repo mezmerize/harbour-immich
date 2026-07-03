@@ -70,6 +70,7 @@ public:
    Q_INVOKABLE int getBucketCount() const;
    Q_INVOKABLE QVariantMap getBucketAt(int index) const;
    Q_INVOKABLE QVariantList getBucketAssets(int bucketIndex) const;
+   Q_INVOKABLE QStringList getLoadedAssetIds() const;
    Q_INVOKABLE QVariantList getBucketSubGroups(int bucketIndex) const;
    Q_INVOKABLE QString getBucketTimeBucket(int bucketIndex) const;
 

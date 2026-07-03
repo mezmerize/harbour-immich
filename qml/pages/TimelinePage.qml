@@ -556,6 +556,7 @@ Page {
         }
         onErrorOccurred: {
             timelineModel.setLoading(false)
+            page.memoriesLoading = false
             notification.showError(error)
         }
         onTrashRestored: {

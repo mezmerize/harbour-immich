@@ -1,6 +1,7 @@
 #include "albummodel.h"
 #include "authmanager.h"
 #include <QJsonObject>
+#include <QJsonArray>
 #include <algorithm>
 
 AlbumModel::AlbumModel(AuthManager *authManager, QObject *parent)
@@ -110,7 +111,16 @@ void AlbumModel::loadAlbums(const QJsonArray &albumsJson)
         album.shared = obj["shared"].toBool();
 
         // Owner info
-        QJsonObject ownerObj = obj["owner"].toObject();
+        QJsonObject ownerObj;
+        const QJsonArray albumUsers = obj["albumUsers"].toArray();
+        for (const QJsonValue &value : albumUsers) {
+            const QJsonObject albumUser = value.toObject();
+            if (albumUser["role"].toString() == QStringLiteral("owner")) {
+                ownerObj = albumUser["user"].toObject();
+                album.ownerId = ownerObj["id"].toString();
+                break;
+            }
+        }
         QString ownerEmail = ownerObj["email"].toString();
         album.ownerName = ownerObj["name"].toString();
         if (album.ownerName.isEmpty()) {

@@ -73,7 +73,7 @@ void ImmichApi::fetchAlbums(const QString &shared)
     QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/albums"));
     if (!shared.isEmpty()) {
         QUrlQuery query;
-        query.addQueryItem(QStringLiteral("shared"), shared);
+        query.addQueryItem(QStringLiteral("isShared"), shared);
         url.setQuery(query);
     }
     QNetworkRequest request = createAuthenticatedRequest(url);
@@ -514,7 +514,6 @@ QHttpMultiPart* ImmichApi::buildUploadMultiPart(QFile *file, const QFileInfo &fi
     QMimeDatabase mimeDb;
     QString mimeType = mimeDb.mimeTypeForFile(fileInfo).name();
     QString isoDate = fileInfo.lastModified().toUTC().toString(Qt::ISODate);
-    QString deviceAssetId = QString("%1-%2").arg(fileInfo.fileName()).arg(fileInfo.lastModified().toMSecsSinceEpoch());
 
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
@@ -533,8 +532,6 @@ QHttpMultiPart* ImmichApi::buildUploadMultiPart(QFile *file, const QFileInfo &fi
     file->setParent(multiPart);
     multiPart->append(filePart);
 
-    addFormField("deviceAssetId", deviceAssetId.toUtf8());
-    addFormField("deviceId", "harbour-immich");
     addFormField("fileCreatedAt", isoDate.toUtf8());
     addFormField("fileModifiedAt", isoDate.toUtf8());
     addFormField("isFavorite", "false");

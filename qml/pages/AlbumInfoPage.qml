@@ -6,6 +6,24 @@ Page {
 
     property string albumId
     property var albumInfo
+    property var albumAssetIds: []
+    property var albumOwner: {
+        if (albumInfo && albumInfo.albumUsers) {
+            for (var i = 0; i < albumInfo.albumUsers.length; i++) {
+                if (albumInfo.albumUsers[i].role === "owner") return albumInfo.albumUsers[i].user
+            }
+        }
+        return null
+    }
+    property var sharedUsers: {
+        var res = []
+        if (albumInfo && albumInfo.albumUsers) {
+            for (var i = 0; i < albumInfo.albumUsers.length; i++) {
+                if (albumInfo.albumUsers[i].role !== "owner") res.push(albumInfo.albumUsers[i])
+            }
+        }
+        return res
+    }
 
     SilicaFlickable {
         anchors.fill: parent
@@ -15,15 +33,14 @@ Page {
             MenuItem {
                 //% "Edit album"
                 text: qsTrId("pullDownMenu.editAlbum")
-                visible: !!(albumInfo && albumInfo.owner && albumInfo.owner.id === authManager.userId)
+                visible: !!(albumOwner && albumOwner.id === authManager.userId)
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("EditAlbumDialog.qml"), {
                         albumId: page.albumId,
                         albumName: !!albumInfo && albumInfo.albumName ? albumInfo.albumName : "",
                         albumDescription: !!albumInfo && albumInfo.description ? albumInfo.description : "",
                         isActivityEnabled: !!albumInfo && albumInfo.isActivityEnabled !== undefined ? albumInfo.isActivityEnabled : true,
-                        albumThumbnailAssetId: !!albumInfo && albumInfo.albumThumbnailAssetId ? albumInfo.albumThumbnailAssetId : "",
-                        albumAssets: !!albumInfo && albumInfo.assets ? albumInfo.assets : []
+                        albumThumbnailAssetId: !!albumInfo && albumInfo.albumThumbnailAssetId ? albumInfo.albumThumbnailAssetId : ""
                     })
                 }
             }
@@ -73,31 +90,31 @@ Page {
             SectionHeader {
                 //% "Owner"
                 text: qsTrId("assetInfoPage.owner")
-                visible: !!(albumInfo && albumInfo.owner)
+                visible: !!albumOwner
             }
 
             DetailItem {
-                visible: !!(albumInfo && albumInfo.owner && albumInfo.owner.name)
+                visible: !!(albumOwner && albumOwner.name)
                 //% "Name"
                 label: qsTrId("albumInfoPage.ownerName")
-                value: !!(albumInfo && albumInfo.owner) ? albumInfo.owner.name : ""
+                value: !!(albumOwner && albumOwner.name) ? albumOwner.name : ""
             }
 
             DetailItem {
-                visible: !!(albumInfo && albumInfo.owner && albumInfo.owner.email)
+                visible: !!(albumOwner && albumOwner.email)
                 //% "Email"
                 label: qsTrId("albumInfoPage.ownerEmail")
-                value: !!(albumInfo && albumInfo.owner) ? albumInfo.owner.email : ""
+                value: !!(albumOwner && albumOwner.email) ? albumOwner.email : ""
             }
 
             SectionHeader {
                 //% "Shared with"
                 text: qsTrId("albumInfoPage.sharedWith")
-                visible: !!(albumInfo && albumInfo.albumUsers && albumInfo.albumUsers.length > 0)
+                visible: sharedUsers.length > 0
             }
 
             Repeater {
-                model: !!(albumInfo && albumInfo.albumUsers) ? albumInfo.albumUsers : []
+                model: sharedUsers
 
                 DetailItem {
                     label: modelData.user ? modelData.user.name : ""

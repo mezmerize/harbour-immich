@@ -1,5 +1,6 @@
 #include "timelinemodel.h"
 #include <QJsonObject>
+#include <QJsonValue>
 #include <QJsonDocument>
 #include <QDebug>
 #include <QLocale>
@@ -143,7 +144,7 @@ void TimelineModel::loadBucketAssets(const QString &timeBucket, const QJsonObjec
         asset.isFavorite = isFavoriteArr[i].toBool();
         asset.createdAt = QDateTime::fromString(fileCreatedAtArr[i].toString(), Qt::ISODate);
         asset.thumbhash = i < thumbhashArr.size() ? thumbhashArr[i].toString() : QString();
-        asset.duration = i < durationArr.size() ? durationArr[i].toString() : QString();
+        asset.duration = i < durationArr.size() ? QString::number(static_cast<qint64>(durationArr[i].toDouble())) : QString();
         asset.ownerId = i < ownerIdArr.size() ? ownerIdArr[i].toString() : QString();
 
         // Parse stack info: null means not a stack, array has id + assetCount
@@ -297,6 +298,17 @@ QVariantList TimelineModel::getBucketAssets(int bucketIndex) const
         result.append(assetMap);
     }
     return result;
+}
+
+QStringList TimelineModel::getLoadedAssetIds() const
+{
+    QStringList ids;
+    for (const TimelineBucket &bucket : m_buckets) {
+        if (!bucket.loaded) continue;
+        for (const TimelineAsset &asset : bucket.assets)
+            ids.append(asset.id);
+    }
+    return ids;
 }
 
 QVariantList TimelineModel::getBucketSubGroups(int bucketIndex) const
