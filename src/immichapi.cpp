@@ -170,9 +170,14 @@ void ImmichApi::populateBaseSearchParams(QJsonObject &json, const QVariantMap &s
     }
 
     // Display options
-    copyBool("withArchived");
     copyBool("isNotInAlbum");
     copyBool("isFavorite");
+
+    if (searchParams.contains("visibility") && !searchParams["visibility"].toString().isEmpty()) {
+        json["visibility"] = searchParams["visibility"].toString();
+    } else {
+        json["visibility"] = QStringLiteral("timeline");
+    }
 
     // Pagination
     if (searchParams.contains("page")) {
@@ -180,7 +185,7 @@ void ImmichApi::populateBaseSearchParams(QJsonObject &json, const QVariantMap &s
     }
     json["size"] = searchParams.contains("size") ? searchParams["size"].toInt() : 100;
 
-    json["withExif"] = "true";
+    json["withExif"] = true;
 }
 
 void ImmichApi::searchByParameters(const QVariantMap &searchParams)
@@ -872,7 +877,7 @@ void ImmichApi::fetchMemories()
     qInfo() << "ImmichApi: Fetching memories";
     QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/memories"));
     QUrlQuery query;
-    query.addQueryItem(QStringLiteral("for"), QDateTime::currentDateTime().toString(Qt::ISODate));
+    query.addQueryItem(QStringLiteral("for"), QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyy-MM-dd'T'HH:mm:ss.zzz'Z'")));
     url.setQuery(query);
     QNetworkRequest request = createAuthenticatedRequest(url);
     QNetworkReply *reply = m_networkManager->get(request);

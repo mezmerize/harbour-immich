@@ -138,10 +138,10 @@ Page {
 
        // Date range
        if (dateFromPicker.dateText.length > 0) {
-           params.takenAfter = dateFromPicker.dateText
+           params.takenAfter = new Date(dateFromPicker.dateText + "T00:00:00.000Z").toISOString()
        }
        if (dateToPicker.dateText.length > 0) {
-           params.takenBefore = dateToPicker.dateText
+           params.takenBefore = new Date(dateToPicker.dateText + "T00:00:00.000Z").toISOString()
        }
 
        // Media type
@@ -156,7 +156,7 @@ Page {
            params.isNotInAlbum = true
        }
        if (archivedSwitch.checked) {
-           params.isArchived = true
+           params.visibility = "archive"
        }
        if (favoriteSwitch.checked) {
            params.isFavorite = true

@@ -10,7 +10,15 @@ Dialog {
     property string shareType: "INDIVIDUAL" // INDIVIDUAL or ALBUM
     property bool albumShare: shareType === "ALBUM"
     property var albumInfo: null
-    property bool isOwner: albumInfo && albumInfo.owner && albumInfo.owner.id === authManager.userId
+    property string albumOwnerId: {
+        if (albumInfo && albumInfo.albumUsers) {
+            for (var i = 0; i < albumInfo.albumUsers.length; i++) {
+                if (albumInfo.albumUsers[i].role === "owner" && albumInfo.albumUsers[i].user) return albumInfo.albumUsers[i].user.id || ""
+            }
+        }
+        return ""
+    }
+    property bool isOwner: albumOwnerId !== "" && albumOwnerId === authManager.userId
     property bool albumActivityEnabled: true
     property bool suppressAlbumActivitySave: false
     property var selectedUserIds: []
@@ -27,6 +35,7 @@ Dialog {
             var au = albumUsers[i]
             var u = au.user
             if (!u) continue
+            if (au.role === "owner") continue
             memberListModel.append({
                 odUserId: u.id || "",
                 odName: u.name || "",
@@ -46,9 +55,7 @@ Dialog {
             var u = albumUsers[i].user
             if (u && u.id) existingIds.push(u.id)
         }
-        if (albumInfo && albumInfo.owner && albumInfo.owner.id)
-            existingIds.push(albumInfo.owner.id)
-
+        if (albumOwnerId !== "") existingIds.push(albumOwnerId)
         var count = 0
         for (var j = 0; j < allUsers.length; j++) {
             var user = allUsers[j]
