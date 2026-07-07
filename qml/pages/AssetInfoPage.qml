@@ -93,28 +93,28 @@ Page {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.fNumber)
                 //% "Aperture"
                 label: qsTrId("assetInfoPage.aperture")
-                value: !!(assetInfo && assetInfo.exifInfo) ? "f/" + assetInfo.exifInfo.fNumber : ""
+                value: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.fNumber) ? "f/" + assetInfo.exifInfo.fNumber : ""
             }
 
             DetailItem {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.exposureTime)
                 //% "Exposure time"
                 label: qsTrId("assetInfoPage.exposureTime")
-                value: !!(assetInfo && assetInfo.exifInfo) ? assetInfo.exifInfo.exposureTime + "s" : ""
+                value: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.exposureTime) ? assetInfo.exifInfo.exposureTime + "s" : ""
             }
 
             DetailItem {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.iso)
                 //% "ISO"
                 label: qsTrId("assetInfoPage.iso")
-                value: !!(assetInfo && assetInfo.exifInfo) ? assetInfo.exifInfo.iso : ""
+                value: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.iso) ? assetInfo.exifInfo.iso : ""
             }
 
             DetailItem {
                 visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.focalLength)
                 //% "Focal length"
                 label: qsTrId("assetInfoPage.focalLength")
-                value: !!(assetInfo && assetInfo.exifInfo) ? assetInfo.exifInfo.focalLength + "mm" : ""
+                value: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.focalLength) ? assetInfo.exifInfo.focalLength + "mm" : ""
             }
 
             SectionHeader {
