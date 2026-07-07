@@ -21,6 +21,14 @@ Page {
                 title: qsTrId("serverPage.serverConfiguration")
             }
 
+            Image {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width - 6 * Theme.horizontalPageMargin
+                source: Qt.resolvedUrl("../../icons/logo-main.svg")
+                fillMode: Image.PreserveAspectFit
+                smooth: true
+            }
+
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin

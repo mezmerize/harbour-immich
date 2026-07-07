@@ -39,7 +39,9 @@ HEADERS += \
     src/thumbhashprovider.h \
     src/timelinemodel.h
 
-icons.files = icons/cover-icon.png
+icons.files = \
+    icons/cover-icon.png \
+    icons/logo-main.svg
 icons.path = $$PREFIX/share/$${TARGET}/icons
 INSTALLS += icons
 
