@@ -150,12 +150,11 @@ Page {
                       BackgroundItem {
                           width: (filterRow.width - filterRow.spacing * (filterRepeater.count - 1)) / filterRepeater.count
                           height: Theme.itemExtraSizeSmall
-                          highlighted: modelData.id === "shared" ? page.activeFilter === "shared" || page.activeFilter === "sharedWithMe" : page.activeFilter === modelData.id
 
                           Rectangle {
                               anchors.fill: parent
-                              radius: Theme.paddingSmall
-                              color: (modelData.id === "shared" ? page.activeFilter === "shared" || page.activeFilter === "sharedWithMe" : page.activeFilter === modelData.id) ? Theme.rgba(Theme.highlightBackgroundColor, 0.4) : Theme.rgba(Theme.highlightBackgroundColor, 0.1)
+                              radius: height / 2
+                              color: (modelData.id === "shared" ? page.activeFilter === "shared" || page.activeFilter === "sharedWithMe" : page.activeFilter === modelData.id) ? Theme.rgba(Theme.highlightBackgroundColor, 0.4) : "transparent"
                               border.width: (modelData.id === "shared" ? page.activeFilter === "shared" || page.activeFilter === "sharedWithMe" : page.activeFilter === modelData.id) ? 1 : 0
                               border.color: Theme.highlightColor
                           }
@@ -202,8 +201,12 @@ Page {
 
                   Rectangle {
                       anchors.fill: parent
-                      radius: Theme.paddingSmall
-                      color: Theme.rgba(Theme.highlightBackgroundColor, 0.1)
+                      radius: height / 2
+                      color: sortOrderButton.down ? Theme.rgba(Theme.highlightBackgroundColor, 0.4) : "transparent"
+
+                      Behavior on color {
+                          ColorAnimation { duration: 100 }
+                      }
                   }
 
                   Icon {
@@ -227,12 +230,11 @@ Page {
                   width: visible ? Theme.itemSizeSmall : 0
                   height: Theme.itemSizeExtraSmall
                   visible: page.sharedSubsetVisible
-                  highlighted: page.activeFilter === "sharedWithMe"
 
                   Rectangle {
                       anchors.fill: parent
-                      radius: Theme.paddingSmall
-                      color: page.activeFilter === "sharedWithMe" ? Theme.rgba(Theme.highlightBackgroundColor, 0.4) : Theme.rgba(Theme.highlightBackgroundColor, 0.1)
+                      radius: height / 2
+                      color: page.activeFilter === "sharedWithMe" ? Theme.rgba(Theme.highlightBackgroundColor, 0.4) : "transparent"
                       border.width: page.activeFilter === "sharedWithMe" ? 1 : 0
                       border.color: Theme.highlightColor
                   }

@@ -32,12 +32,11 @@ Item {
             BackgroundItem {
                 width: (filterRow.width - Theme.paddingSmall - sortButton.width - Theme.paddingMedium) / 2
                 height: Theme.itemSizeExtraSmall
-                highlighted: filterBar.activeFilter === modelData.id
 
                 Rectangle {
                     anchors.fill: parent
-                    radius: Theme.paddingSmall
-                    color: filterBar.activeFilter === modelData.id ? Theme.rgba(Theme.highlightBackgroundColor, 0.4) : Theme.rgba(Theme.highlightBackgroundColor, 0.1)
+                    radius: height / 2
+                    color: filterBar.activeFilter === modelData.id ? Theme.rgba(Theme.highlightBackgroundColor, 0.4) : "transparent"
                     border.width: filterBar.activeFilter === modelData.id ? 1 : 0
                     border.color: Theme.highlightColor
                 }
@@ -78,8 +77,12 @@ Item {
 
             Rectangle {
                 anchors.fill: parent
-                radius: Theme.paddingSmall
-                color: Theme.rgba(Theme.highlightBackgroundColor, 0.1)
+                radius: height / 2
+                color: sortButton.down ? Theme.rgba(Theme.highlightBackgroundColor, 0.4) : "transparent"
+
+                Behavior on color {
+                    ColorAnimation { duration: 100 }
+                }
             }
 
             Icon {
