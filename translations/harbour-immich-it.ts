@@ -2611,7 +2611,7 @@
     <message id="trashPage.loading">
         <location filename="../qml/pages/TrashPage.qml" line="182"/>
         <source>Loading trashed assets...</source>
-        <translation>Caricamento asset cestino</translation>
+        <translation>Caricamento asset eliminati...</translation>
     </message>
     <message id="trashPage.noAssets">
         <location filename="../qml/pages/TrashPage.qml" line="191"/>
@@ -2672,176 +2672,176 @@
     <message id="lockedFolderPage.confirmPin">
         <location filename="../qml/pages/LockedFolderPage.qml" line="56"/>
         <source>Re-enter your 6-digit PIN to confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci nuovamente il tuo PIN a sei cifre per confermare</translation>
     </message>
     <message id="lockedFolderPage.createNewPin">
         <location filename="../qml/pages/LockedFolderPage.qml" line="59"/>
         <source>Create a 6-digit PIN for your locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea un PIN a 6 cifre per la tua cartella protetta</translation>
     </message>
     <message id="lockedFolderPage.enterPin">
         <location filename="../qml/pages/LockedFolderPage.qml" line="62"/>
         <source>Enter your 6-digit PIN to access the locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci il tuo PIN a 6 cifre per accedere alla cartella protetta</translation>
     </message>
     <message id="lockedFolderPage.lockedFolder">
         <location filename="../qml/pages/LockedFolderPage.qml" line="85"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="271"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="295"/>
         <source>Locked Folder</source>
-        <translation type="unfinished">Cartelle bloccate</translation>
+        <translation>Cartella protetta</translation>
     </message>
     <message id="notification.pinMismatch">
         <location filename="../qml/pages/LockedFolderPage.qml" line="200"/>
         <source>PINs to do not match, try again</source>
-        <translation type="unfinished"></translation>
+        <translation>I PIN non combaciano, prova di nuovo</translation>
     </message>
     <message id="lockedFolderPage.asset">
         <location filename="../qml/pages/LockedFolderPage.qml" line="281"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 asset</translation>
+        <translation>1 asset</translation>
     </message>
     <message id="lockedFolderPage.assets">
         <location filename="../qml/pages/LockedFolderPage.qml" line="283"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 asset</translation>
+        <translation>%1 asset</translation>
     </message>
     <message id="lockedFolderPage.loading">
         <location filename="../qml/pages/LockedFolderPage.qml" line="358"/>
         <source>Loading locked folder assets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Caricamento asset cartella protetta...</translation>
     </message>
     <message id="lockedFolderPage.noAssets">
         <location filename="../qml/pages/LockedFolderPage.qml" line="373"/>
         <source>Locked folder is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>La cartella protetta è vuota</translation>
     </message>
     <message id="notification.invalidPin">
         <location filename="../qml/pages/LockedFolderPage.qml" line="455"/>
         <source>Invalid PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN invalido</translation>
     </message>
     <message id="notification.pinCreated">
         <location filename="../qml/pages/LockedFolderPage.qml" line="460"/>
         <source>PIN created successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN creato con successo</translation>
     </message>
     <message id="notification.removedFromLockedFolder">
         <location filename="../qml/pages/LockedFolderPage.qml" line="496"/>
         <source>Removed from locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimosso dalla cartella protetta</translation>
     </message>
     <message id="pullDownMenu.addCustomFolder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="117"/>
         <source>Add custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi cartella personalizzata</translation>
     </message>
     <message id="onThisDevicePage.title">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="132"/>
         <source>On This Device</source>
-        <translation type="unfinished">Su questo dispositivo</translation>
+        <translation>Su questo dispositivo</translation>
     </message>
     <message id="notification.removeCustomFolder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="146"/>
         <source>Removing folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimozione cartella</translation>
     </message>
     <message id="onThisDevicePage.removeCustomFolder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="252"/>
         <source>Remove folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi cartella</translation>
     </message>
     <message id="onThisDevicePage.empty">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="285"/>
         <source>No media files in this folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun file media in questa cartella</translation>
     </message>
     <message id="onThisDevicePage.addFolderAccept">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="303"/>
         <source>Add Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi cartella</translation>
     </message>
     <message id="onThisDevicePage.folderPathPlaceholder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="309"/>
         <source>Enter folder path</source>
-        <translation type="unfinished">Inserisci percorso cartella</translation>
+        <translation>Inserisci percorso cartella</translation>
     </message>
     <message id="onThisDevicePage.folderPath">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="311"/>
         <source>Folder path</source>
-        <translation type="unfinished">Percorso cartella</translation>
+        <translation>Percorso cartella</translation>
     </message>
     <message id="onThisDevicePage.addFolderDescription">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="324"/>
         <source>Enter the full path to a folder on your device. The folder must exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci il percorso completo ad una cartella sul tuo dispositivo. La cartella deve essere già esistente.</translation>
     </message>
     <message id="foldersPage.folders">
         <location filename="../qml/pages/FoldersPage.qml" line="96"/>
         <source>Folders</source>
-        <translation type="unfinished">Cartelle</translation>
+        <translation>Cartelle</translation>
     </message>
     <message id="foldersPage.folderNumber">
         <location filename="../qml/pages/FoldersPage.qml" line="160"/>
         <source>1 folder</source>
-        <translation type="unfinished"></translation>
+        <translation>1 cartella</translation>
     </message>
     <message id="foldersPage.foldersNumber">
         <location filename="../qml/pages/FoldersPage.qml" line="162"/>
         <source>%1 folders</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 cartelle</translation>
     </message>
     <message id="foldersPage.loading">
         <location filename="../qml/pages/FoldersPage.qml" line="211"/>
         <source>Loading folders...</source>
-        <translation type="unfinished"></translation>
+        <translation>Caricamento cartelle...</translation>
     </message>
     <message id="foldersPage.empty">
         <location filename="../qml/pages/FoldersPage.qml" line="219"/>
         <source>No items in this folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun oggetto in questa cartella</translation>
     </message>
     <message id="placeDetailPage.asset">
         <location filename="../qml/pages/PlaceDetailPage.qml" line="123"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="161"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 asset</translation>
+        <translation>1 asset</translation>
     </message>
     <message id="placeDetailPage.assets">
         <location filename="../qml/pages/PlaceDetailPage.qml" line="125"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="161"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 asset</translation>
+        <translation>%1 asset</translation>
     </message>
     <message id="placeDetailPage.loading">
         <location filename="../qml/pages/PlaceDetailPage.qml" line="240"/>
         <source>Loading assets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Caricamento asset...</translation>
     </message>
     <message id="placeDetailPage.noAssets">
         <location filename="../qml/pages/PlaceDetailPage.qml" line="255"/>
         <source>No assets</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun asset</translation>
     </message>
     <message id="placesPage.places">
         <location filename="../qml/pages/PlacesPage.qml" line="47"/>
         <source>Places</source>
-        <translation type="unfinished">Luoghi</translation>
+        <translation>Luoghi</translation>
     </message>
     <message id="placesPage.filter">
         <location filename="../qml/pages/PlacesPage.qml" line="54"/>
         <source>Filter places...</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtra luoghi...</translation>
     </message>
     <message id="placesPage.loading">
         <location filename="../qml/pages/PlacesPage.qml" line="192"/>
         <source>Loading places...</source>
-        <translation type="unfinished"></translation>
+        <translation>Caricamento luoghi...</translation>
     </message>
     <message id="placesPage.noPlaces">
         <location filename="../qml/pages/PlacesPage.qml" line="201"/>
         <source>No places found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun luogo trovato</translation>
     </message>
 </context>
 </TS>
