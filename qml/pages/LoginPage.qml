@@ -7,6 +7,7 @@ Page {
 
     property bool isLoggingIn: false
     property bool hasError: false
+    property bool versionUnsupported: false
 
     Component.onCompleted: {
         oauthManager.checkOAuthAvailability(authManager.serverUrl)
@@ -98,6 +99,38 @@ Page {
                     isLoggingIn = true
                     oauthManager.startOAuthLogin(authManager.serverUrl)
                     pageStack.push(Qt.resolvedUrl("OAuthPage.qml"))
+                }
+            }
+
+            Rectangle {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                height: warningLabel.height + Theme.paddingMedium * 2
+                radius: Theme.paddingSmall
+                color: Theme.rgba(Theme.highlightColor, 0.2)
+                visible: page.versionUnsupported
+
+                Row {
+                    anchors.centerIn: parent
+                    spacing: Theme.paddingMedium
+                    width: parent.width - Theme.paddingMedium * 2
+
+                    Icon {
+                        source: "image://theme/icon-s-warning"
+                        color: Theme.highlightColor
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Label {
+                        id: warningLabel
+                        width: parent.width - parent.spacing - Theme.iconSizeSmall
+                        wrapMode: Text.WordWrap
+                        color: Theme.highlightColor
+                        font.pixelSize: Theme.fontSizeSmall
+                        //% "The Immich server you are trying to log into has lower version than required (minimal required version 3.0.0). Functionality may be affected."
+                        text: qsTrId("loginPage.versionUnsupported")
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
                 }
             }
 

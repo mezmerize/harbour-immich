@@ -45,6 +45,7 @@ public:
     Q_INVOKABLE void fetchMemories();
     Q_INVOKABLE void fetchServerStatistics();
     Q_INVOKABLE void fetchServerAbout();
+    Q_INVOKABLE void fetchServerVersion();
     Q_INVOKABLE void createAlbum(const QString &albumName, const QString &description);
     Q_INVOKABLE void updateAlbum(const QString &albumId, const QString &albumName, const QString &description, bool isActivityEnabled = true, const QString &albumThumbnailAssetId = QString());
     Q_INVOKABLE void fetchTimelineBuckets(const QString &context, const QVariantMap &params);
@@ -93,6 +94,7 @@ signals:
     void memoriesReceived(const QJsonArray &memories);
     void serverStatisticsReceived(const QJsonObject &stats);
     void serverAboutReceived(const QJsonObject &about);
+    void serverVersionReceived(const QJsonObject &version);
     void albumCreated(const QString &albumId, const QString &albumName);
     void albumUpdated(const QString &albumId, const QString &albumName, const QString &description, bool isActivityEnabled, const QString &albumThumbnailAssetId);
     void timelineBucketsReceived(const QString &context, const QJsonArray &buckets);

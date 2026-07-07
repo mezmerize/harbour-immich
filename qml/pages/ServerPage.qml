@@ -4,6 +4,7 @@ import Sailfish.Silica 1.0
 Page {
     id: page
 
+    property bool isLoggingIn: false
     property bool hasError: false
 
     SilicaFlickable {
@@ -64,8 +65,9 @@ Page {
                         return
                     }
 
+                    isLoggingIn = true
                     authManager.serverUrl = url
-                    pageStack.push(Qt.resolvedUrl("LoginPage.qml"))
+                    immichApi.fetchServerVersion()
                 }
             }
 
@@ -110,6 +112,26 @@ Page {
                     }
                 }
             }
+        }
+    }
+
+    Connections {
+        target: immichApi
+        onErrorOccurred: {
+            page.hasError = true
+            page.isLoggingIn = false
+            //% "Login failed"
+            errorLabel.text = error || qsTrId("loginPage.failed")
+        }
+        onServerVersionReceived: {
+            page.isLoggingIn = false
+            var versionUnsupported = false
+            if (version && version.major && version.minor && version.patch && version.major < 3) {
+                versionUnsupported = true
+            }
+            pageStack.push(Qt.resolvedUrl("LoginPage.qml"), {
+                "versionUnsupported": versionUnsupported
+            })
         }
     }
 }
