@@ -16,6 +16,7 @@ TimelineModel::TimelineModel(QObject *parent)
     , m_totalCount(0)
     , m_loading(false)
     , m_isFavoriteFilter(false)
+    , m_groupByCreatedAt(false)
     , m_pendingScrollBucketIndex(-1)
     , m_activeBucketLoads(0)
 {
@@ -129,10 +130,12 @@ void TimelineModel::loadBucketAssets(const QString &timeBucket, const QJsonObjec
     QJsonArray isImageArr = bucketData[QStringLiteral("isImage")].toArray();
     QJsonArray isFavoriteArr = bucketData[QStringLiteral("isFavorite")].toArray();
     QJsonArray fileCreatedAtArr = bucketData[QStringLiteral("fileCreatedAt")].toArray();
+    QJsonArray createdAtArr = bucketData[QStringLiteral("createdAt")].toArray();
     QJsonArray thumbhashArr = bucketData[QStringLiteral("thumbhash")].toArray();
     QJsonArray durationArr = bucketData[QStringLiteral("duration")].toArray();
     QJsonArray stackArr = bucketData[QStringLiteral("stack")].toArray();
     QJsonArray ownerIdArr = bucketData[QStringLiteral("ownerId")].toArray();
+    const QJsonArray &dateArr = (m_groupByCreatedAt && !createdAtArr.isEmpty()) ? createdAtArr : fileCreatedAtArr;
 
     int count = ids.size();
     bucket.assets.reserve(count);
@@ -142,7 +145,7 @@ void TimelineModel::loadBucketAssets(const QString &timeBucket, const QJsonObjec
         asset.id = ids[i].toString();
         asset.isVideo = !isImageArr[i].toBool(); // isImage=false means video
         asset.isFavorite = isFavoriteArr[i].toBool();
-        asset.createdAt = QDateTime::fromString(fileCreatedAtArr[i].toString(), Qt::ISODate);
+        asset.createdAt = QDateTime::fromString(dateArr[i].toString(), Qt::ISODate);
         asset.thumbhash = i < thumbhashArr.size() ? thumbhashArr[i].toString() : QString();
         asset.duration = i < durationArr.size() ? QString::number(static_cast<qint64>(durationArr[i].toDouble())) : QString();
         asset.ownerId = i < ownerIdArr.size() ? ownerIdArr[i].toString() : QString();
@@ -783,6 +786,19 @@ void TimelineModel::setServerUrl(const QString &url)
 int TimelineModel::bucketCount() const
 {
     return m_buckets.size();
+}
+
+bool TimelineModel::groupByCreatedAt() const
+{
+    return m_groupByCreatedAt;
+}
+
+void TimelineModel::setGroupByCreatedAt(bool value)
+{
+    if (m_groupByCreatedAt != value) {
+        m_groupByCreatedAt = value;
+        emit groupByCreatedAtChanged();
+    }
 }
 
 bool TimelineModel::isFavoriteFilter() const
