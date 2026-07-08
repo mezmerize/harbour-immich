@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../components"
 
 Page {
     id: oauthPage
@@ -24,10 +25,9 @@ Page {
                 title: qsTrId("oauthPage.oauthLogin")
             }
 
-            BusyIndicator {
+            LoadingIndicator {
                 anchors.horizontalCenter: parent.horizontalCenter
-                running: oauthManager.busy
-                size: BusyIndicatorSize.Large
+                loading: oauthManager.busy
             }
 
             Label {

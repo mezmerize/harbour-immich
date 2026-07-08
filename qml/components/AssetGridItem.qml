@@ -80,10 +80,10 @@ BackgroundItem {
             visible: thumbnail.status === Image.Loading && !thumbhash
         }
 
-        BusyIndicator {
+        LoadingIndicator {
             anchors.centerIn: parent
-            running: thumbnail.status === Image.Loading && !thumbhash
-            size: BusyIndicatorSize.Small
+            loading: thumbnail.status === Image.Loading && !thumbhash
+            useMonochrome: true
         }
 
         Icon {

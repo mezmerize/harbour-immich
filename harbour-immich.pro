@@ -41,6 +41,8 @@ HEADERS += \
 
 icons.files = \
     icons/cover-icon.png \
+    icons/loading-icon.svg \
+    icons/loading-mono-icon.svg \
     icons/logo-main.svg
 icons.path = $$PREFIX/share/$${TARGET}/icons
 INSTALLS += icons

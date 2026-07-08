@@ -187,10 +187,9 @@ Page {
                     y: panY
                 }
 
-                BusyIndicator {
+                LoadingIndicator {
                     anchors.centerIn: parent
-                    running: assetImage.status === Image.Loading && !currentThumbhash
-                    size: BusyIndicatorSize.Large
+                    visible: assetImage.status === Image.Loading && !currentThumbhash
                 }
 
                 Label {

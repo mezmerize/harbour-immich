@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Sailfish.Pickers 1.0
+import "../components"
 
 Page {
   id: uploadPage
@@ -221,10 +222,10 @@ Page {
                   }
               }
 
-              BusyIndicator {
+              LoadingIndicator {
                   anchors.horizontalCenter: parent.horizontalCenter
-                  size: BusyIndicatorSize.Medium
-                  running: true
+                  loading: true
+                  indicatorSize: Theme.iconSizeMedium
               }
           }
 

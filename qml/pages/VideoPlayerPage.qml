@@ -275,10 +275,9 @@ Page {
        }
 
        // Loading indicator
-       BusyIndicator {
+       LoadingIndicator {
            anchors.centerIn: parent
-           running: videoPlayer.status === MediaPlayer.Loading || videoPlayer.status === MediaPlayer.Buffering
-           size: BusyIndicatorSize.Large
+           loading: videoPlayer.status === MediaPlayer.Loading || videoPlayer.status === MediaPlayer.Buffering
        }
 
        // Error state

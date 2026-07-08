@@ -250,11 +250,10 @@ Dialog {
                 visible: dialog.albumShare && dialog.isOwner
             }
 
-            BusyIndicator {
+            LoadingIndicator {
                 anchors.horizontalCenter: parent.horizontalCenter
-                size: BusyIndicatorSize.Medium
-                running: dialog.albumShare && !dialog.usersLoaded && dialog.isOwner
-                visible: running
+                loading: dialog.albumShare && !dialog.usersLoaded && dialog.isOwner
+                indicatorSize: Theme.iconSizeMedium
             }
 
             Label {

@@ -203,10 +203,10 @@ Page {
                 NumberAnimation { target: slideshowImageB; property: "opacity"; to: 0; duration: 1000; easing.type: Easing.InOutQuad }
             }
 
-            BusyIndicator {
+            LoadingIndicator {
                 anchors.centerIn: parent
-                running: slideshowImageA.status === Image.Loading && slideshowImageB.status === Image.Loading
-                size: BusyIndicatorSize.Medium
+                loading: slideshowImageA.status === Image.Loading && slideshowImageB.status === Image.Loading
+                indicatorSize: Theme.iconSizeMedium
             }
 
             ZoomSwipeArea {

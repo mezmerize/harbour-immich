@@ -162,9 +162,9 @@ Item {
        HorizontalScrollDecorator {}
    }
 
-   BusyIndicator {
+   LoadingIndicator {
        anchors.centerIn: parent
-       running: memoriesBar.loading && memoriesModel.count === 0
-       size: BusyIndicatorSize.Small
+       loading: memoriesBar.loading && memoriesModel.count === 0
+       useMonochrome: true
    }
 }

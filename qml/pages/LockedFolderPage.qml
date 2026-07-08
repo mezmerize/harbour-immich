@@ -100,11 +100,10 @@ Page {
                     color: Theme.highlightColor
                 }
 
-                BusyIndicator {
+                LoadingIndicator {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    running: page.loadingStatus
-                    size: BusyIndicatorSize.Medium
-                    visible: page.loadingStatus
+                    loading: page.loadingStatus
+                    indicatorSize: Theme.iconSizeMedium
                 }
 
                 Label {
@@ -212,11 +211,10 @@ Page {
                     }
                 }
 
-                BusyIndicator {
+                LoadingIndicator {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    running: checkingPin
-                    size: BusyIndicatorSize.Medium
-                    visible: checkingPin
+                    loading: checkingPin
+                    indicatorSize: Theme.iconSizeMedium
                 }
             }
         }

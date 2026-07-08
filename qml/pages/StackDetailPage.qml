@@ -198,10 +198,10 @@ Page {
                     y: panY
                 }
 
-                BusyIndicator {
+                LoadingIndicator {
                     anchors.centerIn: parent
-                    running: mainImage.status === Image.Loading && !thumbhashPlaceholder.visible
-                    size: BusyIndicatorSize.Medium
+                    loading: mainImage.status === Image.Loading && !thumbhashPlaceholder.visible
+                    indicatorSize: Theme.iconSizeMedium
                 }
             }
 
@@ -230,10 +230,9 @@ Page {
             }
 
             // Loading overlay for stack data
-            BusyIndicator {
+            LoadingIndicator {
                 anchors.centerIn: parent
-                running: !stackLoaded
-                size: BusyIndicatorSize.Large
+                loading: !stackLoaded
             }
         }
 

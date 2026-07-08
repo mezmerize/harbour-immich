@@ -80,7 +80,7 @@ Page {
                text: qsTrId("pullDownMenu.refresh")
                onClicked: {
                    searchResultsModel.clear()
-                   searchBusy.running = true
+                   searchBusy.loading = true
                    if (smartSearchAssetId !== "") {
                        immichApi.searchSmartByParameters({ "queryAssetId": smartSearchAssetId })
                    } else if (searchParams.isSmartSearch) {
@@ -158,7 +158,7 @@ Page {
        }
 
        ViewPlaceholder {
-           enabled: resultsGrid.count === 0 && !searchBusy.running
+           enabled: resultsGrid.count === 0 && !searchBusy.loading
            //% "No results found"
            text: qsTrId("searchResultsPage.noResults")
            //% "Try adjusting your search filters"
@@ -168,18 +168,17 @@ Page {
        VerticalScrollDecorator {}
    }
 
-   BusyIndicator {
+   LoadingIndicator {
        id: searchBusy
        anchors.centerIn: parent
-       running: false
-       size: BusyIndicatorSize.Large
+       loading: false
    }
 
    Connections {
        target: immichApi
 
        onSearchResultsReceived: {
-           searchBusy.running = false
+           searchBusy.loading = false
            searchResultsModel.clear()
 
            var items = []
@@ -288,7 +287,7 @@ Page {
    }
 
    Component.onCompleted: {
-       searchBusy.running = true
+       searchBusy.loading = true
        if (smartSearchAssetId !== "") {
            immichApi.searchSmartByParameters({ "queryAssetId": smartSearchAssetId })
        } else {
