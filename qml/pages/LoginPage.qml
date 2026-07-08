@@ -128,7 +128,7 @@ Page {
                         wrapMode: Text.WordWrap
                         color: Theme.highlightColor
                         font.pixelSize: Theme.fontSizeSmall
-                        //% "The Immich server you are trying to log into has lower version than required (minimal required version 3.0.0). Functionality may be affected."
+                        //% "The Immich server you are trying to log in to is running an unsupported version (minimum required: 3.0.0). Some features may not work correctly."
                         text: qsTrId("loginPage.versionUnsupported")
                         anchors.verticalCenter: parent.verticalCenter
                     }
