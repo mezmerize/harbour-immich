@@ -33,7 +33,12 @@ BackgroundItem {
         return m + ":" + (s < 10 ? "0" : "") + s
     }
 
-    Component.onCompleted:  syncBackupState()
+    Component.onCompleted: {
+        syncBackupState()
+        if (isHighlighted) {
+            highlightAnim.start()
+        }
+    }
 
     ThemeEffect {
         id: selectionFeedback

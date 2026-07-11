@@ -24,7 +24,7 @@ Page {
 
             Image {
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: parent.width - 6 * Theme.horizontalPageMargin
+                width: parent.width / 2
                 source: Qt.resolvedUrl("../../icons/logo-main.svg")
                 fillMode: Image.PreserveAspectFit
                 smooth: true
@@ -62,6 +62,7 @@ Page {
                 text: qsTrId("serverPage.next")
                 enabled: serverUrlField.text.length > 0
                 onClicked: {
+                    page.hasError = false
                     var url = String(serverUrlField.text).trim()
                     if (url.charAt(url.length - 1) === "/") {
                         url = url.substring(0, url.length - 1)

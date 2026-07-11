@@ -13,6 +13,7 @@ Column {
     property string highlightAssetId: ""
     property bool autoLoadAssets: true
     property var assetModel: timelineModel
+    property Flickable viewportFlickable: ListView.view
 
     // Public state (read by parent for scroll-to-asset)
     property var bucketData: null
@@ -23,6 +24,38 @@ Column {
     property bool assetsLoaded: false
     property bool initialized: false
 
+    // Rendered area
+    property var rowLayout: []
+    property real bucketContentHeight: 0
+    property real contentTop: 0
+    property real viewportMargin: viewportFlickable ? Math.max(viewportFlickable.height, cellSize * 3) : 0
+
+    property int firstVisibleRow: {
+        if (!assetsLoaded || rowLayout.length === 0) return 0
+        if (!viewportFlickable) return 0
+        return firstRowAtOrAfter(viewportFlickable.contentY - contentTop - viewportMargin)
+    }
+    property int lastVisibleRow: {
+        if (!assetsLoaded || rowLayout.length === 0) return -1
+        if (!viewportFlickable) return rowLayout.length - 1
+        return lastRowAfterOrBefore(viewportFlickable.contentY + viewportFlickable.height - contentTop + viewportMargin)
+    }
+    property int poolRowCount: {
+        if (!viewportFlickable || cellSize <= 0) return 0
+        var minRow = Math.min(cellSize, Theme.itemSizeExtraSmall)
+        if (minRow <= 0) return 0
+        return Math.ceil((viewportFlickable.height + 2 * viewportMargin) / minRow) + 4
+    }
+    property real visibleCenterY: {
+        if (!viewportFlickable) return 0
+        var caTop = contentTop
+        var caBottom = contentTop + contentArea.height
+        var visTop = Math.max(viewportFlickable.contentY, caTop)
+        var visBottom = Math.min(viewportFlickable.contentY + viewportFlickable.height, caBottom)
+        if (visBottom <= visTop) return 0
+        return (visTop + visBottom) / 2 - caTop
+    }
+
     visible: !assetsLoaded || (bucketSubGroups && bucketSubGroups.length > 0)
 
     // Signals for parent to handle navigation
@@ -31,6 +64,7 @@ Column {
     Component.onCompleted: {
         initialized = true
         resetState()
+        updateContentTop()
     }
 
     onBucketIndexChanged: {
@@ -52,9 +86,27 @@ Column {
         }
     }
 
+    onCellSizeChanged: {
+        if (assetsLoaded) {
+            buildRowLayout()
+            updateContentTop()
+        }
+    }
+
+    onAssetsPerRowChanged: {
+        if (assetsLoaded) {
+            buildRowLayout()
+            updateContentTop()
+        }
+    }
+
+    onYChanged: updateContentTop()
+
     function resetState() {
         bucketData = null
         bucketSubGroups = null
+        rowLayout = []
+        bucketContentHeight = 0
         isFirstOfMonth = false
         dataLoaded = false
         assetsLoaded = false
@@ -87,7 +139,71 @@ Column {
 
     function loadAssets() {
         bucketSubGroups = assetModel.getBucketSubGroups(bucketIndex)
+        buildRowLayout()
         assetsLoaded = true
+        updateContentTop()
+    }
+
+    function buildRowLayout() {
+        var rows = []
+        var y = 0
+        var headerHeight = Theme.itemSizeExtraSmall
+        var apr = assetsPerRow
+        var ch = cellSize
+        var sg = bucketSubGroups
+        if (sg) {
+            for (var i = 0; i < sg.length; i++) {
+                var group = sg[i]
+                var assets = group.assets || []
+                rows.push({ "t": 0, "y": y, "h": headerHeight, "displayDate": group.displayDate, "groupAssets": assets })
+                y += headerHeight
+                for (var r = 0; r < assets.length; r += apr) {
+                    rows.push({ "t": 1, "y": y, "h": ch, "assets": assets.slice(r, Math.min(r + apr, assets.length)) })
+                    y += ch
+                }
+            }
+        }
+        rowLayout = rows
+        bucketContentHeight = y
+    }
+
+    function firstRowAtOrAfter(viewY) {
+        var lo = 0
+        var hi = rowLayout.length -1
+        var res = rowLayout.length
+        while (lo <= hi) {
+            var mid = (lo + hi) >> 1
+            var row = rowLayout[mid]
+            if (row.y + row.h > viewY) {
+                res = mid
+                hi = mid - 1
+            } else {
+                lo = mid + 1
+            }
+        }
+        return res
+    }
+
+    function lastRowAfterOrBefore(viewY) {
+        var lo = 0
+        var hi = rowLayout.length -1
+        var res = -1
+        while (lo <= hi) {
+            var mid = (lo + hi) >> 1
+            var row = rowLayout[mid]
+            if (row.y < viewY) {
+                res = mid
+                lo = mid + 1
+            } else {
+                hi = mid - 1
+            }
+        }
+        return res
+    }
+
+    function updateContentTop() {
+        if (!viewportFlickable || !viewportFlickable.contentItem) return
+        contentTop = contentArea.mapToItem(viewportFlickable.contentItem, 0, 0).y
     }
 
     // Listen for bucket load completion
@@ -102,7 +218,8 @@ Column {
         }
         onBucketDataUpdated: {
             if (bucketIndex === bucketColumn.bucketIndex && bucketColumn.assetsLoaded) {
-                bucketSubGroups = assetModel.getBucketSubGroups(bucketColumn.bucketIndex)
+                bucketColumn.bucketSubGroups = assetModel.getBucketSubGroups(bucketColumn.bucketIndex)
+                bucketColumn.buildRowLayout()
             }
         }
         onBucketLoadsIdle: {
@@ -110,6 +227,11 @@ Column {
                 bucketColumn.requestAssets()
             }
         }
+    }
+
+    Connections {
+        target: viewportFlickable
+        onContentHeightChanged: bucketColumn.updateContentTop()
     }
 
     // Helper for height estimation (used by both placeholders)
@@ -162,42 +284,48 @@ Column {
 
     // Stable-height placeholder for unloaded bucket content
     Item {
+        id: contentArea
         width: parent.width
-        height: !bucketColumn.assetsLoaded ? estimateContentHeight(bucketColumn.bucketAssetCount) : 0
-        visible: !bucketColumn.assetsLoaded
+        height: bucketColumn.assetsLoaded ? bucketColumn.bucketContentHeight : estimateContentHeight(bucketColumn.bucketAssetCount)
 
-        BusyIndicator {
-            anchors.centerIn: parent
-            size: BusyIndicatorSize.Small
-            running: parent.visible
+        onYChanged: bucketColumn.updateContentTop()
+
+        LoadingIndicator {
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: bucketColumn.visibleCenterY - height / 2
+            loading: !bucketColumn.assetsLoaded && bucketColumn.bucketAssetCount > 0
+            useMonochrome: true
         }
-    }
-
-    // Sub-groups by date
-    Column {
-        width: parent.width
-        visible: assetsLoaded
-        spacing: 0
 
         Repeater {
-            model: bucketColumn.assetsLoaded ? bucketSubGroups : null
+            model: bucketColumn.assetsLoaded ? bucketColumn.poolRowCount : 0
 
-            Column {
-                width: parent.width
-                spacing: 0
-
-                property var subGroupData: modelData
+            Item {
+                width: contentArea.width
+                property int rowIndex: {
+                    var pool = bucketColumn.poolRowCount
+                    if (pool <= 0) return -1
+                    var first = bucketColumn.firstVisibleRow
+                    var r = first - (first % pool) + index
+                    if (r < first) r+= pool
+                    return r
+                }
+                property var rowData: (rowIndex >= 0 && rowIndex < bucketColumn.rowLayout.length) ? bucketColumn.rowLayout[rowIndex] : null
+                property bool inWindow: rowData !== null && rowIndex >= bucketColumn.firstVisibleRow && rowIndex <= bucketColumn.lastVisibleRow
+                visible: inWindow
+                y: rowData ? rowData.y : 0
+                height: rowData ? rowData.h : 0
 
                 // Sub-group date header
-                Rectangle {
-                    width: parent.width
-                    height: Theme.itemSizeExtraSmall
-                    color: "transparent"
+                Item {
+                    anchors.fill: parent
+                    visible: inWindow && rowData && rowData.t === 0
 
+                    property var groupAssets: (inWindow && rowData && rowData.t === 0) ? rowData.groupAssets : null
                     property bool isSubGroupSelected: {
-                        if (!subGroupData || !subGroupData.assets || assetModel.selectedCount === 0) return false
-                        for (var i = 0; i < subGroupData.assets.length; i++) {
-                            if (!assetModel.isAssetSelected(subGroupData.assets[i].id)) {
+                        if (!groupAssets || assetModel.selectedCount === 0) return false
+                        for (var i = 0; i < groupAssets.length; i++) {
+                            if (!assetModel.isAssetSelected(groupAssets[i].id)) {
                                 return false
                             }
                         }
@@ -208,7 +336,7 @@ Column {
                         anchors.left: parent.left
                         anchors.leftMargin: Theme.horizontalPageMargin
                         anchors.verticalCenter: parent.verticalCenter
-                        text: subGroupData ? subGroupData.displayDate : ""
+                        text: (rowData && rowData.t === 0) ? rowData.displayDate : ""
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryHighlightColor
                     }
@@ -221,38 +349,36 @@ Column {
                         icon.color: parent.isSubGroupSelected ? Theme.errorColor : Theme.primaryColor
 
                         onClicked: {
-                            if (!subGroupData || !subGroupData.assets) return
-                            var assets = subGroupData.assets
-                            if (parent.isSubGroupSelected) {
-                                // Deselect all assets in this subgroup
-                                for (var i = 0; i < assets.length; i++) {
-                                    if (assetModel.isAssetSelected(assets[i].id)) {
-                                        assetModel.toggleSelection(bucketColumn.bucketIndex, assets[i].assetIndex)
-                                    }
+                            var assets = parent.groupAssets
+                            if (!assets) return
+                            var model = bucketColumn.assetModel
+                            var bucketIdx = bucketColumn.bucketIndex
+                            var select = !parent.isSubGroupSelected
+                            var toToggle = []
+                            for (var i = 0; i < assets.length; i++) {
+                                if (model.isAssetSelected(assets[i].id) !== select) {
+                                    toToggle.push(assets[i].assetIndex)
                                 }
-                            } else {
-                                // Select all assets in this subgroup
-                                for (var i = 0; i < assets.length; i++) {
-                                    if (!assetModel.isAssetSelected(assets[i].id)) {
-                                        assetModel.toggleSelection(bucketColumn.bucketIndex, assets[i].assetIndex)
-                                    }
-                                }
+                            }
+                            for (var j = 0; j < toToggle.length; j++) {
+                                model.toggleSelection(bucketIdx, toToggle[j])
                             }
                         }
                     }
                 }
 
                 // Assets in this sub-group
-                Flow {
-                    width: parent.width
+                Row {
+                    anchors.fill: parent
+                    visible: inWindow && rowData && rowData.t === 1
 
                     Repeater {
-                        model: subGroupData ? subGroupData.assets : null
+                        model: (inWindow && rowData && rowData.t === 1) ? rowData.assets : null
 
                         AssetGridItem {
+                            id: gridItem
                             width: bucketColumn.cellSize
                             height: bucketColumn.cellSize
-                            id: gridItem
                             assetId: modelData.id
                             isFavorite: modelData.isFavorite
                             isSelected: {
@@ -272,8 +398,7 @@ Column {
                                 if (assetModel.selectedCount > 0) {
                                     assetModel.toggleSelection(bucketColumn.bucketIndex, modelData.assetIndex)
                                 } else {
-                                    var idx = modelData.globalIndex
-                                    bucketColumn.assetClicked(modelData.id, gridItem.isFavorite, modelData.isVideo, modelData.thumbhash || "", idx, modelData.stackId || "", modelData.stackAssetCount || 0)
+                                    bucketColumn.assetClicked(modelData.id, gridItem.isFavorite, modelData.isVideo, modelData.thumbhash || "", modelData.globalIndex, modelData.stackId || "", modelData.stackAssetCount || 0)
                                 }
                             }
 

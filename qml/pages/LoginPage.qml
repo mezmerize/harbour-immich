@@ -77,6 +77,7 @@ Page {
                     text: qsTrId("loginPage.loginButton")
                     enabled: emailField.text.length > 0 && passwordField.text.length > 0 && !isLoggingIn
                     onClicked: {
+                        page.hasError = false
                         isLoggingIn = true
                         authManager.login(emailField.text.trim(), passwordField.text)
                     }
