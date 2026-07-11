@@ -27,7 +27,6 @@
     <message id="filterablePickerDialog.results">
         <location filename="../qml/components/FilterablePickerDialog.qml" line="112"/>
         <source>%1 results</source>
-        <oldsource>%1 result(s)</oldsource>
         <translation>%1 results</translation>
     </message>
     <message id="filterablePickerDialog.option">
@@ -38,7 +37,6 @@
     <message id="filterablePickerDialog.options">
         <location filename="../qml/components/FilterablePickerDialog.qml" line="117"/>
         <source>%1 options</source>
-        <oldsource>1 option</oldsource>
         <translation>%1 options</translation>
     </message>
     <message id="filterablePickerDialog.noMatchesFound">
@@ -54,7 +52,6 @@
     <message id="memoriesBar.yearsAgo">
         <location filename="../qml/components/MemoriesBar.qml" line="44"/>
         <source>%1 years ago</source>
-        <oldsource>%1 year(s) ago</oldsource>
         <translation>%1 years ago</translation>
     </message>
     <message id="peoplePickerDialog.selectPeople">
@@ -90,7 +87,6 @@
     <message id="peoplePickerDialog.clear">
         <location filename="../qml/components/PeoplePickerDialog.qml" line="107"/>
         <source>Clear selection</source>
-        <oldsource>Clear selection.</oldsource>
         <translation>Clear selection</translation>
     </message>
     <message id="peoplePickerDialog.unknown">
@@ -176,7 +172,6 @@
     <message id="coverPage.yearsAgo">
         <location filename="../qml/cover/CoverPage.qml" line="172"/>
         <source>%1 years ago</source>
-        <oldsource>%1 year(s) ago</oldsource>
         <translation>%1 years ago</translation>
     </message>
     <message id="coverPage.assetCount">
@@ -236,7 +231,6 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="150"/>
         <location filename="../qml/pages/AlbumDetailPage.qml" line="198"/>
         <source>%1 assets</source>
-        <oldsource>%1 asset(s)</oldsource>
         <translation>%1 assets</translation>
     </message>
     <message id="albumDetailPage.loading">
@@ -549,7 +543,6 @@
     <message id="albumPickerPage.results">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="207"/>
         <source>%1 results</source>
-        <oldsource>%1 result(s)</oldsource>
         <translation>%1 results</translation>
     </message>
     <message id="albumPickerPage.album">
@@ -560,7 +553,6 @@
     <message id="albumPickerPage.albums">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="211"/>
         <source>%1 albums</source>
-        <oldsource>%1 album(s)</oldsource>
         <translation>%1 albums</translation>
     </message>
     <message id="albumPickerPage.asset">
@@ -571,13 +563,11 @@
     <message id="albumPickerPage.assets">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="254"/>
         <source>%1 assets</source>
-        <oldsource>%1 asset(s)</oldsource>
         <translation>%1 assets</translation>
     </message>
     <message id="albumPickerPage.noAlbumsMatch">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="273"/>
         <source>No albums match filter</source>
-        <oldsource>No albums match filterNo albums match filter</oldsource>
         <translation>No albums match filter</translation>
     </message>
     <message id="albumPickerPage.noAlbums">
@@ -588,7 +578,6 @@
     <message id="albumsPage.sortAlbumName">
         <location filename="../qml/pages/AlbumsPage.qml" line="268"/>
         <source>Album title</source>
-        <oldsource>Album name</oldsource>
         <translation>Album name</translation>
     </message>
     <message id="albumsPage.sortAssetCount">
@@ -609,7 +598,6 @@
     <message id="albumsPage.sortEndDate">
         <location filename="../qml/pages/AlbumsPage.qml" line="264"/>
         <source>Most recent photo</source>
-        <oldsource>Most recent</oldsource>
         <translation>Most recent</translation>
     </message>
     <message id="pullDownMenu.settings">
@@ -646,7 +634,6 @@
     <message id="albumsPage.sortStartDate">
         <location filename="../qml/pages/AlbumsPage.qml" line="266"/>
         <source>Oldest photo</source>
-        <oldsource>Oldest</oldsource>
         <translation>Oldest</translation>
     </message>
     <message id="albumsPage.albums">
@@ -687,7 +674,6 @@
     <message id="albumsPage.assets">
         <location filename="../qml/pages/AlbumsPage.qml" line="356"/>
         <source>%1 assets</source>
-        <oldsource>%1 asset(s)</oldsource>
         <translation>%1 assets</translation>
     </message>
     <message id="albumsPage.owned">
@@ -728,7 +714,6 @@
     <message id="albumsPage.noSharedAlbumsHint">
         <location filename="../qml/pages/AlbumsPage.qml" line="424"/>
         <source>Shared albums will appear here</source>
-        <oldsource>Albums shared with you will appear here</oldsource>
         <translation>Shared albums will appear here</translation>
     </message>
     <message id="albumsPage.noSharedWithMeAlbumsHint">
@@ -950,7 +935,6 @@
     <message id="loginPage.versionUnsupported">
         <location filename="../qml/pages/LoginPage.qml" line="133"/>
         <source>The Immich server you are trying to log in to is running an unsupported version (minimum required: 3.0.0). Some features may not work correctly.</source>
-        <oldsource>The Immich server you are trying to log into has lower version than required (minimal required version 3.0.0). Functionality may be affected.</oldsource>
         <translation>The Immich server you are trying to log in to is running an unsupported version (minimum required: 3.0.0). Some features may not work correctly.</translation>
     </message>
     <message id="loginPage.failed">
@@ -1029,13 +1013,11 @@
     <message id="searchPage.searchType">
         <location filename="../qml/pages/SearchPage.qml" line="220"/>
         <source>Search Type</source>
-        <oldsource>Search type</oldsource>
         <translation>Search Type</translation>
     </message>
     <message id="searchPage.searchInLabel">
         <location filename="../qml/pages/SearchPage.qml" line="226"/>
         <source>Search in</source>
-        <oldsource>Any</oldsource>
         <translation>Search in</translation>
     </message>
     <message id="searchPage.searchInContext">
@@ -1311,7 +1293,6 @@
     <message id="searchResultsPage.results">
         <location filename="../qml/pages/SearchResultsPage.qml" line="102"/>
         <source>%1 results</source>
-        <oldsource>%1 result(s)</oldsource>
         <translation>%1 results</translation>
     </message>
     <message id="searchResultsPage.noResults">
@@ -1409,7 +1390,6 @@
     <message id="settingsPage.showMemoriesBarInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="137"/>
         <source>Display memories at the top of the timeline.</source>
-        <oldsource>Display memories at the top of the timeline</oldsource>
         <translation>Display memories at the top of the timeline.</translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSize">
@@ -1515,7 +1495,6 @@
     <message id="settingsPage.backupEnabledInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="247"/>
         <source>Automatically back up photos and videos from selected folders to your Immich server.</source>
-        <oldsource>Automatically back up photos and videos from selected folders to your Immich server</oldsource>
         <translation>Automatically back up photos and videos from selected folders to your Immich server.</translation>
     </message>
     <message id="settingsPage.backingUp">
@@ -1566,7 +1545,6 @@
     <message id="settingsPage.backupPhotosOnCellularInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="385"/>
         <source>Allow photo backup when not connected to Wi-Fi.</source>
-        <oldsource>Allow photo backup when not connected to Wi-Fi</oldsource>
         <translation>Allow photo backup when not connected to Wi-Fi.</translation>
     </message>
     <message id="settingsPage.backupVideosOnCellular">
@@ -1577,7 +1555,6 @@
     <message id="settingsPage.backupVideosOnCellularInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="397"/>
         <source>Allow video backup when not connected to Wi-Fi.</source>
-        <oldsource>Allow video backup when not connected to Wi-Fi</oldsource>
         <translation>Allow video backup when not connected to Wi-Fi.</translation>
     </message>
     <message id="settingsPage.backupOnlyWhileCharging">
@@ -1588,7 +1565,6 @@
     <message id="settingsPage.backupOnlyWhileChargingInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="409"/>
         <source>Only run backup when the device is connected to a charger.</source>
-        <oldsource>Only run backup when the device is connected to a charger</oldsource>
         <translation>Only run backup when the device is connected to a charger.</translation>
     </message>
     <message id="settingsPage.backupDeleteAfter">
@@ -1599,7 +1575,6 @@
     <message id="settingsPage.backupDeleteAfterInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="421"/>
         <source>Remove photos and videos from device after successful backup.</source>
-        <oldsource>Remove photos and videos from device after successful backup</oldsource>
         <translation>Remove photos and videos from device after successful backup.</translation>
     </message>
     <message id="settingsPage.backupAutoDisable">
@@ -1615,13 +1590,11 @@
     <message id="settingsPage.backupScanInterval">
         <location filename="../qml/pages/SettingsPage.qml" line="456"/>
         <source>Backup interval</source>
-        <oldsource>Scan interval</oldsource>
         <translation>Backup interval</translation>
     </message>
     <message id="settingsPage.backupScanIntervalInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="458"/>
         <source>How often to run a backup cycle. Shorter intervals may impact battery life. Selecting manual only will require triggering the backup manually by the button below.</source>
-        <oldsource>How often to scan for new files. Shorter intervals may impact battery life.</oldsource>
         <translation>How often to run a backup cycle. Shorter intervals may impact battery life. Selecting manual only will require triggering the backup manually by the button below.</translation>
     </message>
     <message id="settingsPage.backupScanIntervalManual">
@@ -1672,7 +1645,6 @@
     <message id="settingsPage.scanNow">
         <location filename="../qml/pages/SettingsPage.qml" line="535"/>
         <source>Backup now</source>
-        <oldsource>Scan and backup now</oldsource>
         <translation>Backup now</translation>
     </message>
     <message id="notification.backupClearDbRemorse">
@@ -1848,13 +1820,11 @@
     <message id="sharePage.createShareLink">
         <location filename="../qml/pages/SharePage.qml" line="121"/>
         <source>Create Share Link</source>
-        <oldsource>Create Share link</oldsource>
         <translation>Create Share Link</translation>
     </message>
     <message id="sharePage.albumSettings">
         <location filename="../qml/pages/SharePage.qml" line="376"/>
         <source>Album settings</source>
-        <oldsource>Album Settings</oldsource>
         <translation>Album settings</translation>
     </message>
     <message id="sharePage.commentsAndLikes">
@@ -2080,7 +2050,6 @@
     <message id="sharePage.sharingAssets">
         <location filename="../qml/pages/SharePage.qml" line="571"/>
         <source>Sharing %1 assets</source>
-        <oldsource>Sharing %1 asset(s)Sharing %1 asset(s)</oldsource>
         <translation>Sharing %1 assets</translation>
     </message>
     <message id="sharePage.sharingAlbum">
@@ -2327,7 +2296,6 @@
     <message id="uploadPage.successCount">
         <location filename="../qml/pages/UploadPage.qml" line="259"/>
         <source>%1 uploaded</source>
-        <oldsource>%1 succeeded</oldsource>
         <translation>%1 uploaded</translation>
     </message>
     <message id="uploadPage.duplicateCount">
@@ -2468,7 +2436,6 @@
     <message id="downloadFolderDialog.accept">
         <location filename="../qml/components/DownloadFolderDialog.qml" line="36"/>
         <source>Accept</source>
-        <oldsource>Download Folder</oldsource>
         <translation>Accept</translation>
     </message>
     <message id="downloadFolderDialog.description">
@@ -2479,13 +2446,11 @@
     <message id="downloadFolderDialog.suggestedFolders">
         <location filename="../qml/components/DownloadFolderDialog.qml" line="53"/>
         <source>Suggested Folders</source>
-        <oldsource>Suggested folders</oldsource>
         <translation>Suggested Folders</translation>
     </message>
     <message id="downloadFolderDialog.customFolder">
         <location filename="../qml/components/DownloadFolderDialog.qml" line="111"/>
         <source>Custom Folder</source>
-        <oldsource>Custom folder</oldsource>
         <translation>Custom Folder</translation>
     </message>
     <message id="downloadFolderDialog.enterPath">
@@ -2501,7 +2466,6 @@
     <message id="downloadFolderDialog.currentSelection">
         <location filename="../qml/components/DownloadFolderDialog.qml" line="144"/>
         <source>Current selection:</source>
-        <oldsource>Current selection: </oldsource>
         <translation>Current selection:</translation>
     </message>
     <message id="archivedPage.archived">
@@ -2561,7 +2525,6 @@
     <message id="libraryPage.recentlyAdded">
         <location filename="../qml/pages/LibraryPage.qml" line="60"/>
         <source>Recently Added</source>
-        <oldsource>Recently added</oldsource>
         <translation>Recently Added</translation>
     </message>
     <message id="libraryPage.sharedLinks">
@@ -2873,7 +2836,6 @@
         <location filename="../qml/pages/RecentlyAddedPage.qml" line="95"/>
         <location filename="../qml/pages/RecentlyAddedPage.qml" line="119"/>
         <source>Recently Added</source>
-        <oldsource>Recently Taken</oldsource>
         <translation>Recently Added</translation>
     </message>
     <message id="recentlyAddedPage.asset">
@@ -2889,14 +2851,12 @@
     <message id="recentlyAddedPage.loading">
         <location filename="../qml/pages/RecentlyAddedPage.qml" line="181"/>
         <source>Loading recently added assets...</source>
-        <oldsource>Loading archived assets...</oldsource>
-        <translation>Loading archived assets...</translation>
+        <translation>Loading recently added assets...</translation>
     </message>
     <message id="recentlyAddedPage.noAssets">
         <location filename="../qml/pages/RecentlyAddedPage.qml" line="196"/>
         <source>No recently added assets</source>
-        <oldsource>No archived assets</oldsource>
-        <translation>No archived assets</translation>
+        <translation>No recently added assets</translation>
     </message>
 </context>
 </TS>
