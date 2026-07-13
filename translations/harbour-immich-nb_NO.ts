@@ -938,7 +938,7 @@
         <location filename="../qml/pages/LoginPage.qml" line="133"/>
         <source>The Immich server you are trying to log in to is running an unsupported version (minimum required: 3.0.0). Some features may not work correctly.</source>
         <oldsource>The Immich server you are trying to log into has lower version than required (minimal required version 3.0.0). Functionality may be affected.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Immich-serveren du prøver å logge på kjører en versjon som ikke støttes (minimumskrav: 3.0.0). Enkelte funksjoner vil kanskje ikke fungere som de skal.</translation>
     </message>
     <message id="loginPage.failed">
         <location filename="../qml/pages/LoginPage.qml" line="183"/>
@@ -2319,12 +2319,12 @@
     <message id="timelineFilterBar.taken">
         <location filename="../qml/components/TimelineFilterBar.qml" line="32"/>
         <source>Taken</source>
-        <translation type="unfinished"></translation>
+        <translation>Tatt</translation>
     </message>
     <message id="timelineFilterBar.created">
         <location filename="../qml/components/TimelineFilterBar.qml" line="34"/>
         <source>Created</source>
-        <translation type="unfinished">Opprettet</translation>
+        <translation>Opprettet</translation>
     </message>
     <message id="timelineFilterBar.favorites">
         <location filename="../qml/components/TimelineFilterBar.qml" line="103"/>
