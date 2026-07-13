@@ -80,7 +80,6 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/LogViewerPage.qml \
     qml/pages/MemoryDetailPage.qml \
     qml/pages/OAuthPage.qml \
-    qml/pages/RecentlyAddedPage.qml \
     qml/pages/SearchResultsPage.qml \
     qml/pages/ServerPage.qml \
     qml/pages/LoginPage.qml \

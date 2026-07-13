@@ -15,8 +15,9 @@ Page {
 
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
     property real cellSize: width / assetsPerRow
-    property string activeFilter: "all"
+    property string activeFilter: "taken"
     property string sortOrder: "desc"
+    property bool showFavorites: false
     property string contextId: "album-" + albumId
     property var queryParams: ({"albumId": albumId, "order": sortOrder})
     property var heroAssetIds: []
@@ -28,12 +29,15 @@ Page {
     }
 
     function refresh() {
-        var params = {"albumId": albumId, "order": sortOrder}
-        if (activeFilter === "favorites") params["isFavorite"] = "true"
-        queryParams = params
         albumModel.clear()
         albumModel.setLoading(true)
         heroInitialized = false
+        var showCreatedAt = page.activeFilter === "created"
+        albumModel.setGroupByCreatedAt(showCreatedAt)
+        var params = {"albumId": albumId, "order": sortOrder}
+        if (showFavorites) params["isFavorite"] = "true"
+        if (showCreatedAt) params["orderBy"] = "createdAt"
+        queryParams = params
         immichApi.fetchTimelineBuckets(contextId, queryParams)
     }
 
@@ -219,8 +223,13 @@ Page {
             TimelineFilterBar {
                 activeFilter: page.activeFilter
                 sortOrder: page.sortOrder
+                showFavorites: page.showFavorites
                 onFilterActivated: {
                     page.activeFilter = filter
+                    page.refresh()
+                }
+                onFilterFavorites: {
+                    page.showFavorites = showFavorites
                     page.refresh()
                 }
                 onSortOrderToggled: {
@@ -288,7 +297,7 @@ Page {
         }
         visible: !albumModel.loading && albumModel.totalCount === 0
         iconSource: "image://theme/icon-m-folder"
-        message: page.activeFilter === "favorites"
+        message: page.showFavorites
             //% "No favorite assets in this album"
             ? qsTrId("albumDetailPage.noFavorites")
             //% "No assets in this album"

@@ -8,8 +8,9 @@ Page {
 
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
     property real cellSize: width / assetsPerRow
-    property string activeFilter: "all"
+    property string activeFilter: "taken"
     property string sortOrder: "desc"
+    property bool showFavorites: false
     property string contextId: "trash"
     property var queryParams: ({"isTrashed": "true", "order": sortOrder})
 
@@ -18,11 +19,14 @@ Page {
     }
 
     function refresh() {
-        var params = {"isTrashed": "true", "order": sortOrder}
-        if (activeFilter === "favorites") params["isFavorite"] = "true"
-        queryParams = params
         trashModel.clear()
         trashModel.setLoading(true)
+        var showCreatedAt = page.activeFilter === "created"
+        trashModel.setGroupByCreatedAt(showCreatedAt)
+        var params = {"isTrashed": "true", "order": sortOrder}
+        if (showFavorites) params["isFavorite"] = "true"
+        if (showCreatedAt) params["orderBy"] = "createdAt"
+        queryParams = params
         immichApi.fetchTimelineBuckets(contextId, queryParams)
     }
 
@@ -130,8 +134,13 @@ Page {
             TimelineFilterBar {
                 activeFilter: page.activeFilter
                 sortOrder: page.sortOrder
+                showFavorites: page.showFavorites
                 onFilterActivated: {
                     page.activeFilter = filter
+                    page.refresh()
+                }
+                onFilterFavorites: {
+                    page.showFavorites = showFavorites
                     page.refresh()
                 }
                 onSortOrderToggled: {

@@ -6,10 +6,14 @@ Item {
     width: parent.width
     height: Theme.itemSizeExtraSmall + Theme.paddingMedium
 
-    property string activeFilter: "all"  // all, favorites
+    property string activeFilter: "taken"  // taken, created
     property string sortOrder: "desc"    // desc, asc
+    property bool showFavorites: false
+    property bool showActiveFilter: true
+    property real filterButtonWidth: (filterRow.width - Theme.paddingSmall - sortButton.width - Theme.paddingMedium) / (showActiveFilter ? 3 : 1)
 
     signal filterActivated(string filter)
+    signal filterFavorites(bool showFavorites)
     signal sortOrderToggled(string order)
 
     Row {
@@ -21,16 +25,17 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         spacing: Theme.paddingSmall
 
+        // Switch between date taken and date added
         Repeater {
-            model: [
-                //% "All"
-                { id: "all", label: qsTrId("timelineFilterBar.all"), icon: "image://theme/icon-m-image" },
-                //% "Favorites"
-                { id: "favorites", label: qsTrId("timelineFilterBar.favorites"), icon: "image://theme/icon-m-favorite" }
-            ]
+            model: showActiveFilter ? [
+                //% "Taken"
+                { id: "taken", label: qsTrId("timelineFilterBar.taken"), icon: "image://theme/icon-m-image" },
+                //% "Created"
+                { id: "created", label: qsTrId("timelineFilterBar.created"), icon: "image://theme/icon-m-clock" }
+            ] : null
 
             BackgroundItem {
-                width: (filterRow.width - Theme.paddingSmall - sortButton.width - Theme.paddingMedium) / 2
+                width: filterBar.filterButtonWidth
                 height: Theme.itemSizeExtraSmall
 
                 Rectangle {
@@ -67,6 +72,42 @@ Item {
                     }
                 }
             }
+        }
+
+        // Favorites toggle
+        BackgroundItem {
+            id: favoritesButton
+            width: filterBar.filterButtonWidth
+            height: Theme.itemSizeExtraSmall
+
+            Rectangle {
+                anchors.fill: parent
+                radius: height / 2
+                color: filterBar.showFavorites ? Theme.rgba(Theme.highlightBackgroundColor, 0.4) : "transparent"
+                border.width: filterBar.showFavorites ? 1 : 0
+                border.color: Theme.highlightColor
+            }
+
+            Row {
+                anchors.centerIn: parent
+                spacing: Theme.paddingSmall
+
+                Icon {
+                    source: "image://theme/icon-m-favorite"
+                    width: Theme.iconSizeSmall
+                    height: Theme.iconSizeSmall
+                }
+
+                Label {
+                    //% "Favorites"
+                    text: qsTrId("timelineFilterBar.favorites")
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: filterBar.showFavorites ? Theme.highlightColor : Theme.primaryColor
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            onClicked: filterBar.filterFavorites(!filterBar.showFavorites)
         }
 
         // Sort order button

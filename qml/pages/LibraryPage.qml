@@ -56,8 +56,6 @@ Page {
                         { title: qsTrId("libraryPage.favorites"), icon: "image://theme/icon-m-favorite", page: "FavoritesPage.qml", show: true },
                         //% "Archived"
                         { title: qsTrId("libraryPage.archived"), icon: "image://theme/icon-m-file-archive-folder", page: "ArchivedPage.qml", show: true },
-                        //% "Recently Added"
-                        { title: qsTrId("libraryPage.recentlyAdded"), icon: "image://theme/icon-m-clock", page: "RecentlyAddedPage.qml", show: true },
                         //% "Shared Links"
                         { title: qsTrId("libraryPage.sharedLinks"), icon: "image://theme/icon-m-link", page: "SharedLinksPage.qml", show: false },
                         //% "Trash"

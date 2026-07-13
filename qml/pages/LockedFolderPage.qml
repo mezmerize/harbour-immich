@@ -17,8 +17,9 @@ Page {
 
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
     property real cellSize: width / assetsPerRow
-    property string activeFilter: "all"
+    property string activeFilter: "taken"
     property string sortOrder: "desc"
+    property bool showFavorites: false
     property string contextId: "locked"
     property var queryParams: ({"visibility": "locked", "order": sortOrder})
     property var heroAssetIds: []
@@ -29,12 +30,15 @@ Page {
     }
 
     function loadLockedAssets() {
-        var params = {"visibility": "locked", "order": sortOrder}
-        if (activeFilter === "favorites") params["isFavorite"] = "true"
-        queryParams = params
         lockedModel.clear()
         lockedModel.setLoading(true)
         heroInitialized = false
+        var showCreatedAt = page.activeFilter === "created"
+        lockedModel.setGroupByCreatedAt(showCreatedAt)
+        var params = {"visibility": "locked", "order": sortOrder}
+        if (showFavorites) params["isFavorite"] = "true"
+        if (showCreatedAt) params["orderBy"] = "createdAt"
+        queryParams = params
         immichApi.fetchTimelineBuckets(contextId, queryParams)
     }
 
@@ -297,8 +301,13 @@ Page {
             TimelineFilterBar {
                 activeFilter: page.activeFilter
                 sortOrder: page.sortOrder
+                showFavorites: page.showFavorites
                 onFilterActivated: {
                     page.activeFilter = filter
+                    page.loadLockedAssets()
+                }
+                onFilterFavorites: {
+                    page.showFavorites = showFavorites
                     page.loadLockedAssets()
                 }
                 onSortOrderToggled: {

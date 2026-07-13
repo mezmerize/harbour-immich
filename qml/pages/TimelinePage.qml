@@ -11,8 +11,9 @@ Page {
     property int bucketCount: timelineModel.bucketCount
 
     // Filter state
-    property string activeFilter: "all"
+    property string activeFilter: "taken"
     property string sortOrder: "desc"
+    property bool showFavorites: false
     property string contextId: "timeline"
     property var queryParams: ({})
 
@@ -40,13 +41,12 @@ Page {
         bucketsList.positionViewAtBeginning()
         timelineModel.clear()
         timelineModel.setLoading(true)
-        var isFavorite = activeFilter === "favorites"
+        var isFavorite = showFavorites
         timelineModel.setFavoriteFilter(isFavorite)
-        var params = {
-            "visibility": "timeline",
-            "withStacked": "true",
-            "order": sortOrder
-        }
+        var showCreatedAt = page.activeFilter === "created"
+        timelineModel.setGroupByCreatedAt(showCreatedAt)
+        var params = { "visibility": "timeline", "withStacked": "true", "order": sortOrder }
+        if (showCreatedAt) params["orderBy"] = "createdAt"
         if (isFavorite) {
             params["isFavorite"] = "true"
         } else {
@@ -150,7 +150,7 @@ Page {
                 id: memoriesBar
                 width: parent.width
                 loading: page.memoriesLoading
-                visible: activeFilter === "all" && settingsManager.showMemoriesBar
+                visible: settingsManager.showMemoriesBar
 
                 Component.onCompleted: {
                     page.memoriesBarItem = memoriesBar
@@ -170,8 +170,13 @@ Page {
             TimelineFilterBar {
                 activeFilter: page.activeFilter
                 sortOrder: page.sortOrder
+                showFavorites: page.showFavorites
                 onFilterActivated: {
                     page.activeFilter = filter
+                    page.refresh()
+                }
+                onFilterFavorites: {
+                    page.showFavorites = showFavorites
                     page.refresh()
                 }
                 onSortOrderToggled: {
@@ -246,13 +251,13 @@ Page {
             bottom: bucketsList.bottom
         }
         visible: !timelineModel.loading && bucketCount === 0
-        iconSource: page.activeFilter === "favorites" ? "image://theme/icon-m-favorite" : "image://theme/icon-m-image"
-        message: page.activeFilter === "favorites"
+        iconSource: page.showFavorites ? "image://theme/icon-m-favorite" : "image://theme/icon-m-image"
+        message: page.showFavorites
             //% "No favorites yet"
             ? qsTrId("timelinePage.noFavoritesLabel")
             //% "No assets yet"
             : qsTrId("timelinePage.noAssetsLabel")
-        hint: page.activeFilter === "favorites"
+        hint: page.showFavorites
             //% "Long-press an asset and add it to favorites to see it here"
             ? qsTrId("timelinePage.noFavoritesInfo")
             //% "Upload or import assets in Immich to start building your timeline"

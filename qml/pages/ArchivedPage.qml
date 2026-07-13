@@ -9,8 +9,9 @@ Page {
 
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
     property real cellSize: width / assetsPerRow
-    property string activeFilter: "all"
+    property string activeFilter: "taken"
     property string sortOrder: "desc"
+    property bool showFavorites: false
     property string contextId: "archive"
     property var queryParams: ({"visibility": "archive", "order": sortOrder})
     property var heroAssetIds: []
@@ -21,12 +22,15 @@ Page {
     }
 
     function refresh() {
-        var params = {"visibility": "archive", "order": sortOrder}
-        if (activeFilter === "favorites") params["isFavorite"] = "true"
-        queryParams = params
         archiveModel.clear()
         archiveModel.setLoading(true)
         heroInitialized = false
+        var showCreatedAt = page.activeFilter === "created"
+        archiveModel.setGroupByCreatedAt(showCreatedAt)
+        var params = {"visibility": "archive", "order": sortOrder}
+        if (showFavorites) params["isFavorite"] = "true"
+        if (showCreatedAt) params["orderBy"] = "createdAt"
+        queryParams = params
         immichApi.fetchTimelineBuckets(contextId, queryParams)
     }
 
@@ -122,8 +126,13 @@ Page {
             TimelineFilterBar {
                 activeFilter: page.activeFilter
                 sortOrder: page.sortOrder
+                showFavorites: page.showFavorites
                 onFilterActivated: {
                     page.activeFilter = filter
+                    page.refresh()
+                }
+                onFilterFavorites: {
+                    page.showFavorites = showFavorites
                     page.refresh()
                 }
                 onSortOrderToggled: {

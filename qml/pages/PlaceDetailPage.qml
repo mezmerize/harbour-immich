@@ -14,8 +14,8 @@ Page {
     property var selectedAssets: []
     property bool allSelectedAreFavorites: false
     property bool loading: true
-    property string activeFilter: "all"
     property string sortOrder: "desc"
+    property bool showFavorites: false
 
     property var allAssets: []
     property var groupedAssets: []
@@ -51,7 +51,7 @@ Page {
         if (cityName) params["city"] = cityName
         if (stateName) params["state"] = stateName
         if (countryName) params["country"] = countryName
-        if (activeFilter === "favorites") params["isFavorite"] = "true"
+        if (showFavorites) params["isFavorite"] = "true"
         immichApi.searchByParameters(params)
     }
 
@@ -180,10 +180,11 @@ Page {
             }
 
             TimelineFilterBar {
-                activeFilter: page.activeFilter
+                showActiveFilter: false
                 sortOrder: page.sortOrder
-                onFilterActivated: {
-                    page.activeFilter = filter
+                showFavorites: page.showFavorites
+                onFilterFavorites: {
+                    page.showFavorites = showFavorites
                     page.refresh()
                 }
                 onSortOrderToggled: {

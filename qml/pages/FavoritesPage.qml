@@ -20,10 +20,10 @@ Page {
     }
 
     function refresh() {
-        queryParams = {"isFavorite": "true", "withStacked": "true", "order": sortOrder}
         favoritesModel.clear()
         favoritesModel.setLoading(true)
         heroInitialized = false
+        queryParams = {"isFavorite": "true", "withStacked": "true", "order": sortOrder}
         immichApi.fetchTimelineBuckets(contextId, queryParams)
     }
 

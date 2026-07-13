@@ -104,7 +104,7 @@ public:
     Q_INVOKABLE void setServerUrl(const QString &url);
     int bucketCount() const;
     bool groupByCreatedAt() const;
-    void setGroupByCreatedAt(bool value);
+    Q_INVOKABLE void setGroupByCreatedAt(bool value);
 
     Q_INVOKABLE void clear();
 
