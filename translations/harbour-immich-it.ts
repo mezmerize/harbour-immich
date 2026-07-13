@@ -200,188 +200,175 @@
         <translation>Backup finito</translation>
     </message>
     <message id="albumDetailPage.asset">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="148"/>
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="198"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="152"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="202"/>
         <source>1 asset</source>
         <translation>1 asset</translation>
     </message>
     <message id="pullDownMenu.refresh">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="76"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="80"/>
         <location filename="../qml/pages/AlbumsPage.qml" line="113"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="65"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="69"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="60"/>
         <location filename="../qml/pages/FoldersPage.qml" line="89"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="240"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="244"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="82"/>
         <location filename="../qml/pages/PlacesPage.qml" line="36"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="66"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="80"/>
         <location filename="../qml/pages/TimelinePage.qml" line="131"/>
-        <location filename="../qml/pages/TrashPage.qml" line="44"/>
+        <location filename="../qml/pages/TrashPage.qml" line="48"/>
         <source>Refresh</source>
         <translation>Ricarica</translation>
     </message>
     <message id="pullDownMenu.information">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="82"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="86"/>
         <location filename="../qml/pages/VideoPlayerPage.qml" line="31"/>
         <source>Information</source>
         <translation>Informazione</translation>
     </message>
     <message id="pullDownMenu.shareAlbum">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="92"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="96"/>
         <source>Share album</source>
         <translation>Condividi album</translation>
     </message>
     <message id="albumDetailPage.assets">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="150"/>
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="198"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="154"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="202"/>
         <source>%1 assets</source>
         <oldsource>%1 asset(s)</oldsource>
         <translation>%1 asset</translation>
     </message>
     <message id="albumDetailPage.loading">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="277"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="286"/>
         <source>Loading album assets...</source>
         <translation>Caricamento asset album</translation>
     </message>
     <message id="albumDetailPage.noFavorites">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="293"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="302"/>
         <source>No favorite assets in this album</source>
         <translation>Nessun asset preferito in questo album</translation>
     </message>
     <message id="albumDetailPage.noAssets">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="295"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="304"/>
         <source>No assets in this album</source>
         <translation>Nessun assets in questo album</translation>
     </message>
     <message id="notification.addedAssetToFavorites">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="331"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="293"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="340"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="302"/>
         <location filename="../qml/pages/AssetDetailPage.qml" line="457"/>
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="331"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="291"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="588"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="332"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="593"/>
         <source>Added asset to favorites</source>
         <translation>Aggiunto asset ai preferiti</translation>
     </message>
     <message id="notification.addedAssetsToFavorites">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="333"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="295"/>
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="333"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="293"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="590"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="342"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="304"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="334"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="595"/>
         <source>Added %1 assets to favorites</source>
         <translation>Aggiunti %1 asset ai preferiti</translation>
     </message>
     <message id="notification.removedAssetFromFavorites">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="335"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="297"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="344"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="306"/>
         <location filename="../qml/pages/AssetDetailPage.qml" line="459"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="284"/>
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="335"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="295"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="592"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="336"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="597"/>
         <source>Removed asset from favorites</source>
         <translation>Rimosso asset dai preferiti</translation>
     </message>
     <message id="notification.removedAssetsFromFavorites">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="337"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="299"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="346"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="308"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="286"/>
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="337"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="297"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="594"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="338"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="599"/>
         <source>Removed %1 assets from favorites</source>
         <translation>Rimossi %1 asset dai preferiti</translation>
     </message>
     <message id="notification.deletedAsset">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="343"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="316"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="352"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="325"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="294"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="484"/>
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="283"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="314"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="571"/>
-        <location filename="../qml/pages/TrashPage.qml" line="271"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="493"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="284"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="576"/>
+        <location filename="../qml/pages/TrashPage.qml" line="280"/>
         <source>Deleted asset</source>
         <translation>Asset eliminato</translation>
     </message>
     <message id="notification.deletedAssets">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="345"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="318"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="354"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="327"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="296"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="486"/>
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="285"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="316"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="573"/>
-        <location filename="../qml/pages/TrashPage.qml" line="273"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="495"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="286"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="578"/>
+        <location filename="../qml/pages/TrashPage.qml" line="282"/>
         <source>Deleted %1 assets</source>
         <translation>%1 Asset eliminato</translation>
     </message>
     <message id="notification.movedToArchive">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="355"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="364"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="301"/>
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="342"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="302"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="620"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="343"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="625"/>
         <source>Moved to archive</source>
         <translation>Spostato in archivio</translation>
     </message>
     <message id="notification.movedToLockedFolder">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="358"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="307"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="367"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="316"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="304"/>
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="345"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="305"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="623"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="346"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="628"/>
         <source>Moved to locked folder</source>
         <translation>Spostato nella cartella bloccata</translation>
     </message>
     <message id="notification.downloadingAsset">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="406"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="232"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="415"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="241"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="224"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="403"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="232"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="412"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="257"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="312"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="317"/>
         <source>Downloading asset...</source>
         <translation>Scaricamento asset...</translation>
     </message>
     <message id="notification.downloadingAssets">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="408"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="234"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="417"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="243"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="226"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="405"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="234"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="414"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="259"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="314"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="319"/>
         <source>Downloading %1 assets...</source>
         <translation>Scaricamento %1 asset...</translation>
     </message>
     <message id="notification.deletingAssets">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="414"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="240"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="423"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="249"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="232"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="411"/>
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="291"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="240"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="420"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="292"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="265"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="322"/>
-        <location filename="../qml/pages/TrashPage.qml" line="210"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="327"/>
+        <location filename="../qml/pages/TrashPage.qml" line="219"/>
         <source>Deleting %1 assets</source>
         <translation>Eliminazione %1 asset</translation>
     </message>
     <message id="notification.deletingAsset">
-        <location filename="../qml/pages/AlbumDetailPage.qml" line="416"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="242"/>
+        <location filename="../qml/pages/AlbumDetailPage.qml" line="425"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="251"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="234"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="413"/>
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="293"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="242"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="422"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="294"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="267"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="320"/>
-        <location filename="../qml/pages/TrashPage.qml" line="212"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="325"/>
+        <location filename="../qml/pages/TrashPage.qml" line="221"/>
         <source>Deleting asset</source>
         <translation>Eliminazione asset</translation>
     </message>
@@ -771,7 +758,7 @@
     <message id="notification.downloaded">
         <location filename="../qml/pages/AssetDetailPage.qml" line="465"/>
         <location filename="../qml/pages/StackDetailPage.qml" line="608"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="577"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="582"/>
         <location filename="../qml/pages/VideoPlayerPage.qml" line="344"/>
         <source>Downloaded to: %1</source>
         <translation>Scaricato in :%1</translation>
@@ -2189,47 +2176,47 @@
         <translation>Linea temporale</translation>
     </message>
     <message id="timelinePage.loading">
-        <location filename="../qml/pages/TimelinePage.qml" line="237"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="242"/>
         <source>Loading timeline...</source>
         <translation>Caricamento linea temporale...</translation>
     </message>
     <message id="timelinePage.noFavoritesLabel">
-        <location filename="../qml/pages/TimelinePage.qml" line="252"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="257"/>
         <source>No favorites yet</source>
         <translation>Ancora nessun preferito</translation>
     </message>
     <message id="timelinePage.noAssetsLabel">
-        <location filename="../qml/pages/TimelinePage.qml" line="254"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="259"/>
         <source>No assets yet</source>
         <translation>Ancora nessun asset</translation>
     </message>
     <message id="timelinePage.noFavoritesInfo">
-        <location filename="../qml/pages/TimelinePage.qml" line="257"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="262"/>
         <source>Long-press an asset and add it to favorites to see it here</source>
         <translation>Tieni premuto un asset e aggiungilo ai preferiti per vederlo qui</translation>
     </message>
     <message id="timelinePage.noAssetsInfo">
-        <location filename="../qml/pages/TimelinePage.qml" line="259"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="264"/>
         <source>Upload or import assets in Immich to start building your timeline</source>
         <translation>Carica o importa asset su Immich per iniziare la tua linea temporale</translation>
     </message>
     <message id="notification.addedToAlbum">
-        <location filename="../qml/pages/TimelinePage.qml" line="582"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="587"/>
         <source>Added asset(s) to album</source>
         <translation>Aggiungi asset all&apos;album</translation>
     </message>
     <message id="notification.createdAlbum">
-        <location filename="../qml/pages/TimelinePage.qml" line="598"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="603"/>
         <source>Created album: %1</source>
         <translation>Album creato: %1</translation>
     </message>
     <message id="notification.stackCreated">
-        <location filename="../qml/pages/TimelinePage.qml" line="609"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="614"/>
         <source>Stack created</source>
         <translation>Pila creata</translation>
     </message>
     <message id="notification.stackDeleted">
-        <location filename="../qml/pages/TimelinePage.qml" line="614"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="619"/>
         <source>Stack removed</source>
         <translation>Pila rimossa</translation>
     </message>
@@ -2435,13 +2422,18 @@
         <source>%1 items</source>
         <translation>%1 oggetti</translation>
     </message>
-    <message id="timelineFilterBar.all">
-        <location filename="../qml/components/TimelineFilterBar.qml" line="27"/>
-        <source>All</source>
-        <translation>Tutti</translation>
+    <message id="timelineFilterBar.taken">
+        <location filename="../qml/components/TimelineFilterBar.qml" line="32"/>
+        <source>Taken</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="timelineFilterBar.created">
+        <location filename="../qml/components/TimelineFilterBar.qml" line="34"/>
+        <source>Created</source>
+        <translation type="unfinished">Creato</translation>
     </message>
     <message id="timelineFilterBar.favorites">
-        <location filename="../qml/components/TimelineFilterBar.qml" line="29"/>
+        <location filename="../qml/components/TimelineFilterBar.qml" line="103"/>
         <source>Favorites</source>
         <translation>Preferiti</translation>
     </message>
@@ -2505,33 +2497,33 @@
         <translation>Selezione corrente:</translation>
     </message>
     <message id="archivedPage.archived">
-        <location filename="../qml/pages/ArchivedPage.qml" line="94"/>
-        <location filename="../qml/pages/ArchivedPage.qml" line="118"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="98"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="122"/>
         <source>Archived</source>
         <translation>Archiviato</translation>
     </message>
     <message id="archivedPage.asset">
-        <location filename="../qml/pages/ArchivedPage.qml" line="104"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="108"/>
         <source>1 asset</source>
         <translation>1 asset</translation>
     </message>
     <message id="archivedPage.assets">
-        <location filename="../qml/pages/ArchivedPage.qml" line="106"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="110"/>
         <source>%1 assets</source>
         <translation>%1 asset</translation>
     </message>
     <message id="archivedPage.loading">
-        <location filename="../qml/pages/ArchivedPage.qml" line="180"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="189"/>
         <source>Loading archived assets...</source>
         <translation>Caricamento asset archiviati...</translation>
     </message>
     <message id="archivedPage.noAssets">
-        <location filename="../qml/pages/ArchivedPage.qml" line="195"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="204"/>
         <source>No archived assets</source>
         <translation>Nessun asset archiviato</translation>
     </message>
     <message id="notification.removedFromArchive">
-        <location filename="../qml/pages/ArchivedPage.qml" line="304"/>
+        <location filename="../qml/pages/ArchivedPage.qml" line="313"/>
         <source>Removed from archive</source>
         <translation>Rimosso dagli archivi</translation>
     </message>
@@ -2558,103 +2550,98 @@
         <source>Archived</source>
         <translation>Archiviati</translation>
     </message>
-    <message id="libraryPage.recentlyAdded">
-        <location filename="../qml/pages/LibraryPage.qml" line="60"/>
-        <source>Recently Added</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="libraryPage.sharedLinks">
-        <location filename="../qml/pages/LibraryPage.qml" line="62"/>
+        <location filename="../qml/pages/LibraryPage.qml" line="60"/>
         <source>Shared Links</source>
         <translation>Collegamenti condivisi</translation>
     </message>
     <message id="libraryPage.trash">
-        <location filename="../qml/pages/LibraryPage.qml" line="64"/>
+        <location filename="../qml/pages/LibraryPage.qml" line="62"/>
         <source>Trash</source>
         <translation>Cestino</translation>
     </message>
     <message id="libraryPage.people">
-        <location filename="../qml/pages/LibraryPage.qml" line="66"/>
+        <location filename="../qml/pages/LibraryPage.qml" line="64"/>
         <source>People</source>
         <translation>Persone</translation>
     </message>
     <message id="libraryPage.places">
-        <location filename="../qml/pages/LibraryPage.qml" line="68"/>
+        <location filename="../qml/pages/LibraryPage.qml" line="66"/>
         <source>Places</source>
         <translation>Luoghi</translation>
     </message>
     <message id="libraryPage.onThisDevice">
-        <location filename="../qml/pages/LibraryPage.qml" line="70"/>
+        <location filename="../qml/pages/LibraryPage.qml" line="68"/>
         <source>On This Device</source>
         <translation>Su questo dispositivo</translation>
     </message>
     <message id="libraryPage.folders">
-        <location filename="../qml/pages/LibraryPage.qml" line="72"/>
+        <location filename="../qml/pages/LibraryPage.qml" line="70"/>
         <source>Folders</source>
         <translation>Cartelle</translation>
     </message>
     <message id="libraryPage.lockedFolder">
-        <location filename="../qml/pages/LibraryPage.qml" line="74"/>
+        <location filename="../qml/pages/LibraryPage.qml" line="72"/>
         <source>Locked Folder</source>
         <translation>Cartelle bloccate</translation>
     </message>
     <message id="libraryPage.partners">
-        <location filename="../qml/pages/LibraryPage.qml" line="76"/>
+        <location filename="../qml/pages/LibraryPage.qml" line="74"/>
         <source>Partners</source>
         <translation>Compagni</translation>
     </message>
     <message id="pullDownMenu.restoreAll">
-        <location filename="../qml/pages/TrashPage.qml" line="50"/>
+        <location filename="../qml/pages/TrashPage.qml" line="54"/>
         <source>Restore all</source>
         <translation>Ripristina tutto</translation>
     </message>
     <message id="notification.restoringAll">
-        <location filename="../qml/pages/TrashPage.qml" line="55"/>
+        <location filename="../qml/pages/TrashPage.qml" line="59"/>
         <source>Restoring all items from trash</source>
         <translation>Ripristina tutti gli oggetti dal cestino</translation>
     </message>
     <message id="pullDownMenu.emptyTrash">
-        <location filename="../qml/pages/TrashPage.qml" line="63"/>
+        <location filename="../qml/pages/TrashPage.qml" line="67"/>
         <source>Empty trash</source>
         <translation>Svuota cestino</translation>
     </message>
     <message id="notification.emptyingTrash">
-        <location filename="../qml/pages/TrashPage.qml" line="68"/>
+        <location filename="../qml/pages/TrashPage.qml" line="72"/>
         <source>Permanently deleting all trashed items</source>
         <translation>Elimina definitivamente tutti gli oggetti nel cestino</translation>
     </message>
     <message id="trashPage.trash">
-        <location filename="../qml/pages/TrashPage.qml" line="80"/>
+        <location filename="../qml/pages/TrashPage.qml" line="84"/>
         <source>Trash</source>
         <translation>Cestino</translation>
     </message>
     <message id="trashPage.autoDeleteInfo">
-        <location filename="../qml/pages/TrashPage.qml" line="114"/>
+        <location filename="../qml/pages/TrashPage.qml" line="118"/>
         <source>Trashed items will be permanently deleted after 30 days</source>
         <translation>Gli oggetti nel cestino verranno eliminati automaticamente dopo 30 giorni</translation>
     </message>
     <message id="trashPage.loading">
-        <location filename="../qml/pages/TrashPage.qml" line="182"/>
+        <location filename="../qml/pages/TrashPage.qml" line="191"/>
         <source>Loading trashed assets...</source>
         <translation>Caricamento asset eliminati...</translation>
     </message>
     <message id="trashPage.noAssets">
-        <location filename="../qml/pages/TrashPage.qml" line="191"/>
+        <location filename="../qml/pages/TrashPage.qml" line="200"/>
         <source>Trash is empty</source>
         <translation>Il cestino è vuoto</translation>
     </message>
     <message id="notification.restored">
-        <location filename="../qml/pages/TrashPage.qml" line="253"/>
+        <location filename="../qml/pages/TrashPage.qml" line="262"/>
         <source>Restored from trash</source>
         <translation>Ripristinato dal cestino</translation>
     </message>
     <message id="notification.emptied">
-        <location filename="../qml/pages/TrashPage.qml" line="259"/>
+        <location filename="../qml/pages/TrashPage.qml" line="268"/>
         <source>Trash emptied</source>
         <translation>Cestino svuotato</translation>
     </message>
     <message id="notification.allRestored">
-        <location filename="../qml/pages/TrashPage.qml" line="264"/>
+        <location filename="../qml/pages/TrashPage.qml" line="273"/>
         <source>All items restored</source>
         <translation>Tutti gli oggetti ripristinati</translation>
     </message>
@@ -2695,64 +2682,64 @@
         <translation>Nessun asset preferito</translation>
     </message>
     <message id="lockedFolderPage.confirmPin">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="56"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="60"/>
         <source>Re-enter your 6-digit PIN to confirm</source>
         <translation>Inserisci nuovamente il tuo PIN a sei cifre per confermare</translation>
     </message>
     <message id="lockedFolderPage.createNewPin">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="59"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="63"/>
         <source>Create a 6-digit PIN for your locked folder</source>
         <translation>Crea un PIN a 6 cifre per la tua cartella protetta</translation>
     </message>
     <message id="lockedFolderPage.enterPin">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="62"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="66"/>
         <source>Enter your 6-digit PIN to access the locked folder</source>
         <translation>Inserisci il tuo PIN a 6 cifre per accedere alla cartella protetta</translation>
     </message>
     <message id="lockedFolderPage.lockedFolder">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="85"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="269"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="293"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="89"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="273"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="297"/>
         <source>Locked Folder</source>
         <translation>Cartella protetta</translation>
     </message>
     <message id="notification.pinMismatch">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="199"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="203"/>
         <source>PINs to do not match, try again</source>
         <translation>I PIN non combaciano, prova di nuovo</translation>
     </message>
     <message id="lockedFolderPage.asset">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="279"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="283"/>
         <source>1 asset</source>
         <translation>1 asset</translation>
     </message>
     <message id="lockedFolderPage.assets">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="281"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="285"/>
         <source>%1 assets</source>
         <translation>%1 asset</translation>
     </message>
     <message id="lockedFolderPage.loading">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="356"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="365"/>
         <source>Loading locked folder assets...</source>
         <translation>Caricamento asset cartella protetta...</translation>
     </message>
     <message id="lockedFolderPage.noAssets">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="371"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="380"/>
         <source>Locked folder is empty</source>
         <translation>La cartella protetta è vuota</translation>
     </message>
     <message id="notification.invalidPin">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="453"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="462"/>
         <source>Invalid PIN</source>
         <translation>PIN invalido</translation>
     </message>
     <message id="notification.pinCreated">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="458"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="467"/>
         <source>PIN created successfully</source>
         <translation>PIN creato con successo</translation>
     </message>
     <message id="notification.removedFromLockedFolder">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="494"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="503"/>
         <source>Removed from locked folder</source>
         <translation>Rimosso dalla cartella protetta</translation>
     </message>
@@ -2839,12 +2826,12 @@
         <translation>%1 asset</translation>
     </message>
     <message id="placeDetailPage.loading">
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="240"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="241"/>
         <source>Loading assets...</source>
         <translation>Caricamento asset...</translation>
     </message>
     <message id="placeDetailPage.noAssets">
-        <location filename="../qml/pages/PlaceDetailPage.qml" line="255"/>
+        <location filename="../qml/pages/PlaceDetailPage.qml" line="256"/>
         <source>No assets</source>
         <translation>Nessun asset</translation>
     </message>
@@ -2867,32 +2854,6 @@
         <location filename="../qml/pages/PlacesPage.qml" line="201"/>
         <source>No places found</source>
         <translation>Nessun luogo trovato</translation>
-    </message>
-    <message id="recentlyAddedPage.recentlyAdded">
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="95"/>
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="119"/>
-        <source>Recently Added</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="recentlyAddedPage.asset">
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="105"/>
-        <source>1 asset</source>
-        <translation type="unfinished">1 asset</translation>
-    </message>
-    <message id="recentlyAddedPage.assets">
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="107"/>
-        <source>%1 assets</source>
-        <translation type="unfinished">%1 asset</translation>
-    </message>
-    <message id="recentlyAddedPage.loading">
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="181"/>
-        <source>Loading recently added assets...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="recentlyAddedPage.noAssets">
-        <location filename="../qml/pages/RecentlyAddedPage.qml" line="196"/>
-        <source>No recently added assets</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
