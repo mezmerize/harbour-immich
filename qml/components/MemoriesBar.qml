@@ -161,10 +161,4 @@ Item {
 
        HorizontalScrollDecorator {}
    }
-
-   LoadingIndicator {
-       anchors.centerIn: parent
-       loading: memoriesBar.loading && memoriesModel.count === 0
-       useMonochrome: true
-   }
 }

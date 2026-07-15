@@ -877,7 +877,7 @@ void ImmichApi::fetchMemories()
     qInfo() << "ImmichApi: Fetching memories";
     QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/memories"));
     QUrlQuery query;
-    query.addQueryItem(QStringLiteral("for"), QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyy-MM-dd'T'HH:mm:ss.zzz'Z'")));
+    query.addQueryItem(QStringLiteral("for"), QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyy-MM-dd")));
     url.setQuery(query);
     QNetworkRequest request = createAuthenticatedRequest(url);
     QNetworkReply *reply = m_networkManager->get(request);
