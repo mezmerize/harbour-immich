@@ -50,7 +50,7 @@ Project website: https://immich.app
 ## Requirements
 
 - Sailfish OS device
-- Immich server (v2.5.x or newer recommended)
+- Immich server (v3.x or newer recommended)
 - Active user account on your Immich instance
 
 ---
