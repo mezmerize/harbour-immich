@@ -532,8 +532,8 @@ Page {
     }
 
     Component.onCompleted: {
-        page.refresh()
         page.memoriesLoading = true
+        page.refresh()
         immichApi.fetchMemories()
     }
 

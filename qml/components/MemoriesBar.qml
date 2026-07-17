@@ -4,8 +4,8 @@ import Sailfish.Silica 1.0
 Item {
    id: memoriesBar
    width: parent.width
-   height: hasMemories ? memoriesList.height + Theme.paddingMedium * 2 : 0
-   visible: hasMemories
+   height: (hasMemories || loading) ? memoriesList.height + Theme.paddingMedium * 2 : 0
+   visible: hasMemories || loading
 
    property bool hasMemories: memoriesModel.count > 0 && memoriesLoaded
    property bool loading: false
@@ -160,5 +160,11 @@ Item {
        }
 
        HorizontalScrollDecorator {}
+   }
+
+   LoadingIndicator {
+       anchors.centerIn: parent
+       loading: memoriesBar.loading && memoriesModel.count === 0
+       useMonochrome: true
    }
 }
