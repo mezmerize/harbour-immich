@@ -13,19 +13,6 @@ QQueue<ImmichImageResponse*> ImmichImageResponse::s_pendingQueue;
 QMutex ImmichImageResponse::s_cacheMutex;
 QCache<QString, QImage> ImmichImageResponse::s_imageCache(50 * 1024 * 1024); // ~50MB cost limit
 
-static QNetworkAccessManager* getThreadLocalNetworkManager()
-{
-    thread_local QNetworkAccessManager* manager = nullptr;
-    if (!manager) {
-        manager = new QNetworkAccessManager();
-        // Clean up when thread exits
-        QObject::connect(QThread::currentThread(), &QThread::finished, [=]() {
-            delete manager;
-        });
-    }
-    return manager;
-}
-
 ImmichImageResponse::ImmichImageResponse(const QString &url, const QString &authToken, const QSize &requestedSize)
     : m_url(url)
     , m_authToken(authToken)
@@ -98,7 +85,7 @@ void ImmichImageResponse::startRequest()
     m_networkActive = true;
     s_activeRequests.fetchAndAddAcquire(1);
 
-    m_networkManager = getThreadLocalNetworkManager();
+    m_networkManager = new QNetworkAccessManager(this);
 
     QNetworkRequest request(m_url);
     request.setRawHeader("Authorization", QString("Bearer %1").arg(m_authToken).toUtf8());
