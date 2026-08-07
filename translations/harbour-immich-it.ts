@@ -949,7 +949,7 @@
         <location filename="../qml/pages/LoginPage.qml" line="133"/>
         <source>The Immich server you are trying to log in to is running an unsupported version (minimum required: 3.0.0). Some features may not work correctly.</source>
         <oldsource>The Immich server you are trying to log into has lower version than required (minimal required version 3.0.0). Functionality may be affected.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Il server Immich nella quale stai cercando di accedere usa una versione non supportata (minimo richiesto: 3.0.0). Alcune funzioni potrebbero non funzionare correttamente.</translation>
     </message>
     <message id="loginPage.failed">
         <location filename="../qml/pages/LoginPage.qml" line="183"/>
@@ -2406,12 +2406,12 @@
     <message id="timelineFilterBar.taken">
         <location filename="../qml/components/TimelineFilterBar.qml" line="32"/>
         <source>Taken</source>
-        <translation type="unfinished"></translation>
+        <translation>Scattata</translation>
     </message>
     <message id="timelineFilterBar.created">
         <location filename="../qml/components/TimelineFilterBar.qml" line="34"/>
         <source>Created</source>
-        <translation type="unfinished">Creato</translation>
+        <translation>Creato</translation>
     </message>
     <message id="timelineFilterBar.favorites">
         <location filename="../qml/components/TimelineFilterBar.qml" line="103"/>
@@ -2839,111 +2839,111 @@
     <message id="peoplePage.people">
         <location filename="../qml/pages/PeoplePage.qml" line="55"/>
         <source>People</source>
-        <translation type="unfinished">Persone</translation>
+        <translation>Persone</translation>
     </message>
     <message id="peoplePage.filter">
         <location filename="../qml/pages/PeoplePage.qml" line="62"/>
         <source>Filter by name...</source>
-        <translation type="unfinished">Filtra per nome...</translation>
+        <translation>Filtra per nome...</translation>
     </message>
     <message id="peoplePage.unknown">
         <location filename="../qml/pages/PeoplePage.qml" line="163"/>
         <source>Unknown</source>
-        <translation type="unfinished">Sconosciuto</translation>
+        <translation>Sconosciuto</translation>
     </message>
     <message id="peoplePage.showLess">
         <location filename="../qml/pages/PeoplePage.qml" line="189"/>
         <source>Show less</source>
-        <translation type="unfinished">Mostra meno</translation>
+        <translation>Mostra meno</translation>
     </message>
     <message id="peoplePage.showMore">
         <location filename="../qml/pages/PeoplePage.qml" line="191"/>
         <source>Show more (%1 more)</source>
-        <translation type="unfinished">Mostra altro (%1 di più)</translation>
+        <translation>Mostra altro (%1 di più)</translation>
     </message>
     <message id="peoplePage.loading">
         <location filename="../qml/pages/PeoplePage.qml" line="212"/>
         <source>Loading people...</source>
-        <translation type="unfinished">Caricando persone...</translation>
+        <translation>Caricando persone...</translation>
     </message>
     <message id="peoplePage.noPeople">
         <location filename="../qml/pages/PeoplePage.qml" line="221"/>
         <source>No people found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessuna persona trovata</translation>
     </message>
     <message id="editPersonDialog.title">
         <location filename="../qml/components/EditPersonDialog.qml" line="19"/>
         <source>Edit Person</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Persona</translation>
     </message>
     <message id="editPersonDialog.name">
         <location filename="../qml/components/EditPersonDialog.qml" line="27"/>
         <location filename="../qml/components/EditPersonDialog.qml" line="29"/>
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message id="editPersonDialog.birthday">
         <location filename="../qml/components/EditPersonDialog.qml" line="38"/>
         <source>Birthday</source>
-        <translation type="unfinished"></translation>
+        <translation>Compleanno</translation>
     </message>
     <message id="editPersonDialog.noBirthday">
         <location filename="../qml/components/EditPersonDialog.qml" line="40"/>
         <source>No birthday</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun compleanno</translation>
     </message>
     <message id="notification.birthdayInFuture">
         <location filename="../qml/components/EditPersonDialog.qml" line="55"/>
         <source>Future date is not allowed for birthday</source>
-        <translation type="unfinished"></translation>
+        <translation>Non sono ammesse date future per i compleanni</translation>
     </message>
     <message id="editPersonDialog.clearBirthday">
         <location filename="../qml/components/EditPersonDialog.qml" line="65"/>
         <source>Clear birthday</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulisci compleanno</translation>
     </message>
     <message id="pullDownMenu.editPerson">
         <location filename="../qml/pages/PersonDetailPage.qml" line="81"/>
         <source>Edit person</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica persona</translation>
     </message>
     <message id="personDetailPage.unknown">
         <location filename="../qml/pages/PersonDetailPage.qml" line="119"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="155"/>
         <source>Unknown</source>
-        <translation type="unfinished">Sconosciuto</translation>
+        <translation>Sconosciuto</translation>
     </message>
     <message id="personDetailPage.asset">
         <location filename="../qml/pages/PersonDetailPage.qml" line="139"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="171"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 asset</translation>
+        <translation>1 asset</translation>
     </message>
     <message id="personDetailPage.assets">
         <location filename="../qml/pages/PersonDetailPage.qml" line="141"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="171"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 asset</translation>
+        <translation>%1 asset</translation>
     </message>
     <message id="personDetailPage.loading">
         <location filename="../qml/pages/PersonDetailPage.qml" line="240"/>
         <source>Loading assets...</source>
-        <translation type="unfinished">Caricamento asset...</translation>
+        <translation>Caricamento asset...</translation>
     </message>
     <message id="personDetailPage.noAssets">
         <location filename="../qml/pages/PersonDetailPage.qml" line="255"/>
         <source>No assets</source>
-        <translation type="unfinished">Nessun asset</translation>
+        <translation>Nessun asset</translation>
     </message>
     <message id="notification.personUpdated">
         <location filename="../qml/pages/PersonDetailPage.qml" line="357"/>
         <source>Person updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Persona aggiornata</translation>
     </message>
     <message id="videoPlayer.failed">
         <location filename="../qml/components/VideoPlayer.qml" line="248"/>
         <source>Failed to load video</source>
-        <translation type="unfinished">Caricamento video fallito</translation>
+        <translation>Caricamento video fallito</translation>
     </message>
 </context>
 </TS>
