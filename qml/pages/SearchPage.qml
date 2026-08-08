@@ -7,7 +7,7 @@ Page {
    id: searchPage
 
    property var selectedPeople: []
-   property var peopleData: []  // Array of {personId, name, thumbnailId}
+   property var peopleData: []  // Array of {id, name, thumbnailPath}
    property var searchSuggestions: ({})
 
    // Store selection data for filterable pickers
@@ -55,21 +55,6 @@ Page {
        archivedSwitch.checked = false
        notInAlbumSwitch.checked = false
        favoriteSwitch.checked = false
-   }
-
-   function extractPersonThumbnailId(person) {
-       if (!person.thumbnailPath) {
-           return person.id
-       }
-
-       var pathParts = person.thumbnailPath.split('/')
-       if (pathParts.length === 0) {
-           return person.id
-       }
-
-       var filename = pathParts[pathParts.length - 1]
-       var thumbnailId = filename.replace('.jpeg', '').replace('.jpg', '')
-       return thumbnailId || person.id
    }
 
    function normalizeSuggestions(suggestions) {
@@ -579,9 +564,9 @@ Page {
            for (var i = 0; i < people.length; i++) {
                var person = people[i]
                var personData = {
-                   personId: person.id,
+                   id: person.id,
                    name: person.name || "",
-                   thumbnailId: extractPersonThumbnailId(person)
+                   thumbnailPath: person.thumbnailPath || ""
                }
                newPeopleData.push(personData)
            }
