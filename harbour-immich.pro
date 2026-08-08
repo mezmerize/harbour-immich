@@ -18,6 +18,7 @@ SOURCES += src/harbour-immich.cpp \
     src/authmanager.cpp \
     src/logmanager.cpp \
     src/oauthmanager.cpp \
+    src/peoplemodel.cpp \
     src/securestorage.cpp \
     src/albummodel.cpp \
     src/settingsmanager.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     src/authmanager.h \
     src/logmanager.h \
     src/oauthmanager.h \
+    src/peoplemodel.h \
     src/securestorage.h \
     src/albummodel.h \
     src/settingsmanager.h \
