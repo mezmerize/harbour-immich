@@ -63,58 +63,48 @@
         <translation>Velg personer</translation>
     </message>
     <message id="peoplePickerDialog.done">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="61"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="50"/>
         <source>Done</source>
         <translation>Ferdig</translation>
     </message>
     <message id="peoplePickerDialog.cancel">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="63"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="52"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
     <message id="peoplePickerDialog.filterName">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="71"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="59"/>
         <source>Filter by name...</source>
         <translation>Filtrer etter navn...</translation>
     </message>
     <message id="peoplePickerDialog.selected">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="91"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="74"/>
         <source>%1 selected</source>
         <translation>%1 valgt</translation>
     </message>
     <message id="peoplePickerDialog.tapToSelect">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="93"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="76"/>
         <source>Tap to select people</source>
         <translation>Trykk for å velge personer</translation>
     </message>
     <message id="peoplePickerDialog.clear">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="107"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="90"/>
         <source>Clear selection</source>
         <oldsource>Clear selection.</oldsource>
         <translation>Nullstill valg</translation>
     </message>
     <message id="peoplePickerDialog.unknown">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="231"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="185"/>
         <source>Unknown</source>
         <translation>Ukjent</translation>
     </message>
-    <message id="peoplePickerDialog.showLess">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="266"/>
-        <source>Show less</source>
-        <translation>Vis mindre</translation>
-    </message>
-    <message id="peoplePickerDialog.showMore">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="268"/>
-        <source>Show more (%1 more)</source>
-        <translation>Vis mer (%1 mer)</translation>
-    </message>
     <message id="peoplePickerDialog.noPeople">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="285"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="210"/>
         <source>No people available</source>
         <translation>Ingen personer tilgjengelig</translation>
     </message>
     <message id="peoplePickerDialog.noMatches">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="287"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="212"/>
         <source>No matches found</source>
         <translation>Ingen treff</translation>
     </message>
@@ -212,8 +202,8 @@
         <location filename="../qml/pages/FavoritesPage.qml" line="60"/>
         <location filename="../qml/pages/FoldersPage.qml" line="89"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="244"/>
-        <location filename="../qml/pages/PeoplePage.qml" line="44"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="75"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="36"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="77"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="82"/>
         <location filename="../qml/pages/PlacesPage.qml" line="36"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="80"/>
@@ -258,7 +248,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="340"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="302"/>
         <location filename="../qml/pages/AssetDetailPage.qml" line="470"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="346"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="376"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="332"/>
         <location filename="../qml/pages/TimelinePage.qml" line="593"/>
         <source>Added asset to favorites</source>
@@ -267,7 +257,7 @@
     <message id="notification.addedAssetsToFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="342"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="304"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="348"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="378"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="334"/>
         <location filename="../qml/pages/TimelinePage.qml" line="595"/>
         <source>Added %1 assets to favorites</source>
@@ -278,7 +268,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="306"/>
         <location filename="../qml/pages/AssetDetailPage.qml" line="472"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="284"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="350"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="380"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="336"/>
         <location filename="../qml/pages/TimelinePage.qml" line="597"/>
         <source>Removed asset from favorites</source>
@@ -288,7 +278,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="346"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="308"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="286"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="352"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="382"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="338"/>
         <location filename="../qml/pages/TimelinePage.qml" line="599"/>
         <source>Removed %1 assets from favorites</source>
@@ -299,7 +289,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="325"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="294"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="493"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="374"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="404"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="284"/>
         <location filename="../qml/pages/TimelinePage.qml" line="576"/>
         <location filename="../qml/pages/TrashPage.qml" line="280"/>
@@ -311,7 +301,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="327"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="296"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="495"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="376"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="406"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="286"/>
         <location filename="../qml/pages/TimelinePage.qml" line="578"/>
         <location filename="../qml/pages/TrashPage.qml" line="282"/>
@@ -321,7 +311,7 @@
     <message id="notification.movedToArchive">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="364"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="301"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="362"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="392"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="343"/>
         <location filename="../qml/pages/TimelinePage.qml" line="625"/>
         <source>Moved to archive</source>
@@ -331,7 +321,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="367"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="316"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="304"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="365"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="395"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="346"/>
         <location filename="../qml/pages/TimelinePage.qml" line="628"/>
         <source>Moved to locked folder</source>
@@ -342,7 +332,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="241"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="224"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="412"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="286"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="316"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="248"/>
         <location filename="../qml/pages/TimelinePage.qml" line="317"/>
         <source>Downloading asset...</source>
@@ -353,7 +343,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="243"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="226"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="414"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="288"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="318"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="250"/>
         <location filename="../qml/pages/TimelinePage.qml" line="319"/>
         <source>Downloading %1 assets...</source>
@@ -364,7 +354,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="249"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="232"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="420"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="294"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="324"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="292"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="256"/>
         <location filename="../qml/pages/TimelinePage.qml" line="327"/>
@@ -377,7 +367,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="251"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="234"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="422"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="296"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="326"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="294"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="258"/>
         <location filename="../qml/pages/TimelinePage.qml" line="325"/>
@@ -615,7 +605,7 @@
     <message id="pullDownMenu.settings">
         <location filename="../qml/pages/AlbumsPage.qml" line="89"/>
         <location filename="../qml/pages/LibraryPage.qml" line="14"/>
-        <location filename="../qml/pages/SearchPage.qml" line="178"/>
+        <location filename="../qml/pages/SearchPage.qml" line="163"/>
         <location filename="../qml/pages/TimelinePage.qml" line="101"/>
         <source>Settings</source>
         <translation>Innstillinger</translation>
@@ -638,7 +628,7 @@
     <message id="pullDownMenu.timeline">
         <location filename="../qml/pages/AlbumsPage.qml" line="107"/>
         <location filename="../qml/pages/LibraryPage.qml" line="32"/>
-        <location filename="../qml/pages/SearchPage.qml" line="190"/>
+        <location filename="../qml/pages/SearchPage.qml" line="175"/>
         <location filename="../qml/pages/SettingsPage.qml" line="77"/>
         <source>Timeline</source>
         <translation>Tidslinje</translation>
@@ -1010,289 +1000,289 @@
         <translation>Alle</translation>
     </message>
     <message id="pullDownMenu.clearFilters">
-        <location filename="../qml/pages/SearchPage.qml" line="196"/>
+        <location filename="../qml/pages/SearchPage.qml" line="181"/>
         <source>Clear search filters</source>
         <translation>Tøm søkefiltre</translation>
     </message>
     <message id="pullDownMenu.searchAction">
-        <location filename="../qml/pages/SearchPage.qml" line="202"/>
+        <location filename="../qml/pages/SearchPage.qml" line="187"/>
         <source>Search assets</source>
         <translation>Søk i mediefiler</translation>
     </message>
     <message id="searchPage.search">
-        <location filename="../qml/pages/SearchPage.qml" line="214"/>
+        <location filename="../qml/pages/SearchPage.qml" line="199"/>
         <source>Search</source>
         <translation>Søk</translation>
     </message>
     <message id="searchPage.searchType">
-        <location filename="../qml/pages/SearchPage.qml" line="220"/>
+        <location filename="../qml/pages/SearchPage.qml" line="205"/>
         <source>Search Type</source>
         <oldsource>Search type</oldsource>
         <translation>Type søk</translation>
     </message>
     <message id="searchPage.searchInLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="226"/>
+        <location filename="../qml/pages/SearchPage.qml" line="211"/>
         <source>Search in</source>
         <oldsource>Any</oldsource>
         <translation>Søk i</translation>
     </message>
     <message id="searchPage.searchInContext">
-        <location filename="../qml/pages/SearchPage.qml" line="230"/>
+        <location filename="../qml/pages/SearchPage.qml" line="215"/>
         <source>Context (smart search)</source>
         <translation>Kontekst (smart søk)</translation>
     </message>
     <message id="searchPage.searchInFileName">
-        <location filename="../qml/pages/SearchPage.qml" line="232"/>
+        <location filename="../qml/pages/SearchPage.qml" line="217"/>
         <source>Filename / Extension</source>
         <translation>Filnavn / Filtype</translation>
     </message>
     <message id="searchPage.searchInDescription">
-        <location filename="../qml/pages/SearchPage.qml" line="234"/>
+        <location filename="../qml/pages/SearchPage.qml" line="219"/>
         <source>Description</source>
         <translation>Beskrivelse</translation>
     </message>
     <message id="searchPage.searchInOcr">
-        <location filename="../qml/pages/SearchPage.qml" line="236"/>
+        <location filename="../qml/pages/SearchPage.qml" line="221"/>
         <source>OCR (text in images)</source>
         <translation>OCR (tekst i bilder)</translation>
     </message>
     <message id="searchPage.searchInContextPlaceholder">
-        <location filename="../qml/pages/SearchPage.qml" line="246"/>
+        <location filename="../qml/pages/SearchPage.qml" line="231"/>
         <source>Search by description, objects, etc.</source>
         <translation>Søk etter beskrivelse, objekter, osv.</translation>
     </message>
     <message id="searchPage.searchInFileNamePlaceholder">
-        <location filename="../qml/pages/SearchPage.qml" line="248"/>
+        <location filename="../qml/pages/SearchPage.qml" line="233"/>
         <source>e.g. IMG_1234.jpg or .png</source>
         <translation>f.eks. IMG_1234.jpg eller .png</translation>
     </message>
     <message id="searchPage.searchInDescriptionPlaceholder">
-        <location filename="../qml/pages/SearchPage.qml" line="250"/>
+        <location filename="../qml/pages/SearchPage.qml" line="235"/>
         <source>Search in asset descriptions</source>
         <translation>Søk i mediefilbeskrivelser</translation>
     </message>
     <message id="searchPage.searchInOcrPlaceholder">
-        <location filename="../qml/pages/SearchPage.qml" line="252"/>
+        <location filename="../qml/pages/SearchPage.qml" line="237"/>
         <source>Search text visible in assets</source>
         <translation>Søk i synlig tekst i mediefiler</translation>
     </message>
     <message id="searchPage.searchInPlaceholder">
-        <location filename="../qml/pages/SearchPage.qml" line="254"/>
+        <location filename="../qml/pages/SearchPage.qml" line="239"/>
         <source>Enter search query</source>
         <translation>Skriv inn søkeord</translation>
     </message>
     <message id="searchPage.query">
-        <location filename="../qml/pages/SearchPage.qml" line="258"/>
+        <location filename="../qml/pages/SearchPage.qml" line="243"/>
         <source>Search query</source>
         <translation>Søkeord</translation>
     </message>
     <message id="searchPage.sortOrderLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="267"/>
+        <location filename="../qml/pages/SearchPage.qml" line="252"/>
         <source>Sort order</source>
         <translation>Sorteringsrekkefølge</translation>
     </message>
     <message id="searchPage.sortOrderNewest">
-        <location filename="../qml/pages/SearchPage.qml" line="271"/>
+        <location filename="../qml/pages/SearchPage.qml" line="256"/>
         <source>Newest first</source>
         <translation>Nyeste først</translation>
     </message>
     <message id="searchPage.sortOrderOldest">
-        <location filename="../qml/pages/SearchPage.qml" line="273"/>
+        <location filename="../qml/pages/SearchPage.qml" line="258"/>
         <source>Oldest first</source>
         <translation>Eldste først</translation>
     </message>
     <message id="searchPage.people">
-        <location filename="../qml/pages/SearchPage.qml" line="280"/>
+        <location filename="../qml/pages/SearchPage.qml" line="265"/>
         <source>People</source>
         <translation>Personer</translation>
     </message>
     <message id="searchPage.peopleLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="285"/>
+        <location filename="../qml/pages/SearchPage.qml" line="270"/>
         <source>People</source>
         <translation>Personer</translation>
     </message>
     <message id="searchPage.peopleAny">
-        <location filename="../qml/pages/SearchPage.qml" line="289"/>
+        <location filename="../qml/pages/SearchPage.qml" line="274"/>
         <source>Any</source>
         <translation>Alle</translation>
     </message>
     <message id="searchPage.peopleUnknown">
-        <location filename="../qml/pages/SearchPage.qml" line="295"/>
+        <location filename="../qml/pages/SearchPage.qml" line="280"/>
         <source>Unknown</source>
         <translation>Ukjent</translation>
     </message>
     <message id="searchPage.peopleOneSelected">
-        <location filename="../qml/pages/SearchPage.qml" line="299"/>
+        <location filename="../qml/pages/SearchPage.qml" line="284"/>
         <source>1 selected</source>
         <translation>1 valgt</translation>
     </message>
     <message id="searchPage.peopleSelected">
-        <location filename="../qml/pages/SearchPage.qml" line="302"/>
+        <location filename="../qml/pages/SearchPage.qml" line="287"/>
         <source>%1 selected</source>
         <translation>%1 valgt</translation>
     </message>
     <message id="searchPage.peopleLoading">
-        <location filename="../qml/pages/SearchPage.qml" line="320"/>
+        <location filename="../qml/pages/SearchPage.qml" line="305"/>
         <source>Loading people...</source>
         <translation>Laster personer...</translation>
     </message>
     <message id="searchPage.place">
-        <location filename="../qml/pages/SearchPage.qml" line="329"/>
+        <location filename="../qml/pages/SearchPage.qml" line="314"/>
         <source>Place</source>
         <translation>Sted</translation>
     </message>
     <message id="searchPage.stateLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="334"/>
+        <location filename="../qml/pages/SearchPage.qml" line="319"/>
         <source>State</source>
         <translation>Fylke</translation>
     </message>
     <message id="searchPage.stateSelect">
-        <location filename="../qml/pages/SearchPage.qml" line="339"/>
+        <location filename="../qml/pages/SearchPage.qml" line="324"/>
         <source>Select State</source>
         <translation>Velg fylke</translation>
     </message>
     <message id="searchPage.countryLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="355"/>
+        <location filename="../qml/pages/SearchPage.qml" line="340"/>
         <source>Country</source>
         <translation>Land</translation>
     </message>
     <message id="searchPage.countrySelect">
-        <location filename="../qml/pages/SearchPage.qml" line="360"/>
+        <location filename="../qml/pages/SearchPage.qml" line="345"/>
         <source>Select Country</source>
         <translation>Velg land</translation>
     </message>
     <message id="searchPage.cityLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="376"/>
+        <location filename="../qml/pages/SearchPage.qml" line="361"/>
         <source>City</source>
         <translation>By</translation>
     </message>
     <message id="searchPage.citySelect">
-        <location filename="../qml/pages/SearchPage.qml" line="381"/>
+        <location filename="../qml/pages/SearchPage.qml" line="366"/>
         <source>Select City</source>
         <translation>Velg by</translation>
     </message>
     <message id="searchPage.camera">
-        <location filename="../qml/pages/SearchPage.qml" line="398"/>
+        <location filename="../qml/pages/SearchPage.qml" line="383"/>
         <source>Camera</source>
         <translation>Kamera</translation>
     </message>
     <message id="searchPage.cameraMakeLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="403"/>
+        <location filename="../qml/pages/SearchPage.qml" line="388"/>
         <source>Camera Make</source>
         <translation>Kameraprodusent</translation>
     </message>
     <message id="searchPage.cameraMakeSelect">
-        <location filename="../qml/pages/SearchPage.qml" line="408"/>
+        <location filename="../qml/pages/SearchPage.qml" line="393"/>
         <source>Select Camera Make</source>
         <translation>Velg produsent</translation>
     </message>
     <message id="searchPage.cameraModelLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="424"/>
+        <location filename="../qml/pages/SearchPage.qml" line="409"/>
         <source>Camera Model</source>
         <translation>Kameramodell</translation>
     </message>
     <message id="searchPage.cameraModelSelect">
-        <location filename="../qml/pages/SearchPage.qml" line="429"/>
+        <location filename="../qml/pages/SearchPage.qml" line="414"/>
         <source>Select Camera Model</source>
         <translation>Velg kamera</translation>
     </message>
     <message id="searchPage.lensModelLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="445"/>
+        <location filename="../qml/pages/SearchPage.qml" line="430"/>
         <source>Lens Model</source>
         <translation>Objektiv</translation>
     </message>
     <message id="searchPage.lendsModelSelect">
-        <location filename="../qml/pages/SearchPage.qml" line="450"/>
+        <location filename="../qml/pages/SearchPage.qml" line="435"/>
         <source>Select Lens Model</source>
         <translation>Velg objektiv</translation>
     </message>
     <message id="searchPage.dateRange">
-        <location filename="../qml/pages/SearchPage.qml" line="467"/>
+        <location filename="../qml/pages/SearchPage.qml" line="452"/>
         <source>Date Range</source>
         <translation>Tidsrom</translation>
     </message>
     <message id="searchPage.fromLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="473"/>
+        <location filename="../qml/pages/SearchPage.qml" line="458"/>
         <source>From</source>
         <translation>Fra</translation>
     </message>
     <message id="searchPage.fromNotSet">
-        <location filename="../qml/pages/SearchPage.qml" line="475"/>
+        <location filename="../qml/pages/SearchPage.qml" line="460"/>
         <source>Not set</source>
         <translation>Ikke satt</translation>
     </message>
     <message id="searchPage.toLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="490"/>
+        <location filename="../qml/pages/SearchPage.qml" line="475"/>
         <source>To</source>
         <translation>Til</translation>
     </message>
     <message id="searchPage.toNotSet">
-        <location filename="../qml/pages/SearchPage.qml" line="492"/>
+        <location filename="../qml/pages/SearchPage.qml" line="477"/>
         <source>Not set</source>
         <translation>Ikke satt</translation>
     </message>
     <message id="searchPage.mediaType">
-        <location filename="../qml/pages/SearchPage.qml" line="507"/>
+        <location filename="../qml/pages/SearchPage.qml" line="492"/>
         <source>Media Type</source>
         <translation>Medietype</translation>
     </message>
     <message id="searchPage.typeLabel">
-        <location filename="../qml/pages/SearchPage.qml" line="513"/>
+        <location filename="../qml/pages/SearchPage.qml" line="498"/>
         <source>Type</source>
         <translation>Type</translation>
     </message>
     <message id="searchPage.typeAll">
-        <location filename="../qml/pages/SearchPage.qml" line="517"/>
+        <location filename="../qml/pages/SearchPage.qml" line="502"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message id="searchPage.typePhotos">
-        <location filename="../qml/pages/SearchPage.qml" line="519"/>
+        <location filename="../qml/pages/SearchPage.qml" line="504"/>
         <source>Photos</source>
         <translation>Bilder</translation>
     </message>
     <message id="searchPage.typeVideos">
-        <location filename="../qml/pages/SearchPage.qml" line="521"/>
+        <location filename="../qml/pages/SearchPage.qml" line="506"/>
         <source>Videos</source>
         <translation>Videoer</translation>
     </message>
     <message id="searchPage.display">
-        <location filename="../qml/pages/SearchPage.qml" line="528"/>
+        <location filename="../qml/pages/SearchPage.qml" line="513"/>
         <source>Display Options</source>
         <translation>Visningsvalg</translation>
     </message>
     <message id="searchPage.displayNotInAlbum">
-        <location filename="../qml/pages/SearchPage.qml" line="534"/>
+        <location filename="../qml/pages/SearchPage.qml" line="519"/>
         <source>Not in album</source>
         <translation>Ikke i album</translation>
     </message>
     <message id="searchPage.displayNotInAlbumInfo">
-        <location filename="../qml/pages/SearchPage.qml" line="536"/>
+        <location filename="../qml/pages/SearchPage.qml" line="521"/>
         <source>Show only assets not in any album</source>
         <translation>Vis kun mediefiler som ikke er i et album</translation>
     </message>
     <message id="searchPage.displayIncludeArchived">
-        <location filename="../qml/pages/SearchPage.qml" line="542"/>
+        <location filename="../qml/pages/SearchPage.qml" line="527"/>
         <source>Include archived</source>
         <translation>Inkluder arkiverte</translation>
     </message>
     <message id="searchPage.displayIncludeArchivedInfo">
-        <location filename="../qml/pages/SearchPage.qml" line="544"/>
+        <location filename="../qml/pages/SearchPage.qml" line="529"/>
         <source>Include archived assets in results</source>
         <translation>Inkluder arkiverte mediefiler i søkeresultatene</translation>
     </message>
     <message id="searchPage.displayFavoritesOnly">
-        <location filename="../qml/pages/SearchPage.qml" line="550"/>
+        <location filename="../qml/pages/SearchPage.qml" line="535"/>
         <source>Favorites only</source>
         <translation>Bare favoritter</translation>
     </message>
     <message id="searchPage.displayFavoritesOnlyInfo">
-        <location filename="../qml/pages/SearchPage.qml" line="552"/>
+        <location filename="../qml/pages/SearchPage.qml" line="537"/>
         <source>Show only favorite assets</source>
         <translation>Vis kun favoritter</translation>
     </message>
     <message id="searchPage.unknown">
-        <location filename="../qml/pages/SearchPage.qml" line="80"/>
+        <location filename="../qml/pages/SearchPage.qml" line="65"/>
         <source>Unknown</source>
         <translation>Ukjent</translation>
     </message>
@@ -1605,91 +1595,101 @@
         <source>Automatically turn off backup after all pending files have been uploaded.</source>
         <translation>Slå av sikkerhetskopiering automatisk når alle ventende filer er lastet opp.</translation>
     </message>
+    <message id="settingsPage.backupShowStatusIcon">
+        <location filename="../qml/pages/SettingsPage.qml" line="455"/>
+        <source>Show asset backup status icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.backupShowStatusIconInfo">
+        <location filename="../qml/pages/SettingsPage.qml" line="457"/>
+        <source>Show an icon on the timeline for backed-up assets.</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="settingsPage.backupScanInterval">
-        <location filename="../qml/pages/SettingsPage.qml" line="456"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="468"/>
         <source>Backup interval</source>
         <oldsource>Scan interval</oldsource>
         <translation>Backupintervall</translation>
     </message>
     <message id="settingsPage.backupScanIntervalInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="458"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="470"/>
         <source>How often to run a backup cycle. Shorter intervals may impact battery life. Selecting manual only will require triggering the backup manually by the button below.</source>
         <oldsource>How often to scan for new files. Shorter intervals may impact battery life.</oldsource>
         <translation>Hvor ofte backup skal kjøres. Kortere intervaller kan påvirke batteritiden. Hvis du velger &quot;Kun manuelt&quot;, må backup startes manuelt med knappen nedenfor.</translation>
     </message>
     <message id="settingsPage.backupScanIntervalManual">
-        <location filename="../qml/pages/SettingsPage.qml" line="470"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="482"/>
         <source>Manual only</source>
         <translation>Kun manuelt</translation>
     </message>
     <message id="settingsPage.backupScanInterval30">
-        <location filename="../qml/pages/SettingsPage.qml" line="475"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="487"/>
         <source>30 minutes</source>
         <translation>30 minutter</translation>
     </message>
     <message id="settingsPage.backupScanInterval60">
-        <location filename="../qml/pages/SettingsPage.qml" line="480"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="492"/>
         <source>1 hour</source>
         <translation>1 time</translation>
     </message>
     <message id="settingsPage.backupScanInterval240">
-        <location filename="../qml/pages/SettingsPage.qml" line="485"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="497"/>
         <source>4 hours</source>
         <translation>6 timer {4 ?}</translation>
     </message>
     <message id="settingsPage.backupScanInterval480">
-        <location filename="../qml/pages/SettingsPage.qml" line="490"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="502"/>
         <source>8 hours</source>
         <translation>6 timer {8 ?}</translation>
     </message>
     <message id="settingsPage.backupFromDate">
-        <location filename="../qml/pages/SettingsPage.qml" line="500"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="512"/>
         <source>Back up files from</source>
         <translation>Sikkerhetskopier filer fra</translation>
     </message>
     <message id="settingsPage.backupFromDateAll">
-        <location filename="../qml/pages/SettingsPage.qml" line="502"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="514"/>
         <source>All files (no limit)</source>
         <translation>Alle filer (ingen begrensning)</translation>
     </message>
     <message id="settingsPage.backupFromDateInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="522"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="534"/>
         <source>Only back up files modified after this date. Long press to clear.</source>
         <translation>Sikkerhetskopier kun filer som er endret etter denne datoen. Hold inne for å nullstille.</translation>
     </message>
     <message id="settingsPage.cancelBackup">
-        <location filename="../qml/pages/SettingsPage.qml" line="533"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="545"/>
         <source>Cancel backup</source>
         <translation>Avbryt backup</translation>
     </message>
     <message id="settingsPage.scanNow">
-        <location filename="../qml/pages/SettingsPage.qml" line="535"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="547"/>
         <source>Backup now</source>
         <oldsource>Scan and backup now</oldsource>
         <translation>Kjør backup nå</translation>
     </message>
     <message id="notification.backupClearDbRemorse">
-        <location filename="../qml/pages/SettingsPage.qml" line="564"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="576"/>
         <source>Clearing backup database</source>
         <translation>Nullstiller sikkerhetskopidatabasen</translation>
     </message>
     <message id="notification.loggingOut">
-        <location filename="../qml/pages/SettingsPage.qml" line="593"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="605"/>
         <source>Logging out</source>
         <translation>Logger ut</translation>
     </message>
     <message id="notification.serverSyncResult">
-        <location filename="../qml/pages/SettingsPage.qml" line="751"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="763"/>
         <source>Verified: %1 already on server, %2 new to upload</source>
         <translation>Verifisert: %1 finnes allerede på serveren, %2 nye skal lastes opp</translation>
     </message>
     <message id="notification.dbCleared">
-        <location filename="../qml/pages/SettingsPage.qml" line="755"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="767"/>
         <source>Backup database cleared</source>
         <translation>Sikkerhetskopidatabasen er tømt</translation>
     </message>
     <message id="notification.mediaTypesFetchFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="759"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="771"/>
         <source>Could not fetch supported media types from server. Backup disabled.</source>
         <translation>Kunne ikke hente støttede medietyper fra serveren. Sikkerhetskopiering er deaktivert.</translation>
     </message>
@@ -1704,132 +1704,132 @@
         <translation>Hopp over sjekk av filer mot serveren før opplasting. Dette gir raskere skanning, men duplikater oppdages først av serveren under selve opplastingen.</translation>
     </message>
     <message id="settingsPage.backupRetryFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="549"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="561"/>
         <source>Retry failed</source>
         <translation>Nytt forsøk feilet</translation>
     </message>
     <message id="settingsPage.backupClearDb">
-        <location filename="../qml/pages/SettingsPage.qml" line="560"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="572"/>
         <source>Clear backup database</source>
         <translation>Nullstill sikkerhetskopidatabasen</translation>
     </message>
     <message id="settingsPage.account">
-        <location filename="../qml/pages/SettingsPage.qml" line="572"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="584"/>
         <source>Account</source>
         <translation>Konto</translation>
     </message>
     <message id="settingsPage.server">
-        <location filename="../qml/pages/SettingsPage.qml" line="577"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="589"/>
         <source>Server</source>
         <translation>Server</translation>
     </message>
     <message id="settingsPage.email">
-        <location filename="../qml/pages/SettingsPage.qml" line="583"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="595"/>
         <source>Email</source>
         <translation>E-post</translation>
     </message>
     <message id="settingsPage.logout">
-        <location filename="../qml/pages/SettingsPage.qml" line="590"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="602"/>
         <source>Logout</source>
         <translation>Logg ut</translation>
     </message>
     <message id="settingsPage.serverStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="603"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="615"/>
         <source>Server Statistics</source>
         <translation>Serverstatistikk</translation>
     </message>
     <message id="settingsPage.serverStatisticsNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="611"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="623"/>
         <source>Server statistics are not available at the moment.</source>
         <translation>Serverstatistikk er ikke tilgjengelig for øyeblikket.</translation>
     </message>
     <message id="settingsPage.totalPhotos">
-        <location filename="../qml/pages/SettingsPage.qml" line="621"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="633"/>
         <source>Total photos</source>
         <translation>Totalt antall bilder</translation>
     </message>
     <message id="settingsPage.totalPhotosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="623"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="635"/>
         <source>Loading...</source>
         <translation>Laster...</translation>
     </message>
     <message id="settingsPage.totalVideos">
-        <location filename="../qml/pages/SettingsPage.qml" line="629"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="641"/>
         <source>Total videos</source>
         <translation>Totalt antall videoer</translation>
     </message>
     <message id="settingsPage.totalVideosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="631"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="643"/>
         <source>Loading...</source>
         <translation>Laster...</translation>
     </message>
     <message id="settingsPage.storageUsed">
-        <location filename="../qml/pages/SettingsPage.qml" line="637"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="649"/>
         <source>Storage used</source>
         <translation>Lagringsplass brukt</translation>
     </message>
     <message id="settingsPage.storageUsedLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="639"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="651"/>
         <source>Loading...</source>
         <translation>Laster...</translation>
     </message>
     <message id="settingsPage.totalAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="645"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="657"/>
         <source>Total assets</source>
         <translation>Totalt antall mediefiler</translation>
     </message>
     <message id="settingsPage.totalAssetsLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="647"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="659"/>
         <source>Loading...</source>
         <translation>Laster...</translation>
     </message>
     <message id="settingsPage.refreshStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="653"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="665"/>
         <source>Refresh statistics</source>
         <translation>Oppdater statistikk</translation>
     </message>
     <message id="settingsPage.aboutServer">
-        <location filename="../qml/pages/SettingsPage.qml" line="664"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="676"/>
         <source>About Server</source>
         <translation>Om server</translation>
     </message>
     <message id="settingsPage.aboutServerNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="672"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="684"/>
         <source>Server version info is not available at the moment.</source>
         <translation>Informasjon om serverversjon er ikke tilgjengelig for øyeblikket.</translation>
     </message>
     <message id="settingsPage.serverVersion">
-        <location filename="../qml/pages/SettingsPage.qml" line="693"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="705"/>
         <source>Server version</source>
         <translation>Server-versjon</translation>
     </message>
     <message id="settingsPage.serverVersionLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="695"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="707"/>
         <source>Loading...</source>
         <translation>Laster...</translation>
     </message>
     <message id="settingsPage.aboutApplication">
-        <location filename="../qml/pages/SettingsPage.qml" line="701"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="713"/>
         <source>About Application</source>
         <translation>Om applikasjon</translation>
     </message>
     <message id="settingsPage.version">
-        <location filename="../qml/pages/SettingsPage.qml" line="706"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="718"/>
         <source>Version</source>
         <translation>Versjon</translation>
     </message>
     <message id="settingsPage.loadedAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="712"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="724"/>
         <source>Loaded assets</source>
         <translation>Lastede mediefiler</translation>
     </message>
     <message id="settingsPage.viewLogs">
-        <location filename="../qml/pages/SettingsPage.qml" line="719"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="731"/>
         <source>View application logs</source>
         <translation>Vis applikasjonslogger</translation>
     </message>
     <message id="settingsPage.applicationInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="731"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="743"/>
         <source>Harbour Immich - A native Immich client for Sailfish OS</source>
         <translation>Harbour Immich – En Immich-klient for Sailfish OS</translation>
     </message>
@@ -2297,21 +2297,6 @@
         <source>%1 items</source>
         <translation>%1 objekter</translation>
     </message>
-    <message id="timelineFilterBar.taken">
-        <location filename="../qml/components/TimelineFilterBar.qml" line="32"/>
-        <source>Taken</source>
-        <translation>Tatt</translation>
-    </message>
-    <message id="timelineFilterBar.created">
-        <location filename="../qml/components/TimelineFilterBar.qml" line="34"/>
-        <source>Created</source>
-        <translation>Opprettet</translation>
-    </message>
-    <message id="timelineFilterBar.favorites">
-        <location filename="../qml/components/TimelineFilterBar.qml" line="103"/>
-        <source>Favorites</source>
-        <translation>Favoritter</translation>
-    </message>
     <message id="folderPickerPage.accept">
         <location filename="../qml/pages/FolderPickerPage.qml" line="92"/>
         <source>Backup Folders</source>
@@ -2505,7 +2490,7 @@
     </message>
     <message id="pullDownMenu.albums">
         <location filename="../qml/pages/LibraryPage.qml" line="26"/>
-        <location filename="../qml/pages/SearchPage.qml" line="184"/>
+        <location filename="../qml/pages/SearchPage.qml" line="169"/>
         <location filename="../qml/pages/SettingsPage.qml" line="71"/>
         <location filename="../qml/pages/TimelinePage.qml" line="119"/>
         <source>Albums</source>
@@ -2831,107 +2816,147 @@
         <source>No places found</source>
         <translation>Ingen steder funnet</translation>
     </message>
+    <message id="pullDownMenu.hideHidden">
+        <location filename="../qml/pages/PeoplePage.qml" line="43"/>
+        <source>Hide hidden people</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pullDownMenu.showHidden">
+        <location filename="../qml/pages/PeoplePage.qml" line="45"/>
+        <source>Show hidden people</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="peoplePage.people">
-        <location filename="../qml/pages/PeoplePage.qml" line="55"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="59"/>
         <source>People</source>
         <translation>Personer</translation>
     </message>
     <message id="peoplePage.filter">
-        <location filename="../qml/pages/PeoplePage.qml" line="62"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="65"/>
         <source>Filter by name...</source>
         <translation>Filtrer etter navn...</translation>
     </message>
+    <message id="filterBar.name">
+        <location filename="../qml/pages/PeoplePage.qml" line="78"/>
+        <source>Name</source>
+        <translation type="unfinished">Navn</translation>
+    </message>
+    <message id="filterBar.updated">
+        <location filename="../qml/pages/PeoplePage.qml" line="80"/>
+        <source>Updated</source>
+        <translation type="unfinished">Oppdatert</translation>
+    </message>
     <message id="peoplePage.unknown">
-        <location filename="../qml/pages/PeoplePage.qml" line="163"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="177"/>
         <source>Unknown</source>
         <translation>Ukjent</translation>
     </message>
-    <message id="peoplePage.showLess">
-        <location filename="../qml/pages/PeoplePage.qml" line="189"/>
-        <source>Show less</source>
-        <translation>Vis mindre</translation>
+    <message id="peoplePage.removeFromFavorites">
+        <location filename="../qml/pages/PeoplePage.qml" line="204"/>
+        <source>Remove from favorites</source>
+        <translation type="unfinished"></translation>
     </message>
-    <message id="peoplePage.showMore">
-        <location filename="../qml/pages/PeoplePage.qml" line="191"/>
-        <source>Show more (%1 more)</source>
-        <translation>Vis mer (%1 mer)</translation>
+    <message id="peoplePage.addToFavorites">
+        <location filename="../qml/pages/PeoplePage.qml" line="206"/>
+        <source>Add to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="peoplePage.unhidePerson">
+        <location filename="../qml/pages/PeoplePage.qml" line="213"/>
+        <source>Show person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="peoplePage.hidePerson">
+        <location filename="../qml/pages/PeoplePage.qml" line="215"/>
+        <source>Hide person</source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="peoplePage.loading">
-        <location filename="../qml/pages/PeoplePage.qml" line="212"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="229"/>
         <source>Loading people...</source>
         <translation>Laster personer...</translation>
     </message>
     <message id="peoplePage.noPeople">
-        <location filename="../qml/pages/PeoplePage.qml" line="221"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="237"/>
         <source>No people found</source>
         <translation>Ingen personer funnet</translation>
     </message>
     <message id="editPersonDialog.title">
-        <location filename="../qml/components/EditPersonDialog.qml" line="19"/>
+        <location filename="../qml/components/EditPersonDialog.qml" line="23"/>
         <source>Edit Person</source>
         <translation>Rediger person</translation>
     </message>
     <message id="editPersonDialog.name">
-        <location filename="../qml/components/EditPersonDialog.qml" line="27"/>
-        <location filename="../qml/components/EditPersonDialog.qml" line="29"/>
+        <location filename="../qml/components/EditPersonDialog.qml" line="31"/>
+        <location filename="../qml/components/EditPersonDialog.qml" line="33"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
     <message id="editPersonDialog.birthday">
-        <location filename="../qml/components/EditPersonDialog.qml" line="38"/>
+        <location filename="../qml/components/EditPersonDialog.qml" line="42"/>
         <source>Birthday</source>
         <translation>Bursdag</translation>
     </message>
     <message id="editPersonDialog.noBirthday">
-        <location filename="../qml/components/EditPersonDialog.qml" line="40"/>
+        <location filename="../qml/components/EditPersonDialog.qml" line="44"/>
         <source>No birthday</source>
         <translation>Ingen bursdag</translation>
     </message>
     <message id="notification.birthdayInFuture">
-        <location filename="../qml/components/EditPersonDialog.qml" line="55"/>
+        <location filename="../qml/components/EditPersonDialog.qml" line="59"/>
         <source>Future date is not allowed for birthday</source>
         <translation>Fremtidig dato er ikke tillatt for fødselsdato</translation>
     </message>
     <message id="editPersonDialog.clearBirthday">
-        <location filename="../qml/components/EditPersonDialog.qml" line="65"/>
+        <location filename="../qml/components/EditPersonDialog.qml" line="69"/>
         <source>Clear birthday</source>
         <translation>Fjern bursdag</translation>
     </message>
+    <message id="editPersonDialog.favorite">
+        <location filename="../qml/components/EditPersonDialog.qml" line="76"/>
+        <source>Favorite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="editPersonDialog.hidden">
+        <location filename="../qml/components/EditPersonDialog.qml" line="83"/>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="pullDownMenu.editPerson">
-        <location filename="../qml/pages/PersonDetailPage.qml" line="81"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="83"/>
         <source>Edit person</source>
         <translation>Rediger person</translation>
     </message>
     <message id="personDetailPage.unknown">
-        <location filename="../qml/pages/PersonDetailPage.qml" line="119"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="155"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="149"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="185"/>
         <source>Unknown</source>
         <translation>Ukjent</translation>
     </message>
     <message id="personDetailPage.asset">
-        <location filename="../qml/pages/PersonDetailPage.qml" line="139"/>
-        <location filename="../qml/pages/PersonDetailPage.qml" line="171"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="169"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="201"/>
         <source>1 asset</source>
         <translation>1 mediefil</translation>
     </message>
     <message id="personDetailPage.assets">
-        <location filename="../qml/pages/PersonDetailPage.qml" line="141"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="171"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="201"/>
         <source>%1 assets</source>
         <translation>%1 mediefiler</translation>
     </message>
     <message id="personDetailPage.loading">
-        <location filename="../qml/pages/PersonDetailPage.qml" line="240"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="270"/>
         <source>Loading assets...</source>
         <translation>Laster mediefiler…</translation>
     </message>
     <message id="personDetailPage.noAssets">
-        <location filename="../qml/pages/PersonDetailPage.qml" line="255"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="285"/>
         <source>No assets</source>
         <translation>Ingen mediefiler</translation>
     </message>
     <message id="notification.personUpdated">
-        <location filename="../qml/pages/PersonDetailPage.qml" line="357"/>
+        <location filename="../qml/pages/PersonDetailPage.qml" line="387"/>
         <source>Person updated</source>
         <translation>Person oppdatert</translation>
     </message>
@@ -2939,6 +2964,21 @@
         <location filename="../qml/components/VideoPlayer.qml" line="248"/>
         <source>Failed to load video</source>
         <translation>Feil ved lasting av video</translation>
+    </message>
+    <message id="filterBar.taken">
+        <location filename="../qml/components/FilterBar.qml" line="11"/>
+        <source>Taken</source>
+        <translation>Tatt</translation>
+    </message>
+    <message id="filterBar.created">
+        <location filename="../qml/components/FilterBar.qml" line="13"/>
+        <source>Created</source>
+        <translation>Opprettet</translation>
+    </message>
+    <message id="filterBar.favorites">
+        <location filename="../qml/components/FilterBar.qml" line="103"/>
+        <source>Favorites</source>
+        <translation>Favoritter</translation>
     </message>
 </context>
 </TS>
