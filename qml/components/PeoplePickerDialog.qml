@@ -1,304 +1,217 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtGraphicalEffects 1.0
-import "FilterHelper.js" as FilterHelper
+import harbour.immich.models 1.0
 
 Dialog {
-   id: peoplePickerDialog
+    id: peoplePickerDialog
 
-   //% "Select People"
-   property string title: qsTrId("peoplePickerDialog.selectPeople")
-   property var model: []  // Array of {personId, name, thumbnailId}
-   property var selectedPeople: []  // Array of personIds
+    //% "Select People"
+    property string title: qsTrId("peoplePickerDialog.selectPeople")
+    property var model: []  // Array of {personId, name, thumbnailId}
+    property var selectedPeople: []  // Array of personIds
 
-   // Filter text
-   property string filterText: ""
+    // Internal selection state
+    property var selectedSet: {
+        var set = {}
+        for (var i = 0; i < selectedPeople.length; i++) {
+            set[selectedPeople[i]] = true
+        }
+        return set
+    }
 
-   // Pagination
-   property int initialLimit: 12 // Show first 12 items initially
-   property bool expanded: false
+    canAccept: true
 
-   // Filtered model
-   property var filteredModel: FilterHelper.filterByField(model, filterText, "name")
+    PeopleModel {
+        id: peopleModel
+    }
 
-   // Internal selection state
-   property var selectedSet: {
-       var set = {}
-       for (var i = 0; i < selectedPeople.length; i++) {
-           set[selectedPeople[i]] = true
-       }
-       return set
-   }
+    onModelChanged: peopleModel.loadPeople(model)
+    Component.onCompleted: peopleModel.loadPeople(model)
 
-   signal requestViewportCheck()
+    SilicaGridView {
+        id: peopleGrid
+        anchors.fill: parent
+        clip: true
+        currentIndex: -1
+        cellWidth: width / 3
+        cellHeight: cellWidth + Theme.fontSizeExtraSmall + Theme.paddingMedium
+        cacheBuffer: Math.round(cellHeight * 3)
 
-   Timer {
-       id: viewportCheckTimer
-       interval: 50
-       onTriggered: peoplePickerDialog.requestViewportCheck()
-   }
+        model: peopleModel
 
-   canAccept: true
+        header: Column {
+            id: headerColumn
+            width: peopleGrid.width
 
-   Component.onCompleted: viewportCheckTimer.restart()
+            DialogHeader {
+                title: peoplePickerDialog.title
+                //% "Done"
+                acceptText: qsTrId("peoplePickerDialog.done")
+                //% "Cancel"
+                cancelText: qsTrId("peoplePickerDialog.cancel")
+            }
 
-   onAccepted: {
-       // selectedPeople is already updated during interaction
-   }
+            // Filter input field
+            SearchField {
+                width: parent.width
+                //% "Filter by name..."
+                placeholderText: qsTrId("peoplePickerDialog.filterName")
+                onTextChanged: peopleModel.filterText = text
+                EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                EnterKey.onClicked: focus = false
+            }
 
-   SilicaFlickable {
-       id: flickable
-       anchors.fill: parent
-       contentHeight: column.height
+            // Selection info with clear button
+            Row {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                spacing: Theme.paddingMedium
 
-       Column {
-           id: column
-           width: parent.width
+                Label {
+                    text: selectedPeople.length > 0
+                        //% "%1 selected"
+                        ? qsTrId("peoplePickerDialog.selected").arg(selectedPeople.length)
+                        //% "Tap to select people"
+                        : qsTrId("peoplePickerDialog.tapToSelect")
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.secondaryColor
+                }
 
-           DialogHeader {
-               title: peoplePickerDialog.title
-               //% "Done"
-               acceptText: qsTrId("peoplePickerDialog.done")
-               //% "Cancel"
-               cancelText: qsTrId("peoplePickerDialog.cancel")
-           }
+                Label {
+                    text: "·"
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.secondaryColor
+                    visible: selectedPeople.length > 0
+                }
 
-           // Filter input field
-           SearchField {
-               id: filterField
-               width: parent.width
-               //% "Filter by name..."
-               placeholderText: qsTrId("peoplePickerDialog.filterName")
+                Label {
+                    //% "Clear selection"
+                    text: qsTrId("peoplePickerDialog.clear")
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.highlightColor
+                    visible: selectedPeople.length > 0
 
-               onTextChanged: {
-                   peoplePickerDialog.filterText = text
-                   viewportCheckTimer.restart()
-               }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: selectedPeople = []
+                    }
+                }
+            }
 
-               EnterKey.iconSource: "image://theme/icon-m-enter-close"
-               EnterKey.onClicked: focus = false
-           }
+            Item {
+                width: 1
+                height: Theme.paddingMedium
+            }
+        }
 
-           // Selection info with clear button
-           Row {
-               x: Theme.horizontalPageMargin
-               width: parent.width - 2 * Theme.horizontalPageMargin
-               spacing: Theme.paddingMedium
+        delegate: BackgroundItem {
+            id: personDelegate
+            width: peopleGrid.cellWidth
+            height: peopleGrid.cellHeight
 
-               Label {
-                   text: selectedPeople.length > 0
-                       //% "%1 selected"
-                       ? qsTrId("peoplePickerDialog.selected").arg(selectedPeople.length)
-                       //% "Tap to select people"
-                       : qsTrId("peoplePickerDialog.tapToSelect")
-                   font.pixelSize: Theme.fontSizeExtraSmall
-                   color: Theme.secondaryColor
-               }
+            property bool isSelected: peoplePickerDialog.selectedSet[model.personId] === true
+            property real thumbnailSize: peopleGrid.cellWidth - Theme.paddingMedium
 
-               Label {
-                   text: "·"
-                   font.pixelSize: Theme.fontSizeExtraSmall
-                   color: Theme.secondaryColor
-                   visible: selectedPeople.length > 0
-               }
+            Column {
+                anchors.top: parent.top
+                anchors.topMargin: Theme.paddingSmall / 2
+                width: parent.width
+                spacing: Theme.paddingSmall / 2
 
-               Label {
-                   //% "Clear selection"
-                   text: qsTrId("peoplePickerDialog.clear")
-                   font.pixelSize: Theme.fontSizeExtraSmall
-                   color: Theme.highlightColor
-                   visible: selectedPeople.length > 0
+                Rectangle {
+                    width: personDelegate.thumbnailSize
+                    height: personDelegate.thumbnailSize
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "transparent"
+                    border.width: isSelected ? 3 : 1
+                    border.color: isSelected ? Theme.highlightColor : Theme.secondaryColor
+                    radius: width / 2
 
-                   MouseArea {
-                       anchors.fill: parent
-                       onClicked: selectedPeople = []
-                   }
-               }
-           }
+                    Image {
+                        id: personImage
+                        anchors.fill: parent
+                        anchors.margins: 2
+                        source: model.thumbnailId ? "image://immich/person/" + model.thumbnailId : ""
+                        fillMode: Image.PreserveAspectCrop
+                        asynchronous: true
+                        sourceSize.width: personDelegate.thumbnailSize
+                        sourceSize.height: personDelegate.thumbnailSize
+                        layer.enabled: true
+                        layer.effect: OpacityMask {
+                            maskSource: Item {
+                                width: personImage.width
+                                height: personImage.height
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: width / 2
+                                }
+                            }
+                        }
+                    }
 
-           Item { width: 1; height: Theme.paddingMedium }
+                    // Fallback when no thumbnail
+                    Label {
+                        anchors.centerIn: parent
+                        text: (model.name || "?").charAt(0).toUpperCase()
+                        font.pixelSize: Theme.fontSizeLarge
+                        color: Theme.secondaryColor
+                        visible: !model.thumbnailId
+                    }
 
-           // Grid of people
-           Flow {
-               id: peopleGrid
-               width: parent.width - 2 * Theme.horizontalPageMargin
-               x: Theme.horizontalPageMargin
-               spacing: Theme.paddingSmall
+                    // Selection checkmark
+                    Rectangle {
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        anchors.margins: 2
+                        width: Theme.iconSizeSmall
+                        height: Theme.iconSizeSmall
+                        radius: width / 2
+                        color: Theme.highlightColor
+                        visible: isSelected
 
-               property int itemSize: Theme.itemSizeMedium
+                        Image {
+                            anchors.centerIn: parent
+                            source: "image://theme/icon-s-installed"
+                            width: Theme.iconSizeSmall * 0.7
+                            height: width
+                        }
+                    }
+                }
 
-               Repeater {
-                   id: peopleRepeater
+                Label {
+                    width: parent.width
+                    //% "Unknown"
+                    text: model.name || qsTrId("peoplePickerDialog.unknown")
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    truncationMode: TruncationMode.Fade
+                    horizontalAlignment: Text.AlignHCenter
+                    color: isSelected ? Theme.highlightColor : Theme.primaryColor
+                }
+            }
 
-                   // Limit to initialLimit unless expanded
-                   property int maxVisible: expanded ? filteredModel.length : Math.min(initialLimit, filteredModel.length)
+            onClicked: {
+                var personId = model.personId
+                var idx = selectedPeople.indexOf(personId)
+                var newSelection = selectedPeople.slice() // copy
+                if (idx > -1) {
+                    newSelection.splice(idx, 1)
+                } else {
+                    newSelection.push(personId)
+                }
+                selectedPeople = newSelection
+            }
+        }
 
-                   model: peoplePickerDialog.filteredModel
+        EmptyState {
+            visible: peopleModel.count === 0
+            message: peopleModel.totalCount === 0
+                //% "No people available"
+                ? qsTrId("peoplePickerDialog.noPeople")
+                //% "No matches found"
+                : qsTrId("peoplePickerDialog.noMatches")
+        }
 
-                   BackgroundItem {
-                       id: personDelegate
-                       width: peopleGrid.itemSize
-                       height: peopleGrid.itemSize + Theme.paddingMedium + Theme.fontSizeTiny
-
-                       property bool isSelected: peoplePickerDialog.selectedSet[modelData.personId] === true
-                       property bool thumbnailTriggered: false
-
-                       function checkViewport() {
-                           if (thumbnailTriggered || !visible) return
-                           var mapped = mapToItem(flickable.contentItem, 0, 0)
-                           var itemY = mapped.y
-                           if (itemY + height > flickable.contentY - height && itemY < flickable.contentY + flickable.height + height) {
-                               thumbnailTriggered = true
-                           }
-                       }
-
-                       Connections {
-                           target: flickable
-                           onContentYChanged: personDelegate.checkViewport()
-                       }
-
-                       Connections {
-                           target: peoplePickerDialog
-                           onRequestViewportCheck: personDelegate.checkViewport()
-                       }
-
-                       onVisibleChanged: if (visible) checkViewport()
-
-                       Column {
-                           anchors.fill: parent
-                           spacing: Theme.paddingSmall / 2
-
-                           Rectangle {
-                               width: peopleGrid.itemSize
-                               height: peopleGrid.itemSize
-                               color: "transparent"
-                               border.width: isSelected ? 3 : 1
-                               border.color: isSelected ? Theme.highlightColor : Theme.secondaryColor
-                               radius: width / 2
-
-                               Image {
-                                   id: personImage
-                                   anchors.fill: parent
-                                   anchors.margins: 2
-                                   source: personDelegate.thumbnailTriggered && modelData.thumbnailId ? "image://immich/person/" + modelData.thumbnailId : ""
-                                   fillMode: Image.PreserveAspectCrop
-                                   asynchronous: true
-                                   layer.enabled: true
-                                   layer.effect: OpacityMask {
-                                       maskSource: Item {
-                                           width: personImage.width
-                                           height: personImage.height
-                                           Rectangle {
-                                               anchors.fill: parent
-                                               radius: width / 2
-                                           }
-                                       }
-                                   }
-                               }
-
-                               // Fallback when no thumbnail
-                               Label {
-                                   anchors.centerIn: parent
-                                   text: (modelData.name || "?").charAt(0).toUpperCase()
-                                   font.pixelSize: Theme.fontSizeLarge
-                                   color: Theme.secondaryColor
-                                   visible: !modelData.thumbnailId
-                               }
-
-                               // Selection checkmark
-                               Rectangle {
-                                   anchors.right: parent.right
-                                   anchors.bottom: parent.bottom
-                                   anchors.margins: 2
-                                   width: Theme.iconSizeSmall
-                                   height: Theme.iconSizeSmall
-                                   radius: width / 2
-                                   color: Theme.highlightColor
-                                   visible: isSelected
-
-                                   Image {
-                                       anchors.centerIn: parent
-                                       source: "image://theme/icon-s-installed"
-                                       width: Theme.iconSizeSmall * 0.7
-                                       height: width
-                                   }
-                               }
-                           }
-
-                           Label {
-                               width: peopleGrid.itemSize
-                               //% "Unknown"
-                               text: modelData.name || qsTrId("peoplePickerDialog.unknown")
-                               font.pixelSize: Theme.fontSizeTiny
-                               truncationMode: TruncationMode.Fade
-                               horizontalAlignment: Text.AlignHCenter
-                               color: isSelected ? Theme.highlightColor : Theme.primaryColor
-                           }
-                       }
-
-                       visible: index < peopleRepeater.maxVisible
-
-                       onClicked: {
-                           var personId = modelData.personId
-                           var idx = selectedPeople.indexOf(personId)
-                           var newSelection = selectedPeople.slice() // copy
-                           if (idx > -1) {
-                               newSelection.splice(idx, 1)
-                           } else {
-                               newSelection.push(personId)
-                           }
-                           selectedPeople = newSelection
-                       }
-                   }
-               }
-           }
-
-           // Show more / Show less button
-           BackgroundItem {
-               width: parent.width
-               height: Theme.itemSizeExtraSmall
-               visible: filteredModel.length > initialLimit
-
-               Label {
-                   anchors.centerIn: parent
-                   text: expanded
-                        //% "Show less"
-                        ? qsTrId("peoplePickerDialog.showLess")
-                        //% "Show more (%1 more)"
-                        : qsTrId("peoplePickerDialog.showMore").arg(filteredModel.length - initialLimit)
-                   color: Theme.highlightColor
-                   font.pixelSize: Theme.fontSizeSmall
-               }
-
-               onClicked: {
-                   expanded = !expanded
-                   viewportCheckTimer.restart()
-               }
-           }
-
-           // Empty state when no people or search results
-           Label {
-               x: Theme.horizontalPageMargin
-               width: parent.width - 2 * Theme.horizontalPageMargin
-               text: model.length === 0
-                    //% "No people available"
-                    ? qsTrId("peoplePickerDialog.noPeople")
-                    //% "No matches found"
-                    : qsTrId("peoplePickerDialog.noMatches")
-               color: Theme.secondaryHighlightColor
-               font.pixelSize: Theme.fontSizeMedium
-               horizontalAlignment: Text.AlignHCenter
-               visible: model.length === 0 || (filterText.length > 0 && filteredModel.length === 0)
-               height: visible ? implicitHeight + Theme.paddingLarge * 2 : 0
-               verticalAlignment: Text.AlignVCenter
-           }
-
-           Item {
-               width: parent.width
-               height: Theme.paddingLarge
-           }
-       }
-
-       VerticalScrollDecorator {}
-   }
+        VerticalScrollDecorator {}
+    }
 }

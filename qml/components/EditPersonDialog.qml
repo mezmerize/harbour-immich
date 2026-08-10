@@ -6,10 +6,14 @@ Dialog {
 
     property string personName
     property string personBirthDate
+    property bool personIsFavorite
+    property bool personIsHidden
     property string newName: nameField.text
     property string newBirthday: personBirthDate
+    property bool newFavorite: favoriteSwitch.checked
+    property bool newHidden: hiddenSwitch.checked
 
-    canAccept: newName.length > 0 && (newName !== personName || newBirthday !== personBirthDate)
+    canAccept: newName.length > 0 && (newName !== personName || newBirthday !== personBirthDate || newFavorite !== personIsFavorite || newHidden !== personIsHidden)
 
     Column {
         width: parent.width
@@ -27,8 +31,8 @@ Dialog {
             placeholderText: qsTrId("editPersonDialog.name")
             //% "Name"
             label: qsTrId("editPersonDialog.name")
-            EnterKey.iconSource: "image://theme/icon-m-enter-accept"
-            EnterKey.onClicked: accept()
+            EnterKey.iconSource: "image://theme/icon-m-enter-next"
+            EnterKey.onClicked: favoriteSwitch.focus = true
             onTextChanged: newName = text
         }
 
@@ -64,6 +68,20 @@ Dialog {
             //% "Clear birthday"
             text: qsTrId("editPersonDialog.clearBirthday")
             onClicked: newBirthday = ""
+        }
+
+        TextSwitch {
+            id: favoriteSwitch
+            //% "Favorite"
+            text: qsTrId("editPersonDialog.favorite")
+            checked: editPersonDialog.personIsFavorite
+        }
+
+        TextSwitch {
+            id: hiddenSwitch
+            //% "Hidden"
+            text: qsTrId("editPersonDialog.hidden")
+            checked: editPersonDialog.personIsHidden
         }
     }
 

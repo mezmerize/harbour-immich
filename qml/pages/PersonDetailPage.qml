@@ -11,6 +11,8 @@ Page {
     property string personName
     property string personBirthDate
     property string thumbnailPath
+    property bool personIsFavorite: false
+    property bool personIsHidden: false
 
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
     property real cellSize: width / assetsPerRow
@@ -82,12 +84,16 @@ Page {
                 onClicked: {
                     var dialog = pageStack.push(Qt.resolvedUrl("../components/EditPersonDialog.qml"), {
                         personName: personName,
-                        personBirthDate: personBirthDate
+                        personBirthDate: personBirthDate,
+                        personIsFavorite: personIsFavorite,
+                        personIsHidden: personIsHidden
                     })
                     dialog.accepted.connect(function() {
                         personName = dialog.newName
                         personBirthDate = dialog.newBirthday
-                        immichApi.updatePerson(personId, personName, personBirthDate)
+                        personIsFavorite = dialog.newFavorite
+                        personIsHidden = dialog.newHidden
+                        immichApi.updatePerson(personId, { "name": personName, "isFavorite": personIsFavorite, "isHidden": personIsHidden })
                     })
                 }
             }
@@ -103,6 +109,30 @@ Page {
                 assetIds: heroAssetIds
                 active: page.status === PageStatus.Active && heroAssetIds.length > 0
                 visible: heroAssetIds.length > 0
+
+                Row {
+                    anchors {
+                        top: parent.top
+                        right: parent.right
+                        topMargin: Theme.paddingLarge
+                        rightMargin: Theme.horizontalPageMargin
+                    }
+                    spacing: Theme.paddingMedium
+
+                    Icon {
+                        width: Theme.iconSizeMedium
+                        height: Theme.iconSizeMedium
+                        source: "image://theme/icon-m-incognito"
+                        visible: page.personIsHidden
+                    }
+
+                    Icon {
+                        width: Theme.iconSizeMedium
+                        height: Theme.iconSizeMedium
+                        source: "image://theme/icon-m-favorite-selected"
+                        visible: page.personIsFavorite
+                    }
+                }
 
                 Column {
                     anchors.left: parent.left
@@ -174,7 +204,7 @@ Page {
                 }
             }
 
-            TimelineFilterBar {
+            FilterBar {
                 activeFilter: page.activeFilter
                 sortOrder: page.sortOrder
                 showFavorites: page.showFavorites
