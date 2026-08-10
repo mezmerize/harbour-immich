@@ -23,6 +23,7 @@ class SettingsManager : public QObject
     Q_PROPERTY(int backupScanInterval READ backupScanInterval WRITE setBackupScanInterval NOTIFY backupScanIntervalChanged)
     Q_PROPERTY(bool backupAutoDisable READ backupAutoDisable WRITE setBackupAutoDisable NOTIFY backupAutoDisableChanged)
     Q_PROPERTY(bool backupSkipVerification READ backupSkipVerification WRITE setBackupSkipVerification NOTIFY backupSkipVerificationChanged)
+    Q_PROPERTY(bool backupShowStatusIcon READ backupShowStatusIcon WRITE setBackupShowStatusIcon NOTIFY backupShowStatusIconChanged)
     Q_PROPERTY(bool coverShowAssets READ coverShowAssets WRITE setCoverShowAssets NOTIFY coverShowAssetsChanged)
     Q_PROPERTY(bool coverSlideshow READ coverSlideshow WRITE setCoverSlideshow NOTIFY coverSlideshowChanged)
     Q_PROPERTY(QString downloadFolder READ downloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged)
@@ -79,6 +80,9 @@ public:
     bool backupSkipVerification() const;
     void setBackupSkipVerification(bool skip);
 
+    bool backupShowStatusIcon() const;
+    void setBackupShowStatusIcon(bool show);
+
     QString backupServerUrl() const;
     void setBackupServerUrl(const QString &url);
 
@@ -116,6 +120,7 @@ signals:
     void backupScanIntervalChanged();
     void backupAutoDisableChanged();
     void backupSkipVerificationChanged();
+    void backupShowStatusIconChanged();
     void coverShowAssetsChanged();
     void coverSlideshowChanged();
     void downloadFolderChanged();

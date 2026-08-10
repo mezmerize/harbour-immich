@@ -167,7 +167,7 @@ BackgroundItem {
         width: Theme.iconSizeSmallPlus
         height: Theme.iconSizeSmallPlus
         source: "image://theme/icon-m-cloud-download"
-        visible: item.currentBackupState
+        visible: item.currentBackupState && settingsManager.backupEnabled && settingsManager.backupShowStatusIcon
     }
 
     // Highlight overlay for scroll-to-asset

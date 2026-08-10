@@ -227,6 +227,19 @@ void SettingsManager::setBackupSkipVerification(bool skip)
     }
 }
 
+bool SettingsManager::backupShowStatusIcon() const
+{
+    return m_settings.value("backup/showStatusIcon", true).toBool();
+}
+
+void SettingsManager::setBackupShowStatusIcon(bool show)
+{
+    if (backupShowStatusIcon() != show) {
+        m_settings.setValue("backup/showStatusIcon", show);
+        emit backupShowStatusIconChanged();
+    }
+}
+
 QString SettingsManager::backupServerUrl() const
 {
     return m_settings.value("backup/serverUrl", "").toString();

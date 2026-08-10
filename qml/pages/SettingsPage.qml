@@ -449,6 +449,18 @@ Page {
                }
            }
 
+           TextSwitch {
+               visible: settingsManager.backupEnabled
+               //% "Show asset backup status icon"
+               text: qsTrId("settingsPage.backupShowStatusIcon")
+               //% "Show an icon on the timeline for backed-up assets."
+               description: qsTrId("settingsPage.backupShowStatusIconInfo")
+               checked: settingsManager.backupShowStatusIcon
+               onCheckedChanged: {
+                   settingsManager.backupShowStatusIcon = checked
+               }
+           }
+
            // Backup interval
            ComboBox {
                visible: settingsManager.backupEnabled
