@@ -1166,6 +1166,82 @@ void ImmichApi::restoreAllTrash()
     });
 }
 
+void ImmichApi::fetchSharedLinks()
+{
+    qInfo() << "ImmichApi: Fetching shared links";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/shared-links"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this](const QByteArray &response) {
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QJsonArray links = doc.array();
+        qInfo() << "ImmichApi: Shared links received, count:" << links.size();
+        emit sharedLinksReceived(links);
+    });
+}
+
+void ImmichApi::fetchSharedLink(const QString &id)
+{
+    qInfo() << "ImmichApi: Fetching shared link" << id;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/shared-links/") + id);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this](const QByteArray &response) {
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QJsonObject link = doc.object();
+        qInfo() << "ImmichApi: Shared link received:" << link["id"].toString();
+        emit sharedLinkReceived(link);
+    });
+}
+
+void ImmichApi::deleteSharedLink(const QString &id)
+{
+    qInfo() << "ImmichApi: Deleting shared link:" << id;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/shared-links/") + id);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->deleteResource(request);
+    QString savedId = id;
+    connectReply(reply, [this, savedId](const QByteArray &) {
+        emit sharedLinkDeleted(savedId);
+    });
+}
+
+void ImmichApi::updateSharedLink(const QString &id, const QString &description, const QString &password, bool changePassword, const QString &expiresAt, bool allowDownload, bool allowUpload, bool showMetadata, const QString &slug)
+{
+    qInfo() << "ImmichApi: Updating shared link:" << id;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/shared-links/") + id);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    json["description"] = description;
+    json["allowDownload"] = allowDownload;
+    json["allowUpload"] = allowUpload;
+    json["showMetadata"] = showMetadata;
+    if (changePassword) {
+        if (!password.isEmpty()) {
+            json["password"] = password;
+        } else {
+            json["password"] = QJsonValue::Null;
+        }
+    }
+    if (!expiresAt.isEmpty()) {
+        json["expiresAt"] = expiresAt;
+    } else {
+        json["expiresAt"] = QJsonValue::Null;
+    }
+    if (!slug.isEmpty()) {
+        json["slug"] = slug;
+    }
+
+    QBuffer *buffer = createJsonBuffer(json);
+    QNetworkReply *reply = m_networkManager->sendCustomRequest(request, "PATCH", buffer);
+    buffer->setParent(reply);
+    QString savedId = id;
+    connectReply(reply, [this, savedId](const QByteArray &) {
+        emit sharedLinkUpdated(savedId);
+    });
+}
+
 void ImmichApi::updatePerson(const QString &personId, const QVariantMap &fields)
 {
     qInfo() << "ImmichApi: Updating person:" << personId << "fields:" << fields.keys();
@@ -1236,6 +1312,66 @@ void ImmichApi::fetchServerFolders(const QString &path)
             items.append(doc.object());
         }
         emit serverFoldersReceived(savedPath, items);
+    });
+}
+
+void ImmichApi::fetchPartners(const QString &direction)
+{
+    qInfo() << "ImmichApi: Fetching partners, direction:" << direction;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/partners"));
+    QUrlQuery query;
+    query.addQueryItem(QStringLiteral("direction"), direction);
+    url.setQuery(query);
+
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    QString savedDirection = direction;
+    connectReply(reply, [this, savedDirection](const QByteArray &response) {
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QJsonArray partners = doc.array();
+        qInfo() << "ImmichApi: Partners received, direction:" << savedDirection << "count:" << partners.size();
+        emit partnersReceived(savedDirection, partners);
+    });
+}
+
+void ImmichApi::createPartner(const QString &userId)
+{
+    qInfo() << "ImmichApi: Creating partner:" << userId;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/partners/") + userId);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->post(request, QByteArray());
+    QString savedId = userId;
+    connectReply(reply, [this, savedId](const QByteArray &) {
+        emit partnerCreated(savedId);
+    });
+}
+
+void ImmichApi::removePartner(const QString &userId)
+{
+    qInfo() << "ImmichApi: Removing partner:" << userId;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/partners/") + userId);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->deleteResource(request);
+    QString savedId = userId;
+    connectReply(reply, [this, savedId](const QByteArray &) {
+        emit partnerRemoved(savedId);
+    });
+}
+
+void ImmichApi::updatePartner(const QString &userId, bool inTimeline)
+{
+    qInfo() << "ImmichApi: Updating partner:" << userId << "inTimeline:" << inTimeline;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/partners/") + userId);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    json["inTimeline"] = inTimeline;
+    QJsonDocument doc(json);
+
+    QNetworkReply *reply = m_networkManager->put(request, doc.toJson());
+    QString savedId = userId;
+    connectReply(reply, [this, savedId](const QByteArray &) {
+        emit partnerUpdated(savedId);
     });
 }
 
