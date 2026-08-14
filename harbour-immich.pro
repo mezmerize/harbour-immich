@@ -119,6 +119,7 @@ CONFIG += sailfishapp_i18n sailfishapp_i18n_idbased
 
 TRANSLATIONS += translations/harbour-immich-cs.ts \
                 translations/harbour-immich-en.ts \
+                translations/harbour-immich-fr.ts \
                 translations/harbour-immich-it.ts \
                 translations/harbour-immich-nb_NO.ts
 
