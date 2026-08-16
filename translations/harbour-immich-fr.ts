@@ -583,7 +583,7 @@
     <message id="albumsPage.sortCreatedAt">
         <location filename="../qml/pages/AlbumsPage.qml" line="274"/>
         <source>Created date</source>
-        <translation>Date de création</translation>
+        <translation>Créé</translation>
     </message>
     <message id="albumsPage.sortEndDate">
         <location filename="../qml/pages/AlbumsPage.qml" line="264"/>
@@ -2937,7 +2937,7 @@
     <message id="filterBar.taken">
         <location filename="../qml/components/FilterBar.qml" line="11"/>
         <source>Taken</source>
-        <translation>Date de prise</translation>
+        <translation>Prise</translation>
     </message>
     <message id="filterBar.created">
         <location filename="../qml/components/FilterBar.qml" line="13"/>
