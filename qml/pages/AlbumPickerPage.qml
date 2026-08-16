@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../components"
 
 Dialog {
     id: albumPickerDialog
@@ -9,14 +10,14 @@ Dialog {
     property string newAlbumName: ""
     property bool createNew: false
     property string filterText: ""
-    property string activeAlbumFilter: "all"
+    property string activeFilter: "all"
     property int filteredCount: 0
     property var loadedAlbums: []
 
-    function applyAlbumFilter() {
-        if (activeAlbumFilter === "shared") {
+    function applyFilter() {
+        if (activeFilter === "shared") {
             immichApi.fetchAlbums("true")
-        } else if (activeAlbumFilter === "mine") {
+        } else if (activeFilter === "mine") {
             immichApi.fetchAlbums("false")
         } else {
             immichApi.fetchAlbums()
@@ -52,10 +53,9 @@ Dialog {
 
     Connections {
         target: immichApi
-        onAlbumCreated: {
-            immichApi.addAssetsToAlbum(albumId, assetIds)
-        }
+        onAlbumCreated: immichApi.addAssetsToAlbum(albumId, assetIds)
         onAlbumsReceived: {
+            if (albumPickerDialog.status !== PageStatus.Active) return
             albumPickerDialog.loadedAlbums = albums
             albumPickerDialog.updateFilteredCount()
             scrollToTopTimer.restart()
@@ -90,8 +90,9 @@ Dialog {
                 placeholderText: qsTrId("albumPickerPage.albumName")
                 //% "New album name"
                 label: qsTrId("albumPickerPage.newAlbumName")
+                text: albumPickerDialog.newAlbumName
                 onTextChanged: {
-                    albumPickerDialog.newAlbumName = text
+                    if (albumPickerDialog.newAlbumName !== text) albumPickerDialog.newAlbumName = text
                     if (text.length > 0) {
                         albumPickerDialog.createNew = true
                         albumPickerDialog.selectedAlbumId = ""
@@ -114,70 +115,14 @@ Dialog {
             }
 
             // Album type filter row
-            Item {
-                width: listView.width
-                height: Theme.itemSizeExtraSmall + Theme.paddingMedium
+            AlbumFilterBar {
                 visible: listView.count > 0
-
-                Row {
-                    id: albumFilterRow
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.leftMargin: Theme.horizontalPageMargin
-                    anchors.rightMargin: Theme.horizontalPageMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: Theme.paddingSmall
-
-                    Repeater {
-                        model: [
-                            //% "All"
-                            { id: "all", label: qsTrId("albumPickerPage.filterAll"), icon: "image://theme/icon-m-folder" },
-                            //% "Shared"
-                            { id: "shared", label: qsTrId("albumPickerPage.filterShared"), icon: "image://theme/icon-m-share" },
-                            //% "My albums"
-                            { id: "mine", label: qsTrId("albumPickerPage.filterMyAlbums"), icon: "image://theme/icon-m-person" }
-                        ]
-
-                        BackgroundItem {
-                            width: (albumFilterRow.width - 2 * Theme.paddingSmall) / 3
-                            height: Theme.itemSizeExtraSmall
-                            highlighted: albumPickerDialog.activeAlbumFilter === modelData.id
-
-                            Rectangle {
-                                anchors.fill: parent
-                                radius: Theme.paddingSmall
-                                color: albumPickerDialog.activeAlbumFilter === modelData.id ?Theme.rgba(Theme.highlightBackgroundColor, 0.4) : Theme.rgba(Theme.highlightBackgroundColor, 0.1)
-                                border.width: albumPickerDialog.activeAlbumFilter === modelData.id ? 1 : 0
-                                border.color: Theme.highlightColor
-                            }
-
-                            Row {
-                                anchors.centerIn: parent
-                                spacing: Theme.paddingSmall
-
-                                Icon {
-                                    source: modelData.icon
-                                    width: Theme.iconSizeSmall
-                                    height: Theme.iconSizeSmall
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    color: albumPickerDialog.activeAlbumFilter === modelData.id ? Theme.highlightColor : Theme.primaryColor
-                                }
-
-                                Label {
-                                    text: modelData.label
-                                    font.pixelSize: Theme.fontSizeExtraSmall
-                                    color: albumPickerDialog.activeAlbumFilter === modelData.id ? Theme.highlightColor : Theme.primaryColor
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            onClicked: {
-                                if (albumPickerDialog.activeAlbumFilter !== modelData.id) {
-                                    albumPickerDialog.activeAlbumFilter = modelData.id
-                                    albumPickerDialog.applyAlbumFilter()
-                                }
-                            }
-                        }
+                width: listView.width
+                activeFilter: albumPickerDialog.activeFilter
+                onFilterActivated: {
+                    if (albumPickerDialog.activeFilter !== filter) {
+                        albumPickerDialog.activeFilter = filter
+                        albumPickerDialog.applyFilter()
                     }
                 }
             }
@@ -188,11 +133,7 @@ Dialog {
                 //% "Filter albums..."
                 placeholderText: qsTrId("albumPickerPage.filter")
                 visible: listView.count > 5
-
-                onTextChanged: {
-                    albumPickerDialog.filterText = text.toLowerCase()
-                }
-
+                onTextChanged: albumPickerDialog.filterText = text.toLowerCase()
                 EnterKey.iconSource: "image://theme/icon-m-enter-close"
                 EnterKey.onClicked: focus = false
             }
@@ -261,7 +202,7 @@ Dialog {
             onClicked: {
                 albumPickerDialog.selectedAlbumId = albumId
                 albumPickerDialog.createNew = false
-                newAlbumField.text = ""
+                albumPickerDialog.newAlbumName = ""
             }
         }
 
@@ -287,5 +228,5 @@ Dialog {
         onTriggered: listView.positionViewAtBeginning()
     }
 
-    Component.onCompleted: applyAlbumFilter()
+    onStatusChanged: if (status === PageStatus.Active) applyFilter()
 }

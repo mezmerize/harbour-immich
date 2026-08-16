@@ -52,6 +52,7 @@ icons.path = $$PREFIX/share/$${TARGET}/icons
 INSTALLS += icons
 
 DISTFILES += qml/harbour-immich.qml \
+    qml/components/AlbumFilterBar.qml \
     qml/components/AssetGridItem.qml \
     qml/components/AssetGroupHelper.js \
     qml/components/EditPersonDialog.qml \
