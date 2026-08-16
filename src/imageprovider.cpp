@@ -5,6 +5,16 @@
 #include <QNetworkReply>
 #include <QDebug>
 #include <QThread>
+#include <QThreadStorage>
+
+static QNetworkAccessManager *sharedNetworkManager()
+{
+    static QThreadStorage<QNetworkAccessManager *> storage;
+    if (!storage.hasLocalData()) {
+        storage.setLocalData(new QNetworkAccessManager);
+    }
+    return storage.localData();
+}
 
 // Static member initialization
 QAtomicInt ImmichImageResponse::s_activeRequests(0);
@@ -85,7 +95,7 @@ void ImmichImageResponse::startRequest()
     m_networkActive = true;
     s_activeRequests.fetchAndAddAcquire(1);
 
-    m_networkManager = new QNetworkAccessManager(this);
+    m_networkManager = sharedNetworkManager();
 
     QNetworkRequest request(m_url);
     request.setRawHeader("Authorization", QString("Bearer %1").arg(m_authToken).toUtf8());
