@@ -117,12 +117,12 @@
     <message id="selectionActionBar.moveToArchive">
         <location filename="../qml/components/SelectionActionBar.qml" line="348"/>
         <source>Move to archive</source>
-        <translation>Déplacer à l&apos;archive</translation>
+        <translation>Déplacer dans l&apos;archive</translation>
     </message>
     <message id="selectionActionBar.moveToLockedFolder">
         <location filename="../qml/components/SelectionActionBar.qml" line="367"/>
         <source>Move to locked folder</source>
-        <translation>Déplacer au dossier verrouillé</translation>
+        <translation>Déplacer dans le dossier verrouillé</translation>
     </message>
     <message id="selectionActionBar.removeFromArchive">
         <location filename="../qml/components/SelectionActionBar.qml" line="424"/>
@@ -583,7 +583,7 @@
     <message id="albumsPage.sortCreatedAt">
         <location filename="../qml/pages/AlbumsPage.qml" line="274"/>
         <source>Created date</source>
-        <translation>Date créé</translation>
+        <translation>Date de création</translation>
     </message>
     <message id="albumsPage.sortEndDate">
         <location filename="../qml/pages/AlbumsPage.qml" line="264"/>
@@ -624,7 +624,7 @@
     <message id="albumsPage.sortStartDate">
         <location filename="../qml/pages/AlbumsPage.qml" line="266"/>
         <source>Oldest photo</source>
-        <translation>Plus vieux</translation>
+        <translation>Plus ancien</translation>
     </message>
     <message id="albumsPage.albums">
         <location filename="../qml/pages/AlbumsPage.qml" line="123"/>
@@ -1116,12 +1116,12 @@
     <message id="searchPage.stateLabel">
         <location filename="../qml/pages/SearchPage.qml" line="319"/>
         <source>State</source>
-        <translation>État</translation>
+        <translation>Localisation</translation>
     </message>
     <message id="searchPage.stateSelect">
         <location filename="../qml/pages/SearchPage.qml" line="324"/>
         <source>Select State</source>
-        <translation>Sélectionner l&apos;état</translation>
+        <translation>Sélectionner la localisation</translation>
     </message>
     <message id="searchPage.countryLabel">
         <location filename="../qml/pages/SearchPage.qml" line="340"/>
@@ -1251,7 +1251,7 @@
     <message id="searchPage.displayIncludeArchivedInfo">
         <location filename="../qml/pages/SearchPage.qml" line="529"/>
         <source>Include archived assets in results</source>
-        <translation>Inclure les éléments archivées dans les résultats</translation>
+        <translation>Inclure les éléments archivés dans les résultats</translation>
     </message>
     <message id="searchPage.displayFavoritesOnly">
         <location filename="../qml/pages/SearchPage.qml" line="535"/>
@@ -1393,12 +1393,12 @@
     <message id="settingsPage.memoriesThumbnailSizeSmall">
         <location filename="../qml/pages/SettingsPage.qml" line="153"/>
         <source>Small</source>
-        <translation>Petit</translation>
+        <translation>Petite</translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSizeMedium">
         <location filename="../qml/pages/SettingsPage.qml" line="155"/>
         <source>Medium</source>
-        <translation>Moyen</translation>
+        <translation>Moyenne</translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSizeLarge">
         <location filename="../qml/pages/SettingsPage.qml" line="157"/>
@@ -1418,17 +1418,17 @@
     <message id="settingsPage.scrollToTopPositionLeft">
         <location filename="../qml/pages/SettingsPage.qml" line="180"/>
         <source>Left</source>
-        <translation>Gauche</translation>
+        <translation>À gauche</translation>
     </message>
     <message id="settingsPage.scrollToTopPositionCenter">
         <location filename="../qml/pages/SettingsPage.qml" line="182"/>
         <source>Center</source>
-        <translation>Centre</translation>
+        <translation>Au centre</translation>
     </message>
     <message id="settingsPage.scrollToTopPositionRight">
         <location filename="../qml/pages/SettingsPage.qml" line="184"/>
         <source>Right</source>
-        <translation>Droite</translation>
+        <translation>À droite</translation>
     </message>
     <message id="settingsPage.cover">
         <location filename="../qml/pages/SettingsPage.qml" line="196"/>
@@ -2937,12 +2937,12 @@
     <message id="filterBar.taken">
         <location filename="../qml/components/FilterBar.qml" line="11"/>
         <source>Taken</source>
-        <translation>Prise</translation>
+        <translation>Date de prise</translation>
     </message>
     <message id="filterBar.created">
         <location filename="../qml/components/FilterBar.qml" line="13"/>
         <source>Created</source>
-        <translation>Créé</translation>
+        <translation>Date de création</translation>
     </message>
     <message id="filterBar.favorites">
         <location filename="../qml/components/FilterBar.qml" line="103"/>
