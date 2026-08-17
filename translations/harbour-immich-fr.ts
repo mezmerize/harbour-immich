@@ -2513,7 +2513,7 @@
     <message id="libraryPage.lockedFolder">
         <location filename="../qml/pages/LibraryPage.qml" line="72"/>
         <source>Locked Folder</source>
-        <translation>Dossier vérouiller</translation>
+        <translation>Dossier verrouillé</translation>
     </message>
     <message id="libraryPage.partners">
         <location filename="../qml/pages/LibraryPage.qml" line="74"/>
