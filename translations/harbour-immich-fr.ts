@@ -2942,7 +2942,7 @@
     <message id="filterBar.created">
         <location filename="../qml/components/FilterBar.qml" line="13"/>
         <source>Created</source>
-        <translation>Date de création</translation>
+        <translation>Créé</translation>
     </message>
     <message id="filterBar.favorites">
         <location filename="../qml/components/FilterBar.qml" line="103"/>
