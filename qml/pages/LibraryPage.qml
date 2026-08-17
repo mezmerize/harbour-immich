@@ -53,25 +53,25 @@ Page {
                 Repeater {
                     model: [
                         //% "Favorites"
-                        { title: qsTrId("libraryPage.favorites"), icon: "image://theme/icon-m-favorite", page: "FavoritesPage.qml", show: true },
+                        { title: qsTrId("libraryPage.favorites"), icon: "image://theme/icon-m-favorite", page: "FavoritesPage.qml" },
                         //% "Archived"
-                        { title: qsTrId("libraryPage.archived"), icon: "image://theme/icon-m-file-archive-folder", page: "ArchivedPage.qml", show: true },
+                        { title: qsTrId("libraryPage.archived"), icon: "image://theme/icon-m-file-archive-folder", page: "ArchivedPage.qml" },
                         //% "Shared Links"
-                        { title: qsTrId("libraryPage.sharedLinks"), icon: "image://theme/icon-m-link", page: "SharedLinksPage.qml", show: false },
+                        { title: qsTrId("libraryPage.sharedLinks"), icon: "image://theme/icon-m-link", page: "SharedLinksPage.qml" },
                         //% "Trash"
-                        { title: qsTrId("libraryPage.trash"), icon: "image://theme/icon-m-delete", page: "TrashPage.qml", show: true },
+                        { title: qsTrId("libraryPage.trash"), icon: "image://theme/icon-m-delete", page: "TrashPage.qml" },
                         //% "People"
-                        { title: qsTrId("libraryPage.people"), icon: "image://theme/icon-m-people", page: "PeoplePage.qml", show: true },
+                        { title: qsTrId("libraryPage.people"), icon: "image://theme/icon-m-people", page: "PeoplePage.qml" },
                         //% "Places"
-                        { title: qsTrId("libraryPage.places"), icon: "image://theme/icon-m-location", page: "PlacesPage.qml", show: true },
+                        { title: qsTrId("libraryPage.places"), icon: "image://theme/icon-m-location", page: "PlacesPage.qml" },
                         //% "On This Device"
-                        { title: qsTrId("libraryPage.onThisDevice"), icon: "image://theme/icon-m-phone", page: "OnThisDevicePage.qml", show: true },
+                        { title: qsTrId("libraryPage.onThisDevice"), icon: "image://theme/icon-m-phone", page: "OnThisDevicePage.qml" },
                         //% "Folders"
-                        { title: qsTrId("libraryPage.folders"), icon: "image://theme/icon-m-folder", page: "FoldersPage.qml", show: true },
+                        { title: qsTrId("libraryPage.folders"), icon: "image://theme/icon-m-folder", page: "FoldersPage.qml" },
                         //% "Locked Folder"
-                        { title: qsTrId("libraryPage.lockedFolder"), icon: "image://theme/icon-m-device-lock", page: "LockedFolderPage.qml", show: true },
+                        { title: qsTrId("libraryPage.lockedFolder"), icon: "image://theme/icon-m-device-lock", page: "LockedFolderPage.qml" },
                         //% "Partners"
-                        { title: qsTrId("libraryPage.partners"), icon: "image://theme/icon-m-transfer", page: "PartnersPage.qml", show: false }
+                        { title: qsTrId("libraryPage.partners"), icon: "image://theme/icon-m-transfer", page: "PartnersPage.qml" }
                     ]
 
                     BackgroundItem {
@@ -105,7 +105,7 @@ Page {
                             }
                         }
 
-                        onClicked: if (modelData.show) pageStack.push(Qt.resolvedUrl(modelData.page))
+                        onClicked: pageStack.push(Qt.resolvedUrl(modelData.page))
                     }
                 }
             }
