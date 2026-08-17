@@ -11,6 +11,7 @@ URL:        https://github.com/mezmerize/harbour-immich
 Source0:    %{name}-%{version}.tar.bz2
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
+Requires:   sailfishsecretsdaemon-secretsplugins-default
 Requires:   qt5-qtmultimedia
 
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2

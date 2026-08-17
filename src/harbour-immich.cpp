@@ -73,9 +73,6 @@ int main(int argc, char *argv[])
    }
    app->installTranslator(translator);
    SecureStorage *secureStorage = new SecureStorage(app);
-
-   secureStorage->initialize();
-
    AuthManager *authManager = new AuthManager(secureStorage, app);
    OAuthManager *oauthManager = new OAuthManager(authManager, app);
 
@@ -159,6 +156,8 @@ int main(int argc, char *argv[])
 
    view->setSource(SailfishApp::pathTo("qml/harbour-immich.qml"));
    view->show();
+
+   secureStorage->initialize();
 
    return app->exec();
 }
