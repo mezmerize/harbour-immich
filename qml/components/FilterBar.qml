@@ -12,10 +12,12 @@ Item {
         //% "Created"
         { id: "created", label: qsTrId("filterBar.created"), icon: "image://theme/icon-m-clock" }
     ]
-    property string activeFilter: filterModel[0].id || null
+    property string activeFilter: filterModel[0].id
     property string sortOrder: "desc" // desc, asc
+    property bool favoritesButtonVisible: true
     property bool showFavorites: false
-    property real filterButtonWidth: (filterRow.width - Theme.paddingSmall - sortButton.width - Theme.paddingMedium) / (filterModel ? 3 : 1)
+    property real buttonsNumber: favoritesButtonVisible ? filterModel.length + 1 : filterModel.length
+    property real filterButtonWidth: (filterRow.width - Theme.paddingSmall - sortButton.width - Theme.paddingMedium) / buttonsNumber
 
     signal filterActivated(string filter)
     signal filterFavorites(bool showFavorites)
@@ -77,6 +79,7 @@ Item {
         // Favorites toggle
         BackgroundItem {
             id: favoritesButton
+            visible: favoritesButtonVisible
             width: filterBar.filterButtonWidth
             height: Theme.itemSizeExtraSmall
 
