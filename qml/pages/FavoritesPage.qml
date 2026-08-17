@@ -124,6 +124,15 @@ Page {
                 PageHeader {
                     title: qsTrId("favoritesPage.favorites")
                 }
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    visible: favoritesModel.totalCount > 0
+                    text: favoritesModel.totalCount === 1 ? qsTrId("favoritesPage.asset") : qsTrId("favoritesPage.assets").arg(favoritesModel.totalCount)
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.secondaryHighlightColor
+                }
             }
 
             Item {

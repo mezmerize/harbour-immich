@@ -121,6 +121,15 @@ Page {
                 PageHeader {
                     title: qsTrId("archivedPage.archived")
                 }
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    visible: archiveModel.totalCount > 0
+                    text: archiveModel.totalCount === 1 ? qsTrId("archivedPage.asset") : qsTrId("archivedPage.assets").arg(archiveModel.totalCount)
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.secondaryHighlightColor
+                }
             }
 
             FilterBar {

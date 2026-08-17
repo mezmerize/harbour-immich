@@ -23,6 +23,7 @@ Page {
     property var heroAssetIds: []
     property bool heroInitialized: false
     property string dateRange: ""
+    property bool showDateRange: dateRange !== "" && albumModel.totalCount > 0 && activeFilter === "taken" && !showFavorites
 
     TimelineModel {
         id: albumModel
@@ -160,14 +161,14 @@ Page {
                             text: "·"
                             font.pixelSize: Theme.fontSizeExtraSmall
                             color: Theme.secondaryHighlightColor
-                            visible: dateRange !== ""
+                            visible: showDateRange
                         }
 
                         Label {
                             text: dateRange
                             font.pixelSize: Theme.fontSizeExtraSmall
                             color: Theme.secondaryHighlightColor
-                            visible: dateRange !== ""
+                            visible: showDateRange
                         }
                     }
                 }
@@ -198,7 +199,6 @@ Page {
                     spacing: Theme.paddingMedium
 
                     Label {
-                        visible: albumModel.totalCount > 0
                         text: albumModel.totalCount === 1 ? qsTrId("albumDetailPage.asset") : qsTrId("albumDetailPage.assets").arg(albumModel.totalCount)
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryHighlightColor
@@ -208,14 +208,14 @@ Page {
                         text: "·"
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryHighlightColor
-                        visible: dateRange !== ""
+                        visible: showDateRange
                     }
 
                     Label {
                         text: dateRange
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryHighlightColor
-                        visible: dateRange !== ""
+                        visible: showDateRange
                     }
                 }
             }

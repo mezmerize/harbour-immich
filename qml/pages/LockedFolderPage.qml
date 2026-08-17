@@ -296,6 +296,15 @@ Page {
                 PageHeader {
                     title: qsTrId("lockedFolderPage.lockedFolder")
                 }
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    visible: lockedModel.totalCount > 0
+                    text: lockedModel.totalCount === 1 ? qsTrId("lockedFolderPage.asset") : qsTrId("lockedFolderPage.assets").arg(lockedModel.totalCount)
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.secondaryHighlightColor
+                }
             }
 
             FilterBar {

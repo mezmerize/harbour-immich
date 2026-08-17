@@ -134,6 +134,15 @@ Page {
                 PageHeader {
                     title: qsTrId("partnerAssetsPage.title").arg(partnerName)
                 }
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    visible: partnerModel.totalCount > 0
+                    text: partnerModel.totalCount === 1 ? qsTrId("partnerAssetsPage.asset") : qsTrId("partnerAssetsPage.assets").arg(partnerModel.totalCount)
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.secondaryHighlightColor
+                }
             }
 
             FilterBar {
