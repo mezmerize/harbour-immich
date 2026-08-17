@@ -570,6 +570,9 @@ Page {
         onAllTrashRestored: {
             page.refresh()
         }
+        onPartnerUpdated: {
+            page.refresh()
+        }
         onAssetsDeleted: {
             notification.show(assetIds.length === 1
                 //% "Deleted asset"
