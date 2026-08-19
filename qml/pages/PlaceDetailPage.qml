@@ -25,7 +25,7 @@ Page {
     property int totalCount: 0
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
     property real cellSize: width / assetsPerRow
-    property bool showDateRange: dateRange !== "" && activeFilter === "taken"
+    property bool showDateRange: dateRange !== "" && totalCount > 0 && activeFilter === "taken" && !showFavorites
 
     function updateAllSelectedAreFavorites() {
         if (selectedAssets.length === 0) {
