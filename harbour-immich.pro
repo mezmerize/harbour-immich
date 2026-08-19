@@ -59,7 +59,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/EmptyState.qml \
     qml/components/FilterBar.qml \
     qml/components/FilterHelper.js \
-    qml/components/GroupedAssetGrid.qml \
+    qml/components/GroupedAssetListDelegate.qml \
     qml/components/HeroImageRotator.qml \
     qml/components/DismissDragBackdrop.qml \
     qml/components/DownloadFolderDialog.qml \

@@ -14,6 +14,7 @@ Page {
     property var selectedAssets: []
     property bool allSelectedAreFavorites: false
     property bool loading: true
+    property string activeFilter: "taken"
     property string sortOrder: "desc"
     property bool showFavorites: false
 
@@ -22,12 +23,19 @@ Page {
     property var heroAssetIds: []
     property string dateRange: ""
     property int totalCount: 0
+    property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
+    property real cellSize: width / assetsPerRow
+    property bool showDateRange: dateRange !== "" && activeFilter === "taken"
 
     function updateAllSelectedAreFavorites() {
-        if (selectedAssets.length === 0) { allSelectedAreFavorites = false; return }
+        if (selectedAssets.length === 0) {
+            allSelectedAreFavorites = false
+            return
+        }
         for (var i = 0; i < allAssets.length; i++) {
             if (selectedAssets.indexOf(allAssets[i].id) > -1 && !allAssets[i].isFavorite) {
-                allSelectedAreFavorites = false; return
+                allSelectedAreFavorites = false
+                return
             }
         }
         allSelectedAreFavorites = true
@@ -42,8 +50,14 @@ Page {
         updateAllSelectedAreFavorites()
     }
 
-    function clearSelection() { selectedAssets = []; selectionMode = false }
-    function isAssetSelected(assetId) { return selectedAssets.indexOf(assetId) > -1 }
+    function clearSelection() {
+        selectedAssets = []
+        selectionMode = false
+    }
+
+    function isAssetSelected(assetId) {
+        return selectedAssets.indexOf(assetId) > -1
+    }
 
     function refresh() {
         loading = true
@@ -56,23 +70,35 @@ Page {
     }
 
     function processAssets(results) {
-        var r = AssetGroupHelper.processResults(results, sortOrder === "asc")
+        var r = AssetGroupHelper.processResults(results, sortOrder === "asc", false, activeFilter === "created")
         allAssets = r.allAssets
         if (r.heroAssetIds.length > 0) heroAssetIds = r.heroAssetIds
         dateRange = r.dateRange
-        groupedAssets = r.groupedAssets
+        groupedAssets = AssetGroupHelper.buildGroupedAssets(allAssets, assetsPerRow)
         totalCount = r.totalCount
         loading = false
+        scrollToTopTimer.restart()
     }
 
-    SilicaFlickable {
+    onAssetsPerRowChanged: groupedAssets = AssetGroupHelper.buildGroupedAssets(allAssets, assetsPerRow)
+
+    Timer {
+        id: scrollToTopTimer
+        interval: 50
+        repeat: false
+        onTriggered: flickable.positionViewAtBeginning()
+    }
+
+    SilicaListView {
         id: flickable
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
-        contentHeight: contentColumn.height
         clip: true
+        cacheBuffer: Math.max(height * 2, 2000)
+        pixelAligned: true
+        model: page.groupedAssets
 
         PullDownMenu {
             enabled: !page.selectionMode
@@ -84,9 +110,8 @@ Page {
             }
         }
 
-        Column {
-            id: contentColumn
-            width: parent.width
+        header: Column {
+            width: flickable.width
 
             // Hero section
             HeroImageRotator {
@@ -131,14 +156,14 @@ Page {
                             text: "·"
                             font.pixelSize: Theme.fontSizeExtraSmall
                             color: Theme.secondaryHighlightColor
-                            visible: dateRange !== ""
+                            visible: showDateRange
                         }
 
                         Label {
                             text: dateRange
                             font.pixelSize: Theme.fontSizeExtraSmall
                             color: Theme.secondaryHighlightColor
-                            visible: dateRange !== ""
+                            visible: showDateRange
                         }
                     }
                 }
@@ -167,22 +192,26 @@ Page {
                         text: "·"
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryHighlightColor
-                        visible: dateRange !== ""
+                        visible: showDateRange
                     }
 
                     Label {
                         text: dateRange
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryHighlightColor
-                        visible: dateRange !== ""
+                        visible: showDateRange
                     }
                 }
             }
 
             FilterBar {
-                filterModel: null
+                activeFilter: page.activeFilter
                 sortOrder: page.sortOrder
                 showFavorites: page.showFavorites
+                onFilterActivated: {
+                    page.activeFilter = filter
+                    page.refresh()
+                }
                 onFilterFavorites: {
                     page.showFavorites = showFavorites
                     page.refresh()
@@ -193,37 +222,50 @@ Page {
                 }
             }
 
-            GroupedAssetGrid {
-                width: contentColumn.width
-                groupedAssets: page.groupedAssets
-                selectionMode: page.selectionMode
-                selectedAssets: page.selectedAssets
-                onAssetClicked: pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
-                    assetId: assetId,
-                    isFavorite: isFavorite,
-                    isVideo: isVideo,
-                    thumbhash: thumbhash,
-                    albumAssets: page.allAssets,
-                    currentIndex: assetIndex
-                })
-                onAssetPressAndHold: {
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+        }
+
+        delegate: GroupedAssetListDelegate {
+            width: flickable.width
+            rowData: modelData
+            cellSize: page.cellSize
+            assetsPerRow: page.assetsPerRow
+            selectionMode: page.selectionMode
+            selectedAssets: page.selectedAssets
+            onAssetClicked: pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                assetId: assetId,
+                isFavorite: isFavorite,
+                isVideo: isVideo,
+                thumbhash: thumbhash,
+                albumAssets: page.allAssets,
+                currentIndex: assetIndex
+            })
+            onAssetPressAndHold: {
+                if (!page.selectionMode) page.selectionMode = true
+                page.toggleAssetSelection(assetId)
+            }
+            onSubGroupSelectToggled: {
+                if (allSelected) {
+                    for (var i = 0; i < assets.length; i++) {
+                        if (page.isAssetSelected(assets[i].id)) page.toggleAssetSelection(assets[i].id)
+                    }
+                } else {
                     if (!page.selectionMode) page.selectionMode = true
-                    page.toggleAssetSelection(assetId)
-                }
-                onSubGroupSelectToggled: {
-                    if (allSelected) {
-                        for (var i = 0; i < assets.length; i++) {
-                            if (page.isAssetSelected(assets[i].id)) page.toggleAssetSelection(assets[i].id)
-                        }
-                    } else {
-                        if (!page.selectionMode) page.selectionMode = true
-                        for (var i = 0; i < assets.length; i++) {
-                            if (!page.isAssetSelected(assets[i].id)) page.toggleAssetSelection(assets[i].id)
-                        }
+                    for (var i = 0; i < assets.length; i++) {
+                        if (!page.isAssetSelected(assets[i].id)) page.toggleAssetSelection(assets[i].id)
                     }
                 }
             }
         }
+
+        footer: Item {
+            width: parent.width
+            height: Theme.paddingSmall
+        }
+
         VerticalScrollDecorator {}
     }
 
@@ -325,7 +367,7 @@ Page {
                 if (assetIds.indexOf(updated[i].id) > -1) updated[i].isFavorite = isFavorite
             }
             allAssets = updated.slice()
-            groupedAssets = AssetGroupHelper.groupByMonthAndDate(allAssets)
+            groupedAssets = AssetGroupHelper.buildGroupedAssets(allAssets, assetsPerRow)
             page.clearSelection()
             notification.show(isFavorite ? (updated.length === 1
                 //% "Added asset to favorites"

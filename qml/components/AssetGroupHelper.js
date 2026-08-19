@@ -1,10 +1,13 @@
 .pragma library
 
-function parseAssets(results, sortAsc) {
+function parseAssets(results, sortAsc, favorites, groupByCreatedAt) {
+    favorites = (favorites === undefined) ? false : favorites
+    groupByCreatedAt = (groupByCreatedAt === undefined) ? false : groupByCreatedAt
     var parsed = []
     for (var i = 0; i < results.length; i++) {
         var a = results[i]
-        var dt = a.localDateTime || a.fileCreatedAt || a.createdAt || ""
+        if (favorites && !a.isFavorite) continue
+        var dt = groupByCreatedAt ? (a.createdAt || a.fileCreatedAt || a.localDateTime || "") : (a.localDateTime || a.fileCreatedAt || a.createdAt || "")
         parsed.push({
             id: a.id,
             isFavorite: a.isFavorite || false,
@@ -92,13 +95,36 @@ function groupByMonthAndDate(parsed) {
     return result
 }
 
-function processResults(results, sortAsc) {
-    var parsed = parseAssets(results, sortAsc)
+function flattenGroupedAssets(grouped, perRow) {
+    if (!perRow || perRow < 1) perRow = 4
+    var rows = []
+    if (!grouped) return rows
+    for (var m = 0; m < grouped.length; m++) {
+        var month = grouped[m]
+        rows.push({ type: "month", monthYear: month.monthYear })
+        var groups = month.groups || []
+        for (var g = 0; g < groups.length; g++) {
+            var subGroup = groups[g]
+            var assets = subGroup.assets || []
+            rows.push({ type: "date", displayDate: subGroup.displayDate, groupAssets: assets })
+            for (var i = 0; i < assets.length; i += perRow) {
+                rows.push({ type: "assets", rowAssets: assets.slice(i, i + perRow) })
+            }
+        }
+    }
+    return rows
+}
+
+function buildGroupedAssets(assets, perRow) {
+    return flattenGroupedAssets(groupByMonthAndDate(assets), perRow)
+}
+
+function processResults(results, sortAsc, favorites, groupByCreatedAt) {
+    var parsed = parseAssets(results, sortAsc, favorites, groupByCreatedAt)
     return {
         allAssets: parsed,
         heroAssetIds: pickHeroIds(parsed, 5),
         dateRange: computeDateRange(parsed),
-        groupedAssets: groupByMonthAndDate(parsed),
         totalCount: parsed.length
     }
 }
