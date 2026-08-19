@@ -196,6 +196,8 @@ Page {
         iconSource: "image://theme/icon-m-favorite"
         //% "No favorite assets"
         message: qsTrId("favoritesPage.noAssets")
+        //% "Add favorites to quickly find your best pictures and videos"
+        hint: qsTrId("favoritesPage.noAssetsInfo")
     }
 
     SelectionActionBar {

@@ -211,6 +211,8 @@ Page {
         iconSource: "image://theme/icon-m-file-archive-folder"
         //% "No archived assets"
         message: qsTrId("archivedPage.noAssets")
+        //% "Archive photos and videos to hide them from your view"
+        hint: qsTrId("archivedPage.noAssetsInfo")
     }
 
     SelectionActionBar {

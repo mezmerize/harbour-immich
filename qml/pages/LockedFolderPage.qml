@@ -387,6 +387,8 @@ Page {
         iconSource: "image://theme/icon-m-device-lock"
         //% "Locked folder is empty"
         message: qsTrId("lockedFolderPage.noAssets")
+        //% "Photos and videos in the locked folder are hidden and won't show up as you browse or search your library"
+        hint: qsTrId("lockedFolderPage.noAssetsInfo")
     }
 
     SelectionActionBar {

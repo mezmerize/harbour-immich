@@ -198,6 +198,8 @@ Page {
         iconSource: "image://theme/icon-m-delete"
         //% "Trash is empty"
         message: qsTrId("trashPage.noAssets")
+        //% "Trashed photos and videos will show up here"
+        hint: qsTrId("trashPage.noAssetsInfo")
     }
 
     SelectionActionBar {
