@@ -56,6 +56,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/AssetGridItem.qml \
     qml/components/AssetGroupHelper.js \
     qml/components/EditPersonDialog.qml \
+    qml/components/EditSharedLinkDialog.qml \
     qml/components/EmptyState.qml \
     qml/components/FilterBar.qml \
     qml/components/FilterHelper.js \
@@ -79,12 +80,14 @@ DISTFILES += qml/harbour-immich.qml \
     qml/cover/CoverPage.qml \
     qml/pages/AlbumInfoPage.qml \
     qml/pages/AlbumPickerPage.qml \
+    qml/pages/AlbumShareDetailPage.qml \
     qml/pages/AssetDetailPage.qml \
     qml/pages/AssetInfoPage.qml \
     qml/pages/EditAlbumDialog.qml \
     qml/pages/EditAssetDialog.qml \
     qml/pages/FavoritesPage.qml \
     qml/pages/FolderPickerPage.qml \
+    qml/pages/IndividualShareDetailPage.qml \
     qml/pages/LogViewerPage.qml \
     qml/pages/MemoryDetailPage.qml \
     qml/pages/OAuthPage.qml \
@@ -108,6 +111,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/SettingsPage.qml \
     qml/pages/SharePage.qml \
     qml/pages/ShareResultPage.qml \
+    qml/pages/SharedLinksPage.qml \
     qml/pages/StackDetailPage.qml \
     qml/pages/TimelinePage.qml \
     qml/pages/TrashPage.qml \
