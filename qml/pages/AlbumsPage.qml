@@ -332,7 +332,7 @@ Page {
     LoadingIndicator {
         anchors.fill: listView
         loading: page.loading && listView.count === 0
-        //% "Loading albums"
+        //% "Loading albums..."
         message: qsTrId("albumsPage.loading")
     }
 

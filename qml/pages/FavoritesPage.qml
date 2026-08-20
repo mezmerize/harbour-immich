@@ -9,6 +9,7 @@ Page {
 
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
     property real cellSize: width / assetsPerRow
+    property string activeFilter: "taken"
     property string sortOrder: "desc"
     property string contextId: "favorites"
     property var queryParams: ({"isFavorite": "true", "withStacked": "true", "order": sortOrder})
@@ -23,7 +24,11 @@ Page {
         favoritesModel.clear()
         favoritesModel.setLoading(true)
         heroInitialized = false
-        queryParams = {"isFavorite": "true", "withStacked": "true", "order": sortOrder}
+        var showCreatedAt = page.activeFilter === "created"
+        favoritesModel.setGroupByCreatedAt(showCreatedAt)
+        var params = {"isFavorite": "true", "withStacked": "true", "order": sortOrder}
+        if (showCreatedAt) params["orderBy"] = "createdAt"
+        queryParams = params
         immichApi.fetchTimelineBuckets(contextId, queryParams)
     }
 
@@ -59,18 +64,6 @@ Page {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
                 onClicked: page.refresh()
-            }
-
-            MenuItem {
-                text: page.sortOrder === "desc"
-                    //% "Show oldest first"
-                    ? qsTrId("pullDownMenu.showOldestFirst")
-                    //% "Show newest first"
-                    : qsTrId("pullDownMenu.showNewestFirst")
-                onClicked: {
-                    page.sortOrder = page.sortOrder === "desc" ? "asc" : "desc"
-                    page.refresh()
-                }
             }
         }
 
@@ -132,6 +125,20 @@ Page {
                     text: favoritesModel.totalCount === 1 ? qsTrId("favoritesPage.asset") : qsTrId("favoritesPage.assets").arg(favoritesModel.totalCount)
                     font.pixelSize: Theme.fontSizeSmall
                     color: Theme.secondaryHighlightColor
+                }
+            }
+
+            FilterBar {
+                favoritesButtonVisible: false
+                activeFilter: page.activeFilter
+                sortOrder: page.sortOrder
+                onFilterActivated: {
+                    page.activeFilter = filter
+                    page.refresh()
+                }
+                onSortOrderToggled: {
+                    page.sortOrder = order
+                    page.refresh()
                 }
             }
 

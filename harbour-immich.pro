@@ -71,6 +71,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/QRCode.qml \
     qml/components/ScrollToTopButton.qml \
     qml/components/SelectionActionBar.qml \
+    qml/components/SharedLinksHelper.js \
     qml/components/TimelineBucketDelegate.qml \
     qml/components/TimelineHelper.js \
     qml/components/VideoPlayer.qml \
