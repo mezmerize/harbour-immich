@@ -252,7 +252,7 @@
     <message id="notification.addedAssetToFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="340"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="313"/>
-        <location filename="../qml/pages/AssetDetailPage.qml" line="470"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="472"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="407"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="376"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="374"/>
@@ -273,7 +273,7 @@
     <message id="notification.removedAssetFromFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="344"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="317"/>
-        <location filename="../qml/pages/AssetDetailPage.qml" line="472"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="474"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="302"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="411"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="380"/>
@@ -743,33 +743,33 @@
         <translation>Crea un album in Immich per vederlo qui</translation>
     </message>
     <message id="assetDetailPage.failed">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="198"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="200"/>
         <source>Failed to load image</source>
         <translation>Caricamento immagine fallito</translation>
     </message>
     <message id="assetDetailPage.releaseToClose">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="119"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="121"/>
         <source>Release to close</source>
         <translation>Rilascia per chiudere</translation>
     </message>
     <message id="assetDetailPage.dragToClose">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="121"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="123"/>
         <source>Drag to close</source>
         <translation>Trascina per chiudere</translation>
     </message>
     <message id="notification.downloading">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="366"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="368"/>
         <location filename="../qml/pages/StackDetailPage.qml" line="489"/>
         <source>Downloading...</source>
         <translation>Scaricamento...</translation>
     </message>
     <message id="notification.removingFromAlbum">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="419"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="421"/>
         <source>Removing from album</source>
         <translation>Sto rimuovendo dall&apos;album</translation>
     </message>
     <message id="notification.downloaded">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="478"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="480"/>
         <location filename="../qml/pages/StackDetailPage.qml" line="648"/>
         <location filename="../qml/pages/TimelinePage.qml" line="585"/>
         <source>Downloaded to: %1</source>
