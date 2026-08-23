@@ -699,7 +699,7 @@
     <message id="albumsPage.loading">
         <location filename="../qml/pages/AlbumsPage.qml" line="336"/>
         <source>Loading albums...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster album…</translation>
     </message>
     <message id="albumsPage.noAlbums">
         <location filename="../qml/pages/AlbumsPage.qml" line="346"/>
@@ -1609,12 +1609,12 @@
     <message id="settingsPage.backupShowStatusIcon">
         <location filename="../qml/pages/SettingsPage.qml" line="455"/>
         <source>Show asset backup status icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis ikon for sikkerhetskopistatus</translation>
     </message>
     <message id="settingsPage.backupShowStatusIconInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="457"/>
         <source>Show an icon on the timeline for backed-up assets.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis ikon på tidslinjen for sikkerhetskopierte mediefiler.</translation>
     </message>
     <message id="settingsPage.backupScanInterval">
         <location filename="../qml/pages/SettingsPage.qml" line="468"/>
@@ -2175,7 +2175,7 @@
     <message id="timelinePage.noAssetsLabel">
         <location filename="../qml/pages/TimelinePage.qml" line="259"/>
         <source>No assets yet</source>
-        <translation>Ingen mediefiler</translation>
+        <translation>Ingen mediefiler ennå</translation>
     </message>
     <message id="timelinePage.noFavoritesInfo">
         <location filename="../qml/pages/TimelinePage.qml" line="262"/>
@@ -2499,7 +2499,7 @@
     <message id="archivedPage.noAssetsInfo">
         <location filename="../qml/pages/ArchivedPage.qml" line="215"/>
         <source>Archive photos and videos to hide them from your view</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkiver bilder og videoer for å skjule dem fra visningen din</translation>
     </message>
     <message id="notification.removedFromArchive">
         <location filename="../qml/pages/ArchivedPage.qml" line="324"/>
@@ -2612,7 +2612,7 @@
     <message id="trashPage.noAssetsInfo">
         <location filename="../qml/pages/TrashPage.qml" line="202"/>
         <source>Trashed photos and videos will show up here</source>
-        <translation type="unfinished"></translation>
+        <translation>Kastede bilder og videoer vil vises her</translation>
     </message>
     <message id="notification.restored">
         <location filename="../qml/pages/TrashPage.qml" line="264"/>
@@ -2660,7 +2660,7 @@
     <message id="favoritesPage.noAssetsInfo">
         <location filename="../qml/pages/FavoritesPage.qml" line="207"/>
         <source>Add favorites to quickly find your best pictures and videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til favoritter for å raskt finne de beste bildene og videoene dine</translation>
     </message>
     <message id="lockedFolderPage.confirmPin">
         <location filename="../qml/pages/LockedFolderPage.qml" line="60"/>
@@ -2714,7 +2714,7 @@
     <message id="lockedFolderPage.noAssetsInfo">
         <location filename="../qml/pages/LockedFolderPage.qml" line="391"/>
         <source>Photos and videos in the locked folder are hidden and won&apos;t show up as you browse or search your library</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder og videoer i den låste mappen er skjult, og vises ikke når du blar gjennom eller søker i biblioteket ditt</translation>
     </message>
     <message id="notification.invalidPin">
         <location filename="../qml/pages/LockedFolderPage.qml" line="473"/>
@@ -2846,12 +2846,12 @@
     <message id="pullDownMenu.hideHidden">
         <location filename="../qml/pages/PeoplePage.qml" line="43"/>
         <source>Hide hidden people</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjul skjulte personer</translation>
     </message>
     <message id="pullDownMenu.showHidden">
         <location filename="../qml/pages/PeoplePage.qml" line="45"/>
         <source>Show hidden people</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis skjulte personer</translation>
     </message>
     <message id="peoplePage.people">
         <location filename="../qml/pages/PeoplePage.qml" line="59"/>
@@ -2866,12 +2866,12 @@
     <message id="filterBar.name">
         <location filename="../qml/pages/PeoplePage.qml" line="78"/>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message id="filterBar.updated">
         <location filename="../qml/pages/PeoplePage.qml" line="80"/>
         <source>Updated</source>
-        <translation type="unfinished">Oppdatert</translation>
+        <translation>Oppdatert</translation>
     </message>
     <message id="peoplePage.unknown">
         <location filename="../qml/pages/PeoplePage.qml" line="177"/>
@@ -2881,22 +2881,22 @@
     <message id="peoplePage.removeFromFavorites">
         <location filename="../qml/pages/PeoplePage.qml" line="204"/>
         <source>Remove from favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern fra favoritter</translation>
     </message>
     <message id="peoplePage.addToFavorites">
         <location filename="../qml/pages/PeoplePage.qml" line="206"/>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til favoritter</translation>
     </message>
     <message id="peoplePage.unhidePerson">
         <location filename="../qml/pages/PeoplePage.qml" line="213"/>
         <source>Show person</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis person</translation>
     </message>
     <message id="peoplePage.hidePerson">
         <location filename="../qml/pages/PeoplePage.qml" line="215"/>
         <source>Hide person</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjul person</translation>
     </message>
     <message id="peoplePage.loading">
         <location filename="../qml/pages/PeoplePage.qml" line="229"/>
@@ -2942,12 +2942,12 @@
     <message id="editPersonDialog.favorite">
         <location filename="../qml/components/EditPersonDialog.qml" line="76"/>
         <source>Favorite</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoritt</translation>
     </message>
     <message id="editPersonDialog.hidden">
         <location filename="../qml/components/EditPersonDialog.qml" line="83"/>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjult</translation>
     </message>
     <message id="pullDownMenu.editPerson">
         <location filename="../qml/pages/PersonDetailPage.qml" line="83"/>
@@ -3010,385 +3010,385 @@
     <message id="pullDownMenu.hideFromTimeline">
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="77"/>
         <source>Hide from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjul fra tidslinjen</translation>
     </message>
     <message id="pullDownMenu.showOnTimeline">
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="79"/>
         <source>Show in timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis på tidslinjen</translation>
     </message>
     <message id="partnerAssetsPage.title">
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="111"/>
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="135"/>
         <source>%1&apos;s assets</source>
-        <translation type="unfinished"></translation>
+        <translation>%1s mediefiler</translation>
     </message>
     <message id="partnerAssetsPage.asset">
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="121"/>
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="142"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 mediefil</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="partnerAssetsPage.assets">
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="123"/>
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="142"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 mediefiler</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="partnerAssetsPage.loading">
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="208"/>
         <source>Loading assets...</source>
-        <translation type="unfinished">Laster mediefiler…</translation>
+        <translation>Laster mediefiler…</translation>
     </message>
     <message id="partnerAssetsPage.noAssets">
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="222"/>
         <source>No assets</source>
-        <translation type="unfinished">Ingen mediefiler</translation>
+        <translation>Ingen mediefiler</translation>
     </message>
     <message id="pullDownMenu.addPartner">
         <location filename="../qml/pages/PartnersPage.qml" line="33"/>
         <source>Add partner</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til partner</translation>
     </message>
     <message id="partnersPage.partners">
         <location filename="../qml/pages/PartnersPage.qml" line="46"/>
         <source>Partners</source>
-        <translation type="unfinished">Partnere</translation>
+        <translation>Partnere</translation>
     </message>
     <message id="partnersPage.sharingWith">
         <location filename="../qml/pages/PartnersPage.qml" line="52"/>
         <source>Sharing with</source>
-        <translation type="unfinished"></translation>
+        <translation>Deler med</translation>
     </message>
     <message id="partnersPage.removePartner">
         <location filename="../qml/pages/PartnersPage.qml" line="68"/>
         <source>Remove partner</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern partner</translation>
     </message>
     <message id="notification.removingPartner">
         <location filename="../qml/pages/PartnersPage.qml" line="72"/>
         <source>Removing partner</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjerner partner</translation>
     </message>
     <message id="partnersPage.sharedWithMe">
         <location filename="../qml/pages/PartnersPage.qml" line="133"/>
         <source>Shared with me</source>
-        <translation type="unfinished"></translation>
+        <translation>Delt med meg</translation>
     </message>
     <message id="partnersPage.hideFromTimeline">
         <location filename="../qml/pages/PartnersPage.qml" line="150"/>
         <source>Hide from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjul fra tidslinjen</translation>
     </message>
     <message id="partnersPage.showOnTimeline">
         <location filename="../qml/pages/PartnersPage.qml" line="152"/>
         <source>Show on timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis på tidslinjen</translation>
     </message>
     <message id="partnersPage.onTimeline">
         <location filename="../qml/pages/PartnersPage.qml" line="217"/>
         <source>On timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>På tidslinjen</translation>
     </message>
     <message id="partnersPage.loading">
         <location filename="../qml/pages/PartnersPage.qml" line="250"/>
         <source>Loading partners...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster inn partnere…</translation>
     </message>
     <message id="peoplePage.noPartners">
         <location filename="../qml/pages/PartnersPage.qml" line="259"/>
         <source>No partners</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen partnere</translation>
     </message>
     <message id="partnersPage.noPartnersHint">
         <location filename="../qml/pages/PartnersPage.qml" line="261"/>
         <source>Add a partner to share your photos with them</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til en partner for å dele bildene dine med dem</translation>
     </message>
     <message id="notification.partnerAdded">
         <location filename="../qml/pages/PartnersPage.qml" line="305"/>
         <source>Partner added</source>
-        <translation type="unfinished"></translation>
+        <translation>Partner lagt til</translation>
     </message>
     <message id="notification.partnerRemoved">
         <location filename="../qml/pages/PartnersPage.qml" line="311"/>
         <source>Partner removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Partner fjernet</translation>
     </message>
     <message id="notification.partnerUpdated">
         <location filename="../qml/pages/PartnersPage.qml" line="317"/>
         <source>Partner updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Partner oppdatert</translation>
     </message>
     <message id="notification.noUsersAvailable">
         <location filename="../qml/pages/PartnersPage.qml" line="338"/>
         <source>No users available to add as partner</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen brukere er tilgjengelige for å legges til som partner</translation>
     </message>
     <message id="partnersPage.addPartnerTitle">
         <location filename="../qml/pages/PartnersPage.qml" line="356"/>
         <source>Add Partner</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til partner</translation>
     </message>
     <message id="sharedLinksPage.expired">
         <location filename="../qml/pages/SharedLinksPage.qml" line="137"/>
         <source>Expired</source>
-        <translation type="unfinished"></translation>
+        <translation>Utløpt</translation>
     </message>
     <message id="sharedLinksPage.individualShare">
         <location filename="../qml/pages/SharedLinksPage.qml" line="19"/>
         <source>Individual share</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkeltvis deling</translation>
     </message>
     <message id="notification.linkCopied">
         <location filename="../qml/pages/SharedLinksPage.qml" line="41"/>
         <source>Link copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Lenke kopiert til utklippstavle</translation>
     </message>
     <message id="sharedLinksPage.sharedLinks">
         <location filename="../qml/pages/SharedLinksPage.qml" line="62"/>
         <source>Shared Links</source>
-        <translation type="unfinished">Delte lenker</translation>
+        <translation>Delte lenker</translation>
     </message>
     <message id="sharedLinksPage.expires">
         <location filename="../qml/pages/SharedLinksPage.qml" line="139"/>
         <source>Expires: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Utløper: %1</translation>
     </message>
     <message id="sharedLinksPage.noExpiry">
         <location filename="../qml/pages/SharedLinksPage.qml" line="141"/>
         <source>No expiration</source>
-        <translation type="unfinished"></translation>
+        <translation>Utløper ikke</translation>
     </message>
     <message id="sharedLinksPage.metadata">
         <location filename="../qml/pages/SharedLinksPage.qml" line="167"/>
         <source>Metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Metadata</translation>
     </message>
     <message id="sharedLinksPage.upload">
         <location filename="../qml/pages/SharedLinksPage.qml" line="184"/>
         <source>Upload</source>
-        <translation type="unfinished">Last opp</translation>
+        <translation>Last opp</translation>
     </message>
     <message id="sharedLinksPage.download">
         <location filename="../qml/pages/SharedLinksPage.qml" line="201"/>
         <source>Download</source>
-        <translation type="unfinished">Last ned</translation>
+        <translation>Last ned</translation>
     </message>
     <message id="sharedLinksPage.password">
         <location filename="../qml/pages/SharedLinksPage.qml" line="218"/>
         <source>Password</source>
-        <translation type="unfinished">Passord</translation>
+        <translation>Passord</translation>
     </message>
     <message id="notification.deletingLink">
         <location filename="../qml/pages/SharedLinksPage.qml" line="261"/>
         <source>Deleting shared link</source>
-        <translation type="unfinished"></translation>
+        <translation>Sletter delt lenke</translation>
     </message>
     <message id="sharedLinksPage.loading">
         <location filename="../qml/pages/SharedLinksPage.qml" line="278"/>
         <source>Loading shared links...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster delte lenker…</translation>
     </message>
     <message id="sharedLinksPage.noLinks">
         <location filename="../qml/pages/SharedLinksPage.qml" line="286"/>
         <source>No shared links</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen delte lenker</translation>
     </message>
     <message id="sharedLinksPage.noLinksHint">
         <location filename="../qml/pages/SharedLinksPage.qml" line="288"/>
         <source>Create shared links from the share action on assets or albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Lag delte lenker via delingsknappen på bilder, videoer eller album</translation>
     </message>
     <message id="notification.linkDeleted">
         <location filename="../qml/pages/SharedLinksPage.qml" line="310"/>
         <source>Shared link deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>Delt lenke slettet</translation>
     </message>
     <message id="notification.linkUpdated">
         <location filename="../qml/pages/SharedLinksPage.qml" line="315"/>
         <source>Shared link updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Delt lenke oppdatert</translation>
     </message>
     <message id="editSharedLinkDialog.save">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="41"/>
         <source>Edit Share Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger delt lenke</translation>
     </message>
     <message id="editSharedLinkDialog.description">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="48"/>
         <source>Description</source>
-        <translation type="unfinished">Beskrivelse</translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message id="editSharedLinkDialog.password">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="57"/>
         <source>Password</source>
-        <translation type="unfinished">Passord</translation>
+        <translation>Passord</translation>
     </message>
     <message id="editSharedLinkDialog.passwordPlaceholder">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="59"/>
         <source>Enter password (leave empty for none)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv inn passord (la stå tomt for ingen)</translation>
     </message>
     <message id="editSharedLinkDialog.hasPassword">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="71"/>
         <source>This link is currently password protected. Edit the field above to change or remove the password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Denne lenken er for øyeblikket passordbeskyttet. Rediger feltet ovenfor for å endre eller fjerne passordet.</translation>
     </message>
     <message id="editSharedLinkDialog.passwordWillBeRemoved">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="82"/>
         <source>Password protection will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Passordbeskyttelse vil bli fjernet.</translation>
     </message>
     <message id="editSharedLinkDialog.slug">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="91"/>
         <source>Custom URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Egendefinert URL</translation>
     </message>
     <message id="editSharedLinkDialog.slugPlaceholder">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="93"/>
         <source>Custom share URL (optional)</source>
-        <translation type="unfinished"></translation>
+        <translation>Egendefinert delings-URL (valgfritt)</translation>
     </message>
     <message id="editSharedLinkDialog.slugError">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="142"/>
         <source>Please enter a valid custom share URL</source>
-        <translation type="unfinished">Oppgi en gyldig nettadresse for deling</translation>
+        <translation>Oppgi en gyldig nettadresse for deling</translation>
     </message>
     <message id="editSharedLinkDialog.expiration">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="151"/>
         <source>Expiration</source>
-        <translation type="unfinished">Utløpstid</translation>
+        <translation>Utløpstid</translation>
     </message>
     <message id="editSharedLinkDialog.keepExpiry">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="162"/>
         <source>Keep current (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Behold nåværende (%1)</translation>
     </message>
     <message id="editSharedLinkDialog.keepNoExpiry">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="165"/>
         <source>Keep current (no expiry)</source>
-        <translation type="unfinished"></translation>
+        <translation>Behold nåværende (utløper ikke)</translation>
     </message>
     <message id="editSharedLinkDialog.expirationNever">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="169"/>
         <source>Never</source>
-        <translation type="unfinished">Aldri</translation>
+        <translation>Aldri</translation>
     </message>
     <message id="editSharedLinkDialog.expiration30Min">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="171"/>
         <source>30 minutes</source>
-        <translation type="unfinished">30 minutter</translation>
+        <translation>30 minutter</translation>
     </message>
     <message id="editSharedLinkDialog.expiration1Hour">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="173"/>
         <source>1 hour</source>
-        <translation type="unfinished">1 time</translation>
+        <translation>1 time</translation>
     </message>
     <message id="editSharedLinkDialog.expiration6Hours">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="175"/>
         <source>6 hours</source>
-        <translation type="unfinished">6 timer</translation>
+        <translation>6 timer</translation>
     </message>
     <message id="editSharedLinkDialog.expiration1Day">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="177"/>
         <source>1 day</source>
-        <translation type="unfinished">1 dag</translation>
+        <translation>1 dag</translation>
     </message>
     <message id="editSharedLinkDialog.expiration7Days">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="179"/>
         <source>7 days</source>
-        <translation type="unfinished">7 dager</translation>
+        <translation>7 dager</translation>
     </message>
     <message id="editSharedLinkDialog.expiration30Days">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="181"/>
         <source>30 days</source>
-        <translation type="unfinished">30 dager</translation>
+        <translation>30 dager</translation>
     </message>
     <message id="editSharedLinkDialog.expiration3Months">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="183"/>
         <source>3 months</source>
-        <translation type="unfinished">3 måneder</translation>
+        <translation>3 måneder</translation>
     </message>
     <message id="editSharedLinkDialog.expiration1Year">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="185"/>
         <source>1 year</source>
-        <translation type="unfinished">1 år</translation>
+        <translation>1 år</translation>
     </message>
     <message id="editSharedLinkDialog.showMetadata">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="192"/>
         <source>Show metadata</source>
-        <translation type="unfinished">Vis metadata</translation>
+        <translation>Vis metadata</translation>
     </message>
     <message id="editSharedLinkDialog.showMetadataDescription">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="194"/>
         <source>Recipients can view metadata for shared assets</source>
-        <translation type="unfinished">Mottakere kan se detaljer om delte mediefiler</translation>
+        <translation>Mottakere kan se delte mediefilers metadata</translation>
     </message>
     <message id="editSharedLinkDialog.allowDownload">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="207"/>
         <source>Allow download</source>
-        <translation type="unfinished">Tillat nedlasting</translation>
+        <translation>Tillat nedlasting</translation>
     </message>
     <message id="editSharedLinkDialog.allowDownloadDescription">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="209"/>
         <source>Recipients can download assets/albums from this share</source>
-        <translation type="unfinished">Mottakere kan laste ned mediefiler og album fra denne delingen</translation>
+        <translation>Mottakere kan laste ned mediefiler og album fra denne delingen</translation>
     </message>
     <message id="editSharedLinkDialog.allowUpload">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="217"/>
         <source>Allow upload</source>
-        <translation type="unfinished">Tillat opplasting</translation>
+        <translation>Tillat opplasting</translation>
     </message>
     <message id="editSharedLinkDialog.allowUploadDescription">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="219"/>
         <source>Recipients can upload assets/albums to this share</source>
-        <translation type="unfinished">Mottakere kan laste opp mediefiler og album til denne delingen</translation>
+        <translation>Mottakere kan laste opp mediefiler og album til denne delingen</translation>
     </message>
     <message id="albumShareDetailPage.title">
         <location filename="../qml/pages/AlbumShareDetailPage.qml" line="31"/>
         <source>Individual share</source>
         <oldsource>Album</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Enkeltvis deling</translation>
     </message>
     <message id="albumShareDetailPage.asset">
         <location filename="../qml/pages/AlbumShareDetailPage.qml" line="141"/>
         <location filename="../qml/pages/AlbumShareDetailPage.qml" line="189"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 mediefil</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="albumShareDetailPage.assets">
         <location filename="../qml/pages/AlbumShareDetailPage.qml" line="143"/>
         <location filename="../qml/pages/AlbumShareDetailPage.qml" line="189"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 mediefiler</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="albumShareDetailPage.noAssets">
         <location filename="../qml/pages/AlbumShareDetailPage.qml" line="285"/>
         <source>No assets in this share</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen bilder eller videoer i denne delingen</translation>
     </message>
     <message id="individualShareDetailPage.title">
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="70"/>
         <source>Individual share</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkeltvis deling</translation>
     </message>
     <message id="individualShareDetailPage.asset">
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="161"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="219"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 mediefil</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="individualShareDetailPage.assets">
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="163"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="219"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 mediefiler</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="individualShareDetailPage.noAssets">
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="327"/>
         <source>No assets in this share</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen foto eller videoer i denne delingen</translation>
     </message>
 </context>
 </TS>
