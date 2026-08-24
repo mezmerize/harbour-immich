@@ -75,7 +75,7 @@ ApplicationWindow
         onLoginSucceeded: {
             var currentPage = pageStack.currentPage
             var pageName = currentPage && currentPage.objectName ? currentPage.objectName : ""
-            if (pageName === "loadingPage" || pageName === "loginPage") {
+            if (pageName === "loadingPage" || pageName === "loginPage" || pageName === "oauthPage") {
                 pageStack.clear()
                 pageStack.push(Qt.resolvedUrl("pages/TimelinePage.qml"))
             }

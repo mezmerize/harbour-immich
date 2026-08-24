@@ -2133,22 +2133,22 @@
         <translation>Hotovo</translation>
     </message>
     <message id="oauthPage.oauthLogin">
-        <location filename="../qml/pages/OAuthPage.qml" line="25"/>
+        <location filename="../qml/pages/OAuthPage.qml" line="26"/>
         <source>OAuth Login</source>
         <translation>OAuth přihlášení</translation>
     </message>
     <message id="oauthPage.completeInBrowser">
-        <location filename="../qml/pages/OAuthPage.qml" line="41"/>
+        <location filename="../qml/pages/OAuthPage.qml" line="42"/>
         <source>Please complete authentication in the browser</source>
         <translation>Dokončete prosím přihlašovací proces v prohlížeči</translation>
     </message>
     <message id="oauthPage.completeInBrowserReturn">
-        <location filename="../qml/pages/OAuthPage.qml" line="52"/>
+        <location filename="../qml/pages/OAuthPage.qml" line="53"/>
         <source>You will be returned to the app automatically</source>
         <translation>Budete automaticky přesměrován do aplikace</translation>
     </message>
     <message id="oauthPage.cancel">
-        <location filename="../qml/pages/OAuthPage.qml" line="58"/>
+        <location filename="../qml/pages/OAuthPage.qml" line="59"/>
         <source>Cancel</source>
         <translation>Storno</translation>
     </message>

@@ -4,6 +4,7 @@ import "../components"
 
 Page {
     id: oauthPage
+    objectName: oauthPage
 
     onStatusChanged: {
         if (status === PageStatus.Deactivating && oauthManager.busy) {

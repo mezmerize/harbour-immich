@@ -2107,22 +2107,22 @@
         <translation>Fait</translation>
     </message>
     <message id="oauthPage.oauthLogin">
-        <location filename="../qml/pages/OAuthPage.qml" line="25"/>
+        <location filename="../qml/pages/OAuthPage.qml" line="26"/>
         <source>OAuth Login</source>
         <translation>Connexion via OAuth</translation>
     </message>
     <message id="oauthPage.completeInBrowser">
-        <location filename="../qml/pages/OAuthPage.qml" line="41"/>
+        <location filename="../qml/pages/OAuthPage.qml" line="42"/>
         <source>Please complete authentication in the browser</source>
         <translation>Veuillez vous authentifier dans le navigateur</translation>
     </message>
     <message id="oauthPage.completeInBrowserReturn">
-        <location filename="../qml/pages/OAuthPage.qml" line="52"/>
+        <location filename="../qml/pages/OAuthPage.qml" line="53"/>
         <source>You will be returned to the app automatically</source>
         <translation>Vous serez redirigé automatiquement vers l&apos;application</translation>
     </message>
     <message id="oauthPage.cancel">
-        <location filename="../qml/pages/OAuthPage.qml" line="58"/>
+        <location filename="../qml/pages/OAuthPage.qml" line="59"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
