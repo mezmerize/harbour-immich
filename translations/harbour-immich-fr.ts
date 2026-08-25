@@ -142,7 +142,7 @@
     <message id="selectionActionBar.download">
         <location filename="../qml/components/SelectionActionBar.qml" line="481"/>
         <source>Download</source>
-        <translation>Téléchargement</translation>
+        <translation>Télécharger</translation>
     </message>
     <message id="selectionActionBar.delete">
         <location filename="../qml/components/SelectionActionBar.qml" line="500"/>
