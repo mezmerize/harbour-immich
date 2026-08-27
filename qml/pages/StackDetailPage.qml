@@ -38,6 +38,7 @@ Page {
     property bool draggingVertical: false
     property real dismissThreshold: page.height * 0.2
     property real dragOpacity: draggingVertical ? Math.max(0.2, 1.0 - Math.abs(dragOffsetY) / (page.height * 0.5)) : 1.0
+    property bool controlsShown: true
 
     ThemeEffect {
         id: hapticFeedback
@@ -105,7 +106,8 @@ Page {
                 "primaryIsFavorite": asset.isFavorite || false,
                 "primaryThumbhash": asset.thumbhash || "",
                 "timelineAssetIndex": newTimelineIndex,
-                "assetModel": page.assetModel
+                "assetModel": page.assetModel,
+                "controlsShown": page.controlsShown
             }, PageStackAction.Immediate)
         } else {
             // Target is a regular asset — replace with AssetDetailPage
@@ -115,7 +117,8 @@ Page {
                 "isVideo": asset.isVideo || false,
                 "thumbhash": asset.thumbhash || "",
                 "currentIndex": newTimelineIndex,
-                "assetModel": page.assetModel
+                "assetModel": page.assetModel,
+                "controlsShown": page.controlsShown
             }, PageStackAction.Immediate)
         }
     }
@@ -265,6 +268,9 @@ Page {
                     transitionCover.source = ""
                 }
             }
+            onControlsVisibleChanged: {
+                if (page.currentIsVideo) page.controlsShown = controlsVisible
+            }
         }
 
         ZoomSwipeArea {
@@ -278,7 +284,11 @@ Page {
             totalCount: page.totalTimelineAssets
             enableZoom: !page.currentIsVideo
             onTapped: {
-                if (page.currentIsVideo) videoPlayer.toggleControls()
+                if (page.currentIsVideo) {
+                    videoPlayer.toggleControls()
+                } else {
+                    page.controlsShown = !page.controlsShown
+                }
             }
             onPrevRequested: {
                 transitionCover.source = prevImage.source
@@ -301,8 +311,10 @@ Page {
                 right: parent.right
             }
             height: Theme.itemSizeMedium
+            visible: opacity > 0
+            opacity: (controlsShown && !zoomed && !draggingVertical && stackLoaded) ? 1.0 : 0.0
+            Behavior on opacity { FadeAnimation { duration: 200 } }
             z: 10
-            visible: !zoomed && !draggingVertical
 
             Rectangle {
                 anchors.fill: parent
@@ -322,10 +334,7 @@ Page {
                     leftMargin: Theme.horizontalPageMargin
                 }
                 icon.source: "image://theme/icon-m-about"
-                visible: !zoomed && !draggingVertical && stackLoaded
                 icon.color: Theme.lightPrimaryColor
-                opacity: visible ? 1.0 : 0.0
-                Behavior on opacity { FadeAnimation { duration: 150 } }
                 onClicked: {
                     var asset = getCurrentAsset()
                     if (asset && asset.id) {
@@ -349,9 +358,6 @@ Page {
                 }
                 icon.source: "image://theme/icon-m-reset"
                 icon.color: Theme.lightPrimaryColor
-                visible: !zoomed && !draggingVertical && stackLoaded
-                opacity: visible ? 1.0 : 0.0
-                Behavior on opacity { FadeAnimation { duration: 150 } }
                 onClicked: pageStack.pop()
             }
         }
@@ -365,9 +371,9 @@ Page {
                 right: parent.right
             }
             height: bottomColumn.height
-            visible: !zoomed && !draggingVertical && stackLoaded
-            opacity: visible ? 1.0 : 0.0
-            Behavior on opacity { FadeAnimation { duration: 150 } }
+            visible: opacity > 0
+            opacity: (controlsShown && !zoomed && !draggingVertical && stackLoaded) ? 1.0 : 0.0
+            Behavior on opacity { FadeAnimation { duration: 200 } }
             z: 10
 
             Rectangle {

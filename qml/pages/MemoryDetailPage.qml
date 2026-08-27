@@ -24,6 +24,7 @@ Page {
     property bool draggingVertical: false
     property real dismissThreshold: page.height * 0.2
     property real dragOpacity: draggingVertical ? Math.max(0.2, 1.0 - Math.abs(dragOffsetY) / (page.height * 0.5)) : 1.0
+    property bool controlsShown: true
 
     function getMemoryAssetSource(index) {
         if (!assets || assets.length === 0) return ""
@@ -242,7 +243,11 @@ Page {
                 enableZoom: false
                 wrapAround: true
                 onTapped: {
-                    if (page.currentIsVideo) videoPlayer.toggleControls()
+                    if (page.currentIsVideo) {
+                        videoPlayer.toggleControls()
+                    } else {
+                        page.controlsShown = !page.controlsShown
+                    }
                 }
                 onPrevRequested: {
                     memoryTransitionCover.source = prevImage.source
@@ -276,6 +281,9 @@ Page {
                     memoryTransitionCover.source = ""
                 }
             }
+            onControlsVisibleChanged: {
+                if (page.currentIsVideo) page.controlsShown = controlsVisible
+            }
         }
 
         // Title overlay (top)
@@ -286,6 +294,9 @@ Page {
                 right: parent.right
             }
             height: titleLabel.height + Theme.paddingLarge * 2
+            visible: opacity > 0
+            opacity: (controlsShown && !zoomed && !draggingVertical) ? 1.0 : 0.0
+            Behavior on opacity { FadeAnimation { duration: 200 } }
             z: 10
 
             Rectangle {
@@ -323,9 +334,6 @@ Page {
                 }
                 icon.source: "image://theme/icon-m-reset"
                 icon.color: Theme.lightPrimaryColor
-                visible: !draggingVertical
-                opacity: visible ? 1.0 : 0.0
-                Behavior on opacity { FadeAnimation { duration: 150 } }
                 onClicked: pageStack.pop()
             }
         }

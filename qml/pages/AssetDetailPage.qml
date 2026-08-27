@@ -41,6 +41,7 @@ Page {
     property bool draggingVertical: false
     property real dismissThreshold: page.height * 0.2
     property real dragOpacity: draggingVertical ? Math.max(0.2, 1.0 - Math.abs(dragOffsetY) / (page.height * 0.5)) : 1.0
+    property bool controlsShown: true
 
     function getAssetSource(index) {
         if (index < 0 || index >= totalAssets) return ""
@@ -73,7 +74,8 @@ Page {
                     "primaryIsFavorite": asset.isFavorite || false,
                     "primaryThumbhash": asset.thumbhash || "",
                     "timelineAssetIndex": assetIndex,
-                    "assetModel": page.assetModel
+                    "assetModel": page.assetModel,
+                    "controlsShown": page.controlsShown
                 }, PageStackAction.Immediate)
                 return
             }
@@ -243,6 +245,9 @@ Page {
                     transitionCover.source = ""
                 }
             }
+            onControlsVisibleChanged: {
+                if (page.isVideo) page.controlsShown = controlsVisible
+            }
         }
 
         ZoomSwipeArea {
@@ -256,7 +261,11 @@ Page {
             totalCount: page.totalAssets
             enableZoom: !page.isVideo
             onTapped: {
-                if (page.isVideo) videoPlayer.toggleControls()
+                if (page.isVideo) {
+                    videoPlayer.toggleControls()
+                } else {
+                    page.controlsShown = !page.controlsShown
+                }
             }
             onPrevRequested: {
                 transitionCover.source = prevImage.source
@@ -282,9 +291,9 @@ Page {
             }
             icon.source: "image://theme/icon-m-about"
             icon.color: Theme.lightPrimaryColor
-            visible: !zoomed && !draggingVertical
-            opacity: visible ? 1.0 : 0.0
-            Behavior on opacity { FadeAnimation { duration: 150 } }
+            visible: opacity > 0
+            opacity: (controlsShown && !zoomed && !draggingVertical) ? 1.0 : 0.0
+            Behavior on opacity { FadeAnimation { duration: 200 } }
             onClicked: {
                 pageStack.push(Qt.resolvedUrl("AssetInfoPage.qml"), {
                     assetId: assetId,
@@ -305,9 +314,9 @@ Page {
             }
             icon.source: "image://theme/icon-m-reset"
             icon.color: Theme.lightPrimaryColor
-            visible: !zoomed && !draggingVertical
-            opacity: visible ? 1.0 : 0.0
-            Behavior on opacity { FadeAnimation { duration: 150 } }
+            visible: opacity > 0
+            opacity: (controlsShown && !zoomed && !draggingVertical) ? 1.0 : 0.0
+            Behavior on opacity { FadeAnimation { duration: 200 } }
             onClicked: pageStack.pop()
             z: 10
         }
@@ -322,9 +331,9 @@ Page {
             }
             height: actionRow.height + Theme.paddingMedium * 2
             color: Theme.rgba("black", 0.6)
-            visible: !zoomed && !draggingVertical
-            opacity: visible ? 1.0 : 0.0
-            Behavior on opacity { FadeAnimation { duration: 150 } }
+            visible: opacity > 0
+            opacity: (controlsShown && !zoomed && !draggingVertical) ? 1.0 : 0.0
+            Behavior on opacity { FadeAnimation { duration: 200 } }
             z: 10
 
             // Gradient top edge
