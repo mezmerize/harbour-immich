@@ -246,7 +246,7 @@
     <message id="notification.addedAssetToFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="340"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="313"/>
-        <location filename="../qml/pages/AssetDetailPage.qml" line="472"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="481"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="407"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="376"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="374"/>
@@ -267,7 +267,7 @@
     <message id="notification.removedAssetFromFavorites">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="344"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="317"/>
-        <location filename="../qml/pages/AssetDetailPage.qml" line="474"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="483"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="302"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="411"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="380"/>
@@ -728,34 +728,34 @@
         <translation>Create an album in Immich to see it here</translation>
     </message>
     <message id="assetDetailPage.failed">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="200"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="202"/>
         <source>Failed to load image</source>
         <translation>Failed to load image</translation>
     </message>
     <message id="assetDetailPage.releaseToClose">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="121"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="123"/>
         <source>Release to close</source>
         <translation>Release to close</translation>
     </message>
     <message id="assetDetailPage.dragToClose">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="123"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="125"/>
         <source>Drag to close</source>
         <translation>Drag to close</translation>
     </message>
     <message id="notification.downloading">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="368"/>
-        <location filename="../qml/pages/StackDetailPage.qml" line="489"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="377"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="495"/>
         <source>Downloading...</source>
         <translation>Downloading...</translation>
     </message>
     <message id="notification.removingFromAlbum">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="421"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="430"/>
         <source>Removing from album</source>
         <translation>Removing from album</translation>
     </message>
     <message id="notification.downloaded">
-        <location filename="../qml/pages/AssetDetailPage.qml" line="480"/>
-        <location filename="../qml/pages/StackDetailPage.qml" line="648"/>
+        <location filename="../qml/pages/AssetDetailPage.qml" line="489"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="654"/>
         <location filename="../qml/pages/TimelinePage.qml" line="585"/>
         <source>Downloaded to: %1</source>
         <translation>Downloaded to: %1</translation>
@@ -944,17 +944,17 @@
         <translation>Login failed</translation>
     </message>
     <message id="memoryDetailPage.releaseToClose">
-        <location filename="../qml/pages/MemoryDetailPage.qml" line="104"/>
+        <location filename="../qml/pages/MemoryDetailPage.qml" line="105"/>
         <source>Release to close</source>
         <translation>Release to close</translation>
     </message>
     <message id="memoryDetailPage.dragToClose">
-        <location filename="../qml/pages/MemoryDetailPage.qml" line="106"/>
+        <location filename="../qml/pages/MemoryDetailPage.qml" line="107"/>
         <source>Drag to close</source>
         <translation>Drag to close</translation>
     </message>
     <message id="memoryDetailPage.assetCounter">
-        <location filename="../qml/pages/MemoryDetailPage.qml" line="374"/>
+        <location filename="../qml/pages/MemoryDetailPage.qml" line="382"/>
         <source>%1 / %2</source>
         <translation>%1 / %2</translation>
     </message>
@@ -1306,13 +1306,13 @@
     </message>
     <message id="notification.addedToFavorites">
         <location filename="../qml/pages/SearchResultsPage.qml" line="211"/>
-        <location filename="../qml/pages/StackDetailPage.qml" line="639"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="645"/>
         <source>Added to favorites</source>
         <translation>Added to favorites</translation>
     </message>
     <message id="notification.removedFromFavorites">
         <location filename="../qml/pages/SearchResultsPage.qml" line="213"/>
-        <location filename="../qml/pages/StackDetailPage.qml" line="641"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="647"/>
         <source>Removed from favorites</source>
         <translation>Removed from favorites</translation>
     </message>
@@ -2383,22 +2383,22 @@
         <translation>%1 items</translation>
     </message>
     <message id="stackDetailPage.releaseToClose">
-        <location filename="../qml/pages/StackDetailPage.qml" line="139"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="142"/>
         <source>Release to close</source>
         <translation>Release to close</translation>
     </message>
     <message id="stackDetailPage.dragToClose">
-        <location filename="../qml/pages/StackDetailPage.qml" line="141"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="144"/>
         <source>Drag to close</source>
         <translation>Drag to close</translation>
     </message>
     <message id="stackDetailPage.assetCounter">
-        <location filename="../qml/pages/StackDetailPage.qml" line="399"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="405"/>
         <source>%1 / %2</source>
         <translation>%1 / %2</translation>
     </message>
     <message id="notification.unstacking">
-        <location filename="../qml/pages/StackDetailPage.qml" line="550"/>
+        <location filename="../qml/pages/StackDetailPage.qml" line="556"/>
         <source>Unstacking</source>
         <translation>Unstacking</translation>
     </message>
