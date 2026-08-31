@@ -1669,7 +1669,7 @@
     <message id="notification.serverSyncResult">
         <location filename="../qml/pages/SettingsPage.qml" line="763"/>
         <source>Verified: %1 already on server, %2 new to upload</source>
-        <translation>Vérifié&#xa0;: %1 déjà présent sur le serveur, %2 nouveaux fichiers à télécharger</translation>
+        <translation>Vérifié&#xa0;: %1 déjà présent sur le serveur, %2 nouveaux fichiers à téléverser</translation>
     </message>
     <message id="notification.dbCleared">
         <location filename="../qml/pages/SettingsPage.qml" line="767"/>
@@ -1689,7 +1689,7 @@
     <message id="settingsPage.backupSkipVerificationInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="445"/>
         <source>Skip checking of assets against the server before uploading. Faster scanning, but duplicates are only detected by the server during upload.</source>
-        <translation>Ignorer la vérification des éléments par rapport au serveur avant le téléchargement. L&apos;analyse est plus rapide, mais les doublons ne sont détectés par le serveur qu&apos;au moment du téléchargement.</translation>
+        <translation>Ignorer la vérification des éléments par rapport au serveur avant le téléversement. L&apos;analyse est plus rapide, mais les doublons ne sont détectés par le serveur qu&apos;au moment du téléversement.</translation>
     </message>
     <message id="settingsPage.backupRetryFailed">
         <location filename="../qml/pages/SettingsPage.qml" line="561"/>
@@ -2049,7 +2049,7 @@
     <message id="sharePage.allowUploadDescription">
         <location filename="../qml/pages/SharePage.qml" line="560"/>
         <source>Recipients can upload assets/albums to this share</source>
-        <translation>Les destinataires peuvent ajouter des éléments ou des albums à ce partage</translation>
+        <translation>Les destinataires peuvent téléverser des éléments ou des albums à ce partage</translation>
     </message>
     <message id="sharePage.sharingAsset">
         <location filename="../qml/pages/SharePage.qml" line="569"/>
@@ -2159,7 +2159,7 @@
     <message id="timelinePage.noAssetsInfo">
         <location filename="../qml/pages/TimelinePage.qml" line="264"/>
         <source>Upload or import assets in Immich to start building your timeline</source>
-        <translation>Téléchargez ou importez des éléments dans Immich pour commencer à créer votre chronologie</translation>
+        <translation>Téléversez ou importez des éléments dans Immich pour commencer à créer votre chronologie</translation>
     </message>
     <message id="notification.addedToAlbum">
         <location filename="../qml/pages/TimelinePage.qml" line="590"/>
@@ -2260,17 +2260,17 @@
     <message id="uploadPage.startUpload">
         <location filename="../qml/pages/UploadPage.qml" line="153"/>
         <source>Start upload (%1)</source>
-        <translation>Lancer le téléchargement (%1)</translation>
+        <translation>Lancer le téléversement (%1)</translation>
     </message>
     <message id="uploadPage.progress">
         <location filename="../qml/pages/UploadPage.qml" line="169"/>
         <source>Uploading %1 of %2</source>
-        <translation>Téléchargement de %1 sur %2</translation>
+        <translation>Téléversement de %1 sur %2</translation>
     </message>
     <message id="uploadPage.complete">
         <location filename="../qml/pages/UploadPage.qml" line="250"/>
         <source>Upload complete</source>
-        <translation>Téléchargement terminé</translation>
+        <translation>Téléversement terminé</translation>
     </message>
     <message id="uploadPage.successCount">
         <location filename="../qml/pages/UploadPage.qml" line="259"/>
@@ -3109,7 +3109,7 @@
     <message id="editSharedLinkDialog.allowUploadDescription">
         <location filename="../qml/components/EditSharedLinkDialog.qml" line="219"/>
         <source>Recipients can upload assets/albums to this share</source>
-        <translation>Les destinataires peuvent ajouter des éléments ou des albums à ce partage</translation>
+        <translation>Les destinataires peuvent téléverser des éléments ou des albums à ce partage</translation>
     </message>
     <message id="albumShareDetailPage.title">
         <location filename="../qml/pages/AlbumShareDetailPage.qml" line="31"/>
