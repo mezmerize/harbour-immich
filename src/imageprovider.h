@@ -1,6 +1,8 @@
 #ifndef IMAGEPROVIDER_H
 #define IMAGEPROVIDER_H
 
+#include <QObject>
+#include <QString>
 #include <QQuickAsyncImageProvider>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -56,14 +58,25 @@ private:
     static QCache<QString, QImage> s_imageCache;
 };
 
-class ImmichImageProvider: public QQuickAsyncImageProvider {
+class ImmichImageProvider: public QObject, public QQuickAsyncImageProvider {
+    Q_OBJECT
 public:
-    ImmichImageProvider(AuthManager *authManager, SettingsManager *settingsManager);
+    ImmichImageProvider(AuthManager *authManager, SettingsManager *settingsManager, QObject *parent = nullptr);
     QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) override;
+
+private slots:
+    void refreshServerUrl();
+    void refreshAccessToken();
+    void refreshDetailQuality();
 
 private:
     AuthManager *m_authManager;
     SettingsManager *m_settingsManager;
+
+    mutable QMutex m_stateMutex;
+    QString m_serverUrl;
+    QString m_accessToken;
+    QString m_detailQuality;
 };
 
 #endif

@@ -239,11 +239,41 @@ QString ImmichImageResponse::errorString() const
     return m_errorString;
 }
 
-ImmichImageProvider::ImmichImageProvider(AuthManager *authManager, SettingsManager *settingsManager)
-    : QQuickAsyncImageProvider()
+ImmichImageProvider::ImmichImageProvider(AuthManager *authManager, SettingsManager *settingsManager, QObject *parent)
+    : QObject(parent)
+    , QQuickAsyncImageProvider()
     , m_authManager(authManager)
     , m_settingsManager(settingsManager)
+    , m_detailQuality(QStringLiteral("preview"))
 {
+    if (m_authManager) {
+        m_serverUrl = m_authManager->serverUrl();
+        m_accessToken = m_authManager->getAccessToken();
+        connect(m_authManager, &AuthManager::serverUrlChanged, this, &ImmichImageProvider::refreshServerUrl);
+        connect(m_authManager, &AuthManager::accessTokenChanged, this, &ImmichImageProvider::refreshAccessToken);
+    }
+    if (m_settingsManager) {
+        m_detailQuality = m_settingsManager->detailQuality();
+        connect(m_settingsManager, &SettingsManager::detailQualityChanged, this, &ImmichImageProvider::refreshDetailQuality);
+    }
+}
+
+void ImmichImageProvider::refreshServerUrl()
+{
+    QMutexLocker locker(&m_stateMutex);
+    m_serverUrl = m_authManager->serverUrl();
+}
+
+void ImmichImageProvider::refreshAccessToken()
+{
+    QMutexLocker locker(&m_stateMutex);
+    m_accessToken = m_authManager->getAccessToken();
+}
+
+void ImmichImageProvider::refreshDetailQuality()
+{
+    QMutexLocker locker(&m_stateMutex);
+    m_detailQuality = m_settingsManager->detailQuality();
 }
 
 QQuickImageResponse *ImmichImageProvider::requestImageResponse(const QString &id, const QSize &requestedSize)
@@ -257,23 +287,29 @@ QQuickImageResponse *ImmichImageProvider::requestImageResponse(const QString &id
     QString type = parts[0];
     QString assetId = parts[1];
 
+    QString serverUrl;
+    QString accessToken;
+    QString detailQuality;
+    {
+        QMutexLocker locker(&m_stateMutex);
+        serverUrl = m_serverUrl;
+        accessToken = m_accessToken;
+        detailQuality = m_detailQuality;
+    }
+
     QString url;
     if (type == "thumbnail") {
-        url = m_authManager->serverUrl() + QStringLiteral("/api/assets/") + assetId + QStringLiteral("/thumbnail?edited=true&size=thumbnail");
+        url = serverUrl + QStringLiteral("/api/assets/") + assetId + QStringLiteral("/thumbnail?edited=true&size=thumbnail");
     } else if (type == "detail") {
-        QString size = QStringLiteral("preview");
-        if (m_settingsManager) {
-            size = m_settingsManager->detailQuality();
-        }
-        url = m_authManager->serverUrl() + QStringLiteral("/api/assets/") + assetId + QStringLiteral("/thumbnail?edited=true&size=") + size;
+        url = serverUrl + QStringLiteral("/api/assets/") + assetId + QStringLiteral("/thumbnail?edited=true&size=") + detailQuality;
     } else if (type == "original") {
-        url = m_authManager->serverUrl() + QStringLiteral("/api/assets/") + assetId + QStringLiteral("/original");
+        url = serverUrl + QStringLiteral("/api/assets/") + assetId + QStringLiteral("/original");
     } else if (type == "person") {
-        url = m_authManager->serverUrl() + QStringLiteral("/api/people/") + assetId + QStringLiteral("/thumbnail");
+        url = serverUrl + QStringLiteral("/api/people/") + assetId + QStringLiteral("/thumbnail");
     } else {
         qWarning() << "ImmichImageProvider: Unknown type:" << type;
         return new ImmichImageResponse(QString(), QString(), requestedSize);
     }
 
-    return new ImmichImageResponse(url, m_authManager->getAccessToken(), requestedSize);
+    return new ImmichImageResponse(url, accessToken, requestedSize);
 }

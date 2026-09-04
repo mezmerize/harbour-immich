@@ -39,6 +39,7 @@ public:
 signals:
     void isAuthenticatedChanged();
     void serverUrlChanged();
+    void accessTokenChanged();
     void emailChanged();
     void userIdChanged();
     void storedPasswordChanged();

@@ -80,6 +80,8 @@ void AuthManager::checkStoredCredentials()
     m_serverUrl = m_storage->loadServerUrl();
     m_email = m_storage->loadEmail();
     m_accessToken = m_storage->loadAccessToken();
+    emit serverUrlChanged();
+    emit accessTokenChanged();
 
     if (!m_serverUrl.isEmpty() && !m_accessToken.isEmpty()) {
         qInfo() << "AuthManager: Found access token, validating";
@@ -140,6 +142,7 @@ void AuthManager::onLoginReplyFinished()
         m_accessToken = obj["accessToken"].toString();
 
         m_storage->saveAccessToken(m_accessToken);
+        emit accessTokenChanged();
 
         qInfo() << "AuthManager: Login succeeded";
         setAuthenticated(true);
@@ -160,6 +163,7 @@ void AuthManager::onLoginReplyFinished()
         qInfo() << "AuthManager: Login failed:" << errorString;
         m_accessToken.clear();
         m_storage->saveAccessToken(QString());
+        emit accessTokenChanged();
         setAuthenticated(false);
         emit loginFailed(errorString);
     }
@@ -174,6 +178,7 @@ void AuthManager::logout()
     m_email.clear();
     m_userId.clear();
     m_storage->clearAll();
+    emit accessTokenChanged();
     setAuthenticated(false);
     emit emailChanged();
     emit userIdChanged();
@@ -195,6 +200,7 @@ void AuthManager::setOAuthCredentials(const QString &serverUrl, const QString &a
     }
 
     emit serverUrlChanged();
+    emit accessTokenChanged();
     setAuthenticated(true);
     fetchCurrentUser();
     emit loginSucceeded();
