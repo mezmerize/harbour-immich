@@ -129,7 +129,8 @@ TRANSLATIONS += translations/harbour-immich-cs.ts \
                 translations/harbour-immich-en.ts \
                 translations/harbour-immich-fr.ts \
                 translations/harbour-immich-it.ts \
-                translations/harbour-immich-nb_NO.ts
+                translations/harbour-immich-nb_NO.ts \
+                translations/harbour-immich-nl.ts
 
 lupdate_only {
     SOURCES += qml/*.qml \
