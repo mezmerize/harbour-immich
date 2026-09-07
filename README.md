@@ -116,3 +116,4 @@ GPLv3
 - Frank Paul Silye (https://forum.sailfishos.org/u/frankps) - Norwegian translations and testing
 - 247 (https://forum.sailfishos.org/u/247) - Italian translations
 - Asulfr999 (https://forum.sailfishos.org/u/Asulfr999) - French translations
+- nthn (https://forum.sailfishos.org/u/nthn) - Dutch translations
