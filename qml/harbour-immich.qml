@@ -7,7 +7,8 @@ import "components"
 ApplicationWindow
 {
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
-    allowedOrientations: defaultAllowedOrientations
+    allowedOrientations: Orientation.All
+    _defaultPageOrientations: Orientation.All
 
     // Background backup job - wakes the device periodically to scan and upload
     BackgroundJob {

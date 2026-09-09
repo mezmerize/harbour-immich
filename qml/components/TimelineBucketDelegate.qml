@@ -111,7 +111,9 @@ Column {
         dataLoaded = false
         assetsLoaded = false
         loadBucketData()
-        if (autoLoadAssets) {
+        if (assetModel && assetModel.isBucketLoaded(bucketIndex)) {
+            loadAssets()
+        } else if (autoLoadAssets) {
             requestAssets()
         }
     }

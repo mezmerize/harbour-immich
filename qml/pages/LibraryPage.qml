@@ -45,10 +45,13 @@ Page {
 
             // Library items grid
             Grid {
+                id: libraryGrid
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 x: Theme.horizontalPageMargin
-                columns: 2
+                columns: columnCount
                 spacing: Theme.paddingMedium
+
+                property int columnCount: page.isPortrait ? 2 : 4
 
                 Repeater {
                     model: [
@@ -75,7 +78,7 @@ Page {
                     ]
 
                     BackgroundItem {
-                        width: (column.width - 2 * Theme.horizontalPageMargin - Theme.paddingMedium) / 2
+                        width: (libraryGrid.width - (libraryGrid.columnCount - 1) * libraryGrid.spacing) / libraryGrid.columnCount
                         height: Theme.itemSizeLarge * 1.2
 
                         Rectangle {

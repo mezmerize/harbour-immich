@@ -34,7 +34,7 @@ Dialog {
         anchors.fill: parent
         clip: true
         currentIndex: -1
-        cellWidth: width / 3
+        cellWidth: width / (peoplePickerDialog.isPortrait ? 3 : 6)
         cellHeight: cellWidth + Theme.fontSizeExtraSmall + Theme.paddingMedium
         cacheBuffer: Math.round(cellHeight * 3)
 

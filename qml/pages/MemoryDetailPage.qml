@@ -82,7 +82,6 @@ Page {
         }
     }
 
-    allowedOrientations: Orientation.All
     backNavigation: false
     backgroundColor: "transparent"
 

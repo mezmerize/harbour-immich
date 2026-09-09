@@ -100,7 +100,6 @@ Page {
         return 5
     }
 
-    allowedOrientations: Orientation.All
     backNavigation: false
     backgroundColor: "transparent"
 
