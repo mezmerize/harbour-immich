@@ -341,6 +341,13 @@ Page {
         forceHidden: selectionActionBar.activeMenuType !== ""
     }
 
+    SelectedCountButton {
+        selectedCount: personModel.selectedCount
+        actionBarHeight: selectionActionBar.visible ? selectionActionBar.contentHeight : 0
+        forceHidden: selectionActionBar.activeMenuType !== ""
+        onClearSelection: personModel.clearSelection()
+    }
+
     NotificationBanner {
         id: notification
         anchors.bottom: personModel.selectedCount > 0 ? selectionActionBar.top : parent.bottom

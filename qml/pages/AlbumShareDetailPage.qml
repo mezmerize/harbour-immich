@@ -370,6 +370,13 @@ Page {
         forceHidden: selectionActionBar.activeMenuType !== ""
     }
 
+    SelectedCountButton {
+        selectedCount: sharedLinkModel.selectedCount
+        actionBarHeight: selectionActionBar.visible ? selectionActionBar.contentHeight : 0
+        forceHidden: selectionActionBar.activeMenuType !== ""
+        onClearSelection: sharedLinkModel.clearSelection()
+    }
+
     NotificationBanner {
         id: notification
         anchors.bottom: parent.bottom

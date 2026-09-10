@@ -347,6 +347,13 @@ Page {
         forceHidden: selectionActionBar.activeMenuType !== ""
     }
 
+    SelectedCountButton {
+        selectedCount: timelineModel.selectedCount
+        actionBarHeight: selectionActionBar.shown ? selectionActionBar.contentHeight : 0
+        forceHidden: selectionActionBar.activeMenuType !== ""
+        onClearSelection: timelineModel.clearSelection()
+    }
+
     RemorsePopup {
         id: deleteRemorse
     }

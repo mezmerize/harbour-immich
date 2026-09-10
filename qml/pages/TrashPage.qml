@@ -237,6 +237,13 @@ Page {
         actionBarHeight: selectionActionBar.visible ? selectionActionBar.contentHeight : 0
     }
 
+    SelectedCountButton {
+        selectedCount: trashModel.selectedCount
+        actionBarHeight: selectionActionBar.visible ? selectionActionBar.contentHeight : 0
+        forceHidden: selectionActionBar.activeMenuType !== ""
+        onClearSelection: trashModel.clearSelection()
+    }
+
     NotificationBanner {
         id: notification
         anchors.bottom: trashModel.selectedCount > 0 ? selectionActionBar.top : parent.bottom

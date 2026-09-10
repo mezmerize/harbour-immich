@@ -445,6 +445,19 @@ Page {
         id: deleteRemorse
     }
 
+    ScrollToTopButton {
+        targetFlickable: bucketsList
+        actionBarHeight: selectionActionBar.visible ? selectionActionBar.contentHeight : 0
+        forceHidden: !page.authenticated || selectionActionBar.activeMenuType !== ""
+    }
+
+    SelectedCountButton {
+        selectedCount: lockedModel.selectedCount
+        actionBarHeight: selectionActionBar.visible ? selectionActionBar.contentHeight : 0
+        forceHidden: !page.authenticated || selectionActionBar.activeMenuType !== ""
+        onClearSelection: lockedModel.clearSelection()
+    }
+
     NotificationBanner {
         id: notification
         anchors.bottom: lockedModel.selectedCount > 0 ? selectionActionBar.top : parent.bottom
