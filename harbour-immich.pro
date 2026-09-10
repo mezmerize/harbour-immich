@@ -71,6 +71,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/PeoplePickerDialog.qml \
     qml/components/QRCode.qml \
     qml/components/ScrollToTopButton.qml \
+    qml/components/SelectedCountButton.qml \
     qml/components/SelectionActionBar.qml \
     qml/components/SharedLinksHelper.js \
     qml/components/TimelineBucketDelegate.qml \

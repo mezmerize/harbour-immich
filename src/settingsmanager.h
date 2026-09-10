@@ -13,6 +13,7 @@ class SettingsManager : public QObject
     Q_PROPERTY(int memoriesThumbnailSize READ memoriesThumbnailSize WRITE setMemoriesThumbnailSize NOTIFY memoriesThumbnailSizeChanged)
     Q_PROPERTY(bool showMemoriesBar READ showMemoriesBar WRITE setShowMemoriesBar NOTIFY showMemoriesBarChanged)
     Q_PROPERTY(QString scrollToTopPosition READ scrollToTopPosition WRITE setScrollToTopPosition NOTIFY scrollToTopPositionChanged)
+    Q_PROPERTY(QString selectedCountPosition READ selectedCountPosition WRITE setSelectedCountPosition NOTIFY selectedCountPositionChanged)
     Q_PROPERTY(bool backupEnabled READ backupEnabled WRITE setBackupEnabled NOTIFY backupEnabledChanged)
     Q_PROPERTY(QStringList backupFolders READ backupFolders WRITE setBackupFolders NOTIFY backupFoldersChanged)
     Q_PROPERTY(bool backupPhotosOnCellular READ backupPhotosOnCellular WRITE setBackupPhotosOnCellular NOTIFY backupPhotosOnCellularChanged)
@@ -46,6 +47,9 @@ public:
 
     QString scrollToTopPosition() const;
     void setScrollToTopPosition(const QString &position);
+
+    QString selectedCountPosition() const;
+    void setSelectedCountPosition(const QString &position);
 
     bool backupEnabled() const;
     void setBackupEnabled(bool enabled);
@@ -110,6 +114,7 @@ signals:
     void memoriesThumbnailSizeChanged();
     void showMemoriesBarChanged();
     void scrollToTopPositionChanged();
+    void selectedCountPositionChanged();
     void backupEnabledChanged();
     void backupFoldersChanged();
     void backupPhotosOnCellularChanged();

@@ -97,19 +97,6 @@ Item {
         }
     }
 
-    // Selection label
-    Label {
-        anchors.top: parent.top
-        anchors.topMargin: Theme.paddingSmall
-        anchors.horizontalCenter: parent.horizontalCenter
-        //% "%1 selected"
-        text: qsTrId("selectionActionBar.selected").arg(selectedCount)
-        font.pixelSize: Theme.fontSizeExtraSmall
-        color: Theme.highlightColor
-        visible: selectedCount > 0
-        z: 3
-    }
-
     // Buttons - trash folder mode
     Row {
         anchors.top: parent.top
@@ -447,25 +434,6 @@ Item {
                 onClicked: {
                     activeMenuType = ""
                     removeFromLockedFolder()
-                }
-            }
-
-            BackgroundItem {
-                width: parent.width
-                height: Theme.itemSizeSmall
-                visible: activeMenuType === "more"
-                highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
-
-                Label {
-                    anchors.centerIn: parent
-                    //% "Clear selection"
-                    text: qsTrId("selectionActionBar.clear")
-                    color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
-                }
-
-                onClicked: {
-                    activeMenuType = ""
-                    clearSelection()
                 }
             }
 

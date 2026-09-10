@@ -75,6 +75,19 @@ void SettingsManager::setScrollToTopPosition(const QString &position)
     }
 }
 
+QString SettingsManager::selectedCountPosition() const
+{
+    return m_settings.value("selectedCountPosition", "top-left").toString();
+}
+
+void SettingsManager::setSelectedCountPosition(const QString &position)
+{
+    if (selectedCountPosition() != position) {
+        m_settings.setValue("selectedCountPosition", position);
+        emit selectedCountPositionChanged();
+    }
+}
+
 bool SettingsManager::backupEnabled() const
 {
    return m_settings.value("backup/enabled", false).toBool();

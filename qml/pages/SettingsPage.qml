@@ -177,16 +177,70 @@ Page {
                }
                menu: ContextMenu {
                    //% "Left"
-                   MenuItem { text: qsTrId("settingsPage.scrollToTopPositionLeft") }
+                   MenuItem {
+                       text: qsTrId("settingsPage.scrollToTopPositionLeft")
+                       enabled: settingsManager.selectedCountPosition !== "bottom-left"
+                   }
                    //% "Center"
-                   MenuItem { text: qsTrId("settingsPage.scrollToTopPositionCenter") }
+                   MenuItem {
+                       text: qsTrId("settingsPage.scrollToTopPositionCenter")
+                       enabled: settingsManager.selectedCountPosition !== "bottom-center"
+                   }
                    //% "Right"
-                   MenuItem { text: qsTrId("settingsPage.scrollToTopPositionRight") }
+                   MenuItem {
+                       text: qsTrId("settingsPage.scrollToTopPositionRight")
+                       enabled: settingsManager.selectedCountPosition !== "bottom-right"
+                   }
                }
                onCurrentIndexChanged: {
                    var pos = ["left", "center", "right"][currentIndex]
                    if (pos !== settingsManager.scrollToTopPosition) {
                        settingsManager.scrollToTopPosition = pos
+                   }
+               }
+           }
+
+           ComboBox {
+               //% "Selected count button position"
+               label: qsTrId("settingsPage.selectedCountPosition")
+               //% "Controls position of the button showing the number of selected assets. Tap it to clear the selection. It cannot share a position with scroll to top button."
+               description: qsTrId("settingsPage.selectedCountPositionInfo")
+               currentIndex: {
+                   var pos = settingsManager.selectedCountPosition
+                   var values = ["top-left", "top-right", "bottom-left", "bottom-center", "bottom-right"]
+                   var idx = values.indexOf(pos)
+                   return idx >= 0 ? idx : 0
+               }
+               menu: ContextMenu {
+                   //% "Top left"
+                   MenuItem {
+                       text: qsTrId("settingsPage.selectedCountPositionTopLeft")
+                   }
+                   //% "Top right"
+                   MenuItem {
+                       text: qsTrId("settingsPage.selectedCountPositionTopRight")
+                   }
+                   //% "Bottom left"
+                   MenuItem {
+                       text: qsTrId("settingsPage.selectedCountPositionBottomLeft")
+                       enabled: settingsManager.scrollToTopPosition !== "left"
+                   }
+                   //% "Bottom center"
+                   MenuItem {
+                       text: qsTrId("settingsPage.selectedCountPositionBottomCenter")
+                       enabled: settingsManager.scrollToTopPosition !== "center"
+                   }
+                   //% "Bottom right"
+                   MenuItem {
+                       text: qsTrId("settingsPage.selectedCountPositionBottomRight")
+                       enabled: settingsManager.scrollToTopPosition !== "right"
+                   }
+               }
+               onCurrentIndexChanged: {
+                   var values = ["top-left", "top-right", "bottom-left", "bottom-center", "bottom-right"]
+                   var pos = values[currentIndex]
+                   if (pos !== settingsManager.selectedCountPosition) {
+                       settingsManager.selectedCountPosition = pos
                    }
                }
            }
