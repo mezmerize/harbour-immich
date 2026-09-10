@@ -324,14 +324,17 @@ Column {
                     visible: inWindow && rowData && rowData.t === 0
 
                     property var groupAssets: (inWindow && rowData && rowData.t === 0) ? rowData.groupAssets : null
-                    property bool isSubGroupSelected: {
-                        if (!groupAssets || assetModel.selectedCount === 0) return false
+                    property var groupAssetIds: {
+                        if (!groupAssets) return []
+                        var ids = []
                         for (var i = 0; i < groupAssets.length; i++) {
-                            if (!assetModel.isAssetSelected(groupAssets[i].id)) {
-                                return false
-                            }
+                            ids.push(groupAssets[i].id)
                         }
-                        return true
+                        return ids
+                    }
+                    property bool isSubGroupSelected: {
+                        if (assetModel.selectedCount === 0) return false
+                        return assetModel.areAllAssetsSelected(groupAssetIds)
                     }
 
                     Label {
@@ -353,18 +356,11 @@ Column {
                         onClicked: {
                             var assets = parent.groupAssets
                             if (!assets) return
-                            var model = bucketColumn.assetModel
-                            var bucketIdx = bucketColumn.bucketIndex
-                            var select = !parent.isSubGroupSelected
-                            var toToggle = []
+                            var ids = []
                             for (var i = 0; i < assets.length; i++) {
-                                if (model.isAssetSelected(assets[i].id) !== select) {
-                                    toToggle.push(assets[i].assetIndex)
-                                }
+                                ids.push(assets[i].id)
                             }
-                            for (var j = 0; j < toToggle.length; j++) {
-                                model.toggleSelection(bucketIdx, toToggle[j])
-                            }
+                            bucketColumn.assetModel.setSelectionForAssets(ids, !parent.isSubGroupSelected)
                         }
                     }
                 }

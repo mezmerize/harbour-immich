@@ -77,6 +77,8 @@ public:
 
     // Selection
     Q_INVOKABLE void toggleSelection(int bucketIndex, int assetIndex);
+    Q_INVOKABLE void setSelectionForAssets(const QStringList &assetIds, bool selected);
+    Q_INVOKABLE bool areAllAssetsSelected(const QStringList &assetIds) const;
     Q_INVOKABLE void clearSelection();
     Q_INVOKABLE QStringList getSelectedAssetIds() const;
     Q_INVOKABLE bool isAssetSelected(const QString &assetId) const;

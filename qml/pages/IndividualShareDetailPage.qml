@@ -51,6 +51,46 @@ Page {
         updateAllSelectedAreFavorites()
     }
 
+    function setAssetsSelected(assets, select) {
+        var current = {}
+        for (var i = 0; i < selectedAssets.length; i++) current[selectedAssets[i]] = true
+        var changed = false
+        for (var j = 0; j < assets.length; j++) {
+            var id = assets[j].id
+            var has = current[id] === true
+            if (select && !has) {
+                current[id] = true
+                changed = true
+            } else if (!select && has) {
+                current[id] = false
+                changed = true
+            }
+        }
+        if (!changed) return
+        var next = []
+        for (var k = 0; k < selectedAssets.length; k++) {
+            if (current[selectedAssets[k]]) {
+                next.push(selectedAssets[k])
+                current[selectedAssets[k]] = false
+            }
+        }
+        if (select) {
+            for (var m = 0; m < assets.length; m++) {
+                if (current[assets[m].id]) {
+                    next.push(assets[m].id)
+                    current[assets[m].id] = false
+                }
+            }
+        }
+        selectedAssets = next
+        if (select) {
+            if (!selectionMode) selectionMode = true
+        } else if (selectedAssets.length === 0) {
+            selectionMode = false
+        }
+        updateAllSelectedAreFavorites()
+    }
+
     function clearSelection() {
         selectedAssets = []
         selectionMode = false
@@ -280,18 +320,7 @@ Page {
                 if (!page.selectionMode) page.selectionMode = true
                 page.toggleAssetSelection(assetId)
             }
-            onSubGroupSelectToggled: {
-                if (allSelected) {
-                    for (var i = 0; i < assets.length; i++) {
-                        if (page.isAssetSelected(assets[i].id)) page.toggleAssetSelection(assets[i].id)
-                    }
-                } else {
-                    if (!page.selectionMode) page.selectionMode = true
-                    for (var i = 0; i < assets.length; i++) {
-                        if (!page.isAssetSelected(assets[i].id)) page.toggleAssetSelection(assets[i].id)
-                    }
-                }
-            }
+            onSubGroupSelectToggled: page.setAssetsSelected(assets, !allSelected)
         }
 
         footer: Item {

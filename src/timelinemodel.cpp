@@ -441,6 +441,37 @@ void TimelineModel::toggleSelection(int bucketIndex, int assetIndex)
     emit selectedCountChanged();
 }
 
+void TimelineModel::setSelectionForAssets(const QStringList &assetIds, bool selected)
+{
+    bool changed = false;
+    for (const QString &assetId : assetIds) {
+        if (selected) {
+            if (!m_selectedIds.contains(assetId)) {
+                m_selectedIds.insert(assetId);
+                changed = true;
+            }
+        } else if (m_selectedIds.remove(assetId)) {
+            changed = true;
+        }
+    }
+    if (changed) {
+        emit selectedCountChanged();
+    }
+}
+
+bool TimelineModel::areAllAssetsSelected(const QStringList &assetIds) const
+{
+    if (assetIds.isEmpty()) {
+        return false;
+    }
+    for (const QString &assetId : assetIds) {
+        if (!m_selectedIds.contains(assetId)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void TimelineModel::clearSelection()
 {
     m_selectedIds.clear();
