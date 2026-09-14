@@ -10,6 +10,13 @@ Page {
     property var assetAlbums: []
     property bool isOwnedByOther: assetInfo ? (assetInfo.ownerId !== undefined && assetInfo.ownerId !== authManager.userId) : false
 
+    function formatBytes(bytes) {
+        if (!bytes || bytes === 0) return "0 B"
+        var sizes = ["B", "KB", "MB", "GB", "TB"]
+        var i = Math.floor(Math.log(bytes) / Math.log(1024))
+        return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + " " + sizes[i]
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
@@ -56,6 +63,20 @@ Page {
                 //% "File name"
                 label: qsTrId("assetInfoPage.fileNme")
                 value: !!(assetInfo && assetInfo.originalFileName) ? assetInfo.originalFileName : ""
+            }
+
+            DetailItem {
+                visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.exifImageWidth && assetInfo.exifInfo.exifImageHeight)
+                //% "Resolution"
+                label: qsTrId("assetInfoPage.resolution")
+                value: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.exifImageWidth && assetInfo.exifInfo.exifImageHeight) ? assetInfo.exifInfo.exifImageWidth + " x " + assetInfo.exifInfo.exifImageHeight : ""
+            }
+
+            DetailItem {
+                visible: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.fileSizeInByte)
+                //% "Size"
+                label: qsTrId("assetInfoPage.size")
+                value: !!(assetInfo && assetInfo.exifInfo && assetInfo.exifInfo.fileSizeInByte) ? formatBytes(assetInfo.exifInfo.fileSizeInByte) : ""
             }
 
             DetailItem {

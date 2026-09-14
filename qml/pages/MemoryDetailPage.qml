@@ -48,6 +48,7 @@ Page {
             slideshowImageA.source = newSource
             crossfadeToA.start()
         }
+        currentIndex = newIndex
         showingA = !showingA
     }
 

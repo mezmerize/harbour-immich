@@ -59,15 +59,6 @@ Page {
                 title: qsTrId("peoplePage.people")
             }
 
-            SearchField {
-                width: parent.width
-                //% "Filter by name..."
-                placeholderText: qsTrId("peoplePage.filter")
-                onTextChanged: peopleModel.filterText = text
-                EnterKey.iconSource: "image://theme/icon-m-enter-close"
-                EnterKey.onClicked: focus = false
-            }
-
             FilterBar {
                 width: parent.width
                 activeFilter: peopleModel.activeFilter
@@ -82,6 +73,15 @@ Page {
                 onFilterActivated: peopleModel.activeFilter = filter
                 onFilterFavorites: peopleModel.showFavorites = showFavorites
                 onSortOrderToggled: peopleModel.sortAscending = (order === "asc")
+            }
+
+            SearchField {
+                width: parent.width
+                //% "Filter by name..."
+                placeholderText: qsTrId("peoplePage.filter")
+                onTextChanged: peopleModel.filterText = text
+                EnterKey.iconSource: "image://theme/icon-m-enter-close"
+                EnterKey.onClicked: focus = false
             }
 
             Item {
