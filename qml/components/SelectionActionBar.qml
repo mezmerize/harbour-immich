@@ -85,15 +85,10 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         height: contentHeight
-        color: Theme.rgba(Theme.highlightDimmerColor, 0.95)
         z: 2
-
-        Rectangle {
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: 1
-            color: Theme.rgba(Theme.highlightColor, 0.3)
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "transparent" }
+            GradientStop { position: 1.0; color: Theme.rgba(Theme.highlightDimmerColor, 0.95) }
         }
     }
 

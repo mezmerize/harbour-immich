@@ -108,6 +108,12 @@ Page {
         z: -1
     }
 
+    AssetInfoPeek {
+        dragOffsetY: page.dragOffsetY
+        openThreshold: page.dismissThreshold
+        assetInfo: page.currentAsset
+    }
+
     // Main content container - moves vertically during drag-to-dismiss
     Item {
         id: contentContainer
@@ -262,6 +268,15 @@ Page {
                     page.switchTo((page.currentIndex + 1) % page.assets.length)
                 }
                 onDismissRequested: pageStack.pop()
+                onInfoRequested: {
+                    var asset = currentAsset
+                    if (!asset || !asset.id) return
+                    slideshowRunning = false
+                    pageStack.push(Qt.resolvedUrl("AssetInfoPage.qml"), {
+                        assetId: asset.id,
+                        assetInfo: asset
+                    })
+                }
             }
         }
 
@@ -295,7 +310,7 @@ Page {
             }
             height: titleLabel.height + Theme.paddingLarge * 2
             visible: opacity > 0
-            opacity: (controlsShown && !zoomed && !draggingVertical) ? 1.0 : 0.0
+            opacity: (controlsShown && !draggingVertical) ? 1.0 : 0.0
             Behavior on opacity { FadeAnimation { duration: 200 } }
             z: 10
 

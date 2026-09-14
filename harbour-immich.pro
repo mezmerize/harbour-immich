@@ -55,6 +55,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/AlbumFilterBar.qml \
     qml/components/AssetGridItem.qml \
     qml/components/AssetGroupHelper.js \
+    qml/components/AssetInfoPeek.qml \
     qml/components/EditPersonDialog.qml \
     qml/components/EditSharedLinkDialog.qml \
     qml/components/EmptyState.qml \

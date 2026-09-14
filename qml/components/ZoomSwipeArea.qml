@@ -13,12 +13,14 @@ PinchArea {
     property bool enableZoom: true
     property bool enableHorizontal: true
     property bool enableDismiss: true
+    property bool enableInfo: true
     property bool wrapAround: false
     property real maxScale: 4.0
     property real doubleTapScale: 2.5
 
     signal prevRequested()
     signal nextRequested()
+    signal infoRequested()
     signal dismissRequested()
     signal tapped()
 
@@ -179,9 +181,12 @@ PinchArea {
             if (enableZoom && zoomed) {
             } else if (root.stateTarget.draggingVertical) {
                 root.stateTarget.draggingVertical = false
-                if (Math.abs(root.stateTarget.dragOffsetY) > root.stateTarget.dismissThreshold) {
+                if (root.stateTarget.dragOffsetY > root.stateTarget.dismissThreshold) {
                     root.dismissRequested()
                 } else {
+                    if (root.enableInfo && root.stateTarget.dragOffsetY < - root.stateTarget.dismissThreshold) {
+                        root.infoRequested()
+                    }
                     dragResetAnim.start()
                 }
             } else if (gestureDecided && horizontalGesture && enableHorizontal) {

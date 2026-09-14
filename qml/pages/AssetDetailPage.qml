@@ -125,6 +125,13 @@ Page {
         z: -1
     }
 
+    AssetInfoPeek {
+        dragOffsetY: page.dragOffsetY
+        openThreshold: page.dismissThreshold
+        assetInfo: page.assetInfo
+        assetId: page.assetId
+    }
+
     // Main content container - moves vertically during drag-to-dismiss
     Item {
         id: contentContainer
@@ -277,29 +284,12 @@ Page {
                 page.navigateToAsset(page.currentIndex + 1)
             }
             onDismissRequested: pageStack.pop()
-        }
-
-        // Info button (top-left)
-        IconButton {
-            id: infoButton
-            anchors {
-                top: parent.top
-                left: parent.left
-                topMargin: Theme.paddingLarge
-                leftMargin: Theme.horizontalPageMargin
-            }
-            icon.source: "image://theme/icon-m-about"
-            icon.color: Theme.lightPrimaryColor
-            visible: opacity > 0
-            opacity: (controlsShown && !zoomed && !draggingVertical) ? 1.0 : 0.0
-            Behavior on opacity { FadeAnimation { duration: 200 } }
-            onClicked: {
+            onInfoRequested: {
                 pageStack.push(Qt.resolvedUrl("AssetInfoPage.qml"), {
                     assetId: assetId,
                     assetInfo: assetInfo
                 })
             }
-            z: 10
         }
 
         // Back button (top-right)

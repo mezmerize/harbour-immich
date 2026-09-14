@@ -144,6 +144,12 @@ Page {
         z: -1
     }
 
+    AssetInfoPeek {
+        dragOffsetY: page.dragOffsetY
+        openThreshold: page.dismissThreshold
+        assetInfo: (page.assetInfo && page.currentAsset && page.assetInfo.id === page.currentAsset.id) ? page.assetInfo : page.currentAsset
+    }
+
     // Main content
     Item {
         id: contentContainer
@@ -300,6 +306,15 @@ Page {
                 page.navigateToTimelineAsset(page.timelineAssetIndex + 1)
             }
             onDismissRequested: pageStack.pop()
+            onInfoRequested: {
+                var asset = getCurrentAsset()
+                if (asset && asset.id) {
+                    pageStack.push(Qt.resolvedUrl("AssetInfoPage.qml"), {
+                        assetId: asset.id,
+                        assetInfo: page.assetInfo
+                    })
+                }
+            }
         }
 
         // Top bar: back + info
@@ -321,29 +336,6 @@ Page {
                     GradientStop { position: 0.0; color: Theme.rgba("black", 0.6) }
                     GradientStop { position: 1.0; color: "transparent" }
                 }
-            }
-
-            // Info button (top-left)
-            IconButton {
-                id: infoButton
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    topMargin: Theme.paddingLarge
-                    leftMargin: Theme.horizontalPageMargin
-                }
-                icon.source: "image://theme/icon-m-about"
-                icon.color: Theme.lightPrimaryColor
-                onClicked: {
-                    var asset = getCurrentAsset()
-                    if (asset && asset.id) {
-                        pageStack.push(Qt.resolvedUrl("AssetInfoPage.qml"), {
-                            assetId: asset.id,
-                            assetInfo: page.assetInfo
-                        })
-                    }
-                }
-                z: 10
             }
 
             // Back button (top-right)

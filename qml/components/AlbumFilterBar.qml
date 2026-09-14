@@ -57,8 +57,8 @@ Item {
                         source: modelData.icon
                         width: Theme.iconSizeSmall
                         height: Theme.iconSizeSmall
-                        anchors.verticalCenter: parent.verticalCenter
                         color: filterBar.isActive(modelData.id) ? Theme.highlightColor : Theme.primaryColor
+                        anchors.verticalCenter: parent.verticalCenter
                     }
 
                     Label {

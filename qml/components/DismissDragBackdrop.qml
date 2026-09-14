@@ -14,7 +14,7 @@ Rectangle {
     Label {
         anchors.horizontalCenter: parent.horizontalCenter
         y: dragOffsetY > 0 ? Theme.paddingLarge * 2 : parent.height - height - Theme.paddingLarge * 2
-        visible: draggingVertical
+        visible: draggingVertical && dragOffsetY > 0
         opacity: Math.min(1.0, Math.abs(dragOffsetY) / (dismissThreshold * 0.5))
         text: Math.abs(dragOffsetY) >= dismissThreshold ? releaseText : dragText
         color: Math.abs(dragOffsetY) >= dismissThreshold ? Theme.highlightColor : Theme.secondaryColor
