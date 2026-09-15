@@ -25,6 +25,7 @@ public:
 
 public slots:
     void handleCallbackUrl(const QString &url);
+    void raiseWindow();
 
 signals:
     void oauthEnabledChanged();
@@ -52,7 +53,6 @@ private:
     void setOAuthEnabled(bool enabled);
     void handleOAuthCallback(const QString &callbackUrl);
     QString redirectUri() const;
-    void raiseWindow();
     void resetOAuthState();
     static QString generateRandomString(int length);
     static QString computeCodeChallenge(const QString &codeVerifier);

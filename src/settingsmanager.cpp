@@ -1,8 +1,10 @@
 #include "settingsmanager.h"
+#include "sailfishapp.h"
 #include <QCoreApplication>
 #include <QStandardPaths>
 #include <QDir>
 #include <QDateTime>
+#include <QLocale>
 
 SettingsManager::SettingsManager(QObject *parent)
     : QObject(parent)
@@ -361,4 +363,37 @@ QStringList SettingsManager::validCustomBrowseFolders()
 bool SettingsManager::folderExists(const QString &path) const
 {
     return QDir(path).exists();
+}
+
+QString SettingsManager::language() const
+{
+    return m_settings.value("language", "").toString();
+}
+
+void SettingsManager::setLanguage(const QString &language)
+{
+    if (this->language() != language) {
+        m_settings.setValue("language", language);
+        emit languageChanged();
+    }
+}
+
+QVariantList SettingsManager::availableLanguages() const
+{
+    QVariantList result;
+    const QDir dir(SailfishApp::pathTo(QStringLiteral("translations")).toLocalFile());
+    const QStringList files = dir.entryList(QStringList() << QStringLiteral("harbour-immich-*.qm"), QDir::Files);
+    for (const QString &file : files) {
+        QString code = file.mid(QStringLiteral("harbour-immich-").size());
+        code.chop(3); // ".qm"
+        QString name = QLocale(code).nativeLanguageName();
+        if (!name.isEmpty()) {
+            name[0] = name[0].toUpper();
+        }
+        QVariantMap entry;
+        entry[QStringLiteral("code")] = code;
+        entry[QStringLiteral("name")] = name.isEmpty() ? code : name;
+        result.append(entry);
+    }
+    return result;
 }

@@ -5,8 +5,13 @@ Icon=harbour-immich
 Exec=harbour-immich %u
 Name=Immich
 MimeType=x-scheme-handler/app.immich;
+X-Maemo-Service=mezmerize.harbour-immich
+X-Maemo-Object-Path=/mezmerize/harbour_immich
+X-Maemo-Method=mezmerize.harbour_immich.openUrl
+X-DBusActivatable=true
 
 [X-Sailjail]
 OrganizationName=mezmerize
 ApplicationName=harbour-immich
 Permissions=Internet;Secrets;Pictures;Videos;UserDirs;MediaIndexing;Audio
+ExecDBus=harbour-immich

@@ -9,6 +9,16 @@
 namespace {
 const int MaxConcurrentBucketLoads = 2;
 const int MaxQueuedBucketLoads = 4;
+
+QString monthYearLabel(const QDate &date)
+{
+    const QLocale locale;
+    QString name = locale.standaloneMonthName(date.month());
+    if (!name.isEmpty()) {
+        name.replace(0, 1, locale.toUpper(name.left(1)));
+    }
+    return name + QLatin1Char(' ') + QString::number(date.year());
+}
 }
 
 TimelineModel::TimelineModel(QObject *parent)
@@ -85,14 +95,14 @@ void TimelineModel::loadBuckets(const QJsonArray &bucketsJson)
         // Parse the timeBucket to create display strings
         bucket.dateTime = QDateTime::fromString(bucket.timeBucket, Qt::ISODate);
         if (bucket.dateTime.isValid()) {
-            bucket.monthYear = QLocale().toString(bucket.dateTime, QStringLiteral("MMMM yyyy"));
+            bucket.monthYear = monthYearLabel(bucket.dateTime.date());
             bucket.date = QLocale().toString(bucket.dateTime, QStringLiteral("dd.MM.yyyy"));
         } else {
             // Fallback - try parsing just the date part
             QString dateStr = bucket.timeBucket.left(10);
             QDate date = QDate::fromString(dateStr, Qt::ISODate);
             if (date.isValid()) {
-                bucket.monthYear = QLocale().toString(date, QStringLiteral("MMMM yyyy"));
+                bucket.monthYear = monthYearLabel(date);
                 bucket.date = QLocale().toString(date, QStringLiteral("dd.MM.yyyy"));
                 bucket.dateTime = QDateTime(date, QTime(0, 0));
             }

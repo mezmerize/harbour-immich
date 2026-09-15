@@ -52,7 +52,7 @@ void OAuthManager::setOAuthEnabled(bool enabled)
 
 QString OAuthManager::redirectUri() const
 {
-    return QStringLiteral("app.immich://oauth-callback");
+    return QStringLiteral("app.immich:///oauth-callback");
 }
 
 QString OAuthManager::generateRandomString(int length)
@@ -175,8 +175,24 @@ void OAuthManager::handleCallbackUrl(const QString &url)
         return;
     }
 
-    QUrl callbackUrl(url);
+    QString normalizedUrl = url.trimmed();
+    if (normalizedUrl.startsWith(QStringLiteral("app.immich"))) {
+        const int queryStart = normalizedUrl.indexOf(QLatin1Char('?'));
+        normalizedUrl = redirectUri() + (queryStart >= 0 ? normalizedUrl.mid(queryStart) : QString());
+    }
+    QUrl callbackUrl(normalizedUrl);
     QUrlQuery query(callbackUrl);
+
+    const QString error = query.queryItemValue(QStringLiteral("error"));
+    if (!error.isEmpty()) {
+        const QString description = query.queryItemValue(QStringLiteral("error_description"));
+        qWarning() << "OAuthManager: Provider returned error:" << error << description;
+        resetOAuthState();
+        setBusy(false);
+        emit oauthLoginFailed(description.isEmpty() ? error : description);
+        return;
+    }
+
     QString callbackState = query.queryItemValue(QStringLiteral("state"));
 
     if (!callbackState.isEmpty() && callbackState != m_state) {
@@ -187,7 +203,7 @@ void OAuthManager::handleCallbackUrl(const QString &url)
         return;
     }
 
-    handleOAuthCallback(url);
+    handleOAuthCallback(normalizedUrl);
 }
 
 void OAuthManager::onAuthorizeReplyFinished()
@@ -276,6 +292,7 @@ void OAuthManager::onCallbackReplyFinished()
             }
         }
 
+        qWarning() << "OAuthManager: Callback request failed:" << errorString;
         emit oauthLoginFailed(errorString);
     }
 

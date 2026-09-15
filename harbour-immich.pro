@@ -11,6 +11,12 @@ harbour {
     DEFINES += HARBOUR_BUILD
 }
 
+!harbour {
+    QT += dbus
+    SOURCES += src/appactivationadaptor.cpp
+    HEADERS += src/appactivationadaptor.h
+}
+
 SOURCES += src/harbour-immich.cpp \
     src/backupdatabase.cpp \
     src/backupmanager.cpp \

@@ -1,5 +1,17 @@
 .pragma library
 
+function monthYearLabel(date) {
+    var name = null
+    try {
+        name = Qt.locale().standaloneMonthName(date.getMonth())
+    } catch (e) {}
+    if (!name) {
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        name = months[date.getMonth()]
+    }
+    return name.charAt(0).toUpperCase() + name.slice(1) + " " + date.getFullYear()
+}
+
 function parseAssets(results, sortAsc, favorites, groupByCreatedAt) {
     favorites = (favorites === undefined) ? false : favorites
     groupByCreatedAt = (groupByCreatedAt === undefined) ? false : groupByCreatedAt
@@ -66,8 +78,7 @@ function groupByMonthAndDate(parsed) {
     for (var g = 0; g < parsed.length; g++) {
         var asset = parsed[g], d = asset.dateObj
         var monthKey = d.getFullYear() + "-" + (d.getMonth() + 1)
-        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-        var monthLabel = months[d.getMonth()] + " " + d.getFullYear()
+        var monthLabel = monthYearLabel(d)
         var dateKey = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
         var dd = d.getDate(), mm = d.getMonth() + 1, yyyy = d.getFullYear()
         var dateLabel = (dd < 10 ? "0" + dd : dd) + "." + (mm < 10 ? "0" + mm : mm) + "." + yyyy

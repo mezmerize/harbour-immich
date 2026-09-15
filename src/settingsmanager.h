@@ -29,6 +29,7 @@ class SettingsManager : public QObject
     Q_PROPERTY(bool coverSlideshow READ coverSlideshow WRITE setCoverSlideshow NOTIFY coverSlideshowChanged)
     Q_PROPERTY(QString downloadFolder READ downloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged)
     Q_PROPERTY(QStringList customBrowseFolders READ customBrowseFolders WRITE setCustomBrowseFolders NOTIFY customBrowseFoldersChanged)
+    Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
 
 public:
     explicit SettingsManager(QObject *parent = nullptr);
@@ -108,6 +109,10 @@ public:
     Q_INVOKABLE QString homePath() const;
     Q_INVOKABLE bool folderExists(const QString &path) const;
 
+    QString language() const;
+    void setLanguage(const QString &language);
+    Q_INVOKABLE QVariantList availableLanguages() const;
+
 signals:
     void detailQualityChanged();
     void assetsPerRowChanged();
@@ -130,6 +135,7 @@ signals:
     void coverSlideshowChanged();
     void downloadFolderChanged();
     void customBrowseFoldersChanged();
+    void languageChanged();
 
 private:
     QSettings m_settings;
