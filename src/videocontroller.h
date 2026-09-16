@@ -67,6 +67,7 @@ public:
     bool failed() const;
 
     Q_INVOKABLE void load(const QString &assetId);
+    Q_INVOKABLE void loadLocalFile(const QString &filePath);
     Q_INVOKABLE void unload();
     Q_INVOKABLE void play();
     Q_INVOKABLE void pause();
@@ -97,10 +98,15 @@ private:
     QPointer<AuthManager> m_authManager;
 
     QString m_assetId;
+    QString m_localPath;
     bool m_autoPlay;
+    bool m_sourcePending;
     bool m_loadedEmitted;
     bool m_failed;
     bool m_suppressErrors;
+    int m_retryCount;
+    int m_loadGeneration;
+    qint64 m_retryPosition;
 };
 
 #endif // VIDEOCONTROLLER_H

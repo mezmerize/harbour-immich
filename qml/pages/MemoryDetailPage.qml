@@ -411,6 +411,11 @@ Page {
                     rightMargin: Theme.horizontalPageMargin
 
                     model: assets ? assets.length : 0
+                    currentIndex: page.currentIndex
+                    highlightRangeMode: ListView.ApplyRange
+                    preferredHighlightBegin: 0
+                    preferredHighlightEnd: width
+                    highlightMoveDuration: 200
 
                     delegate: BackgroundItem {
                         width: Theme.itemSizeMedium

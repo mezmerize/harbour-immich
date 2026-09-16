@@ -259,7 +259,8 @@ Page {
                     isVideo: isVideo,
                     thumbhash: thumbhash,
                     assetModel: albumModel,
-                    currentIndex: currentIndex
+                    currentIndex: currentIndex,
+                    albumId: page.albumId
                 })
             }
         }
