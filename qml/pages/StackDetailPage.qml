@@ -540,6 +540,7 @@ Page {
                         width: parent.width / actionRow.buttonCount
                         icon.source: "image://theme/icon-m-video"
                         icon.color: page.motionPlaying ? Theme.highlightColor : Theme.lightPrimaryColor
+                        visible: page.motionAvailable
                         onClicked: {
                             if (!page.motionPlaying) {
                                 hapticFeedback.play()
