@@ -131,6 +131,17 @@ Page {
            }
 
            TextSwitch {
+               //% "Motion photos"
+               text: qsTrId("settingsPage.motionPhotos")
+               //% "Show an indicator on motion photos and allow playing their video part in the detail view."
+               description: qsTrId("settingsPage.motionPhotosInfo")
+               checked: settingsManager.motionPhotosEnabled
+               onCheckedChanged: {
+                   settingsManager.motionPhotosEnabled = checked
+               }
+           }
+
+           TextSwitch {
                //% "Show memories bar"
                text: qsTrId("settingsPage.showMemoriesBar")
                //% "Display memories at the top of the timeline."
@@ -241,6 +252,42 @@ Page {
                    var pos = values[currentIndex]
                    if (pos !== settingsManager.selectedCountPosition) {
                        settingsManager.selectedCountPosition = pos
+                   }
+               }
+           }
+
+           SectionHeader {
+               //% "Language"
+               text: qsTrId("settingsPage.language")
+           }
+
+           ComboBox {
+               label: qsTrId("settingsPage.language")
+               //% "Application language. Automatic follows the system language. Changes will take effect after application restart."
+               description: qsTrId("settingsPage.languageInfo")
+               property var languages: settingsManager.availableLanguages()
+               currentIndex: {
+                   for (var i = 0; i < languages.length; i++) {
+                       if (languages[i].code === settingsManager.language) return i + 1
+                   }
+                   return 0
+               }
+               menu: ContextMenu {
+                   MenuItem {
+                       //% "Automatic (system)"
+                       text: qsTrId("settingsPage.languageAutomatic")
+                   }
+                   Repeater {
+                       model: settingsManager.availableLanguages()
+                       MenuItem {
+                           text: modelData.name
+                       }
+                   }
+               }
+               onCurrentIndexChanged: {
+                   var code = currentIndex === 0 ? "" : languages[currentIndex - 1].code
+                   if (code !== settingsManager.language) {
+                       settingsManager.language = code
                    }
                }
            }

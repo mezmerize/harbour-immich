@@ -23,6 +23,9 @@ Page {
 
     property var currentAsset: (assets && currentIndex >= 0 && currentIndex < assets.length) ? assets[currentIndex] : null
     property bool currentIsVideo: currentAsset ? (currentAsset.isVideo || false) : false
+    property string currentLivePhotoVideoId: (currentAsset && currentAsset.livePhotoVideoId) ? currentAsset.livePhotoVideoId : ""
+    property bool motionPlaying: false
+    property bool motionAvailable: settingsManager.motionPhotosEnabled && currentLivePhotoVideoId !== "" && !currentIsVideo
 
     // Zoom + pan state
     property real imageScale: 1.0
@@ -58,6 +61,7 @@ Page {
         imageScale = 1.0
         panX = 0
         panY = 0
+        motionPlaying = false
 
         transitionCover.source = mainImage.source
         transitionCover.visible = true
@@ -127,7 +131,7 @@ Page {
     backgroundColor: "transparent"
 
     onStatusChanged: {
-        if (status === PageStatus.Deactivating && currentIsVideo) videoPlayer.pause()
+        if (status === PageStatus.Deactivating && (currentIsVideo || motionPlaying)) videoPlayer.pause()
     }
 
     // Semi-transparent backdrop
@@ -263,9 +267,10 @@ Page {
             width: page.width
             height: page.height
             z: 2
-            visible: page.currentIsVideo
-            videoId: page.currentIsVideo && page.currentAsset ? page.currentAsset.id : ""
+            visible: page.currentIsVideo || page.motionPlaying
+            videoId: page.currentIsVideo && page.currentAsset ? page.currentAsset.id : (page.motionPlaying ? page.currentLivePhotoVideoId : "")
             thumbhash: page.currentAsset && page.currentAsset.thumbhash ? page.currentAsset.thumbhash : page.primaryThumbhash
+            controlsEnabled: !page.motionPlaying
             controlsBottomMargin: bottomPanel.height
             onLoaded: {
                 if (transitionCover.visible) {
@@ -275,6 +280,12 @@ Page {
             }
             onControlsVisibleChanged: {
                 if (page.currentIsVideo) page.controlsShown = controlsVisible
+            }
+            onFinished: {
+                if (page.motionPlaying) {
+                    page.motionPlaying = false
+                    videoPlayer.active = false
+                }
             }
         }
 
@@ -287,7 +298,7 @@ Page {
             viewportHeight: page.height
             currentIndex: page.timelineAssetIndex
             totalCount: page.totalTimelineAssets
-            enableZoom: !page.currentIsVideo
+            enableZoom: !page.currentIsVideo && !page.motionPlaying
             onTapped: {
                 if (page.currentIsVideo) {
                     videoPlayer.toggleControls()
@@ -464,7 +475,7 @@ Page {
                     id: actionRow
                     width: parent.width
 
-                    property int buttonCount: 6
+                    property int buttonCount: 6 + (page.motionAvailable ? 1 : 0)
 
                     // Favorite
                     IconButton {
@@ -520,6 +531,20 @@ Page {
                                 pageStack.push(Qt.resolvedUrl("SearchResultsPage.qml"), {
                                     smartSearchAssetId: asset.id
                                 })
+                            }
+                        }
+                    }
+
+                    // Motion photo play
+                    IconButton {
+                        width: parent.width / actionRow.buttonCount
+                        icon.source: "image://theme/icon-m-video"
+                        icon.color: page.motionPlaying ? Theme.highlightColor : Theme.lightPrimaryColor
+                        onClicked: {
+                            if (!page.motionPlaying) {
+                                hapticFeedback.play()
+                                page.motionPlaying = true
+                                videoPlayer.active = true
                             }
                         }
                     }

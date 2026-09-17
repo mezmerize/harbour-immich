@@ -12,6 +12,9 @@ Page {
 
     property var currentAsset: (assets && currentIndex >= 0 && currentIndex < assets.length) ? assets[currentIndex] : null
     property bool currentIsVideo: currentAsset ? (currentAsset.isVideo || false) : false
+    property string currentLivePhotoVideoId: (currentAsset && currentAsset.livePhotoVideoId) ? currentAsset.livePhotoVideoId : ""
+    property bool motionPlaying: false
+    property bool motionAvailable: settingsManager.motionPhotosEnabled && currentLivePhotoVideoId !== "" && !currentIsVideo
 
     property bool showingA: true
     property bool crossfading: false
@@ -34,6 +37,7 @@ Page {
 
     function crossfadeTo(newIndex) {
         if (!assets || assets.length === 0) return
+        motionPlaying = false
         if (assets[newIndex] && assets[newIndex].isVideo) {
             slideshowRunning = false
             switchTo(newIndex)
@@ -54,6 +58,7 @@ Page {
 
     function switchTo(newIndex) {
         if (!assets || assets.length === 0) return
+        motionPlaying = false
         crossfadeToA.stop()
         crossfadeToB.stop()
         currentIndex = newIndex
@@ -89,7 +94,7 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Active && currentIsVideo && !videoPlayer.active) {
             videoPlayer.active = true
-        } else if (status === PageStatus.Deactivating && currentIsVideo) {
+        } else if (status === PageStatus.Deactivating && (currentIsVideo || motionPlaying)) {
             videoPlayer.pause()
         }
     }
@@ -286,9 +291,10 @@ Page {
             width: page.width
             height: page.height
             z: 2
-            visible: page.currentIsVideo
-            videoId: page.currentIsVideo && page.currentAsset ? page.currentAsset.id : ""
+            visible: page.currentIsVideo || page.motionPlaying
+            videoId: page.currentIsVideo && page.currentAsset ? page.currentAsset.id : (page.motionPlaying ? page.currentLivePhotoVideoId : "")
             thumbhash: page.currentAsset && page.currentAsset.thumbhash ? page.currentAsset.thumbhash : ""
+            controlsEnabled: !page.motionPlaying
             controlsBottomMargin: bottomPanel.height
             onLoaded: {
                 if (memoryTransitionCover.visible) {
@@ -298,6 +304,12 @@ Page {
             }
             onControlsVisibleChanged: {
                 if (page.currentIsVideo) page.controlsShown = controlsVisible
+            }
+            onFinished: {
+                if (page.motionPlaying) {
+                    page.motionPlaying = false
+                    videoPlayer.active = false
+                }
             }
         }
 
@@ -466,7 +478,7 @@ Page {
                     id: actionRow
                     width: parent.width
 
-                    property int buttonCount: assets && assets.length > 1 ? 3 : 2
+                    property int buttonCount: (assets && assets.length > 1 ? 1 : 0) + 2 + (page.motionAvailable ? 1 : 0)
 
                     IconButton {
                         width: parent.width / actionRow.buttonCount
@@ -487,6 +499,20 @@ Page {
                                 pageStack.push(Qt.resolvedUrl("SearchResultsPage.qml"), {
                                     smartSearchAssetId: asset.id
                                 })
+                            }
+                        }
+                    }
+
+                    IconButton {
+                        width: parent.width / actionRow.buttonCount
+                        icon.source: "image://theme/icon-m-video"
+                        icon.color: page.motionPlaying ? Theme.highlightColor : Theme.lightPrimaryColor
+                        visible: page.motionAvailable
+                        onClicked: {
+                            if (!page.motionPlaying) {
+                                page.slideshowRunning = false
+                                page.motionPlaying = true
+                                videoPlayer.active = true
                             }
                         }
                     }

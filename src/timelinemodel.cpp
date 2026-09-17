@@ -145,6 +145,7 @@ void TimelineModel::loadBucketAssets(const QString &timeBucket, const QJsonObjec
     QJsonArray durationArr = bucketData[QStringLiteral("duration")].toArray();
     QJsonArray stackArr = bucketData[QStringLiteral("stack")].toArray();
     QJsonArray ownerIdArr = bucketData[QStringLiteral("ownerId")].toArray();
+    QJsonArray livePhotoVideoIdArr = bucketData[QStringLiteral("livePhotoVideoId")].toArray();
     const QJsonArray &dateArr = (m_groupByCreatedAt && !createdAtArr.isEmpty()) ? createdAtArr : fileCreatedAtArr;
 
     int count = ids.size();
@@ -159,6 +160,7 @@ void TimelineModel::loadBucketAssets(const QString &timeBucket, const QJsonObjec
         asset.thumbhash = i < thumbhashArr.size() ? thumbhashArr[i].toString() : QString();
         asset.duration = i < durationArr.size() ? QString::number(static_cast<qint64>(durationArr[i].toDouble())) : QString();
         asset.ownerId = i < ownerIdArr.size() ? ownerIdArr[i].toString() : QString();
+        asset.livePhotoVideoId = i < livePhotoVideoIdArr.size() ? livePhotoVideoIdArr[i].toString() : QString();
 
         // Parse stack info: null means not a stack, array has id + assetCount
         if (i < stackArr.size() && stackArr[i].isArray()) {
@@ -306,6 +308,7 @@ QVariantList TimelineModel::getBucketAssets(int bucketIndex) const
         assetMap[QStringLiteral("duration")] = asset.duration;
         assetMap[QStringLiteral("stackId")] = asset.stackId;
         assetMap[QStringLiteral("stackAssetCount")] = asset.stackAssetCount;
+        assetMap[QStringLiteral("livePhotoVideoId")] = asset.livePhotoVideoId;
         assetMap[QStringLiteral("ownerId")] = asset.ownerId;
         assetMap[QStringLiteral("assetIndex")] = assetIndex++;
         result.append(assetMap);
@@ -361,6 +364,7 @@ QVariantList TimelineModel::getBucketSubGroups(int bucketIndex) const
         assetMap[QStringLiteral("duration")] = asset.duration;
         assetMap[QStringLiteral("stackId")] = asset.stackId;
         assetMap[QStringLiteral("stackAssetCount")] = asset.stackAssetCount;
+        assetMap[QStringLiteral("livePhotoVideoId")] = asset.livePhotoVideoId;
         assetMap[QStringLiteral("assetIndex")] = assetIndex++;
         assetMap[QStringLiteral("globalIndex")] = globalBaseIndex + assetIndex - 1;
 
@@ -599,6 +603,7 @@ QVariantMap TimelineModel::getAssetByAssetIndex(int assetIndex) const
     result[QStringLiteral("duration")] = asset.duration;
     result[QStringLiteral("stackId")] = asset.stackId;
     result[QStringLiteral("stackAssetCount")] = asset.stackAssetCount;
+    result[QStringLiteral("livePhotoVideoId")] = asset.livePhotoVideoId;
     result[QStringLiteral("thumbhash")] = asset.thumbhash;
     result[QStringLiteral("ownerId")] = asset.ownerId;
     return result;

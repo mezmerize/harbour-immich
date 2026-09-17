@@ -389,6 +389,7 @@ Column {
                             duration: modelData.duration || ""
                             stackId: modelData.stackId || ""
                             stackAssetCount: modelData.stackAssetCount || 0
+                            livePhotoVideoId: modelData.livePhotoVideoId || ""
 
                             isHighlighted: bucketColumn.highlightAssetId === modelData.id
 

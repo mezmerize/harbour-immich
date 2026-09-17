@@ -26,6 +26,9 @@ Page {
     property bool isLockedAsset: false
     property bool isOwnedByOther: assetInfo ? (assetInfo.ownerId !== undefined && assetInfo.ownerId !== authManager.userId) : false
     property bool partnerShowInTimeline: false
+    property string livePhotoVideoId: ""
+    property bool motionPlaying: false
+    property bool motionAvailable: settingsManager.motionPhotosEnabled && livePhotoVideoId !== "" && !isVideo
 
     // Zoom + pan state
     property real imageScale: 1.0
@@ -85,6 +88,8 @@ Page {
             isFavorite = asset.isFavorite || false
             thumbhash = asset.thumbhash || ""
             currentIndex = assetIndex
+            motionPlaying = false
+            livePhotoVideoId = asset.livePhotoVideoId || ""
 
             videoPlayer.active = isVideo
             immichApi.getAssetInfo(assetId)
@@ -94,10 +99,11 @@ Page {
     }
 
     function getButtonCount() {
-        if (isLockedAsset || (isOwnedByOther && !partnerShowInTimeline)) return 3
-        if (isOwnedByOther && partnerShowInTimeline) return 4
-        if (albumId) return 6
-        return 5
+        var motion = motionAvailable ? 1 : 0
+        if (isLockedAsset || (isOwnedByOther && !partnerShowInTimeline)) return 3 + motion
+        if (isOwnedByOther && partnerShowInTimeline) return 4 + motion
+        if (albumId) return 6 + motion
+        return 5 + motion
     }
 
     backNavigation: false
@@ -106,7 +112,7 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Active && isVideo && !videoPlayer.active) {
             videoPlayer.active = true
-        } else if (status === PageStatus.Deactivating && isVideo) {
+        } else if (status === PageStatus.Deactivating && (isVideo || motionPlaying)) {
             videoPlayer.pause()
         }
     }
@@ -241,8 +247,9 @@ Page {
             width: page.width
             height: page.height
             z: 2
-            visible: page.isVideo
-            videoId: page.isVideo ? page.assetId : ""
+            visible: page.isVideo || page.motionPlaying
+            videoId: page.isVideo ? page.assetId : (page.motionPlaying ? page.livePhotoVideoId : "")
+            controlsEnabled: !page.motionPlaying
             thumbhash: page.currentThumbhash
             controlsBottomMargin: actionBar.height
             onLoaded: {
@@ -253,6 +260,12 @@ Page {
             }
             onControlsVisibleChanged: {
                 if (page.isVideo) page.controlsShown = controlsVisible
+            }
+            onFinished: {
+                if (page.motionPlaying) {
+                    page.motionPlaying = false
+                    videoPlayer.active = false
+                }
             }
         }
 
@@ -265,7 +278,7 @@ Page {
             viewportHeight: page.height
             currentIndex: page.currentIndex
             totalCount: page.totalAssets
-            enableZoom: !page.isVideo
+            enableZoom: !page.isVideo && !page.motionPlaying
             onTapped: {
                 if (page.isVideo) {
                     videoPlayer.toggleControls()
@@ -393,6 +406,20 @@ Page {
 
                 IconButton {
                     width: parent.width / actionRow.buttonCount
+                    icon.source: "image://theme/icon-m-video"
+                    icon.color: page.motionPlaying ? Theme.highlightColor : Theme.lightPrimaryColor
+                    visible: page.motionAvailable
+                    onClicked: {
+                        if (!page.motionPlaying) {
+                            hapticFeedback.play()
+                            page.motionPlaying = true
+                            videoPlayer.active = true
+                        }
+                    }
+                }
+
+                IconButton {
+                    width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-whereami"
                     icon.color: Theme.lightPrimaryColor
                     visible: (!isLockedAsset && !isOwnedByOther) || (isOwnedByOther && partnerShowInTimeline)
@@ -458,8 +485,9 @@ Page {
         target: immichApi
         onAssetInfoReceived: {
             assetInfo = info
-            if (info.id === page.assetId && info.isFavorite !== undefined) {
-                page.isFavorite = info.isFavorite
+            if (info.id === page.assetId) {
+                page.livePhotoVideoId = info.livePhotoVideoId || ""
+                if (info.isFavorite !== undefined) page.isFavorite = info.isFavorite
             }
         }
         onFavoritesToggled: {

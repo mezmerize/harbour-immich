@@ -7,12 +7,15 @@ Item {
     id: root
 
     property string videoId: ""
+    property string filePath: ""
     property string thumbhash: ""
     property bool active: false
     property real controlsBottomMargin: 0
     property bool controlsVisible: true
+    property bool controlsEnabled: true
 
     signal loaded()
+    signal finished()
 
     // Internal player variables
     property bool hasVideoFrame: false
@@ -22,6 +25,7 @@ Item {
     property bool loadPending: false
 
     function toggleControls() {
+        if (!controlsEnabled) return
         if (controlsVisible) {
             controlsVisible = false
             controlsHideTimer.stop()
@@ -34,6 +38,7 @@ Item {
     }
 
     function togglePlayback() {
+        if (!controlsEnabled) return
         if (controller.playbackState === VideoController.PlayingState) {
             controller.pause()
             controlsVisible = true
@@ -61,7 +66,7 @@ Item {
     }
 
     function loadSource() {
-        if (!active || !videoId) return
+        if (!active || (!videoId && !filePath)) return
         if (!surfaceReady) {
             loadPending = true
             return
@@ -70,7 +75,11 @@ Item {
         hasVideoFrame = false
         sourceLoadedEmitted = false
         controlsVisible = true
-        controller.load(videoId)
+        if (filePath) {
+            controller.loadLocalFile(filePath)
+        } else {
+            controller.load(videoId)
+        }
     }
 
     function unloadSource() {
@@ -90,6 +99,10 @@ Item {
     }
 
     onVideoIdChanged: {
+        if (active) loadSource()
+    }
+
+    onFilePathChanged: {
         if (active) loadSource()
     }
 
@@ -164,6 +177,7 @@ Item {
                 progressSlider.value = 0
                 root.controlsVisible = true
                 controlsHideTimer.stop()
+                root.finished()
             }
         }
 
@@ -207,8 +221,8 @@ Item {
         height: Theme.itemSizeExtraLarge
         radius: width / 2
         color: Theme.rgba("black", 0.4)
-        visible: root.controlsVisible
-        opacity: root.controlsVisible ? 1.0 : 0.0
+        visible: root.controlsEnabled && root.controlsVisible
+        opacity: (root.controlsEnabled && root.controlsVisible) ? 1.0 : 0.0
         Behavior on opacity { FadeAnimation { duration: 200 } }
 
         Image {
@@ -260,8 +274,8 @@ Item {
         anchors.right: parent.right
         height: controlsContent.height + Theme.paddingMedium * 2
         color: Theme.rgba("black", 0.6)
-        visible: root.controlsVisible
-        opacity: root.controlsVisible ? 1.0 : 0.0
+        visible: root.controlsEnabled && root.controlsVisible
+        opacity: (root.controlsEnabled && root.controlsVisible) ? 1.0 : 0.0
         Behavior on opacity { FadeAnimation { duration: 200 } }
 
         MouseArea {

@@ -94,7 +94,8 @@ function groupByMonthAndDate(parsed) {
         }
         month.dateMap[dateKey].assets.push({
             id: asset.id, isFavorite: asset.isFavorite, isVideo: asset.isVideo,
-            thumbhash: asset.thumbhash, duration: asset.duration, assetIndex: g
+            thumbhash: asset.thumbhash, duration: asset.duration, assetIndex: g,
+            livePhotoVideoId: asset.livePhotoVideoId
         })
     }
     var result = []

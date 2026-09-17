@@ -259,6 +259,7 @@ Page {
                         isVideo: item.type === "VIDEO",
                         thumbhash: item.thumbhash || "",
                         duration: item.duration || "",
+                        livePhotoVideoId: item.livePhotoVideoId || "",
                         fileSize: item.exifInfo ? (item.exifInfo.fileSizeInByte || 0) : 0,
                         fileCreatedAt: fileDate
                     })

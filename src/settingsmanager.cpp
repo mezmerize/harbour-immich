@@ -64,6 +64,19 @@ void SettingsManager::setShowMemoriesBar(bool show)
     }
 }
 
+bool SettingsManager::motionPhotosEnabled() const
+{
+    return m_settings.value("motionPhotosEnabled", true).toBool();
+}
+
+void SettingsManager::setMotionPhotosEnabled(bool enabled)
+{
+    if (motionPhotosEnabled() != enabled) {
+        m_settings.setValue("motionPhotosEnabled", enabled);
+        emit motionPhotosEnabledChanged();
+    }
+}
+
 QString SettingsManager::scrollToTopPosition() const
 {
     return m_settings.value("scrollToTopPosition", "right").toString();

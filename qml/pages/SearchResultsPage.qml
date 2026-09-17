@@ -116,6 +116,7 @@ Page {
            isVideo: model.isVideo
            thumbhash: model.thumbhash || ""
            duration: model.duration || ""
+           livePhotoVideoId: model.livePhotoVideoId || ""
 
            onClicked: {
                if (page.selectionMode) {
@@ -181,6 +182,7 @@ Page {
                    isVideo: asset.type === "VIDEO",
                    thumbhash: asset.thumbhash || "",
                    duration: asset.duration || "",
+                   livePhotoVideoId: asset.livePhotoVideoId || "",
                    fileCreatedAt: asset.fileCreatedAt || asset.createdAt || ""
                })
            }

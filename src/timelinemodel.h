@@ -17,6 +17,7 @@ struct TimelineAsset {
     QString thumbhash;
     QString duration;
     QString stackId;
+    QString livePhotoVideoId;
     int stackAssetCount;
 };
 

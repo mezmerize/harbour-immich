@@ -14,6 +14,7 @@ BackgroundItem {
     property string duration: ""
     property string stackId: ""
     property int stackAssetCount: 0
+    property string livePhotoVideoId: ""
     property int imageSize: Math.max(64, Math.ceil(Math.max(width, height)))
     property bool isHighlighted: false
     property bool currentBackupState: false
@@ -142,21 +143,33 @@ BackgroundItem {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.margins: Theme.paddingSmall
-        width: Theme.iconSizeSmallPlus
-        height: Theme.iconSizeSmallPlus
+        width: Theme.iconSizeSmall
+        height: Theme.iconSizeSmall
         source: "image://theme/icon-m-favorite-selected"
         visible: isFavorite
     }
 
     // Stack indicator
     Icon {
+        id: stackIcon
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: Theme.paddingSmall
-        width: Theme.iconSizeSmallPlus
-        height: Theme.iconSizeSmallPlus
+        width: Theme.iconSizeSmall
+        height: Theme.iconSizeSmall
         source: "image://theme/icon-m-levels"
         visible: stackId !== "" && stackAssetCount > 1
+    }
+
+    // Motion photo indicator
+    Icon {
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.margins: Theme.paddingSmall
+        width: Theme.iconSizeSmall
+        height: Theme.iconSizeSmall
+        source: "image://theme/icon-m-video"
+        visible: settingsManager.motionPhotosEnabled && livePhotoVideoId !== "" && !stackIcon.visible
     }
 
     // Backup status indicator
@@ -164,8 +177,8 @@ BackgroundItem {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         anchors.margins: Theme.paddingSmall
-        width: Theme.iconSizeSmallPlus
-        height: Theme.iconSizeSmallPlus
+        width: Theme.iconSizeSmall
+        height: Theme.iconSizeSmall
         source: "image://theme/icon-m-cloud-download"
         visible: item.currentBackupState && settingsManager.backupEnabled && settingsManager.backupShowStatusIcon
     }

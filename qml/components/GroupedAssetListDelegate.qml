@@ -97,6 +97,7 @@ Item {
                     isVideo: modelData.isVideo
                     thumbhash: modelData.thumbhash || ""
                     duration: modelData.duration || ""
+                    livePhotoVideoId: modelData.livePhotoVideoId || ""
 
                     onClicked: {
                         if (delegate.selectionMode) {
