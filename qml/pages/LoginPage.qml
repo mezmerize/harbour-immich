@@ -10,6 +10,12 @@ Page {
     property bool hasError: false
     property bool versionUnsupported: false
 
+    function processLogin() {
+        hasError = false
+        isLoggingIn = true
+        authManager.login(emailField.text.trim(), passwordField.text)
+    }
+
     Component.onCompleted: {
         oauthManager.checkOAuthAvailability(authManager.serverUrl)
     }
@@ -60,9 +66,9 @@ Page {
                 label: qsTrId("loginPage.password")
                 //% "Enter password"
                 placeholderText: qsTrId("loginPage.passwordPlaceholder")
-                EnterKey.enabled: emailField.text.length > 0 && text.length > 0
+                EnterKey.enabled: emailField.text.length > 0 && text.length > 0 && !isLoggingIn
                 EnterKey.iconSource: "image://theme/icon-m-enter-accept"
-                EnterKey.onClicked: loginButton.clicked()
+                EnterKey.onClicked: page.processLogin()
                 color: page.hasError ? Theme.errorColor : Theme.primaryColor
                 onTextChanged: page.hasError = false
             }
@@ -76,11 +82,7 @@ Page {
                     //% "Login"
                     text: qsTrId("loginPage.loginButton")
                     enabled: emailField.text.length > 0 && passwordField.text.length > 0 && !isLoggingIn
-                    onClicked: {
-                        page.hasError = false
-                        isLoggingIn = true
-                        authManager.login(emailField.text.trim(), passwordField.text)
-                    }
+                    onClicked: page.processLogin()
                 }
             }
 

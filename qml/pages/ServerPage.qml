@@ -8,6 +8,25 @@ Page {
     property bool isLoggingIn: false
     property bool hasError: false
 
+    function processServerUrl() {
+        hasError = false
+        var url = String(serverUrlField.text).trim()
+        if (url.charAt(url.length - 1) === "/") {
+            url = url.substring(0, url.length - 1)
+        }
+
+        // Validate URL format
+        var urlPattern = /^https?:\/\/(([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+|localhost|\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?(\/.*)?$/
+        if (!urlPattern.test(url)) {
+            hasError = true
+            return
+        }
+
+        isLoggingIn = true
+        authManager.serverUrl = url
+        immichApi.fetchServerVersion()
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
@@ -50,7 +69,7 @@ Page {
                 inputMethodHints: Qt.ImhUrlCharactersOnly
                 EnterKey.enabled: text.length > 0
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
-                EnterKey.onClicked: nextButton.clicked()
+                EnterKey.onClicked: page.processServerUrl()
                 color: page.hasError ? Theme.errorColor : Theme.primaryColor
                 onTextChanged: page.hasError = false
             }
@@ -61,24 +80,7 @@ Page {
                 //% "Next"
                 text: qsTrId("serverPage.next")
                 enabled: serverUrlField.text.length > 0
-                onClicked: {
-                    page.hasError = false
-                    var url = String(serverUrlField.text).trim()
-                    if (url.charAt(url.length - 1) === "/") {
-                        url = url.substring(0, url.length - 1)
-                    }
-
-                    // Validate URL format
-                    var urlPattern = /^https?:\/\/(([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+|localhost|\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?(\/.*)?$/
-                    if (!urlPattern.test(url)) {
-                        page.hasError = true
-                        return
-                    }
-
-                    isLoggingIn = true
-                    authManager.serverUrl = url
-                    immichApi.fetchServerVersion()
-                }
+                onClicked: page.processServerUrl()
             }
 
             Label {
