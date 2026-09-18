@@ -905,6 +905,61 @@ void ImmichApi::fetchMemories()
     });
 }
 
+void ImmichApi::fetchMemoriesStatistics(const QVariantMap &params)
+{
+    qInfo().noquote() << "ImmichApi: Fetching memories statistics, params:" << QJsonDocument::fromVariant(params).toJson(QJsonDocument::Compact);
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/memories/statistics"));
+    QUrlQuery query;
+    for (auto it = params.constBegin(); it != params.constEnd(); ++it) {
+        query.addQueryItem(it.key(), it.value().toString());
+    }
+    url.setQuery(query);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this](const QByteArray &response) {
+        QJsonObject obj = QJsonDocument::fromJson(response).object();
+        const int total = obj.value(QStringLiteral("total")).toInt();
+        qInfo() << "ImmichApi: Memories statistics received, total:" << total;
+        emit memoriesStatisticsReceived(total);
+    });
+}
+
+void ImmichApi::searchMemories(const QVariantMap &params)
+{
+    qInfo().noquote() << "ImmichApi: Searching memories, params:" << QJsonDocument::fromVariant(params).toJson(QJsonDocument::Compact);
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/memories"));
+    QUrlQuery query;
+    for (auto it = params.constBegin(); it != params.constEnd(); ++it) {
+        query.addQueryItem(it.key(), it.value().toString());
+    }
+    url.setQuery(query);
+    const int pageNumber = params.value(QStringLiteral("page"), 1).toInt();
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this, pageNumber](const QByteArray &response) {
+        QJsonArray memories = QJsonDocument::fromJson(response).array();
+        qInfo() << "ImmichApi: Memories search received, page:" << pageNumber << "count:" << memories.size();
+        emit memoriesSearchReceived(memories, pageNumber);
+    });
+}
+
+void ImmichApi::updateMemory(const QString &memoryId, const QVariantMap &fields)
+{
+    qInfo() << "ImmichApi: Updating memory:" << memoryId << "fields:" << fields.keys();
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/memories/") + memoryId);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json = QJsonObject::fromVariantMap(fields);
+    QJsonDocument doc(json);
+    QNetworkReply *reply = m_networkManager->put(request, doc.toJson());
+    QString savedId = memoryId;
+    connectReply(reply, [this, savedId](const QByteArray &response) {
+        QJsonObject obj = QJsonDocument::fromJson(response).object();
+        const bool isSaved = obj.value(QStringLiteral("isSaved")).toBool();
+        emit memoryUpdated(savedId, isSaved);
+    });
+}
+
 void ImmichApi::fetchServerStatistics()
 {
     qInfo() << "ImmichApi: Fetching server statistics";

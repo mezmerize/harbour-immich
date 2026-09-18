@@ -484,8 +484,8 @@ Page {
     Connections {
         target: immichApi
         onAssetInfoReceived: {
-            assetInfo = info
             if (info.id === page.assetId) {
+                assetInfo = info
                 page.livePhotoVideoId = info.livePhotoVideoId || ""
                 if (info.isFavorite !== undefined) page.isFavorite = info.isFavorite
             }

@@ -57,6 +57,8 @@ Page {
                     model: [
                         //% "Favorites"
                         { title: qsTrId("libraryPage.favorites"), icon: "image://theme/icon-m-favorite", page: "FavoritesPage.qml" },
+                        //% "Memories"
+                        { title: qsTrId("libraryPage.memories"), icon: "image://theme/icon-m-date", page: "MemoriesPage.qml" },
                         //% "Archived"
                         { title: qsTrId("libraryPage.archived"), icon: "image://theme/icon-m-file-archive-folder", page: "ArchivedPage.qml" },
                         //% "Shared Links"

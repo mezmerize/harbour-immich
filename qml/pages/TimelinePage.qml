@@ -19,9 +19,6 @@ Page {
 
     // Highlight state for scroll-to-asset
     property string highlightAssetId: ""
-    property var memoriesBarItem: null
-    property bool memoriesLoading: false
-    property var pendingMemoriesData: null
 
     function resetPendingScrollState() {
         pendingScrollAssetId = ""
@@ -131,8 +128,7 @@ Page {
                 text: qsTrId("pullDownMenu.refresh")
                 onClicked: {
                     page.refresh()
-                    page.memoriesLoading = true
-                    immichApi.fetchMemories()
+                    memoriesBar.reload()
                 }
             }
         }
@@ -149,22 +145,7 @@ Page {
             MemoriesBar {
                 id: memoriesBar
                 width: parent.width
-                loading: page.memoriesLoading
                 visible: settingsManager.showMemoriesBar
-
-                Component.onCompleted: {
-                    page.memoriesBarItem = memoriesBar
-                    if (page.pendingMemoriesData !== null) {
-                        memoriesBar.loadMemories(page.pendingMemoriesData)
-                        page.pendingMemoriesData = null
-                    }
-                }
-
-                Component.onDestruction: {
-                    if (page.memoriesBarItem === memoriesBar) {
-                        page.memoriesBarItem = null
-                    }
-                }
             }
 
             FilterBar {
@@ -539,9 +520,7 @@ Page {
     }
 
     Component.onCompleted: {
-        page.memoriesLoading = true
         page.refresh()
-        immichApi.fetchMemories()
     }
 
     Connections {
@@ -558,17 +537,8 @@ Page {
             if (context !== page.contextId) return
             timelineModel.loadBucketAssets(timeBucket, bucketData)
         }
-        onMemoriesReceived: {
-            page.memoriesLoading = false
-            if (page.memoriesBarItem) {
-                page.memoriesBarItem.loadMemories(memories)
-            } else {
-                page.pendingMemoriesData = memories
-            }
-        }
         onErrorOccurred: {
             timelineModel.setLoading(false)
-            page.memoriesLoading = false
             notification.showError(error)
         }
         onTrashRestored: {

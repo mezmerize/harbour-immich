@@ -23,6 +23,7 @@ SOURCES += src/harbour-immich.cpp \
     src/immichapi.cpp \
     src/authmanager.cpp \
     src/logmanager.cpp \
+    src/memoriesmodel.cpp \
     src/oauthmanager.cpp \
     src/peoplemodel.cpp \
     src/securestorage.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     src/immichapi.h \
     src/authmanager.h \
     src/logmanager.h \
+    src/memoriesmodel.h \
     src/oauthmanager.h \
     src/peoplemodel.h \
     src/securestorage.h \
@@ -74,6 +76,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/FilterablePickerDialog.qml \
     qml/components/LoadingIndicator.qml \
     qml/components/MemoriesBar.qml \
+    qml/components/MemoriesFilterBar.qml \
     qml/components/NotificationBanner.qml \
     qml/components/PeoplePickerDialog.qml \
     qml/components/QRCode.qml \
@@ -97,6 +100,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/FolderPickerPage.qml \
     qml/pages/IndividualShareDetailPage.qml \
     qml/pages/LogViewerPage.qml \
+    qml/pages/MemoriesPage.qml \
     qml/pages/MemoryDetailPage.qml \
     qml/pages/OAuthPage.qml \
     qml/pages/PartnerAssetsPage.qml \

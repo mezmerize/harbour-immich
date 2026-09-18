@@ -43,6 +43,9 @@ public:
     Q_INVOKABLE void updateAlbumUserRole(const QString &albumId, const QString &userId, const QString &role);
     Q_INVOKABLE void removeAlbumUser(const QString &albumId, const QString &userId);
     Q_INVOKABLE void fetchMemories();
+    Q_INVOKABLE void fetchMemoriesStatistics(const QVariantMap &params);
+    Q_INVOKABLE void searchMemories(const QVariantMap &params);
+    Q_INVOKABLE void updateMemory(const QString &memoryId, const QVariantMap &fields);
     Q_INVOKABLE void fetchServerStatistics();
     Q_INVOKABLE void fetchServerAbout();
     Q_INVOKABLE void fetchServerVersion();
@@ -100,6 +103,9 @@ signals:
     void albumUserRoleUpdated(const QString &albumId);
     void albumUserRemoved(const QString &albumId);
     void memoriesReceived(const QJsonArray &memories);
+    void memoriesStatisticsReceived(int total);
+    void memoriesSearchReceived(const QJsonArray &memories, int pageNumber);
+    void memoryUpdated(const QString &memoryId, bool isSaved);
     void serverStatisticsReceived(const QJsonObject &stats);
     void serverAboutReceived(const QJsonObject &about);
     void serverVersionReceived(const QJsonObject &version);

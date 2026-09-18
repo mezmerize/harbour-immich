@@ -6,6 +6,8 @@ Page {
     id: page
 
     property string memoryTitle: ""
+    property string memoryId: ""
+    property bool memoryIsSaved: false
     property var assets: []
     property int currentIndex: 0
     property bool slideshowRunning: false
@@ -96,6 +98,13 @@ Page {
             videoPlayer.active = true
         } else if (status === PageStatus.Deactivating && (currentIsVideo || motionPlaying)) {
             videoPlayer.pause()
+        }
+    }
+
+    Connections {
+        target: immichApi
+        onMemoryUpdated: {
+            if (memoryId === page.memoryId) page.memoryIsSaved = isSaved
         }
     }
 
@@ -374,9 +383,9 @@ Page {
                 right: parent.right
             }
             height: bottomColumn.height
-            visible: !draggingVertical
-            opacity: visible ? 1.0 : 0.0
-            Behavior on opacity { FadeAnimation { duration: 150 } }
+            visible: opacity > 0
+            opacity: (controlsShown && !draggingVertical) ? 1.0 : 0.0
+            Behavior on opacity { FadeAnimation { duration: 200 } }
             z: 10
 
             Rectangle {
@@ -478,7 +487,7 @@ Page {
                     id: actionRow
                     width: parent.width
 
-                    property int buttonCount: (assets && assets.length > 1 ? 1 : 0) + 2 + (page.motionAvailable ? 1 : 0)
+                    property int buttonCount: (assets && assets.length > 1 ? 1 : 0) + 2 + (page.memoryId !== "" ? 1 : 0) + (page.motionAvailable ? 1 : 0)
 
                     IconButton {
                         width: parent.width / actionRow.buttonCount
@@ -486,6 +495,16 @@ Page {
                         icon.color: Theme.lightPrimaryColor
                         visible: assets && assets.length > 1
                         onClicked: slideshowRunning = !slideshowRunning
+                    }
+
+                    IconButton {
+                        width: parent.width / actionRow.buttonCount
+                        icon.source: page.memoryIsSaved ? "image://theme/icon-m-favorite-selected" : "image://theme/icon-m-favorite"
+                        icon.color: Theme.lightPrimaryColor
+                        onClicked: {
+                            page.memoryIsSaved = !page.memoryIsSaved
+                            immichApi.updateMemory(page.memoryId, { "isSaved": page.memoryIsSaved })
+                        }
                     }
 
                     IconButton {
