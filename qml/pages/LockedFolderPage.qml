@@ -27,6 +27,9 @@ Page {
 
     TimelineModel {
         id: lockedModel
+        api: authenticated ? immichApi : null
+        context: page.contextId
+        queryParams: page.queryParams
     }
 
     function loadLockedAssets() {
@@ -39,7 +42,7 @@ Page {
         if (showFavorites) params["isFavorite"] = "true"
         if (showCreatedAt) params["orderBy"] = "createdAt"
         queryParams = params
-        immichApi.fetchTimelineBuckets(contextId, queryParams)
+        lockedModel.fetchBuckets()
     }
 
     function updateHeroIds() {
@@ -492,32 +495,10 @@ Page {
             pinExists = true
             immichApi.verifyPinCode(enteredPin)
         }
-        onTimelineBucketsReceived: {
-            if (context !== page.contextId) return
-            if (authenticated) {
-                lockedModel.loadBuckets(buckets)
-                lockedModel.setLoading(false)
-                if (lockedModel.getBucketCount() > 0) {
-                    lockedModel.requestBucketLoad(0)
-                }
-            }
-        }
-        onTimelineBucketReceived: {
-            if (context !== page.contextId) return
-            if (authenticated) {
-                lockedModel.loadBucketAssets(timeBucket, bucketData)
-                page.updateHeroIds()
-            }
-        }
         onAssetsDeleted: {
             if (authenticated) {
                 page.loadLockedAssets()
-                notification.show(assetIds.length === 1
-                    //% "Deleted asset"
-                    ? qsTrId("notification.deletedAsset")
-                    //% "Deleted %1 assets"
-                    : qsTrId("notification.deletedAssets").arg(assetIds.length))
-
+                notification.show(TimelineHelper.deletedNotification(assetIds.length))
             }
         }
         onAssetVisibilityChanged: {
@@ -537,8 +518,6 @@ Page {
 
     Connections {
         target: lockedModel
-        onBucketLoadRequested: {
-            immichApi.fetchTimelineBucket(page.contextId, timeBucket, page.queryParams)
-        }
+        onBucketAssetsLoaded: page.updateHeroIds()
     }
 }

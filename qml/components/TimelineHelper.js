@@ -35,3 +35,26 @@ function computeDateRange(startDate, endDate) {
         return fmt(first) + " - " + fmt(last)
     }
 }
+
+function favoritesNotification(isFavorite, count) {
+   if (isFavorite) {
+       return count === 1
+           //% "Added asset to favorites"
+           ? qsTrId("notification.addedAssetToFavorites")
+           //% "Added %1 assets to favorites"
+           : qsTrId("notification.addedAssetsToFavorites").arg(count)
+   }
+   return count === 1
+       //% "Removed asset from favorites"
+       ? qsTrId("notification.removedAssetFromFavorites")
+       //% "Removed %1 assets from favorites"
+       : qsTrId("notification.removedAssetsFromFavorites").arg(count)
+}
+
+function deletedNotification(count) {
+   return count === 1
+       //% "Deleted asset"
+       ? qsTrId("notification.deletedAsset")
+       //% "Deleted %1 assets"
+       : qsTrId("notification.deletedAssets").arg(count)
+}

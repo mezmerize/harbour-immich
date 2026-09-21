@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.immich.models 1.0
 import "../components"
+import "../components/TimelineHelper.js" as TimelineHelper
 
 Page {
     id: page
@@ -16,6 +17,9 @@ Page {
 
     TimelineModel {
         id: trashModel
+        api: immichApi
+        context: page.contextId
+        queryParams: page.queryParams
     }
 
     function refresh() {
@@ -27,7 +31,7 @@ Page {
         if (showFavorites) params["isFavorite"] = "true"
         if (showCreatedAt) params["orderBy"] = "createdAt"
         queryParams = params
-        immichApi.fetchTimelineBuckets(contextId, queryParams)
+        trashModel.fetchBuckets()
     }
 
     SilicaListView {
@@ -257,15 +261,6 @@ Page {
 
     Connections {
         target: immichApi
-        onTimelineBucketsReceived: {
-            if (context !== page.contextId) return
-            trashModel.loadBuckets(buckets)
-            trashModel.setLoading(false)
-        }
-        onTimelineBucketReceived: {
-            if (context !== page.contextId) return
-            trashModel.loadBucketAssets(timeBucket, bucketData)
-        }
         onTrashRestored: {
             //% "Restored from trash"
             notification.show(qsTrId("notification.restored"))
@@ -284,18 +279,7 @@ Page {
         }
         onAssetsDeleted: {
             page.refresh()
-            notification.show(assetIds.length === 1
-                //% "Deleted asset"
-                ? qsTrId("notification.deletedAsset")
-                //% "Deleted %1 assets"
-                : qsTrId("notification.deletedAssets").arg(assetIds.length))
-        }
-    }
-
-    Connections {
-        target: trashModel
-        onBucketLoadRequested: {
-            immichApi.fetchTimelineBucket(page.contextId, timeBucket, page.queryParams)
+            notification.show(TimelineHelper.deletedNotification(assetIds.length))
         }
     }
 }

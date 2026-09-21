@@ -27,6 +27,9 @@ Page {
 
     TimelineModel {
         id: albumModel
+        api: immichApi
+        context: page.contextId
+        queryParams: page.queryParams
     }
 
     function refresh() {
@@ -39,7 +42,7 @@ Page {
         if (showFavorites) params["isFavorite"] = "true"
         if (showCreatedAt) params["orderBy"] = "createdAt"
         queryParams = params
-        immichApi.fetchTimelineBuckets(contextId, queryParams)
+        albumModel.fetchBuckets()
     }
 
     function updateHeroIds() {
@@ -313,20 +316,6 @@ Page {
 
     Connections {
         target: immichApi
-        onTimelineBucketsReceived: {
-            if (context !== page.contextId) return
-            albumModel.loadBuckets(buckets)
-            albumModel.setLoading(false)
-            page.updateDateRange()
-            if (albumModel.getBucketCount() > 0) {
-                albumModel.requestBucketLoad(0)
-            }
-        }
-        onTimelineBucketReceived: {
-            if (context !== page.contextId) return
-            albumModel.loadBucketAssets(timeBucket, bucketData)
-            page.updateHeroIds()
-        }
         onAlbumUpdated: {
             if (albumId === page.albumId) {
                 page.albumName = albumName
@@ -336,23 +325,11 @@ Page {
         onFavoritesToggled: {
             albumModel.updateFavorites(assetIds, isFavorite)
             albumModel.clearSelection()
-            notification.show(isFavorite ? (assetIds.length === 1
-                //% "Added asset to favorites"
-                ? qsTrId("notification.addedAssetToFavorites")
-                //% "Added %1 assets to favorites"
-                : qsTrId("notification.addedAssetsToFavorites").arg(assetIds.length)) : (assetIds.length === 1
-                //% "Removed asset from favorites"
-                ? qsTrId("notification.removedAssetFromFavorites")
-                //% "Removed %1 assets from favorites"
-                : qsTrId("notification.removedAssetsFromFavorites").arg(assetIds.length)))
+            notification.show(TimelineHelper.favoritesNotification(isFavorite, assetIds.length))
         }
         onAssetsDeleted: {
             page.refresh()
-            notification.show(assetIds.length === 1
-                //% "Deleted asset"
-                ? qsTrId("notification.deletedAsset")
-                //% "Deleted %1 assets"
-                : qsTrId("notification.deletedAssets").arg(assetIds.length))
+            notification.show(TimelineHelper.deletedNotification(assetIds.length))
         }
         onAssetsRemovedFromAlbum: {
             if (albumId === page.albumId) {
@@ -374,9 +351,8 @@ Page {
 
     Connections {
         target: albumModel
-        onBucketLoadRequested: {
-            immichApi.fetchTimelineBucket(page.contextId, timeBucket, page.queryParams)
-        }
+        onBucketsLoaded: page.updateDateRange()
+        onBucketAssetsLoaded: page.updateHeroIds()
     }
 
     // Selection Action Bar

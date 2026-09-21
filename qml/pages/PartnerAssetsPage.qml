@@ -22,6 +22,9 @@ Page {
 
     TimelineModel {
         id: partnerModel
+        api: immichApi
+        context: page.contextId
+        queryParams: page.queryParams
     }
 
     function refresh() {
@@ -32,7 +35,7 @@ Page {
         var params = {"userId": partnerId, "order": sortOrder}
         if (showCreatedAt) params["orderBy"] = "createdAt"
         queryParams = params
-        immichApi.fetchTimelineBuckets(contextId, queryParams)
+        partnerModel.fetchBuckets()
     }
 
     function updateHeroIds() {
@@ -283,24 +286,7 @@ Page {
     }
 
     Connections {
-        target: immichApi
-        onTimelineBucketsReceived: {
-            if (context !== page.contextId) return
-            partnerModel.loadBuckets(buckets)
-            partnerModel.setLoading(false)
-            if (partnerModel.getBucketCount() > 0) {
-                partnerModel.requestBucketLoad(0)
-            }
-        }
-        onTimelineBucketReceived: {
-            if (context !== page.contextId) return
-            partnerModel.loadBucketAssets(timeBucket, bucketData)
-            page.updateHeroIds()
-        }
-    }
-
-    Connections {
         target: partnerModel
-        onBucketLoadRequested: immichApi.fetchTimelineBucket(page.contextId, timeBucket, page.queryParams)
+        onBucketAssetsLoaded: page.updateHeroIds()
     }
 }

@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../components"
+import "../components/TimelineHelper.js" as TimelineHelper
 
 Page {
     id: page
@@ -14,8 +15,6 @@ Page {
     property string activeFilter: "taken"
     property string sortOrder: "desc"
     property bool showFavorites: false
-    property string contextId: "timeline"
-    property var queryParams: ({})
 
     // Highlight state for scroll-to-asset
     property string highlightAssetId: ""
@@ -39,7 +38,6 @@ Page {
         timelineModel.clear()
         timelineModel.setLoading(true)
         var isFavorite = showFavorites
-        timelineModel.setFavoriteFilter(isFavorite)
         var showCreatedAt = page.activeFilter === "created"
         timelineModel.setGroupByCreatedAt(showCreatedAt)
         var params = { "visibility": "timeline", "withStacked": "true", "order": sortOrder }
@@ -49,8 +47,8 @@ Page {
         } else {
             params["withPartners"] = "true"
         }
-        queryParams = params
-        immichApi.fetchTimelineBuckets(contextId, queryParams)
+        timelineModel.queryParams = params
+        timelineModel.fetchBuckets()
     }
 
     function currentBucketLoadMargin() {
@@ -498,8 +496,10 @@ Page {
 
     Connections {
         target: timelineModel
-        onBucketLoadRequested: {
-            immichApi.fetchTimelineBucket(page.contextId, timeBucket, page.queryParams)
+        onBucketsLoaded: {
+            if (pendingScrollBucketIndex < 0) {
+                bucketsList.positionViewAtBeginning()
+            }
         }
         onScrollToAssetRequested: {
             pendingScrollAssetId = assetId
@@ -525,18 +525,6 @@ Page {
 
     Connections {
         target: immichApi
-        onTimelineBucketsReceived: {
-            if (context !== page.contextId) return
-            timelineModel.loadBuckets(buckets)
-            timelineModel.setLoading(false)
-            if (pendingScrollBucketIndex < 0) {
-                bucketsList.positionViewAtBeginning()
-            }
-        }
-        onTimelineBucketReceived: {
-            if (context !== page.contextId) return
-            timelineModel.loadBucketAssets(timeBucket, bucketData)
-        }
         onErrorOccurred: {
             timelineModel.setLoading(false)
             notification.showError(error)
@@ -551,11 +539,7 @@ Page {
             page.refresh()
         }
         onAssetsDeleted: {
-            notification.show(assetIds.length === 1
-                //% "Deleted asset"
-                ? qsTrId("notification.deletedAsset")
-                //% "Deleted %1 assets"
-                : qsTrId("notification.deletedAssets").arg(assetIds.length))
+            notification.show(TimelineHelper.deletedNotification(assetIds.length))
         }
         onAssetDownloaded: {
             //% "Downloaded to: %1"
@@ -568,15 +552,7 @@ Page {
         }
         onFavoritesToggled: {
             timelineModel.clearSelection()
-            notification.show(isFavorite ? (assetIds.length === 1
-                //% "Added asset to favorites"
-                ? qsTrId("notification.addedAssetToFavorites")
-                //% "Added %1 assets to favorites"
-                : qsTrId("notification.addedAssetsToFavorites").arg(assetIds.length)) : (assetIds.length === 1
-                //% "Removed asset from favorites"
-                ? qsTrId("notification.removedAssetFromFavorites")
-                //% "Removed %1 assets from favorites"
-                : qsTrId("notification.removedAssetsFromFavorites").arg(assetIds.length)))
+            notification.show(TimelineHelper.favoritesNotification(isFavorite, assetIds.length))
         }
         onAlbumCreated: {
             //% "Created album: %1"

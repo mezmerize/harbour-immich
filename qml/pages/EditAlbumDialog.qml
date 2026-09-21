@@ -35,36 +35,28 @@ Dialog {
 
   TimelineModel {
       id: pickerModel
+      api: immichApi
+      context: dialog.albumContext
+      queryParams: dialog.albumQuery
   }
 
   Component.onCompleted: {
       pickerModel.setServerUrl(authManager.serverUrl)
-      immichApi.fetchTimelineBuckets(albumContext, albumQuery)
+      pickerModel.fetchBuckets()
   }
 
   Connections {
       target: immichApi
-      onTimelineBucketsReceived: {
-          if (context !== dialog.albumContext) return
-          pickerModel.loadBuckets(buckets)
+      onBucketsLoaded: {
           dialog.nextBucketToLoad = 0
           if (pickerModel.getBucketCount() > 0)
               dialog.loadNextBucket()
       }
-      onTimelineBucketReceived: {
-          if (context !== dialog.albumContext) return
-          pickerModel.loadBucketAssets(timeBucket, bucketData)
+      onBucketAssetsLoaded: {
           dialog.albumAssets = pickerModel.getLoadedAssetIds()
           var visibleCapacity = Math.ceil(dialog.width / dialog.thumbnailSize) + 4
           if (dialog.albumAssets.length < visibleCapacity)
               dialog.loadNextBucket()
-      }
-  }
-
-  Connections {
-      target: pickerModel
-      onBucketLoadRequested: {
-          immichApi.fetchTimelineBucket(dialog.albumContext, timeBucket, dialog.albumQuery)
       }
   }
 

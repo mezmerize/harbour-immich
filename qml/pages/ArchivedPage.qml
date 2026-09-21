@@ -19,6 +19,9 @@ Page {
 
     TimelineModel {
         id: archiveModel
+        api: immichApi
+        context: page.contextId
+        queryParams: page.queryParams
     }
 
     function refresh() {
@@ -31,7 +34,7 @@ Page {
         if (showFavorites) params["isFavorite"] = "true"
         if (showCreatedAt) params["orderBy"] = "createdAt"
         queryParams = params
-        immichApi.fetchTimelineBuckets(contextId, queryParams)
+        archiveModel.fetchBuckets()
     }
 
     function updateHeroIds() {
@@ -299,31 +302,10 @@ Page {
 
     Connections {
         target: immichApi
-        onTimelineBucketsReceived: {
-            if (context !== page.contextId) return
-            archiveModel.loadBuckets(buckets)
-            archiveModel.setLoading(false)
-            if (archiveModel.getBucketCount() > 0) {
-                archiveModel.requestBucketLoad(0)
-            }
-        }
-        onTimelineBucketReceived: {
-            if (context !== page.contextId) return
-            archiveModel.loadBucketAssets(timeBucket, bucketData)
-            page.updateHeroIds()
-        }
         onFavoritesToggled: {
             archiveModel.updateFavorites(assetIds, isFavorite)
             archiveModel.clearSelection()
-            notification.show(isFavorite ? (assetIds.length === 1
-                //% "Added asset to favorites"
-                ? qsTrId("notification.addedAssetToFavorites")
-                //% "Added %1 assets to favorites"
-                : qsTrId("notification.addedAssetsToFavorites").arg(assetIds.length)) : (assetIds.length === 1
-                //% "Removed asset from favorites"
-                ? qsTrId("notification.removedAssetFromFavorites")
-                //% "Removed %1 assets from favorites"
-                : qsTrId("notification.removedAssetsFromFavorites").arg(assetIds.length)))
+            notification.show(TimelineHelper.favoritesNotification(isFavorite, assetIds.length))
         }
         onAssetVisibilityChanged: {
             if (visibility === "timeline") {
@@ -338,18 +320,12 @@ Page {
         }
         onAssetsDeleted: {
             page.refresh()
-            notification.show(assetIds.length === 1
-                //% "Deleted asset"
-                ? qsTrId("notification.deletedAsset")
-                //% "Deleted %1 assets"
-                : qsTrId("notification.deletedAssets").arg(assetIds.length))
+            notification.show(TimelineHelper.deletedNotification(assetIds.length))
         }
     }
 
     Connections {
         target: archiveModel
-        onBucketLoadRequested: {
-            immichApi.fetchTimelineBucket(page.contextId, timeBucket, page.queryParams)
-        }
+        onBucketAssetsLoaded: page.updateHeroIds()
     }
 }

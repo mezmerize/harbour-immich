@@ -107,7 +107,10 @@ Dialog {
                 text: qsTrId("folderPickerPage.description")
             }
 
-            Item { width: 1; height: Theme.paddingMedium }
+            Item {
+                width: 1
+                height: Theme.paddingMedium
+            }
 
             Repeater {
                 model: folderModel
@@ -158,7 +161,10 @@ Dialog {
                 }
             }
 
-            Item { width: 1; height: Theme.paddingLarge }
+            Item {
+                width: 1
+                height: Theme.paddingLarge
+            }
 
             SectionHeader {
                 //% "Custom Folder"
@@ -191,7 +197,10 @@ Dialog {
                 }
             }
 
-            Item { width: 1; height: Theme.paddingLarge }
+            Item {
+                width: 1
+                height: Theme.paddingLarge
+            }
 
             SectionHeader {
                 //% "Selected Folders"

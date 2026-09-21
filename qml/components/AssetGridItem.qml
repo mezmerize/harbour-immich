@@ -15,7 +15,7 @@ BackgroundItem {
     property string stackId: ""
     property int stackAssetCount: 0
     property string livePhotoVideoId: ""
-    property int imageSize: Math.max(64, Math.ceil(Math.max(width, height)))
+    property int imageSize: Math.max(64, Math.ceil(Math.max(width, height) * Theme.pixelRatio))
     property bool isHighlighted: false
     property bool currentBackupState: false
 

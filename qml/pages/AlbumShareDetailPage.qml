@@ -50,7 +50,7 @@ Page {
         if (showFavorites) params["isFavorite"] = "true"
         if (showCreatedAt) params["orderBy"] = "createdAt"
         queryParams = params
-        immichApi.fetchTimelineBuckets(contextId, queryParams)
+        sharedLinkModel.fetchBuckets()
     }
 
     function updateHeroIds() {
@@ -69,6 +69,9 @@ Page {
 
     TimelineModel {
         id: sharedLinkModel
+        api: immichApi
+        context: page.contextId
+        queryParams: page.queryParams
     }
 
     Timer {
@@ -239,7 +242,6 @@ Page {
             assetsPerRow: page.assetsPerRow
             assetModel: sharedLinkModel
 
-
             onAssetClicked: {
                 pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
                     assetId: assetId,
@@ -396,25 +398,12 @@ Page {
             loading = false
             page.reloadFromLinkData()
         }
-        onTimelineBucketsReceived: {
-            if (context !== page.contextId) return
-            sharedLinkModel.loadBuckets(buckets)
-            sharedLinkModel.setLoading(false)
-            page.updateDateRange()
-            if (sharedLinkModel.getBucketCount() > 0) sharedLinkModel.requestBucketLoad(0)
-        }
-        onTimelineBucketReceived: {
-            if (context !== page.contextId) return
-            sharedLinkModel.loadBucketAssets(timeBucket, bucketData)
-            page.updateHeroIds()
-        }
         onFavoritesToggled: sharedLinkModel.updateFavorites(assetIds, isFavorite)
     }
 
     Connections {
         target: sharedLinkModel
-        onBucketLoadRequested: {
-            immichApi.fetchTimelineBucket(page.contextId, timeBucket, page.queryParams)
-        }
+        onBucketsLoaded: page.updateDateRange()
+        onBucketAssetsLoaded: page.updateHeroIds()
     }
 }
