@@ -103,8 +103,6 @@ void AuthManager::reloginWithStoredCredentials()
     QString storedPassword = m_storage->loadPassword();
     if (!m_serverUrl.isEmpty() && !m_email.isEmpty() && !storedPassword.isEmpty()) {
         login(m_email, storedPassword);
-    } else {
-        emit authenticationRequired();
     }
 }
 

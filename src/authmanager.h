@@ -45,7 +45,6 @@ signals:
     void storedPasswordChanged();
     void loginSucceeded();
     void loginFailed(const QString &error);
-    void authenticationRequired();
 
 private slots:
     void onLoginReplyFinished();

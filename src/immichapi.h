@@ -51,10 +51,10 @@ public:
     Q_INVOKABLE void fetchServerVersion();
     Q_INVOKABLE void createAlbum(const QString &albumName, const QString &description);
     Q_INVOKABLE void updateAlbum(const QString &albumId, const QString &albumName, const QString &description, bool isActivityEnabled = true, const QString &albumThumbnailAssetId = QString());
-    Q_INVOKABLE void fetchTimelineBuckets(const QString &context, const QVariantMap &params);
-    Q_INVOKABLE void fetchTimelineBucket(const QString &context, const QString &timeBucket, const QVariantMap &params);
+    void fetchTimelineBuckets(const QString &context, const QVariantMap &params);
+    void fetchTimelineBucket(const QString &context, const QString &timeBucket, const QVariantMap &params);
     Q_INVOKABLE QString serverUrl() const;
-    Q_INVOKABLE void bulkUploadCheck(const QJsonArray &assets);
+    Q_INVOKABLE void bulkUploadCheck(const QJsonArray &assets, const QString &token = QString());
     Q_INVOKABLE void getStack(const QString &stackId);
     Q_INVOKABLE void createStack(const QStringList &assetIds);
     Q_INVOKABLE void deleteStack(const QString &stackId);
@@ -113,12 +113,14 @@ signals:
     void albumUpdated(const QString &albumId, const QString &albumName, const QString &description, bool isActivityEnabled, const QString &albumThumbnailAssetId);
     void timelineBucketsReceived(const QString &context, const QJsonArray &buckets);
     void timelineBucketReceived(const QString &context, const QString &timeBucket, const QJsonObject &bucketData);
+    void timelineBucketsFailed(const QString &context);
+    void timelineBucketFailed(const QString &context, const QString &timeBucket);
     void errorOccurred(const QString &error);
-    void bulkUploadCheckCompleted(const QJsonArray &results);
+    void bulkUploadCheckCompleted(const QJsonArray &results, const QString &token);
+    void bulkUploadCheckFailed(const QString &token);
     void stackReceived(const QString &stackId, const QJsonArray &assets);
     void stackCreated(const QString &stackId);
     void stackDeleted(const QString &stackId);
-    void authenticationRequired();
     void assetVisibilityChanged(const QStringList &assetIds, const QString &visibility);
     void trashRestored(const QStringList &assetIds);
     void trashEmptied();
@@ -161,7 +163,7 @@ private:
     void startAssetDownload(const QString &assetId, const QString &fileName);
 
     // Generic reply handler
-    void connectReply(QNetworkReply *reply, std::function<void(const QByteArray&)> onSuccess, int timeoutMs = 30000);
+    void connectReply(QNetworkReply *reply, std::function<void(const QByteArray&)> onSuccess, int timeoutMs = 30000, std::function<void()> onFailure = nullptr);
 
     // Upload queue state
     QStringList m_uploadQueue;

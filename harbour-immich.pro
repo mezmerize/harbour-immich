@@ -149,5 +149,6 @@ lupdate_only {
     SOURCES += qml/*.qml \
                qml/pages/*.qml \
                qml/cover/*.qml \
+               qml/components/*.js \
                qml/components/*.qml
 }

@@ -1,32 +1,25 @@
 #include "timelinemodel.h"
+#include "immichapi.h"
+#include "dateutils.h"
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QJsonDocument>
 #include <QDebug>
 #include <QLocale>
+#include <algorithm>
 #include <limits>
 
 namespace {
 const int MaxConcurrentBucketLoads = 2;
 const int MaxQueuedBucketLoads = 4;
-
-QString monthYearLabel(const QDate &date)
-{
-    const QLocale locale;
-    QString name = locale.standaloneMonthName(date.month());
-    if (!name.isEmpty()) {
-        name.replace(0, 1, locale.toUpper(name.left(1)));
-    }
-    return name + QLatin1Char(' ') + QString::number(date.year());
-}
+const int MaxBucketLoadAttempts = 3;
 }
 
 TimelineModel::TimelineModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_totalCount(0)
     , m_loading(false)
-    , m_isFavoriteFilter(false)
     , m_groupByCreatedAt(false)
+    , m_api(nullptr)
     , m_pendingScrollBucketIndex(-1)
     , m_activeBucketLoads(0)
 {
@@ -43,25 +36,7 @@ QVariant TimelineModel::data(const QModelIndex &index, int role) const
 {
     Q_UNUSED(index)
     Q_UNUSED(role)
-    // This model doesn't use traditional row-based access
-    // QML accesses data through getBucketAt() and getBucketAssets()
     return QVariant();
-}
-
-QHash<int, QByteArray> TimelineModel::roleNames() const
-{
-    QHash<int, QByteArray> roles;
-    roles[IdRole] = "assetId";
-    roles[IsFavoriteRole] = "isFavorite";
-    roles[IsSelectedRole] = "isSelected";
-    roles[IsVideoRole] = "isVideo";
-    roles[IsGroupHeaderRole] = "isGroupHeader";
-    roles[GroupTitleRole] = "groupTitle";
-    roles[GroupSubtitleRole] = "groupSubtitle";
-    roles[GroupIndexRole] = "groupIndex";
-    roles[StackIdRole] = "stackId";
-    roles[StackAssetCountRole] = "stackAssetCount";
-    return roles;
 }
 
 void TimelineModel::loadBuckets(const QJsonArray &bucketsJson)
@@ -75,6 +50,8 @@ void TimelineModel::loadBuckets(const QJsonArray &bucketsJson)
     m_bucketOffsets.clear();
     m_bucketLoadQueue.clear();
     m_activeBucketLoads = 0;
+    m_pendingScrollAssetId.clear();
+    m_pendingScrollBucketIndex = -1;
     m_totalCount = 0;
 
     for (const QJsonValue &value : bucketsJson) {
@@ -89,20 +66,21 @@ void TimelineModel::loadBuckets(const QJsonArray &bucketsJson)
         bucket.count = count;
         bucket.loaded = false;
         bucket.loading = false;
+        bucket.loadAttempts = 0;
         bucket.cachedSubGroups.clear();
         bucket.subGroupsDirty = true;
 
         // Parse the timeBucket to create display strings
         bucket.dateTime = QDateTime::fromString(bucket.timeBucket, Qt::ISODate);
         if (bucket.dateTime.isValid()) {
-            bucket.monthYear = monthYearLabel(bucket.dateTime.date());
+            bucket.monthYear = DateUtils::monthYearLabel(bucket.dateTime.date());
             bucket.date = QLocale().toString(bucket.dateTime, QStringLiteral("dd.MM.yyyy"));
         } else {
             // Fallback - try parsing just the date part
             QString dateStr = bucket.timeBucket.left(10);
             QDate date = QDate::fromString(dateStr, Qt::ISODate);
             if (date.isValid()) {
-                bucket.monthYear = monthYearLabel(date);
+                bucket.monthYear = DateUtils::monthYearLabel(date);
                 bucket.date = QLocale().toString(date, QStringLiteral("dd.MM.yyyy"));
                 bucket.dateTime = QDateTime(date, QTime(0, 0));
             }
@@ -206,7 +184,7 @@ void TimelineModel::requestBucketLoad(int bucketIndex)
         return;
 
     const TimelineBucket &bucket = m_buckets.at(bucketIndex);
-    if (bucket.loaded || bucket.loading)
+    if (bucket.loaded || bucket.loading || bucket.loadAttempts >= MaxBucketLoadAttempts)
         return;
 
     if (m_activeBucketLoads < MaxConcurrentBucketLoads) {
@@ -237,12 +215,18 @@ void TimelineModel::dispatchBucketLoad(int bucketIndex)
         return;
 
     TimelineBucket &bucket = m_buckets[bucketIndex];
-    if (bucket.loaded || bucket.loading)
+    if (bucket.loaded || bucket.loading || bucket.loadAttempts >= MaxBucketLoadAttempts)
         return;
 
+    if (!m_api || m_context.isEmpty()) {
+        qWarning() << "TimelineModel: Bucket load requested without api/context";
+        return;
+    }
+
     bucket.loading = true;
+    ++bucket.loadAttempts;
     ++m_activeBucketLoads;
-    emit bucketLoadRequested(bucket.timeBucket, m_isFavoriteFilter);
+    m_api->fetchTimelineBucket(m_context, bucket.timeBucket, m_queryParams);
 }
 
 void TimelineModel::processQueuedBucketLoads()
@@ -425,16 +409,13 @@ void TimelineModel::rebuildBucketOffsets()
 
 int TimelineModel::findBucketByAssetIndex(int assetIndex) const
 {
-    for (int b = 0; b < m_buckets.size(); ++b) {
-        int bucketStart = m_bucketOffsets.value(b, -1);
-        if (bucketStart < 0) {
-            continue;
-        }
-        if (assetIndex >= bucketStart && assetIndex < bucketStart + m_buckets.at(b).count) {
-            return b;
-        }
-    }
-    return -1;
+    auto it = std::upper_bound(m_bucketOffsets.constBegin(), m_bucketOffsets.constEnd(), assetIndex);
+    if (it == m_bucketOffsets.constBegin())
+        return -1;
+    int b = int(it - m_bucketOffsets.constBegin()) - 1;
+    if (assetIndex >= m_bucketOffsets.at(b) + m_buckets.at(b).count)
+        return -1;
+    return b;
 }
 
 void TimelineModel::toggleSelection(int bucketIndex, int assetIndex)
@@ -626,17 +607,6 @@ QVariantMap TimelineModel::getAssetLocation(int assetIndex) const
     return result;
 }
 
-int TimelineModel::getAssetIndexById(const QString &assetId) const
-{
-    auto it = m_assetIndex.find(assetId);
-    if (it != m_assetIndex.end()) {
-        int bucketIdx = it.value().first;
-        int assetIdx = it.value().second;
-        return m_bucketOffsets.value(bucketIdx, 0) + assetIdx;
-    }
-    return -1;
-}
-
 void TimelineModel::updateFavorites(const QStringList &assetIds, bool isFavorite)
 {
     QSet<int> affectedBuckets;
@@ -744,6 +714,8 @@ void TimelineModel::scrollToAsset(const QString &assetId, const QString &dateStr
         }
         // Asset not in this bucket, scroll to bucket top
         emit scrollToAssetRequested(assetId, targetBucket, -1);
+    } else if (m_buckets[targetBucket].loadAttempts <= MaxBucketLoadAttempts) {
+        emit scrollToAssetRequested(assetId, targetBucket, -1);
     } else {
         // Bucket not loaded - store pending scroll and request load
         m_pendingScrollAssetId = assetId;
@@ -847,17 +819,107 @@ void TimelineModel::setGroupByCreatedAt(bool value)
     }
 }
 
-bool TimelineModel::isFavoriteFilter() const
+QObject* TimelineModel::api() const
 {
-    return m_isFavoriteFilter;
+    return m_api;
 }
 
-void TimelineModel::setFavoriteFilter(bool isFavorite)
+void TimelineModel::setApi(QObject *apiObject)
 {
-    if (m_isFavoriteFilter != isFavorite) {
-        m_isFavoriteFilter = isFavorite;
-        emit favoriteFilterChanged();
+    ImmichApi *api = qobject_cast<ImmichApi*>(apiObject);
+    if (m_api == api)
+        return;
+
+    if (m_api) {
+        m_api->disconnect(this);
     }
+    m_api = api;
+    if (m_api) {
+        connect(m_api, &ImmichApi::timelineBucketsReceived, this, [this](const QString &context, const QJsonArray &buckets) {
+            if (context != m_context)
+                return;
+            loadBuckets(buckets);
+            setLoading(false);
+            if (!m_buckets.isEmpty()) {
+                requestBucketLoad(0);
+            }
+            emit bucketsLoaded();
+        });
+        connect(m_api, &ImmichApi::timelineBucketReceived, this, [this](const QString &context, const QString &timeBucket, const QJsonObject &bucketData) {
+            if (context != m_context)
+                return;
+            loadBucketAssets(timeBucket, bucketData);
+        });
+        connect(m_api, &ImmichApi::timelineBucketsFailed, this, [this](const QString &context) {
+            if (context != m_context)
+                return;
+            setLoading(false);
+        });
+        connect(m_api, &ImmichApi::timelineBucketFailed, this, [this](const QString &context, const QString &timeBucket) {
+            if (context != m_context)
+                return;
+            int bucketIndex = findBucketByTimeBucket(timeBucket);
+            if (bucketIndex < 0)
+                return;
+            markBucketLoadFailed(bucketIndex);
+        });
+    }
+    emit apiChanged();
+}
+
+QString TimelineModel::context() const
+{
+    return m_context;
+}
+
+void TimelineModel::setContext(const QString &context)
+{
+    if (m_context != context) {
+        m_context = context;
+        emit contextChanged();
+    }
+}
+
+QVariantMap TimelineModel::queryParams() const
+{
+    return m_queryParams;
+}
+
+void TimelineModel::setQueryParams(const QVariantMap &params)
+{
+    if (m_queryParams != params) {
+        m_queryParams = params;
+        emit queryParamsChanged();
+    }
+}
+
+void TimelineModel::fetchBuckets()
+{
+    if (!m_api || m_context.isEmpty()) {
+        qWarning() << "TimelineModel: Called fetchBuckets without api/context";
+        return;
+    }
+    m_api->fetchTimelineBuckets(m_context, m_queryParams);
+}
+
+void TimelineModel::markBucketLoadFailed(int bucketIndex)
+{
+    TimelineBucket &bucket = m_buckets[bucketIndex];
+    if (bucket.loading) {
+        bucket.loading = false;
+        if (m_activeBucketLoads > 0) {
+            --m_activeBucketLoads;
+        }
+    }
+
+    if (m_pendingScrollBucketIndex == bucketIndex) {
+        QString assetId = m_pendingScrollAssetId;
+        m_pendingScrollAssetId.clear();
+        m_pendingScrollBucketIndex = -1;
+        emit scrollToAssetRequested(assetId, bucketIndex, -1);
+    }
+
+    processQueuedBucketLoads();
 }
 
 void TimelineModel::clear()
@@ -870,6 +932,8 @@ void TimelineModel::clear()
     m_bucketOffsets.clear();
     m_bucketLoadQueue.clear();
     m_activeBucketLoads = 0;
+    m_pendingScrollAssetId.clear();
+    m_pendingScrollBucketIndex = -1;
     m_totalCount = 0;
     endResetModel();
     emit bucketCountChanged();

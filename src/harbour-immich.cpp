@@ -158,6 +158,8 @@ int main(int argc, char *argv[])
     // Timeline model connections
     timelineModel->setServerUrl(authManager->serverUrl());
     timelineModel->setUserId(authManager->userId());
+    timelineModel->setApi(immichApi);
+    timelineModel->setContext(QStringLiteral("timeline"));
     QObject::connect(authManager, &AuthManager::serverUrlChanged, [authManager, timelineModel]() {
         timelineModel->setServerUrl(authManager->serverUrl());
     });

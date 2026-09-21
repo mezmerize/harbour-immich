@@ -8,6 +8,8 @@
 #include <QSet>
 #include <QQueue>
 
+class ImmichApi;
+
 struct TimelineAsset {
     QString id;
     QString ownerId;
@@ -29,6 +31,7 @@ struct TimelineBucket {
     int count;               // Number of assets in bucket
     bool loaded;             // Whether assets have been fetched
     bool loading;            // Whether assets are currently being fetched
+    int loadAttempts;        // Number of fetch attempts
     QList<TimelineAsset> assets;
     mutable QVariantList cachedSubGroups;
     mutable bool subGroupsDirty;
@@ -43,30 +46,18 @@ class TimelineModel : public QAbstractListModel
     Q_PROPERTY(QString serverUrl READ serverUrl WRITE setServerUrl NOTIFY serverUrlChanged)
     Q_PROPERTY(int bucketCount READ bucketCount NOTIFY bucketCountChanged)
     Q_PROPERTY(bool groupByCreatedAt READ groupByCreatedAt WRITE setGroupByCreatedAt NOTIFY groupByCreatedAtChanged)
+    Q_PROPERTY(QObject* api READ api WRITE setApi NOTIFY apiChanged)
+    Q_PROPERTY(QString context READ context WRITE setContext NOTIFY contextChanged)
+    Q_PROPERTY(QVariantMap queryParams READ queryParams WRITE setQueryParams NOTIFY queryParamsChanged)
 
 public:
-    enum AssetRoles {
-        IdRole = Qt::UserRole + 1,
-        IsFavoriteRole,
-        IsSelectedRole,
-        IsVideoRole,
-        IsGroupHeaderRole,
-        GroupTitleRole,
-        GroupSubtitleRole,
-        GroupIndexRole,
-        StackIdRole,
-        StackAssetCountRole
-    };
-
     explicit TimelineModel(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    QHash<int, QByteArray> roleNames() const override;
+    Q_INVOKABLE void fetchBuckets();
 
     // Bucket management
-    Q_INVOKABLE void loadBuckets(const QJsonArray &bucketsJson);
-    Q_INVOKABLE void loadBucketAssets(const QString &timeBucket, const QJsonObject &bucketData);
     Q_INVOKABLE bool isBucketLoaded(int bucketIndex) const;
     Q_INVOKABLE void requestBucketLoad(int bucketIndex);
     Q_INVOKABLE int getBucketCount() const;
@@ -96,7 +87,6 @@ public:
 
     Q_INVOKABLE QVariantMap getAssetByAssetIndex(int assetIndex) const;
     Q_INVOKABLE QVariantMap getAssetLocation(int assetIndex) const;
-    Q_INVOKABLE int getAssetIndexById(const QString &assetId) const;
 
     // Properties
     int totalCount() const;
@@ -108,12 +98,14 @@ public:
     int bucketCount() const;
     bool groupByCreatedAt() const;
     Q_INVOKABLE void setGroupByCreatedAt(bool value);
+    QObject* api() const;
+    Q_INVOKABLE void setApi(QObject *api);
+    QString context() const;
+    Q_INVOKABLE void setContext(const QString &context);
+    QVariantMap queryParams() const;
+    Q_INVOKABLE void setQueryParams(const QVariantMap &params);
 
     Q_INVOKABLE void clear();
-
-    // Filter state
-    bool isFavoriteFilter() const;
-    Q_INVOKABLE void setFavoriteFilter(bool isFavorite);
 
 signals:
     void totalCountChanged();
@@ -122,8 +114,10 @@ signals:
     void serverUrlChanged();
     void bucketCountChanged();
     void groupByCreatedAtChanged();
-    void favoriteFilterChanged();
-    void bucketLoadRequested(const QString &timeBucket, bool isFavorite);
+    void apiChanged();
+    void contextChanged();
+    void queryParamsChanged();
+    void bucketsLoaded();
     void bucketDataUpdated(int bucketIndex);
     void scrollToAssetRequested(const QString &assetId, int bucketIndex, int assetIndexInBucket);
     void bucketAssetsLoaded(int bucketIndex);
@@ -139,14 +133,19 @@ private:
     bool m_loading;
     QString m_serverUrl;
     QString m_userId;
-    bool m_isFavoriteFilter;
     bool m_groupByCreatedAt;
+    ImmichApi *m_api;
+    QString m_context;
+    QVariantMap m_queryParams;
 
+    void loadBuckets(const QJsonArray &bucketsJson);
+    void loadBucketAssets(const QString &timeBucket, const QJsonObject &bucketData);
     void rebuildAssetIndex();
     void rebuildBucketOffsets();
     int findBucketByAssetIndex(int assetIndex) const;
     int findBucketByTimeBucket(const QString &timeBucket) const;
     int findClosestBucketByDate(const QDateTime &date) const;
+    void markBucketLoadFailed(int bucketIndex);
     void resolvePendingScroll(int bucketIndex);
     void dispatchBucketLoad(int bucketIndex);
     void processQueuedBucketLoads();

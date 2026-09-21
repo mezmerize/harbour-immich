@@ -469,11 +469,10 @@ void ImmichApi::handleNetworkError(QNetworkReply *reply)
 
     // Check HTTP 401
     if (statusCode == 401) {
-        emit authenticationRequired();
         m_authManager->reloginWithStoredCredentials();
         return;
     }
-    QString errorString = reply->errorString();
+    QString errorString = (reply->error() == QNetworkReply::OperationCanceledError) ? tr("Network request timed out") : reply->errorString();
     QByteArray response = reply->readAll();
     QJsonDocument doc = QJsonDocument::fromJson(response);
 
@@ -488,7 +487,7 @@ void ImmichApi::handleNetworkError(QNetworkReply *reply)
     emit errorOccurred(errorString);
 }
 
-void ImmichApi::connectReply(QNetworkReply *reply, std::function<void(const QByteArray&)> onSuccess, int timeoutMs)
+void ImmichApi::connectReply(QNetworkReply *reply, std::function<void(const QByteArray&)> onSuccess, int timeoutMs, std::function<void()> onFailure)
 {
     QTimer *timer = new QTimer(reply);
     timer->setSingleShot(true);
@@ -497,11 +496,12 @@ void ImmichApi::connectReply(QNetworkReply *reply, std::function<void(const QByt
     connect(reply, &QNetworkReply::finished, timer, &QTimer::stop);
     timer->start();
 
-    connect(reply, &QNetworkReply::finished, this, [this, reply, onSuccess]() {
+    connect(reply, &QNetworkReply::finished, this, [this, reply, onSuccess, onFailure]() {
         if (reply->error() == QNetworkReply::NoError) {
             onSuccess(reply->readAll());
         } else {
             handleNetworkError(reply);
+            if (onFailure) onFailure();
         }
         reply->deleteLater();
     });
@@ -1069,6 +1069,8 @@ void ImmichApi::fetchTimelineBuckets(const QString &context, const QVariantMap &
         QJsonArray buckets = QJsonDocument::fromJson(response).array();
         qInfo() << "ImmichApi: Context buckets for" << savedContext << "count:" << buckets.size();
         emit timelineBucketsReceived(savedContext, buckets);
+    }, 30000, [this, savedContext]() {
+        emit timelineBucketsFailed(savedContext);
     });
 }
 
@@ -1091,10 +1093,12 @@ void ImmichApi::fetchTimelineBucket(const QString &context, const QString &timeB
     connectReply(reply, [this, savedContext, savedTimeBucket](const QByteArray &response) {
         QJsonObject data = QJsonDocument::fromJson(response).object();
         emit timelineBucketReceived(savedContext, savedTimeBucket, data);
+    }, 30000, [this, savedContext, savedTimeBucket]() {
+        emit timelineBucketFailed(savedContext, savedTimeBucket);
     });
 }
 
-void ImmichApi::bulkUploadCheck(const QJsonArray &assets)
+void ImmichApi::bulkUploadCheck(const QJsonArray &assets, const QString &token)
 {
     qInfo() << "ImmichApi: Bulk upload check for" << assets.size() << "assets";
     QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/assets/bulk-upload-check"));
@@ -1105,13 +1109,18 @@ void ImmichApi::bulkUploadCheck(const QJsonArray &assets)
 
     QJsonDocument doc(json);
     QNetworkReply *reply = m_networkManager->post(request, doc.toJson());
-    connectReply(reply, [this](const QByteArray &response) {
+    connectReply(reply, [this, token](const QByteArray &response) {
         QJsonDocument doc = QJsonDocument::fromJson(response);
         QJsonObject obj = doc.object();
         QJsonArray results = obj["results"].toArray();
         qInfo() << "ImmichApi: Bulk upload check returned" << results.size() << "results";
-        emit bulkUploadCheckCompleted(results);
+        emit bulkUploadCheckCompleted(results, token);
     }, 120000); // 120s timeout for bulk operations
+    connect(reply, &QNetworkReply::finished, this, [this, reply, token]() {
+        if (reply->error() != QNetworkReply::NoError) {
+            emit bulkUploadCheckFailed(token);
+        }
+    });
 }
 
 void ImmichApi::getStack(const QString &stackId)
