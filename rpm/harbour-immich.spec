@@ -20,6 +20,7 @@ BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Network)
 BuildRequires:  pkgconfig(Qt5Multimedia)
+BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(sailfishsecrets)
 BuildRequires:  desktop-file-utils
 
@@ -60,6 +61,9 @@ Links:
 %if %{with harbour}
 sed -i 's|Exec=harbour-immich %%u|Exec=harbour-immich|' %{buildroot}%{_datadir}/applications/%{name}.desktop
 sed -i '/^MimeType=/d' %{buildroot}%{_datadir}/applications/%{name}.desktop
+sed -i '/^X-Maemo-/d' %{buildroot}%{_datadir}/applications/%{name}.desktop
+sed -i '/^X-DBusActivatable=/d' %{buildroot}%{_datadir}/applications/%{name}.desktop
+sed -i '/^ExecDBus=/d' %{buildroot}%{_datadir}/applications/%{name}.desktop
 %endif
 
 desktop-file-install --delete-original       \

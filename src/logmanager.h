@@ -22,7 +22,6 @@ public:
     int count() const;
 
     Q_INVOKABLE void clear();
-    Q_INVOKABLE QString logFilePath() const;
     Q_INVOKABLE QString previousLogContents() const;
 
     void addEntry(const QString &entry);

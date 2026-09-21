@@ -49,7 +49,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
 
-    Q_INVOKABLE void loadAlbums(const QJsonArray &albumsJson);
+    void loadAlbums(const QJsonArray &albumsJson);
     Q_INVOKABLE void sortAlbums(const QString &field, bool ascending);
     Q_INVOKABLE void updateAlbumMetadata(const QString &albumId, const QString &albumName, const QString &albumThumbnailAssetId);
 

@@ -89,11 +89,6 @@ void LogManager::addEntry(const QString &entry)
     }
 }
 
-QString LogManager::logFilePath() const
-{
-    return m_logFilePath;
-}
-
 QString LogManager::previousLogContents() const
 {
     QFile file(m_previousLogPath);
