@@ -37,6 +37,7 @@ SOURCES += src/harbour-immich.cpp \
 HEADERS += \
     src/backupdatabase.h \
     src/backupmanager.h \
+    src/dateutils.h \
     src/immichapi.h \
     src/authmanager.h \
     src/logmanager.h \
