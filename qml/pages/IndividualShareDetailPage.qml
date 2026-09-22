@@ -375,15 +375,14 @@ Page {
         onAddToAlbum: pageStack.push(Qt.resolvedUrl("AlbumPickerPage.qml"), {
             assetIds: page.selectedAssets
         })
-        onClearSelection: page.clearSelection()
         onDownload: {
             for (var i = 0; i < page.selectedAssets.length; i++) immichApi.downloadAsset(page.selectedAssets[i])
             page.clearSelection()
             notification.show(page.selectedAssets.length === 1
-                //% "Deleted asset"
-                ? qsTrId("notification.deletedAsset")
-                //% "Deleted %1 assets"
-                : qsTrId("notification.deletedAssets").arg(page.selectedAssets.length))
+                //% "Downloading asset"
+                ? qsTrId("notification.downloadingAsset")
+                //% "Downloading %1 assets"
+                : qsTrId("notification.downloadingAssets").arg(page.selectedAssets.length))
         }
         onDeleteSelected: {
             var ids = page.selectedAssets.slice()

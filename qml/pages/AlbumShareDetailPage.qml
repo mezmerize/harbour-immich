@@ -326,7 +326,6 @@ Page {
                 sharedLinkModel.clearSelection()
             })
         }
-        onClearSelection: sharedLinkModel.clearSelection()
         onDownload: {
             var selectedIds = sharedLinkModel.getSelectedAssetIds()
             for (var i = 0; i < selectedIds.length; i++) {
@@ -334,9 +333,9 @@ Page {
             }
             sharedLinkModel.clearSelection()
             notification.show(selectedIds.length === 1
-                //% "Downloading asset..."
+                //% "Downloading asset"
                 ? qsTrId("notification.downloadingAsset")
-                //% "Downloading %1 assets..."
+                //% "Downloading %1 assets"
                 : qsTrId("notification.downloadingAssets").arg(selectedIds.length))
         }
         onDeleteSelected: {

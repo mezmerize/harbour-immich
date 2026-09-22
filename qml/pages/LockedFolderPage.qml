@@ -414,7 +414,6 @@ Page {
         onAddToAlbum: pageStack.push(Qt.resolvedUrl("AlbumPickerPage.qml"), {
             assetIds: lockedModel.getSelectedAssetIds()
         })
-        onClearSelection: lockedModel.clearSelection()
         onDownload: {
             var ids = lockedModel.getSelectedAssetIds()
             for (var i = 0; i < ids.length; i++) {
@@ -422,9 +421,9 @@ Page {
             }
             lockedModel.clearSelection()
             notification.show(ids.length === 1
-                //% "Downloading asset..."
+                //% "Downloading asset"
                 ? qsTrId("notification.downloadingAsset")
-                //% "Downloading %1 assets..."
+                //% "Downloading %1 assets"
                 : qsTrId("notification.downloadingAssets").arg(ids.length))
         }
         onDeleteSelected: {

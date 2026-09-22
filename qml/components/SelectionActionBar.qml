@@ -33,7 +33,6 @@ Item {
     signal share()
     signal addToAlbum()
     signal stackSelected()
-    signal clearSelection()
     signal download()
     signal deleteSelected()
     signal moveToArchive()
@@ -104,7 +103,7 @@ Item {
         visible: isTrashPage
 
         IconButton {
-            width: parent.width / 3
+            width: parent.width / 2
             height: parent.height
             icon.source: "image://theme/icon-m-backup"
 
@@ -115,24 +114,13 @@ Item {
         }
 
         IconButton {
-            width: parent.width / 3
+            width: parent.width / 2
             height: parent.height
             icon.source: "image://theme/icon-m-delete"
 
             onClicked: {
                 actionFeedback.play()
                 deleteSelected()
-            }
-        }
-
-        IconButton {
-            width: parent.width / 3
-            height: parent.height
-            icon.source: "image://theme/icon-m-dismiss"
-
-            onClicked: {
-                actionFeedback.play()
-                clearSelection()
             }
         }
     }
@@ -149,7 +137,7 @@ Item {
         visible: isLockedFolderPage
 
         IconButton {
-            width: parent.width / 4
+            width: parent.width / 3
             height: parent.height
             icon.source: "image://theme/icon-m-cloud-download"
 
@@ -160,7 +148,7 @@ Item {
         }
 
         IconButton {
-            width: parent.width / 4
+            width: parent.width / 3
             height: parent.height
             icon.source: "image://theme/icon-m-delete"
 
@@ -171,24 +159,13 @@ Item {
         }
 
         IconButton {
-            width: parent.width / 4
+            width: parent.width / 3
             height: parent.height
             icon.source: "image://theme/icon-m-device-lock"
 
             onClicked: {
                 actionFeedback.play()
                 removeFromLockedFolder()
-            }
-        }
-
-        IconButton {
-            width: parent.width / 4
-            height: parent.height
-            icon.source: "image://theme/icon-m-dismiss"
-
-            onClicked: {
-                actionFeedback.play()
-                clearSelection()
             }
         }
     }

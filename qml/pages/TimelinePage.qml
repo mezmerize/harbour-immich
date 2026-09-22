@@ -292,9 +292,9 @@ Page {
             }
             timelineModel.clearSelection()
             notification.show(selectedIds.length === 1
-                //% "Downloading asset..."
+                //% "Downloading asset"
                 ? qsTrId("notification.downloadingAsset")
-                //% "Downloading %1 assets..."
+                //% "Downloading %1 assets"
                 : qsTrId("notification.downloadingAssets").arg(selectedIds.length))
         }
         onDeleteSelected: {

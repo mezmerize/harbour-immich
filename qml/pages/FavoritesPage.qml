@@ -233,7 +233,6 @@ Page {
                 assetIds: favoritesModel.getSelectedAssetIds()
             })
         }
-        onClearSelection: favoritesModel.clearSelection()
         onDownload: {
             var ids = favoritesModel.getSelectedAssetIds()
             for (var i = 0; i < ids.length; i++) {
@@ -241,9 +240,9 @@ Page {
             }
             favoritesModel.clearSelection()
             notification.show(ids.length === 1
-                //% "Downloading asset..."
+                //% "Downloading asset"
                 ? qsTrId("notification.downloadingAsset")
-                //% "Downloading %1 assets..."
+                //% "Downloading %1 assets"
                 : qsTrId("notification.downloadingAssets").arg(ids.length))
         }
         onDeleteSelected: {

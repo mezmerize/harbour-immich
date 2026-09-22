@@ -229,7 +229,6 @@ Page {
                 trashModel.clearSelection()
             })
         }
-        onClearSelection: trashModel.clearSelection()
     }
 
     RemorsePopup {

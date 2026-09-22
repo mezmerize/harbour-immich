@@ -375,7 +375,7 @@ Page {
                     onClicked: {
                         hapticFeedback.play()
                         immichApi.downloadAsset(assetId)
-                        //% "Downloading..."
+                        //% "Downloading"
                         notification.show(qsTrId("notification.downloading"))
                     }
                 }

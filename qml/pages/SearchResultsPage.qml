@@ -239,16 +239,15 @@ Page {
                assetIds: page.selectedAssets
            })
        }
-       onClearSelection: page.clearSelection()
        onDownload: {
            for (var i = 0; i < page.selectedAssets.length; i++) {
                immichApi.downloadAsset(page.selectedAssets[i])
            }
            page.clearSelection()
            notification.show(page.selectedAssets.length === 1
-                //% "Downloading asset..."
+                //% "Downloading asset"
                 ? qsTrId("notification.downloadingAsset")
-                //% "Downloading %1 assets..."
+                //% "Downloading %1 assets"
                 : qsTrId("notification.downloadingAssets").arg(page.selectedAssets.length))
        }
        onDeleteSelected: {

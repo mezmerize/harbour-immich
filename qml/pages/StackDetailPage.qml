@@ -498,7 +498,7 @@ Page {
                             var asset = getCurrentAsset()
                             if (asset) {
                                 immichApi.downloadAsset(asset.id)
-                                //% "Downloading..."
+                                //% "Downloading"
                                 notification.show(qsTrId("notification.downloading"))
                             }
                         }

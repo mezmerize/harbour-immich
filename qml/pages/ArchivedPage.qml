@@ -243,7 +243,6 @@ Page {
                 assetIds: archiveModel.getSelectedAssetIds()
             })
         }
-        onClearSelection: archiveModel.clearSelection()
         onDownload: {
             var ids = archiveModel.getSelectedAssetIds()
             for (var i = 0; i < ids.length; i++) {
@@ -251,9 +250,9 @@ Page {
             }
             archiveModel.clearSelection()
             notification.show(ids.length === 1
-                //% "Downloading asset..."
+                //% "Downloading asset"
                 ? qsTrId("notification.downloadingAsset")
-                //% "Downloading %1 assets..."
+                //% "Downloading %1 assets"
                 : qsTrId("notification.downloadingAssets").arg(ids.length))
         }
         onDeleteSelected: {
