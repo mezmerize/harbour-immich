@@ -1814,12 +1814,12 @@
     <message id="settingsPage.sourceCode">
         <location filename="../qml/pages/SettingsPage.qml" line="826"/>
         <source>Source code</source>
-        <translation type="unfinished"></translation>
+        <translation>Code source</translation>
     </message>
     <message id="settingsPage.translations">
         <location filename="../qml/pages/SettingsPage.qml" line="839"/>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traductions</translation>
     </message>
     <message id="settingsPage.viewLogs">
         <location filename="../qml/pages/SettingsPage.qml" line="731"/>
