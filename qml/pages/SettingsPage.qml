@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 import "../components"
 
@@ -528,7 +528,7 @@ Page {
 
            TextSwitch {
                visible: settingsManager.backupEnabled
-               //% "Auto-disable after backup
+               //% "Auto-disable after backup"
                text: qsTrId("settingsPage.backupAutoDisable")
                //% "Automatically turn off backup after all pending files have been uploaded."
                description: qsTrId("settingsPage.backupAutoDisableInfo")
@@ -868,7 +868,7 @@ Page {
            notification.show(qsTrId("notification.dbCleared"))
        }
        onMediaTypesFetchFailed: {
-           //% "Could not fetch supported media types from server. Backup disabled.
+           //% "Could not fetch supported media types from server - backup disabled"
            notification.showError(qsTrId("notification.mediaTypesFetchFailed"))
        }
    }

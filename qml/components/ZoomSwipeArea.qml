@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 
 PinchArea {
@@ -159,8 +159,7 @@ PinchArea {
                 if (gestureDecided) {
                     if (horizontalGesture && enableHorizontal) {
                         var slideD = deltaX
-                        if (!wrapAround && ((currentIndex <= 0 && root.stateTarget.slideOffset + slideD > 0) ||
-                                (currentIndex >= totalCount - 1 && root.stateTarget.slideOffset + slideD < 0))) {
+                        if (!wrapAround && ((currentIndex <= 0 && root.stateTarget.slideOffset + slideD > 0) || (currentIndex >= totalCount - 1 && root.stateTarget.slideOffset + slideD < 0))) {
                             slideD *= 0.3
                         }
                         root.stateTarget.slideOffset += slideD

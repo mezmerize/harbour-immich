@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 import harbour.immich.models 1.0
 import "../components"
@@ -179,7 +179,7 @@ Page {
                     Label {
                         id: dateLabel
                         anchors.centerIn: parent
-                        text: model.memoryDate ? Qt.formatDate(new Date(model.memoryDate), "dd MMMM yyyy") : ""
+                        text: model.memoryDate ? (new Date(model.memoryDate)).toLocaleDateString() : ""
                         font.pixelSize: Theme.fontSizeExtraSmall
                         color: Theme.lightPrimaryColor
                     }

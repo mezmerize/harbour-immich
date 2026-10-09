@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 import "../components"
 import "../components/FilterHelper.js" as FilterHelper
@@ -195,10 +195,13 @@ Page {
     // Empty state
     EmptyState {
         anchors.fill: flickable
-        visible: !page.loading && placesModel.length === 0
+        visible: (!page.loading && placesModel.length === 0) || (filterText.length > 0 && filteredModel.length === 0)
         iconSource: "image://theme/icon-m-location"
-        //% "No places found"
-        message: qsTrId("placesPage.noPlaces")
+        message: filterText.length > 0
+            //% "No places match filter"
+            ? qsTrId("placesPage.noPlacesMatch")
+            //% "No places found"
+            : qsTrId("placesPage.noPlaces")
     }
 
     Component.onCompleted: page.refresh()

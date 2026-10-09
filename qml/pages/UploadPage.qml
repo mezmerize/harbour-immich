@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 import Sailfish.Pickers 1.0
 import "../components"
@@ -320,9 +320,7 @@ Page {
                           sourceSize.width: Theme.iconSizeSmall
                           sourceSize.height: Theme.iconSizeSmall
                           visible: model.status !== "pending"
-                          source: model.status === "success" ? "image://theme/icon-s-installed"
-                                : model.status === "duplicate" ? "image://theme/icon-s-certificates"
-                                : model.status === "failed" ? "image://theme/icon-s-high-importance" : ""
+                          source: model.status === "success" ? "image://theme/icon-s-installed" : model.status === "duplicate" ? "image://theme/icon-s-certificates" : model.status === "failed" ? "image://theme/icon-s-high-importance" : ""
                       }
 
                       Label {

@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 import QtFeedback 5.0
 import "../components"
@@ -328,7 +328,7 @@ Page {
             }
         }
 
-        // Top bar: back + info
+        // Top bar: back
         Item {
             anchors {
                 top: parent.top

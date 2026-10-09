@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 
 Item {
@@ -14,7 +14,7 @@ Item {
     readonly property string fileName: (assetInfo && assetInfo.originalFileName) || ""
     readonly property string dateText: {
         var dt = (assetInfo && (assetInfo.localDateTime || assetInfo.fileCreatedAt)) || ""
-        return dt ? Qt.formatDateTime(new Date(dt), "dd.MM.yyyy hh:mm") : ""
+        return dt ? Qt.formatDateTime(new Date(dt), "dd.MM.yyyy hh:mm:ss") : ""
     }
     readonly property string cameraText: {
         if (exifInfo && (exifInfo.make || exifInfo.model)) return ((exifInfo.make || "") + " " + (exifInfo.model || "")).replace(/^\s+|\s+$/g, "")

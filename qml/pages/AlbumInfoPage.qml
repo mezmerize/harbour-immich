@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 
 Page {
@@ -72,13 +72,13 @@ Page {
             DetailItem {
                 //% "Created"
                 label: qsTrId("albumInfoPage.created")
-                value: !!albumInfo ? Qt.formatDateTime(new Date(albumInfo.createdAt), "dd.MM.yyyy hh:mm") : ""
+                value: !!albumInfo ? Qt.formatDateTime(new Date(albumInfo.createdAt), "dd.MM.yyyy hh:mm:ss") : ""
             }
 
             DetailItem {
                 //% "Updated"
                 label: qsTrId("albumInfoPage.updated")
-                value: !!albumInfo ? Qt.formatDateTime(new Date(albumInfo.updatedAt), "dd.MM.yyyy hh:mm") : ""
+                value: !!albumInfo ? Qt.formatDateTime(new Date(albumInfo.updatedAt), "dd.MM.yyyy hh:mm:ss") : ""
             }
 
             DetailItem {

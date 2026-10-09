@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 
 Dialog {
@@ -89,7 +89,7 @@ Dialog {
                 id: slugField
                 //% "Custom URL"
                 label: qsTrId("editSharedLinkDialog.slug")
-                //% "Custom share URL (optional)
+                //% "Custom share URL (optional)"
                 placeholderText: qsTrId("editSharedLinkDialog.slugPlaceholder")
                 text: linkData.slug || ""
                 color: slugField.acceptableInput ? Theme.primaryColor : Theme.errorColor
@@ -159,7 +159,7 @@ Dialog {
                             if (linkData.expiresAt) {
                                 var d = new Date(linkData.expiresAt)
                                 //% "Keep current (%1)"
-                                return qsTrId("editSharedLinkDialog.keepExpiry").arg(Qt.formatDateTime(d, "dd.MM.yyyy hh:mm"))
+                                return qsTrId("editSharedLinkDialog.keepExpiry").arg(Qt.formatDateTime(d, "dd.MM.yyyy hh:mm:ss"))
                             }
                             //% "Keep current (no expiry)"
                             return qsTrId("editSharedLinkDialog.keepNoExpiry")

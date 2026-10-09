@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 import QtGraphicalEffects 1.0
 
@@ -82,13 +82,13 @@ Page {
             DetailItem {
                 //% "Created"
                 label: qsTrId("assetInfoPage.created")
-                value: !!(assetInfo && assetInfo.fileCreatedAt) ? Qt.formatDateTime(new Date(assetInfo.fileCreatedAt), "dd.MM.yyyy hh:mm") : ""
+                value: !!(assetInfo && assetInfo.fileCreatedAt) ? Qt.formatDateTime(new Date(assetInfo.fileCreatedAt), "dd.MM.yyyy hh:mm:ss") : ""
             }
 
             DetailItem {
                 //% "Modified"
                 label: qsTrId("assetInfoPage.modified")
-                value: !!(assetInfo && assetInfo.fileModifiedAt) ? Qt.formatDateTime(new Date(assetInfo.fileModifiedAt), "dd.MM.yyyy hh:mm") : ""
+                value: !!(assetInfo && assetInfo.fileModifiedAt) ? Qt.formatDateTime(new Date(assetInfo.fileModifiedAt), "dd.MM.yyyy hh:mm:ss") : ""
             }
 
             DetailItem {
@@ -266,11 +266,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 //% "Open in Maps"
                 text: qsTrId("assetInfoPage.openInMaps")
-                onClicked: {
-                    if (assetInfo && assetInfo.exifInfo) {
-                        Qt.openUrlExternally("geo:" + assetInfo.exifInfo.latitude + "," + assetInfo.exifInfo.longitude)
-                    }
-                }
+                onClicked: Qt.openUrlExternally("geo:" + assetInfo.exifInfo.latitude + "," + assetInfo.exifInfo.longitude)
             }
 
             SectionHeader {

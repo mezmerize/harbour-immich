@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 
 CoverBackground {
@@ -12,7 +12,7 @@ CoverBackground {
 
     function memoryImageSource(memIdx, assetIdx) {
         if (coverMemories.length > 0 && coverMemories[memIdx] && coverMemories[memIdx].assets && coverMemories[memIdx].assets[assetIdx]) {
-            return "image://immich/thumbnail/" + coverMemories[memIdx].assets[assetIdx].id
+            return "image://immich/detail/" + coverMemories[memIdx].assets[assetIdx].id
         }
         return ""
     }
@@ -201,10 +201,8 @@ CoverBackground {
                 height: width
                 anchors.verticalCenter: parent.verticalCenter
                 source: {
-                    if (backupManager.currentFile)
-                        return "image://theme/icon-s-sync"
-                    if (backupManager.pendingCount > 0)
-                        return "image://theme/icon-s-cloud-download"
+                    if (backupManager.currentFile) return "image://theme/icon-s-sync"
+                    if (backupManager.pendingCount > 0) return "image://theme/icon-s-cloud-download"
                     return "image://theme/icon-s-installed"
                 }
             }
@@ -214,18 +212,12 @@ CoverBackground {
                 font.pixelSize: Theme.fontSizeTiny
                 color: Theme.highlightColor
                 text: {
-                    if (backupManager.currentFile) {
-                        //% "Backing up..."
-                        return qsTrId("coverPage.backingUp")
-                    }
-                    if (backupManager.pendingCount > 0) {
-                        //% "%1 pending"
-                        return qsTrId("coverPage.pending").arg(backupManager.pendingCount)
-                    }
-                    if (backupManager.backedUpCount > 0) {
-                        //% "All backed up"
-                        return qsTrId("coverPage.allBackedUp")
-                    }
+                    //% "Backing up..."
+                    if (backupManager.currentFile) return qsTrId("coverPage.backingUp")
+                    //% "%1 pending"
+                    if (backupManager.pendingCount > 0) return qsTrId("coverPage.pending").arg(backupManager.pendingCount)
+                    //% "All backed up"
+                    if (backupManager.backedUpCount > 0) return qsTrId("coverPage.allBackedUp")
                     return ""
                 }
                 visible: text !== ""
@@ -291,9 +283,7 @@ CoverBackground {
 
         CoverAction {
             iconSource: "image://theme/icon-cover-sync"
-            onTriggered: {
-                backupManager.scanNow()
-            }
+            onTriggered: backupManager.scanNow()
         }
     }
 
@@ -320,9 +310,7 @@ CoverBackground {
                 }
             }
             cover.coverMemories = filtered
-            if (settingsManager.coverShowAssets && filtered.length > 0) {
-                loadInitialMemory()
-            }
+            if (settingsManager.coverShowAssets && filtered.length > 0) loadInitialMemory()
         }
     }
 

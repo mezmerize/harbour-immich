@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 import harbour.immich.models 1.0
 import "../components"
@@ -395,9 +395,9 @@ Page {
         onDeleteSelected: {
             var selectedIds = albumModel.getSelectedAssetIds()
             deleteRemorse.execute(selectedIds.length > 1
-                //% "Deleting %1 assets
+                //% "Deleting %1 assets"
                 ? qsTrId("notification.deletingAssets").arg(selectedIds.length)
-                //% "Deleting asset
+                //% "Deleting asset"
                 : qsTrId("notification.deletingAsset"), function() {
                     immichApi.deleteAssets(selectedIds)
                     page.clearSelection()
