@@ -826,6 +826,30 @@ Page {
                value: timelineModel.totalCount
            }
 
+           BackgroundItem {
+               width: parent.width
+               height: githubItem.height
+               onClicked: Qt.openUrlExternally("https://github.com/mezmerize/harbour-immich")
+               DetailItem {
+                   id: githubItem
+                   //% "Source code"
+                   label: qsTrId("settingsPage.sourceCode")
+                   value: "GitHub"
+               }
+           }
+
+           BackgroundItem {
+               width: parent.width
+               height: translationsItem.height
+               onClicked: Qt.openUrlExternally("https://hosted.weblate.org/projects/harbour-immich/")
+               DetailItem {
+                   id: translationsItem
+                   //% "Translations"
+                   label: qsTrId("settingsPage.translations")
+                   value: "Weblate"
+               }
+           }
+
            Button {
                anchors.horizontalCenter: parent.horizontalCenter
                //% "View application logs"

@@ -1811,6 +1811,16 @@
         <source>Loaded assets</source>
         <translation>Geladene Dateien</translation>
     </message>
+    <message id="settingsPage.sourceCode">
+        <location filename="../qml/pages/SettingsPage.qml" line="826"/>
+        <source>Source code</source>
+        <translation>Quellcode</translation>
+    </message>
+    <message id="settingsPage.translations">
+        <location filename="../qml/pages/SettingsPage.qml" line="839"/>
+        <source>Translations</source>
+        <translation>Übersetzungen</translation>
+    </message>
     <message id="settingsPage.viewLogs">
         <location filename="../qml/pages/SettingsPage.qml" line="731"/>
         <source>View application logs</source>
@@ -2039,7 +2049,7 @@
     <message id="sharePage.allowDownloadDescription">
         <location filename="../qml/pages/SharePage.qml" line="550"/>
         <source>Recipients can download assets/albums from this share</source>
-        <translation type="unfinished">Empfänger können Dateien/Alben herunterladen von dieser Teilung</translation>
+        <translation>Empfänger können Dateien/Alben herunterladen von dieser Teilung</translation>
     </message>
     <message id="sharePage.allowUpload">
         <location filename="../qml/pages/SharePage.qml" line="558"/>
@@ -2049,7 +2059,7 @@
     <message id="sharePage.allowUploadDescription">
         <location filename="../qml/pages/SharePage.qml" line="560"/>
         <source>Recipients can upload assets/albums to this share</source>
-        <translation type="unfinished">Empfänger können Dateien/Alben hochladen und dieser Teilung hinzufügen</translation>
+        <translation>Empfänger können Dateien/Alben hochladen und dieser Teilung hinzufügen</translation>
     </message>
     <message id="sharePage.sharingAsset">
         <location filename="../qml/pages/SharePage.qml" line="569"/>
@@ -3107,7 +3117,7 @@
     <message id="sharedLinksPage.individualShare">
         <location filename="../qml/pages/SharedLinksPage.qml" line="19"/>
         <source>Individual share</source>
-        <translation type="unfinished">Individuell Geteilt</translation>
+        <translation>Individuell Geteilt</translation>
     </message>
     <message id="notification.linkCopied">
         <location filename="../qml/pages/SharedLinksPage.qml" line="41"/>
@@ -3357,7 +3367,7 @@
     <message id="individualShareDetailPage.noAssets">
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="327"/>
         <source>No assets in this share</source>
-        <translation type="unfinished">Keine Dateien in der Teilung</translation>
+        <translation>Keine Dateien in der Teilung</translation>
     </message>
 </context>
 </TS>
