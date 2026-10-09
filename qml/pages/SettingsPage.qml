@@ -131,6 +131,29 @@ Page {
            }
 
            TextSwitch {
+               //% "Auto-play videos"
+               text: qsTrId("settingsPage.videoAutoPlay")
+               //% "Start playing videos automatically when opened in the detail view."
+               description: qsTrId("settingsPage.videoAutoPlayInfo")
+               checked: settingsManager.videoAutoPlay
+               onCheckedChanged: {
+                   settingsManager.videoAutoPlay = checked
+               }
+           }
+
+           TextSwitch {
+               //% "Auto-play on Wi-Fi only"
+               text: qsTrId("settingsPage.videoAutoPlayWifiOnly")
+               //% "Auto-play streamed videos only when connected to Wi-Fi. Videos stored on the device are not affected."
+               description: qsTrId("settingsPage.videoAutoPlayWifiOnlyInfo")
+               enabled: settingsManager.videoAutoPlay
+               checked: settingsManager.videoAutoPlayWifiOnly
+               onCheckedChanged: {
+                   settingsManager.videoAutoPlayWifiOnly = checked
+               }
+           }
+
+           TextSwitch {
                //% "Motion photos"
                text: qsTrId("settingsPage.motionPhotos")
                //% "Show an indicator on motion photos and allow playing their video part in the detail view."

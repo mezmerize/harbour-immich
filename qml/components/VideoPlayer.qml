@@ -9,6 +9,8 @@ Item {
     property string videoId: ""
     property string filePath: ""
     property string thumbhash: ""
+    property string posterSource: ""
+    property bool showPoster: true
     property bool active: false
     property real controlsBottomMargin: 0
     property bool controlsVisible: true
@@ -16,9 +18,9 @@ Item {
 
     signal loaded()
     signal finished()
+    signal playbackFailed()
 
     // Internal player variables
-    property bool hasVideoFrame: false
     property bool sourceLoadedEmitted: false
     property var authManagerShaded: authManager
     property bool surfaceReady: false
@@ -72,13 +74,18 @@ Item {
             return
         }
         loadPending = false
-        hasVideoFrame = false
+        showPoster = true
         sourceLoadedEmitted = false
         controlsVisible = true
+        var autoPlay = !controlsEnabled || (settingsManager.videoAutoPlay && (filePath !== "" || !settingsManager.videoAutoPlayWifiOnly || backupManager.wifiConnected))
         if (filePath) {
-            controller.loadLocalFile(filePath)
+            controller.loadLocalFile(filePath, autoPlay)
         } else {
-            controller.load(videoId)
+            controller.load(videoId, autoPlay)
+        }
+        if (!autoPlay) {
+            sourceLoadedEmitted = true
+            root.loaded()
         }
     }
 
@@ -86,7 +93,7 @@ Item {
         loadPending = false
         controller.unload()
         controlsHideTimer.stop()
-        hasVideoFrame = false
+        showPoster = true
         sourceLoadedEmitted = false
     }
 
@@ -164,7 +171,6 @@ Item {
         authManager: root.authManagerShaded
 
         onLoaded: {
-            root.hasVideoFrame = true
             if (!root.sourceLoadedEmitted) {
                 root.sourceLoadedEmitted = true
                 root.loaded()
@@ -175,6 +181,7 @@ Item {
             if (mediaStatus === VideoController.EndOfMedia) {
                 controller.seek(0)
                 progressSlider.value = 0
+                root.showPoster = true
                 root.controlsVisible = true
                 controlsHideTimer.stop()
                 root.finished()
@@ -183,10 +190,17 @@ Item {
 
         onPositionChanged: {
             if (!progressSlider.userDragging) progressSlider.value = controller.position
+            if (controller.position > 0 && controller.playbackState === VideoController.PlayingState) {
+                root.showPoster = false
+            }
         }
 
         onErrorChanged: {
-            if (error !== VideoController.NoError) console.error("VideoPlayer: media error", error, errorString, "for", root.videoId)
+            if (error !== VideoController.NoError) console.error("VideoPlayer: Media error", error, errorString, "for", root.videoId)
+        }
+
+        onFailedChanged: {
+            if (failed) root.playbackFailed()
         }
     }
 
@@ -203,15 +217,29 @@ Item {
         fillMode: VideoOutput.PreserveAspectFit
     }
 
-    // Thumbhash until the first frame is ready
+    // Thumbhash until the first frame or poster is ready
     Image {
         anchors.fill: parent
         fillMode: Image.PreserveAspectFit
         source: root.thumbhash ? "image://thumbhash/" + root.thumbhash : ""
-        visible: !root.hasVideoFrame && root.thumbhash !== ""
+        visible: root.showPoster && poster.status !== Image.Ready && root.thumbhash !== ""
         asynchronous: false
         smooth: true
         cache: true
+    }
+
+    Image {
+        id: poster
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectFit
+        asynchronous: true
+        cache: true
+        smooth: true
+        autoTransform: true
+        sourceSize.width: root.width
+        sourceSize.height: root.height
+        source: root.posterSource
+        visible: root.showPoster && status === Image.Ready
     }
 
     // Play and pause button
@@ -338,6 +366,7 @@ Item {
 
                     onReleased: {
                         userDragging = false
+                        root.showPoster = false
                         controller.seek(value)
                         if (controller.playbackState === VideoController.PlayingState) {
                             controlsHideTimer.restart()

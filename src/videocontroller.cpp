@@ -91,7 +91,7 @@ bool VideoController::failed() const
     return m_failed;
 }
 
-void VideoController::load(const QString &assetId)
+void VideoController::load(const QString &assetId, bool autoPlay)
 {
     if (assetId.isEmpty()) {
         qInfo() << "VideoController: Skipped load (empty assetId)";
@@ -100,7 +100,7 @@ void VideoController::load(const QString &assetId)
 
     m_assetId = assetId;
     m_localPath.clear();
-    m_autoPlay = true;
+    m_autoPlay = autoPlay;
     m_sourcePending = true;
     m_loadedEmitted = false;
     m_retryCount = 0;
@@ -108,11 +108,13 @@ void VideoController::load(const QString &assetId)
     m_loadGeneration++;
     setFailed(false);
     m_suppressErrors = true;
+    if (failIfUnavailable())
+        return;
     m_player->stop();
     applyPendingSource();
 }
 
-void VideoController::loadLocalFile(const QString &filePath)
+void VideoController::loadLocalFile(const QString &filePath, bool autoPlay)
 {
     if (filePath.isEmpty()) {
         qInfo() << "VideoController: Skipped loadLocalFile (empty filePath)";
@@ -121,7 +123,7 @@ void VideoController::loadLocalFile(const QString &filePath)
 
     m_localPath = filePath;
     m_assetId.clear();
-    m_autoPlay = true;
+    m_autoPlay = autoPlay;
     m_sourcePending = true;
     m_loadedEmitted = false;
     m_retryCount = 0;
@@ -129,6 +131,8 @@ void VideoController::loadLocalFile(const QString &filePath)
     m_loadGeneration++;
     setFailed(false);
     m_suppressErrors = true;
+    if (failIfUnavailable())
+        return;
     m_player->stop();
     applyPendingSource();
 }
@@ -151,6 +155,10 @@ void VideoController::unload()
 void VideoController::play()
 {
     m_autoPlay = true;
+    if (m_sourcePending) {
+        applyPendingSource();
+        return;
+    }
     m_player->play();
 }
 
@@ -172,6 +180,20 @@ void VideoController::seek(qint64 position)
     m_player->setPosition(position);
 }
 
+bool VideoController::failIfUnavailable()
+{
+    if (m_player->isAvailable())
+        return false;
+    const int generation = m_loadGeneration;
+    QTimer::singleShot(0, this, [this, generation]() {
+        if (generation != m_loadGeneration || (m_assetId.isEmpty() && m_localPath.isEmpty()))
+            return;
+        emit errorChanged();
+        setFailed(true);
+    });
+    return true;
+}
+
 void VideoController::applyPendingSource()
 {
     if (!m_sourcePending)
@@ -180,10 +202,10 @@ void VideoController::applyPendingSource()
     if (m_player->state() != QMediaPlayer::StoppedState)
         return;
 
-    m_sourcePending = false;
-
     if (!m_autoPlay)
         return;
+
+    m_sourcePending = false;
 
     if (!m_localPath.isEmpty()) {
         m_player->setMedia(QMediaContent(QUrl::fromLocalFile(m_localPath)));
@@ -237,7 +259,8 @@ void VideoController::onError(QMediaPlayer::Error error)
     if (error == QMediaPlayer::NoError)
         return;
 
-    if (m_suppressErrors || (m_assetId.isEmpty() && m_localPath.isEmpty())) {
+    const bool hasSource = !m_assetId.isEmpty() || !m_localPath.isEmpty();
+    if (!hasSource || (m_suppressErrors && error != QMediaPlayer::ResourceError && error != QMediaPlayer::NetworkError)) {
         qInfo() << "VideoController: Ignoring transient error" << error << m_player->errorString();
         return;
     }

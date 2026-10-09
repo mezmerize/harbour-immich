@@ -66,8 +66,8 @@ public:
     QString errorString() const;
     bool failed() const;
 
-    Q_INVOKABLE void load(const QString &assetId);
-    Q_INVOKABLE void loadLocalFile(const QString &filePath);
+    Q_INVOKABLE void load(const QString &assetId, bool autoPlay = true);
+    Q_INVOKABLE void loadLocalFile(const QString &filePath, bool autoPlay = true);
     Q_INVOKABLE void unload();
     Q_INVOKABLE void play();
     Q_INVOKABLE void pause();
@@ -92,6 +92,7 @@ private slots:
 
 private:
     void applyPendingSource();
+    bool failIfUnavailable();
     void setFailed(bool failed);
 
     QMediaPlayer *m_player;
