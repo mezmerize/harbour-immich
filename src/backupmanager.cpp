@@ -3,6 +3,7 @@
 #include "authmanager.h"
 #include "settingsmanager.h"
 #include "immichapi.h"
+#include "clientcertmanager.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QNetworkConfiguration>
@@ -31,7 +32,7 @@ BackupManager::BackupManager(AuthManager *authManager, SettingsManager *settings
     , m_settingsManager(settingsManager)
     , m_immichApi(immichApi)
     , m_database(new BackupDatabase(this))
-    , m_networkManager(new QNetworkAccessManager(this))
+    , m_networkManager(new TlsNetworkAccessManager(this))
     , m_netConfigManager(new QNetworkConfigurationManager(this))
     , m_fileWatcher(new QFileSystemWatcher(this))
     , m_scanTimer(new QTimer(this))

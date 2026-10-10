@@ -1,5 +1,6 @@
 #include "oauthmanager.h"
 #include "authmanager.h"
+#include "clientcertmanager.h"
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -16,7 +17,7 @@
 
 OAuthManager::OAuthManager(AuthManager *authManager, QObject *parent)
     : QObject(parent)
-    , m_networkManager(new QNetworkAccessManager(this))
+    , m_networkManager(new TlsNetworkAccessManager(this))
     , m_authManager(authManager)
     , m_oauthEnabled(false)
     , m_busy(false)

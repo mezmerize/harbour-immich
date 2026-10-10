@@ -13,47 +13,57 @@
 
 class SecureStorage : public QObject
 {
-   Q_OBJECT
+    Q_OBJECT
 
 public:
-   explicit SecureStorage(QObject *parent = nullptr);
+    explicit SecureStorage(QObject *parent = nullptr);
 
-   Q_INVOKABLE void saveServerUrl(const QString &url);
-   Q_INVOKABLE QString loadServerUrl() const;
+    Q_INVOKABLE void saveServerUrl(const QString &url);
+    Q_INVOKABLE QString loadServerUrl() const;
 
-   Q_INVOKABLE void saveAccessToken(const QString &token);
-   Q_INVOKABLE QString loadAccessToken() const;
+    Q_INVOKABLE void saveAccessToken(const QString &token);
+    Q_INVOKABLE QString loadAccessToken() const;
 
-   Q_INVOKABLE void saveEmail(const QString &email);
-   Q_INVOKABLE QString loadEmail() const;
+    Q_INVOKABLE void saveEmail(const QString &email);
+    Q_INVOKABLE QString loadEmail() const;
 
-   Q_INVOKABLE void savePassword(const QString &password);
-   Q_INVOKABLE QString loadPassword() const;
+    Q_INVOKABLE void savePassword(const QString &password);
+    Q_INVOKABLE QString loadPassword() const;
 
-   Q_INVOKABLE void clearAll();
+    Q_INVOKABLE void saveClientCert(const QString &base64Data);
+    Q_INVOKABLE QString loadClientCert() const;
 
-   Q_INVOKABLE void initialize();
+    Q_INVOKABLE void saveClientCertPassword(const QString &password);
+    Q_INVOKABLE QString loadClientCertPassword() const;
+
+    Q_INVOKABLE void clearClientCert();
+
+    Q_INVOKABLE void clearAll();
+
+    Q_INVOKABLE void initialize();
 
 signals:
-   void initialized();
-   void error(const QString &message);
+    void initialized();
+    void error(const QString &message);
 
 private:
-   void ensureCollection();
-   void storeSecret(const QString &name, const QString &value);
-   QString getSecret(const QString &name) const;
-   void deleteSecret(const QString &name);
+    void ensureCollection();
+    void storeSecret(const QString &name, const QString &value);
+    QString getSecret(const QString &name) const;
+    void deleteSecret(const QString &name);
 
-   Sailfish::Secrets::SecretManager m_secretManager;
-   QString m_collectionName;
-   bool m_initialized;
+    Sailfish::Secrets::SecretManager m_secretManager;
+    QString m_collectionName;
+    bool m_initialized;
 
-   // Cache for synchronous access (loaded at init)
-   mutable QString m_cachedServerUrl;
-   mutable QString m_cachedAccessToken;
-   mutable QString m_cachedEmail;
-   mutable QString m_cachedPassword;
-   mutable bool m_cacheLoaded;
+    // Cache for synchronous access (loaded at init)
+    mutable QString m_cachedServerUrl;
+    mutable QString m_cachedAccessToken;
+    mutable QString m_cachedEmail;
+    mutable QString m_cachedPassword;
+    mutable QString m_cachedClientCert;
+    mutable QString m_cachedClientCertPassword;
+    mutable bool m_cacheLoaded;
 };
 
 #endif

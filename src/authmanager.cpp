@@ -1,4 +1,5 @@
 #include "authmanager.h"
+#include "clientcertmanager.h"
 #include <QDebug>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -9,7 +10,7 @@
 
 AuthManager::AuthManager(SecureStorage *storage, QObject *parent)
     : QObject(parent)
-    , m_networkManager(new QNetworkAccessManager(this))
+    , m_networkManager(new TlsNetworkAccessManager(this))
     , m_storage(storage)
     , m_isAuthenticated(false)
 {

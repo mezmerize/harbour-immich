@@ -7,8 +7,14 @@ import "components"
 ApplicationWindow
 {
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
-    allowedOrientations: Orientation.All
+    allowedOrientations: defaultAllowedOrientations
     _defaultPageOrientations: Orientation.All
+
+    function shouldShowClientCertWarning() {
+        if (!clientCertManager.hasCertificate) return
+        if (!clientCertManager.isExpired && !clientCertManager.isExpiringSoon) return
+        clientCertWarningTimer.restart()
+    }
 
     // Background backup job - wakes the device periodically to scan and upload
     BackgroundJob {
@@ -47,6 +53,22 @@ ApplicationWindow
         pageStack.push(loadingPageComponent)
     }
 
+    Timer {
+        id: clientCertWarningTimer
+        interval: 1200
+        onTriggered: clientCertManager.isExpired
+            //% "Client certificate has expired. Update it to keep connecting."
+            ? notification.showError(qsTrId("app.clientCertExpired"))
+            //% "Client certificate expires in %1 day(s)."
+            : notification.showError(qsTrId("app.clientCertExpiringSoon").arg(clientCertManager.daysUntilExpiry))
+    }
+
+    NotificationBanner {
+        id: notification
+        anchors.top: parent.top
+        z: 10
+    }
+
     Component {
         id: loadingPageComponent
         Page {
@@ -80,6 +102,7 @@ ApplicationWindow
                 pageStack.clear()
                 pageStack.push(Qt.resolvedUrl("pages/TimelinePage.qml"))
             }
+            shouldShowClientCertWarning()
         }
         onLoginFailed: {
             // Redirect to server page should happen only during automatic credentials check not when user interacts with it

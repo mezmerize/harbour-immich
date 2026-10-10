@@ -316,6 +316,29 @@ Page {
            }
 
            SectionHeader {
+               //% "Security"
+               text: qsTrId("settingsPage.security")
+           }
+
+           ValueButton {
+               //% "Client certificate"
+               label: qsTrId("settingsPage.clientCertificate")
+               value:  {
+                   //% "Not configured"
+                   if (!clientCertManager.hasCertificate) return qsTrId("settingsPage.clientCertificateNone")
+                   //% "Expired"
+                   if (clientCertManager.isExpired) return qsTrId("settingsPage.clientCertificateExpired")
+                   //% "Expiring soon"
+                   if (clientCertManager.isExpiringSoon) return qsTrId("settingsPage.clientCertificateExpiringSoon")
+                   //% "Configured"
+                   return qsTrId("settingsPage.clientCertificateConfigured")
+               }
+               //% "Import a client (mTLS) certificate for servers that require it. Changes take effect immediately."
+               description: qsTrId("settingsPage.clientCertificateInfo")
+               onClicked: pageStack.push(Qt.resolvedUrl("ClientCertPage.qml"))
+           }
+
+           SectionHeader {
                //% "Cover"
                text: qsTrId("settingsPage.cover")
            }

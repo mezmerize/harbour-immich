@@ -1,5 +1,6 @@
 #include "immichapi.h"
 #include "authmanager.h"
+#include "clientcertmanager.h"
 #include "settingsmanager.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -41,7 +42,7 @@ QBuffer *createJsonBuffer(const QJsonObject &json) {
 
 ImmichApi::ImmichApi(AuthManager *authManager, QObject *parent)
     : QObject(parent)
-    , m_networkManager(new QNetworkAccessManager(this))
+    , m_networkManager(new TlsNetworkAccessManager(this))
     , m_authManager(authManager)
     , m_settingsManager(nullptr)
     , m_uploadIndex(0)

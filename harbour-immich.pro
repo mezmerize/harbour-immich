@@ -20,6 +20,7 @@ harbour {
 SOURCES += src/harbour-immich.cpp \
     src/backupdatabase.cpp \
     src/backupmanager.cpp \
+    src/clientcertmanager.cpp \
     src/immichapi.cpp \
     src/authmanager.cpp \
     src/logmanager.cpp \
@@ -37,6 +38,7 @@ SOURCES += src/harbour-immich.cpp \
 HEADERS += \
     src/backupdatabase.h \
     src/backupmanager.h \
+    src/clientcertmanager.h \
     src/dateutils.h \
     src/immichapi.h \
     src/authmanager.h \
@@ -95,6 +97,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/AlbumShareDetailPage.qml \
     qml/pages/AssetDetailPage.qml \
     qml/pages/AssetInfoPage.qml \
+    qml/pages/ClientCertPage.qml \
     qml/pages/EditAlbumDialog.qml \
     qml/pages/EditAssetDialog.qml \
     qml/pages/FavoritesPage.qml \

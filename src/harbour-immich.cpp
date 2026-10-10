@@ -29,6 +29,7 @@
 #include "timelinemodel.h"
 #include "settingsmanager.h"
 #include "securestorage.h"
+#include "clientcertmanager.h"
 #include "imageprovider.h"
 #include "thumbhashprovider.h"
 #include "logmanager.h"
@@ -96,9 +97,16 @@ int main(int argc, char *argv[])
     app->installTranslator(translator);
 
     SecureStorage *secureStorage = new SecureStorage(app);
+    ClientCertManager *clientCertManager = new ClientCertManager(secureStorage, app);
 
+    QObject::connect(secureStorage, &SecureStorage::initialized, clientCertManager, [clientCertManager]() {
+        clientCertManager->applyStoredCertificate();
+    });
 
     AuthManager *authManager = new AuthManager(secureStorage, app);
+    QObject::connect(authManager, &AuthManager::serverUrlChanged, clientCertManager, [clientCertManager, authManager]() {
+        clientCertManager->setServerUrl(authManager->serverUrl());
+    });
     OAuthManager *oauthManager = new OAuthManager(authManager, app);
 
 #ifndef HARBOUR_BUILD
@@ -176,6 +184,7 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("timelineModel", timelineModel);
     view->rootContext()->setContextProperty("settingsManager", settingsManager);
     view->rootContext()->setContextProperty("secureStorage", secureStorage);
+    view->rootContext()->setContextProperty("clientCertManager", clientCertManager);
     view->rootContext()->setContextProperty("logManager", logManager);
     view->rootContext()->setContextProperty("backupManager", backupManager);
 
