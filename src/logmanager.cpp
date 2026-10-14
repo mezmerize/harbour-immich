@@ -1,5 +1,7 @@
 #include "logmanager.h"
 #include <QMutexLocker>
+#include <QThread>
+#include <QMetaObject>
 #include <QStandardPaths>
 #include <QDir>
 #include <QTextStream>
@@ -83,6 +85,15 @@ void LogManager::addEntry(const QString &entry)
         }
     }
     // Throttle notifications
+    if (QThread::currentThread() != thread()) {
+        QMetaObject::invokeMethod(this, "scheduleEmit", Qt::QueuedConnection);
+        return;
+    }
+    scheduleEmit();
+}
+
+void LogManager::scheduleEmit()
+{
     if (!m_pendingEmit) {
         m_pendingEmit = true;
         m_emitTimer.start();
@@ -98,10 +109,8 @@ QString LogManager::previousLogContents() const
     return QString::fromUtf8(file.readAll());
 }
 
-void LogManager::messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void LogManager::messageHandler(QtMsgType type, const QMessageLogContext &, const QString &msg)
 {
-    Q_UNUSED(context)
-
     QString level;
     switch (type) {
     case QtDebugMsg:    level = QStringLiteral("DBG"); break;
@@ -115,7 +124,6 @@ void LogManager::messageHandler(QtMsgType type, const QMessageLogContext &contex
     QString entry = QStringLiteral("[%1] %2: %3").arg(timestamp, level, msg);
 
 #ifndef QT_NO_DEBUG_OUTPUT
-    // Also print to stderr for development
     fprintf(stderr, "%s\n", entry.toLocal8Bit().constData());
 #endif
 

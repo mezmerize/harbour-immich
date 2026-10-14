@@ -31,6 +31,9 @@ public:
 signals:
     void logsChanged();
 
+private slots:
+    void scheduleEmit();
+
 private:
     void initLogFile();
 
