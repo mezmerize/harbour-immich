@@ -3359,15 +3359,15 @@
         <source>No assets in this share</source>
         <translation>Inga tillgångar i denna delning</translation>
     </message>
+    <message id="settingsPage.sourceCode">
+        <location filename="../qml/pages/SettingsPage.qml" line="826"/>
+        <source>Source code</source>
+        <translation>Källkod</translation>
+    </message>
+    <message id="settingsPage.translations">
+        <location filename="../qml/pages/SettingsPage.qml" line="839"/>
+        <source>Translations</source>
+        <translation>Översättningar</translation>
+    </message>
 </context>
-<message id="settingsPage.sourceCode">
-    <location filename="../qml/pages/SettingsPage.qml" line="826"/>
-    <source>Source code</source>
-    <translation>Källkod</translation>
-</message>
-<message id="settingsPage.translations">
-    <location filename="../qml/pages/SettingsPage.qml" line="839"/>
-    <source>Translations</source>
-    <translation>Översättningar</translation>
-</message>
 </TS>
