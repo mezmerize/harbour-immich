@@ -118,3 +118,4 @@ GPLv3
 - Asulfr999 (https://forum.sailfishos.org/u/Asulfr999) - French translations
 - nthn (https://forum.sailfishos.org/u/nthn) - Dutch translations
 - xamino (https://forum.sailfishos.org/u/xamino) - German translations
+- nthn (https://forum.sailfishos.org/u/nthn) - Swedish translations
