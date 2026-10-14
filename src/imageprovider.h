@@ -26,7 +26,7 @@ public:
     QString errorString() const override;
     void cancel() override;
 
-    void startRequest(); // Called when slot becomes available
+    void startRequest();
 
 private slots:
     void onFinished();
@@ -53,7 +53,6 @@ private:
     static QMutex s_queueMutex;
     static QQueue<ImmichImageResponse*> s_pendingQueue;
 
-    // In-memory thumbnail cache to avoid re-fetching on bucket reload
     static QMutex s_cacheMutex;
     static QCache<QString, QImage> s_imageCache;
 };
@@ -63,6 +62,8 @@ class ImmichImageProvider: public QObject, public QQuickAsyncImageProvider {
 public:
     ImmichImageProvider(AuthManager *authManager, SettingsManager *settingsManager, QObject *parent = nullptr);
     QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) override;
+
+    static void clearImageDiskCache();
 
 private slots:
     void refreshServerUrl();

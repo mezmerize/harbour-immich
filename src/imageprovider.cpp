@@ -1,19 +1,85 @@
 #include "imageprovider.h"
 #include "authmanager.h"
+#include "clientcertmanager.h"
 #include "settingsmanager.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QDebug>
 #include <QThread>
 #include <QThreadStorage>
+#include <QStandardPaths>
+#include <QDir>
+#include <QDirIterator>
+#include <QFile>
+#include <QDateTime>
+#include <QFileInfo>
+#include <QCryptographicHash>
+#include <algorithm>
 
 static QNetworkAccessManager *sharedNetworkManager()
 {
     static QThreadStorage<QNetworkAccessManager *> storage;
     if (!storage.hasLocalData()) {
-        storage.setLocalData(new QNetworkAccessManager);
+        storage.setLocalData(new TlsNetworkAccessManager);
     }
     return storage.localData();
+}
+
+namespace {
+const qint64 DiskCacheMaxBytes = 300LL * 1024 * 1024;
+const int DiskCacheMaxAgeDays = 30;
+
+QString diskCacheDir()
+{
+    static QString dir;
+    if (dir.isEmpty()) {
+        dir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + QStringLiteral("/immich-images");
+        QDir().mkpath(dir);
+    }
+    return dir;
+}
+
+QString diskCachePath(const QString &url)
+{
+    const QByteArray key = QCryptographicHash::hash(url.toUtf8(), QCryptographicHash::Sha1).toHex();
+    return diskCacheDir() + QLatin1Char('/') + QString::fromLatin1(key) + QStringLiteral(".img");
+}
+
+QAtomicInt g_diskCachePruned(0);
+
+void pruneDiskCacheOnce()
+{
+    if (g_diskCachePruned.fetchAndStoreRelaxed(1))
+        return;
+
+    qint64 total = 0;
+    QList<QFileInfo> files;
+    const QDateTime staleBefore = QDateTime::currentDateTime().addDays(-DiskCacheMaxAgeDays);
+    QDirIterator it(diskCacheDir(), QStringList() << QStringLiteral("*.img"), QDir::Files, QDirIterator::NoIteratorFlags);
+    while (it.hasNext()) {
+        it.next();
+        QFileInfo fi = it.fileInfo();
+        if (fi.lastModified() < staleBefore) {
+            QFile::remove(fi.absoluteFilePath());
+            continue;
+        }
+        total += fi.size();
+        files.append(fi);
+    }
+
+    if (total <= DiskCacheMaxBytes)
+        return;
+
+    std::sort(files.begin(), files.end(), [](const QFileInfo &a, const QFileInfo &b) {
+        return a.lastModified() < b.lastModified();
+    });
+    for (const QFileInfo &fi : files) {
+        if (total <= DiskCacheMaxBytes)
+            break;
+        total -= fi.size();
+        QFile::remove(fi.absoluteFilePath());
+    }
+}
 }
 
 // Static member initialization
@@ -21,7 +87,7 @@ QAtomicInt ImmichImageResponse::s_activeRequests(0);
 QMutex ImmichImageResponse::s_queueMutex;
 QQueue<ImmichImageResponse*> ImmichImageResponse::s_pendingQueue;
 QMutex ImmichImageResponse::s_cacheMutex;
-QCache<QString, QImage> ImmichImageResponse::s_imageCache(50 * 1024 * 1024); // ~50MB cost limit
+QCache<QString, QImage> ImmichImageResponse::s_imageCache(16 * 1024 * 1024); // ~16MB cost limit
 
 ImmichImageResponse::ImmichImageResponse(const QString &url, const QString &authToken, const QSize &requestedSize)
     : m_url(url)
@@ -67,7 +133,8 @@ void ImmichImageResponse::processQueue()
 
 void ImmichImageResponse::startRequest()
 {
-    if (m_started || m_cancelled) return;
+    if (m_started || m_cancelled)
+        return;
 
     if (m_url.isEmpty()) {
         m_errorString = QStringLiteral("Invalid image request");
@@ -88,6 +155,35 @@ void ImmichImageResponse::startRequest()
             // m_networkActive stays false - we didn't touch s_activeRequests
             QMetaObject::invokeMethod(this, "finished", Qt::QueuedConnection);
             return;
+        }
+    }
+
+    pruneDiskCacheOnce();
+
+    // Disk cache
+    {
+        const QString cachePath = diskCachePath(m_url);
+        const QFileInfo fi(cachePath);
+        if (fi.exists() && fi.lastModified().addDays(DiskCacheMaxAgeDays) < QDateTime::currentDateTime()) {
+            // Entry is stale
+            QFile::remove(cachePath);
+        }
+        QFile file(cachePath);
+        if (file.exists() && file.open(QIODevice::ReadOnly)) {
+            const QByteArray data = file.readAll();
+            file.close();
+            if (!data.isEmpty() && m_image.loadFromData(data)) {
+                m_started = true;
+                m_finished = true;
+                {
+                    QMutexLocker locker(&s_cacheMutex);
+                    s_imageCache.insert(m_url, new QImage(m_image), m_image.byteCount());
+                }
+                QMetaObject::invokeMethod(this, "finished", Qt::QueuedConnection);
+                return;
+            }
+            // Corrupt entry - drop it
+            file.remove();
         }
     }
 
@@ -121,12 +217,10 @@ ImmichImageResponse::~ImmichImageResponse()
         }
         m_reply->deleteLater();
     }
-    // Safety: if we still hold an active request slot, release it
     if (m_networkActive) {
         m_networkActive = false;
         requestCompleted();
     }
-    // Safety: if we're still in the queue, remove ourselves
     if (!m_started) {
         QMutexLocker locker(&s_queueMutex);
         s_pendingQueue.removeOne(this);
@@ -142,17 +236,13 @@ void ImmichImageResponse::cancel()
             m_reply->abort();
         }
     }
-    // Only decrement if we actually hold a network slot
     if (m_networkActive) {
         m_networkActive = false;
         requestCompleted();
     } else if (!m_started) {
-        // Remove from queue if not yet started
         QMutexLocker locker(&s_queueMutex);
         s_pendingQueue.removeOne(this);
     }
-    // Only emit finished if we haven't already — prevents poisoning
-    // a successful pixmap cache entry with an error
     if (!m_finished) {
         m_errorString = QStringLiteral("Cancelled");
         m_finished = true;
@@ -162,23 +252,19 @@ void ImmichImageResponse::cancel()
 
 void ImmichImageResponse::onFinished()
 {
-    // Release our network slot (exactly once)
     if (m_networkActive) {
         m_networkActive = false;
         requestCompleted();
     }
 
-    // Don't emit twice (cancel may have beaten us)
     if (m_finished) return;
 
-    // Check if cancelled or reply is invalid
     if (m_cancelled || !m_reply) {
         m_finished = true;
         emit finished();
         return;
     }
 
-    // Disconnect to prevent any further callbacks
     m_reply->disconnect(this);
 
     if (m_reply->error() == QNetworkReply::NoError) {
@@ -187,24 +273,31 @@ void ImmichImageResponse::onFinished()
         if (data.isEmpty()) {
             m_errorString = QStringLiteral("Empty response data");
         } else {
+            const QString cachePath = diskCachePath(m_url);
+            const QString tmpPath = cachePath + QStringLiteral(".") + QString::number(reinterpret_cast<quintptr>(m_reply.data()), 16) + QStringLiteral(".tmp");
+            QFile tmpFile(tmpPath);
+            if (tmpFile.open(QIODevice::WriteOnly)) {
+                tmpFile.write(data);
+                tmpFile.close();
+                QFile::remove(cachePath);
+                QFile::rename(tmpPath, cachePath);
+            }
+
             // Try to load image with error handling for memory issues
             try {
                 if (!m_image.loadFromData(data)) {
                     m_errorString = QStringLiteral("Failed to load image data");
                     qWarning() << "ImmichImageProvider: Failed to parse image, size:" << data.size();
                 } else {
-                    // Scale down to save memory - use smaller size for thumbnails
                     if (!m_image.isNull()) {
                         QSize targetSize = m_requestedSize;
                         if (!targetSize.isValid()) {
-                            // Default max size to prevent huge images in memory
                             targetSize = QSize(1920, 1920);
                         }
                         if (m_image.width() > targetSize.width() || m_image.height() > targetSize.height()) {
                             m_image = m_image.scaled(targetSize, Qt::KeepAspectRatio, Qt::FastTransformation);
                         }
 
-                        // Store in cache (cost = byte count of image)
                         QMutexLocker locker(&s_cacheMutex);
                         s_imageCache.insert(m_url, new QImage(m_image), m_image.byteCount());
                     }
@@ -212,7 +305,7 @@ void ImmichImageResponse::onFinished()
             } catch (const std::bad_alloc &) {
                 m_errorString = QStringLiteral("Out of memory loading image");
                 qWarning() << "ImmichImageProvider: Out of memory loading image, size:" << data.size();
-                m_image = QImage();  // Clear any partial image
+                m_image = QImage();
             }
         }
     } else {
@@ -255,6 +348,14 @@ ImmichImageProvider::ImmichImageProvider(AuthManager *authManager, SettingsManag
     if (m_settingsManager) {
         m_detailQuality = m_settingsManager->detailQuality();
         connect(m_settingsManager, &SettingsManager::detailQualityChanged, this, &ImmichImageProvider::refreshDetailQuality);
+    }
+}
+
+void ImmichImageProvider::clearImageDiskCache()
+{
+    QDirIterator it(diskCacheDir(), QStringList() << QStringLiteral("*.img"), QDir::Files, QDirIterator::NoIteratorFlags);
+    while (it.hasNext()) {
+        QFile::remove(it.next());
     }
 }
 
