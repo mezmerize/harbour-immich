@@ -31,6 +31,7 @@ SOURCES += src/harbour-immich.cpp \
     src/albummodel.cpp \
     src/settingsmanager.cpp \
     src/imageprovider.cpp \
+    src/exifreader.cpp \
     src/thumbhashprovider.cpp \
     src/timelinemodel.cpp \
     src/videocontroller.cpp
@@ -50,6 +51,8 @@ HEADERS += \
     src/albummodel.h \
     src/settingsmanager.h \
     src/imageprovider.h \
+    src/exifparser.h \
+    src/exifreader.h \
     src/thumbhashprovider.h \
     src/timelinemodel.h \
     src/videocontroller.h
