@@ -1,6 +1,7 @@
 #ifndef IMMICHAPI_H
 #define IMMICHAPI_H
 
+#include "authmanager.h"
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -10,7 +11,6 @@
 #include <QFile>
 #include <QFileInfo>
 #include <functional>
-#include "authmanager.h"
 
 class SettingsManager;
 
@@ -48,7 +48,6 @@ public:
     Q_INVOKABLE void updateMemory(const QString &memoryId, const QVariantMap &fields);
     Q_INVOKABLE void fetchServerStatistics();
     Q_INVOKABLE void fetchServerAbout();
-    Q_INVOKABLE void fetchServerVersion();
     Q_INVOKABLE void createAlbum(const QString &albumName, const QString &description);
     Q_INVOKABLE void updateAlbum(const QString &albumId, const QString &albumName, const QString &description, bool isActivityEnabled = true, const QString &albumThumbnailAssetId = QString());
     void fetchTimelineBuckets(const QString &context, const QVariantMap &params);
@@ -108,7 +107,6 @@ signals:
     void memoryUpdated(const QString &memoryId, bool isSaved);
     void serverStatisticsReceived(const QJsonObject &stats);
     void serverAboutReceived(const QJsonObject &about);
-    void serverVersionReceived(const QJsonObject &version);
     void albumCreated(const QString &albumId, const QString &albumName);
     void albumUpdated(const QString &albumId, const QString &albumName, const QString &description, bool isActivityEnabled, const QString &albumThumbnailAssetId);
     void timelineBucketsReceived(const QString &context, const QJsonArray &buckets);

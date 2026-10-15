@@ -473,7 +473,7 @@ void ImmichApi::handleNetworkError(QNetworkReply *reply)
         m_authManager->reloginWithStoredCredentials();
         return;
     }
-    QString errorString = (reply->error() == QNetworkReply::OperationCanceledError) ? tr("Network request timed out") : reply->errorString();
+    QString errorString = reply->errorString();
     QByteArray response = reply->readAll();
     QJsonDocument doc = QJsonDocument::fromJson(response);
 
@@ -984,21 +984,6 @@ void ImmichApi::fetchServerAbout()
         QJsonDocument doc = QJsonDocument::fromJson(response);
         qInfo() << "ImmichApi: Server about received";
         emit serverAboutReceived(doc.object());
-    });
-}
-
-void ImmichApi::fetchServerVersion()
-{
-    qInfo() << "ImmichApi: Fetching server version";
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/server/version"));
-    // Unauthenticated request to open version endpoint
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QNetworkReply *reply = m_networkManager->get(request);
-    connectReply(reply, [this](const QByteArray &response) {
-        QJsonDocument doc = QJsonDocument::fromJson(response);
-        qInfo() << "ImmichApi: Server version received";
-        emit serverVersionReceived(doc.object());
     });
 }
 

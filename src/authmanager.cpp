@@ -7,12 +7,16 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QUrl>
+#include <QTimer>
 
 AuthManager::AuthManager(SecureStorage *storage, QObject *parent)
     : QObject(parent)
     , m_networkManager(new TlsNetworkAccessManager(this))
     , m_storage(storage)
     , m_isAuthenticated(false)
+    , m_serverSupported(true)
+    , m_checkingServer(false)
+    , m_serverCheckAutoLogin(false)
 {
 }
 
@@ -53,17 +57,40 @@ QString AuthManager::userId() const
     return m_userId;
 }
 
+QString AuthManager::serverVersion() const
+{
+    return m_serverVersion;
+}
+
+QString AuthManager::clusterGroupId() const
+{
+    return m_clusterGroupId;
+}
+
+bool AuthManager::serverSupported() const
+{
+    return m_serverSupported;
+}
+
+bool AuthManager::checkingServer() const
+{
+    return m_checkingServer;
+}
+
+void AuthManager::setCheckingServer(bool checking)
+{
+    if (m_checkingServer != checking) {
+        m_checkingServer = checking;
+        emit checkingServerChanged();
+    }
+}
+
 void AuthManager::setUserId(const QString &userId)
 {
     if (m_userId != userId) {
         m_userId = userId;
         emit userIdChanged();
     }
-}
-
-QString AuthManager::storedPassword() const
-{
-    return m_storage->loadPassword();
 }
 
 void AuthManager::setEmail(const QString &email)
@@ -84,6 +111,16 @@ void AuthManager::checkStoredCredentials()
     emit serverUrlChanged();
     emit accessTokenChanged();
 
+    if (m_serverUrl.isEmpty()) {
+        qInfo() << "AuthManager: No stored credentials found";
+        emit loginFailed(QString());
+        return;
+    }
+    startServerCheck(m_serverUrl, true);
+}
+
+void AuthManager::proceedWithStoredCredentials()
+{
     if (!m_serverUrl.isEmpty() && !m_accessToken.isEmpty()) {
         qInfo() << "AuthManager: Found access token, validating";
         validateToken();
@@ -97,6 +134,96 @@ void AuthManager::checkStoredCredentials()
             emit loginFailed(QString());
         }
     }
+}
+
+void AuthManager::checkServer(const QString &url)
+{
+    startServerCheck(url, false);
+}
+
+void AuthManager::startServerCheck(const QString &url, bool autoLogin)
+{
+    QString normalized = url.trimmed();
+    while (normalized.endsWith(QLatin1Char('/'))) {
+        normalized.chop(1);
+    }
+
+    const QUrl u(normalized, QUrl::StrictMode);
+    if (!u.isValid() || (u.scheme() != QLatin1String("http") && u.scheme() != QLatin1String("https")) || u.host().isEmpty()) {
+        if (autoLogin) emit loginFailed(QString());
+        else emit serverCheckFailed(QString());
+        return;
+    }
+
+    qInfo() << "AuthManager: Checking server" << normalized;
+    m_serverCheckAutoLogin = autoLogin;
+    m_serverCheckUrl = normalized;
+    setCheckingServer(true);
+
+    QNetworkRequest request(QUrl(normalized + QStringLiteral("/api/server/version")));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkReply *reply = m_networkManager->get(request);
+    m_serverCheckReply = reply;
+
+    QTimer *timer = new QTimer(reply);
+    timer->setSingleShot(true);
+    timer->setInterval(15000);
+    connect(timer, &QTimer::timeout, reply, &QNetworkReply::abort);
+    connect(reply, &QNetworkReply::finished, timer, &QTimer::stop);
+    timer->start();
+
+    connect(reply, &QNetworkReply::finished, this, &AuthManager::onServerCheckReplyFinished);
+}
+
+void AuthManager::onServerCheckReplyFinished()
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+    if (!reply) return;
+
+    if (reply != m_serverCheckReply) {
+        reply->deleteLater();
+        return;
+    }
+    m_serverCheckReply = nullptr;
+    setCheckingServer(false);
+
+    if (reply->error() == QNetworkReply::NoError) {
+        const QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+        const QJsonObject obj = doc.object();
+        if (!obj.contains(QStringLiteral("major"))) {
+            const QString error = "Invalid server response";
+            qInfo() << "AuthManager: Server check failed:" << error;
+            if (m_serverCheckAutoLogin) emit loginFailed(error);
+            else emit serverCheckFailed(error);
+            reply->deleteLater();
+            return;
+        }
+        const int major = obj[QStringLiteral("major")].toInt();
+        const int minor = obj[QStringLiteral("minor")].toInt();
+        const int patch = obj[QStringLiteral("patch")].toInt();
+        m_serverVersion = QStringLiteral("%1.%2.%3").arg(major).arg(minor).arg(patch);
+        m_serverSupported = major >= 3;
+        qInfo() << "AuthManager: Server version" << m_serverVersion << "supported:" << m_serverSupported;
+        setServerUrl(m_serverCheckUrl);
+        emit serverVersionChanged();
+        if (m_serverCheckAutoLogin) {
+            proceedWithStoredCredentials();
+        } else {
+            emit serverCheckSucceeded();
+        }
+    } else {
+        QString error = reply->errorString();
+        const QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+        const QJsonObject obj = doc.object();
+        if (obj.contains(QStringLiteral("message"))) {
+            error = obj[QStringLiteral("message")].toString();
+        }
+        qInfo() << "AuthManager: Server check failed:" << error;
+        if (m_serverCheckAutoLogin) emit loginFailed(error);
+        else emit serverCheckFailed(error);
+    }
+
+    reply->deleteLater();
 }
 
 void AuthManager::reloginWithStoredCredentials()
@@ -237,12 +364,20 @@ void AuthManager::onValidateTokenReplyFinished()
             fetchCurrentUser();
             emit loginSucceeded();
         } else {
-            qInfo() << "AuthManager: Token invalid, re-logging in";
-            reloginWithStoredCredentials();
+            qInfo() << "AuthManager: Token invalid";
+            if (!m_storage->loadPassword().isEmpty()) {
+                reloginWithStoredCredentials();
+            } else {
+                emit loginFailed(QString());
+            }
         }
     } else {
-        qInfo() << "AuthManager: Token validation failed, re-logging in";
-        reloginWithStoredCredentials();
+        qInfo() << "AuthManager: Token validation failed";
+        if (!m_storage->loadPassword().isEmpty()) {
+            reloginWithStoredCredentials();
+        } else {
+            emit loginFailed(reply->errorString());
+        }
     }
 
     reply->deleteLater();
@@ -270,6 +405,11 @@ void AuthManager::onUserMeReplyFinished()
         QString email = obj["email"].toString();
         if (!email.isEmpty()) {
             setEmail(email);
+        }
+        const QString clusterGroupId = obj["clusterGroupId"].toString();
+        if (m_clusterGroupId != clusterGroupId) {
+            m_clusterGroupId = clusterGroupId;
+            emit clusterGroupIdChanged();
         }
         qInfo() << "AuthManager: Current user fetched, id:" << m_userId;
     } else {

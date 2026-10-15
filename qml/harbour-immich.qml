@@ -102,6 +102,9 @@ ApplicationWindow
                 pageStack.clear()
                 pageStack.push(Qt.resolvedUrl("pages/TimelinePage.qml"))
             }
+            if (!authManager.serverSupported) {
+                notification.showError(qsTrId("loginPage.versionUnsupported"))
+            }
             shouldShowClientCertWarning()
         }
         onLoginFailed: {
@@ -110,7 +113,7 @@ ApplicationWindow
             var pageName = currentPage && currentPage.objectName ? currentPage.objectName : ""
             if (pageName === "loadingPage" || pageName === "") {
                 pageStack.clear()
-                pageStack.push(Qt.resolvedUrl("pages/ServerPage.qml"))
+                pageStack.push(Qt.resolvedUrl("pages/ServerPage.qml"), { errorText: error })
             }
         }
     }

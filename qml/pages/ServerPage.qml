@@ -5,31 +5,33 @@ import "../components"
 Page {
     id: page
 
-    property bool isLoggingIn: false
+    readonly property bool isLoggingIn: authManager.checkingServer
     property bool hasError: false
+    property string errorText: ""
 
     function processServerUrl() {
         hasError = false
-        var url = String(serverUrlField.text).trim()
-        if (url.charAt(url.length - 1) === "/") {
-            url = url.substring(0, url.length - 1)
-        }
+        authManager.checkServer(String(serverUrlField.text))
+    }
 
-        // Validate URL format
-        var urlPattern = /^https?:\/\/(([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+|localhost|\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?(\/.*)?$/
-        if (!urlPattern.test(url)) {
+    Component.onCompleted: {
+        if (errorText) {
             hasError = true
-            return
+            errorLabel.text = errorText
         }
-
-        isLoggingIn = true
-        authManager.serverUrl = url
-        immichApi.fetchServerVersion()
     }
 
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
+
+        PullDownMenu {
+            MenuItem {
+                //% "Client certificate"
+                text: qsTrId("pullDownMenu.clientCertificate")
+                onClicked: pageStack.push(Qt.resolvedUrl("ClientCertPage.qml"))
+            }
+        }
 
         Column {
             id: column
@@ -67,7 +69,7 @@ Page {
                 placeholderText: "http://your-server-ip:port"
                 text: authManager.serverUrl || ""
                 inputMethodHints: Qt.ImhUrlCharactersOnly
-                EnterKey.enabled: text.length > 0
+                EnterKey.enabled: text.length > 0 && !page.isLoggingIn
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
                 EnterKey.onClicked: page.processServerUrl()
                 color: page.hasError ? Theme.errorColor : Theme.primaryColor
@@ -79,7 +81,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 //% "Next"
                 text: qsTrId("serverPage.next")
-                enabled: serverUrlField.text.length > 0
+                enabled: serverUrlField.text.length > 0 && !page.isLoggingIn
                 onClicked: page.processServerUrl()
             }
 
@@ -134,22 +136,15 @@ Page {
     }
 
     Connections {
-        target: immichApi
-        onErrorOccurred: {
-            page.hasError = true
-            page.isLoggingIn = false
-            //% "Login failed"
-            errorLabel.text = error || qsTrId("loginPage.failed")
-        }
-        onServerVersionReceived: {
-            page.isLoggingIn = false
-            var versionUnsupported = false
-            if (version && version.major && version.minor && version.patch && version.major < 3) {
-                versionUnsupported = true
+        target: authManager
+        onServerCheckSucceeded: {
+            if (page.status === PageStatus.Active || pageStack.currentPage === page) {
+                pageStack.push(Qt.resolvedUrl("LoginPage.qml"))
             }
-            pageStack.push(Qt.resolvedUrl("LoginPage.qml"), {
-                "versionUnsupported": versionUnsupported
-            })
+        }
+        onServerCheckFailed: {
+            page.hasError = true
+            errorLabel.text = error || qsTrId("serverPage.serverUrlError")
         }
     }
 }
