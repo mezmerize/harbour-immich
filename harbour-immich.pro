@@ -18,6 +18,7 @@ harbour {
 }
 
 SOURCES += src/harbour-immich.cpp \
+    src/backgroundtasks.cpp \
     src/backupdatabase.cpp \
     src/backupmanager.cpp \
     src/clientcertmanager.cpp \
@@ -38,6 +39,7 @@ SOURCES += src/harbour-immich.cpp \
     src/videocontroller.cpp
 
 HEADERS += \
+    src/backgroundtasks.h \
     src/backupdatabase.h \
     src/backupmanager.h \
     src/clientcertmanager.h \
