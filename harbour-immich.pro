@@ -18,6 +18,8 @@ harbour {
 }
 
 SOURCES += src/harbour-immich.cpp \
+    src/assetdatabase.cpp \
+    src/syncengine.cpp \
     src/backgroundtasks.cpp \
     src/backupdatabase.cpp \
     src/backupmanager.cpp \
@@ -39,6 +41,8 @@ SOURCES += src/harbour-immich.cpp \
     src/videocontroller.cpp
 
 HEADERS += \
+    src/assetdatabase.h \
+    src/syncengine.h \
     src/backgroundtasks.h \
     src/backupdatabase.h \
     src/backupmanager.h \
