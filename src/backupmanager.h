@@ -1,6 +1,7 @@
 #ifndef BACKUPMANAGER_H
 #define BACKUPMANAGER_H
 
+#include "backupdatabase.h"
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -9,11 +10,12 @@
 #include <QTimer>
 #include <QSet>
 #include <QMap>
+#include <QHash>
+#include <QVariantMap>
 #include <QJsonArray>
 
 class AuthManager;
 class SettingsManager;
-class BackupDatabase;
 class ImmichApi;
 
 class BackupManager : public QObject
@@ -29,8 +31,8 @@ class BackupManager : public QObject
     Q_PROPERTY(double currentProgress READ currentProgress NOTIFY currentProgressChanged)
     Q_PROPERTY(bool syncing READ syncing NOTIFY syncingChanged)
     Q_PROPERTY(bool backgroundActive READ backgroundActive NOTIFY backgroundActiveChanged)
-    Q_PROPERTY(bool autoDisableAfterBackup READ autoDisableAfterBackup WRITE setAutoDisableAfterBackup NOTIFY autoDisableAfterBackupChanged)
     Q_PROPERTY(bool mediaTypesReady READ mediaTypesReady NOTIFY mediaTypesReadyChanged)
+    Q_PROPERTY(bool wifiConnected READ isOnWifi NOTIFY wifiConnectedChanged)
 
 public:
     explicit BackupManager(AuthManager *authManager, SettingsManager *settingsManager, ImmichApi *immichApi, QObject *parent = nullptr);
@@ -51,22 +53,40 @@ public:
     bool syncing() const;
     bool backgroundActive() const;
 
-    bool autoDisableAfterBackup() const;
-    void setAutoDisableAfterBackup(bool enabled);
-
     bool mediaTypesReady() const;
 
-    Q_INVOKABLE void startBackup();
-    Q_INVOKABLE void stopBackup();
+    bool isOnWifi() const;
+
     Q_INVOKABLE void scanNow();
+    Q_INVOKABLE void scanNowIfDue();
     Q_INVOKABLE void cancelBackup();
     Q_INVOKABLE void retryFailed();
     Q_INVOKABLE bool isAssetBackedUp(const QString &remoteAssetId) const;
-    Q_INVOKABLE void registerManualUpload(const QString &filePath, const QString &remoteAssetId);
-    Q_INVOKABLE void handleServerDeletion(const QString &remoteAssetId);
     Q_INVOKABLE void clearDatabase();
-    Q_INVOKABLE QStringList supportedPhotoExtensions() const;
-    Q_INVOKABLE QStringList supportedVideoExtensions() const;
+
+    void startBackup();
+    void stopBackup();
+    void registerManualUpload(const QString &filePath, const QString &remoteAssetId);
+    void handleServerDeletions(const QStringList &remoteAssetIds);
+    void reconcileWithServer(const QSet<QString> &existingIds, qint64 olderThanMs);
+
+    // On this device folders
+    Q_INVOKABLE void requestMediaCount(const QString &path);
+    Q_INVOKABLE void ensureMediaTypesFetched();
+    Q_INVOKABLE QVariantMap deviceFileInfo(const QString &filePath) const;
+
+    QSet<QString> mediaExtensions() const;
+    bool isVideoFilePath(const QString &filePath) const;
+    bool isDeviceFileBackedUp(const QString &filePath, qint64 fileSize, qint64 fileModified) const;
+    void markDeviceFileBackedUp(const QString &filePath, const QString &remoteAssetId);
+    void handleLocalFileDeletion(const QString &filePath);
+    void pruneDeletedFilesInFolder(const QString &folderPath);
+
+    int deviceFileStatusOverride(const QString &filePath) const;
+    void setDeviceFileStatusOverride(const QString &filePath, int status);
+
+    QString deviceFolderCheckFingerprint(const QString &folderPath) const;
+    void setDeviceFolderCheckFingerprint(const QString &folderPath, const QString &fingerprint);
 
     BackupDatabase* database() const;
 
@@ -81,15 +101,16 @@ signals:
     void databaseCleared();
     void serverSyncComplete(int matched, int pending);
     void backgroundActiveChanged();
-    void autoDisableAfterBackupChanged();
     void mediaTypesReadyChanged();
+    void mediaCountReady(const QString &path, int count);
     void mediaTypesFetchFailed();
     void fileBackedUp(const QString &filePath, const QString &remoteAssetId);
-    void fileBackupFailed(const QString &filePath, const QString &error);
+    void localMediaChanged();
+    void wifiConnectedChanged();
 
 private slots:
-    void onDirectoryChanged(const QString &path);
-    void onNetworkStateChanged(bool isOnline);
+    void onDirectoryChanged();
+    void onNetworkStateChanged();
     void onDebouncedDirectoryChange();
     void processQueue();
 
@@ -101,14 +122,21 @@ private:
     QNetworkAccessManager *m_networkManager;
     QNetworkConfigurationManager *m_netConfigManager;
     QFileSystemWatcher *m_fileWatcher;
-    QTimer *m_scanTimer;
     QTimer *m_processTimer;
     QTimer *m_dirChangeDebounce;
-    QSet<QString> m_pendingDirChanges;
+    QTimer *m_retryWaitTimer;
+    QTimer *m_settingsChangeDebounce;
 
     bool m_running;
     bool m_uploading;
     bool m_syncing;
+    bool m_scanInProgress;
+    bool m_scanQueued;
+    bool m_changeCheckQueued;
+    bool m_scanIsFull;
+    quint64 m_scanToken;
+    quint64 m_hashToken;
+    qint64 m_lastAutoScanMs;
 
     // Server sync state
     QMap<QString, QString> m_syncDeviceAssetToPath;
@@ -119,6 +147,7 @@ private:
     QString m_currentFile;
     double m_currentProgress;
     QNetworkReply *m_currentUploadReply;
+    bool m_onWifi;
 
     // Cached stats
     mutable int m_cachedPending;
@@ -127,22 +156,34 @@ private:
     mutable int m_cachedTotal;
     mutable bool m_statsDirty;
 
-    // Cached backed-up remote asset IDs for fast lookup
     QSet<QString> m_backedUpAssetIds;
+    QHash<QString, int> m_deviceStatusOverrides;
+    QHash<QString, QString> m_deviceFolderCheckFingerprints;
 
     void watchDirectories();
     void uploadFile(const QString &filePath);
     void onUploadFinished(QNetworkReply *reply, const QString &filePath);
-    void onBulkUploadCheckCompleted(const QJsonArray &results);
+    void onBulkUploadCheckCompleted(const QJsonArray &results, const QString &token);
+    void onBulkUploadCheckFailed(const QString &token);
+    void finishSync();
     void verifyNewFiles(const QStringList &newFilePaths);
+    void onChecksumsDone(quint64 token, const QVariantList &entries);
     void checkForChanges();
+    void startMediaScan(bool fullScan);
+    void onMediaScanDone(quint64 token, const QVariantList &files);
+    void applyScanResults(const QVariantList &files, bool fullScan);
     void refreshStats();
     void refreshBackedUpCache();
+    void backupRecordsDropped(int removedCount);
     void invalidateStats(bool includeBackupStatus = false);
     void scheduleProcessQueue();
+    void waitForUploadConditions();
 
     bool canUploadNow(const QString &filePath) const;
-    bool isOnWifi() const;
+    bool isInWatchedFolder(const QString &path, const QStringList &folders) const;
+    bool isValidTrackedFile(const QString &path, const QStringList &folders, qint64 fromDateMs) const;
+    int pruneInvalidFiles(const QHash<QString, BackupDatabase::FileRecord> &records, const QStringList &folders, qint64 fromDateMs, QStringList *pendingToVerify);
+    void updateWifiState();
     bool isCharging() const;
 
     bool isPhotoFile(const QString &suffix) const;
