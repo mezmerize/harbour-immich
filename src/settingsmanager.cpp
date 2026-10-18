@@ -1,4 +1,5 @@
 #include "settingsmanager.h"
+#include "imageprovider.h"
 #include "sailfishapp.h"
 #include <QCoreApplication>
 #include <QStandardPaths>
@@ -77,6 +78,32 @@ void SettingsManager::setMotionPhotosEnabled(bool enabled)
     }
 }
 
+bool SettingsManager::videoAutoPlay() const
+{
+    return m_settings.value("video/autoPlay", true).toBool();
+}
+
+void SettingsManager::setVideoAutoPlay(bool enabled)
+{
+    if (videoAutoPlay() != enabled) {
+        m_settings.setValue("video/autoPlay", enabled);
+        emit videoAutoPlayChanged();
+    }
+}
+
+bool SettingsManager::videoAutoPlayWifiOnly() const
+{
+    return m_settings.value("video/autoPlayWifiOnly", true).toBool();
+}
+
+void SettingsManager::setVideoAutoPlayWifiOnly(bool enabled)
+{
+    if (videoAutoPlayWifiOnly() != enabled) {
+        m_settings.setValue("video/autoPlayWifiOnly", enabled);
+        emit videoAutoPlayWifiOnlyChanged();
+    }
+}
+
 QString SettingsManager::scrollToTopPosition() const
 {
     return m_settings.value("scrollToTopPosition", "right").toString();
@@ -118,32 +145,57 @@ void SettingsManager::setBackupEnabled(bool enabled)
 
 QStringList SettingsManager::backupFolders() const
 {
-   return m_settings.value("backup/folders", QStringList()).toStringList();
+   return normalizeFolders(m_settings.value("backup/folders", QStringList()).toStringList());
 }
 
 void SettingsManager::setBackupFolders(const QStringList &folders)
 {
-    if (backupFolders() != folders) {
-        m_settings.setValue("backup/folders", folders);
+    const QStringList normalized = normalizeFolders(folders);
+    if (backupFolders() != normalized) {
+        m_settings.setValue("backup/folders", normalized);
         emit backupFoldersChanged();
     }
 }
 
-void SettingsManager::addBackupFolder(const QString &folder)
+QStringList SettingsManager::normalizeFolders(const QStringList &folders)
 {
-   QStringList folders = backupFolders();
-   if (!folders.contains(folder)) {
-       folders.append(folder);
-       setBackupFolders(folders);
-   }
+    QStringList result;
+    for (QString f : folders) {
+        f = f.trimmed();
+        if (f.isEmpty()) {
+            continue;
+        }
+        f = QDir::cleanPath(f);
+        while (f.length() > 1 && f.endsWith(QLatin1Char('/'))) {
+            f.chop(1);
+        }
+        if (f.isEmpty() || result.contains(f)) {
+            continue;
+        }
+        result.append(f);
+    }
+    QStringList survivors;
+    for (const QString &f : result) {
+        bool covered = false;
+        for (const QString &other : result) {
+            if (other != f && isPathWithin(f, other)) {
+                covered = true;
+                break;
+            }
+        }
+        if (!covered) {
+            survivors.append(f);
+        }
+    }
+    return survivors;
 }
 
-void SettingsManager::removeBackupFolder(const QString &folder)
+bool SettingsManager::isPathWithin(const QString &path, const QString &folder)
 {
-   QStringList folders = backupFolders();
-   if (folders.removeOne(folder)) {
-       setBackupFolders(folders);
-   }
+    if (folder == QLatin1String("/")) {
+        return path.startsWith(QLatin1Char('/'));
+    }
+    return path == folder || path.startsWith(folder + QLatin1Char('/'));
 }
 
 bool SettingsManager::backupPhotosOnCellular() const
@@ -268,6 +320,19 @@ void SettingsManager::setBackupShowStatusIcon(bool show)
     }
 }
 
+bool SettingsManager::showDeviceMediaOnTimeline() const
+{
+    return m_settings.value("backup/showDeviceMediaOnTimeline", true).toBool();
+}
+
+void SettingsManager::setShowDeviceMediaOnTimeline(bool show)
+{
+    if (showDeviceMediaOnTimeline() != show) {
+        m_settings.setValue("backup/showDeviceMediaOnTimeline", show);
+        emit showDeviceMediaOnTimelineChanged();
+    }
+}
+
 QString SettingsManager::backupServerUrl() const
 {
     return m_settings.value("backup/serverUrl", "").toString();
@@ -376,6 +441,11 @@ QStringList SettingsManager::validCustomBrowseFolders()
 bool SettingsManager::folderExists(const QString &path) const
 {
     return QDir(path).exists();
+}
+
+void SettingsManager::clearImageCache()
+{
+    ImmichImageProvider::clearImageDiskCache();
 }
 
 QString SettingsManager::language() const

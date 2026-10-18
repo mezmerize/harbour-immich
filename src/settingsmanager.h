@@ -13,6 +13,8 @@ class SettingsManager : public QObject
     Q_PROPERTY(int memoriesThumbnailSize READ memoriesThumbnailSize WRITE setMemoriesThumbnailSize NOTIFY memoriesThumbnailSizeChanged)
     Q_PROPERTY(bool showMemoriesBar READ showMemoriesBar WRITE setShowMemoriesBar NOTIFY showMemoriesBarChanged)
     Q_PROPERTY(bool motionPhotosEnabled READ motionPhotosEnabled WRITE setMotionPhotosEnabled NOTIFY motionPhotosEnabledChanged)
+    Q_PROPERTY(bool videoAutoPlay READ videoAutoPlay WRITE setVideoAutoPlay NOTIFY videoAutoPlayChanged)
+    Q_PROPERTY(bool videoAutoPlayWifiOnly READ videoAutoPlayWifiOnly WRITE setVideoAutoPlayWifiOnly NOTIFY videoAutoPlayWifiOnlyChanged)
     Q_PROPERTY(QString scrollToTopPosition READ scrollToTopPosition WRITE setScrollToTopPosition NOTIFY scrollToTopPositionChanged)
     Q_PROPERTY(QString selectedCountPosition READ selectedCountPosition WRITE setSelectedCountPosition NOTIFY selectedCountPositionChanged)
     Q_PROPERTY(bool backupEnabled READ backupEnabled WRITE setBackupEnabled NOTIFY backupEnabledChanged)
@@ -26,6 +28,7 @@ class SettingsManager : public QObject
     Q_PROPERTY(bool backupAutoDisable READ backupAutoDisable WRITE setBackupAutoDisable NOTIFY backupAutoDisableChanged)
     Q_PROPERTY(bool backupSkipVerification READ backupSkipVerification WRITE setBackupSkipVerification NOTIFY backupSkipVerificationChanged)
     Q_PROPERTY(bool backupShowStatusIcon READ backupShowStatusIcon WRITE setBackupShowStatusIcon NOTIFY backupShowStatusIconChanged)
+    Q_PROPERTY(bool showDeviceMediaOnTimeline READ showDeviceMediaOnTimeline WRITE setShowDeviceMediaOnTimeline NOTIFY showDeviceMediaOnTimelineChanged)
     Q_PROPERTY(bool coverShowAssets READ coverShowAssets WRITE setCoverShowAssets NOTIFY coverShowAssetsChanged)
     Q_PROPERTY(bool coverSlideshow READ coverSlideshow WRITE setCoverSlideshow NOTIFY coverSlideshowChanged)
     Q_PROPERTY(QString downloadFolder READ downloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged)
@@ -50,6 +53,12 @@ public:
     bool motionPhotosEnabled() const;
     void setMotionPhotosEnabled(bool enabled);
 
+    bool videoAutoPlay() const;
+    void setVideoAutoPlay(bool enabled);
+
+    bool videoAutoPlayWifiOnly() const;
+    void setVideoAutoPlayWifiOnly(bool enabled);
+
     QString scrollToTopPosition() const;
     void setScrollToTopPosition(const QString &position);
 
@@ -61,8 +70,11 @@ public:
 
     QStringList backupFolders() const;
     void setBackupFolders(const QStringList &folders);
-    Q_INVOKABLE void addBackupFolder(const QString &folder);
-    Q_INVOKABLE void removeBackupFolder(const QString &folder);
+    static QStringList normalizeFolders(const QStringList &folders);
+    static bool isPathWithin(const QString &path, const QString &folder);
+    Q_INVOKABLE QStringList normalizedFolders(const QStringList &folders) const {
+        return normalizeFolders(folders);
+    }
 
     bool backupPhotosOnCellular() const;
     void setBackupPhotosOnCellular(bool allow);
@@ -78,7 +90,7 @@ public:
 
     QString backupFromDate() const;
     void setBackupFromDate(const QString &date);
-    Q_INVOKABLE qint64 backupFromDateMs() const;
+    qint64 backupFromDateMs() const;
 
     int backupScanInterval() const;
     void setBackupScanInterval(int minutes);
@@ -91,6 +103,9 @@ public:
 
     bool backupShowStatusIcon() const;
     void setBackupShowStatusIcon(bool show);
+
+    bool showDeviceMediaOnTimeline() const;
+    void setShowDeviceMediaOnTimeline(bool show);
 
     QString backupServerUrl() const;
     void setBackupServerUrl(const QString &url);
@@ -112,6 +127,7 @@ public:
 
     Q_INVOKABLE QString homePath() const;
     Q_INVOKABLE bool folderExists(const QString &path) const;
+    Q_INVOKABLE void clearImageCache();
 
     QString language() const;
     void setLanguage(const QString &language);
@@ -123,6 +139,8 @@ signals:
     void memoriesThumbnailSizeChanged();
     void showMemoriesBarChanged();
     void motionPhotosEnabledChanged();
+    void videoAutoPlayChanged();
+    void videoAutoPlayWifiOnlyChanged();
     void scrollToTopPositionChanged();
     void selectedCountPositionChanged();
     void backupEnabledChanged();
@@ -136,6 +154,7 @@ signals:
     void backupAutoDisableChanged();
     void backupSkipVerificationChanged();
     void backupShowStatusIconChanged();
+    void showDeviceMediaOnTimelineChanged();
     void coverShowAssetsChanged();
     void coverSlideshowChanged();
     void downloadFolderChanged();
