@@ -20,10 +20,12 @@ harbour {
 SOURCES += src/harbour-immich.cpp \
     src/assetdatabase.cpp \
     src/syncengine.cpp \
+    src/localmediaindex.cpp \
     src/backgroundtasks.cpp \
     src/backupdatabase.cpp \
     src/backupmanager.cpp \
     src/clientcertmanager.cpp \
+    src/devicefoldermodel.cpp \
     src/immichapi.cpp \
     src/authmanager.cpp \
     src/logmanager.cpp \
@@ -43,11 +45,13 @@ SOURCES += src/harbour-immich.cpp \
 HEADERS += \
     src/assetdatabase.h \
     src/syncengine.h \
+    src/localmediaindex.h \
     src/backgroundtasks.h \
     src/backupdatabase.h \
     src/backupmanager.h \
     src/clientcertmanager.h \
     src/dateutils.h \
+    src/devicefoldermodel.h \
     src/immichapi.h \
     src/authmanager.h \
     src/logmanager.h \
