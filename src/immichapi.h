@@ -22,7 +22,14 @@ public:
     explicit ImmichApi(AuthManager *authManager, QObject *parent = nullptr);
     void setSettingsManager(SettingsManager *settingsManager);
 
-    Q_INVOKABLE void fetchAlbums(const QString &shared = QString());
+    QNetworkRequest authenticatedRequest(const QUrl &url) const {
+        return createAuthenticatedRequest(url);
+    }
+    QNetworkAccessManager *networkManager() const {
+        return m_networkManager;
+    }
+
+    Q_INVOKABLE void fetchAlbums(const QString &filter = QString());
     Q_INVOKABLE void fetchAlbumDetails(const QString &albumId);
     Q_INVOKABLE void searchByParameters(const QVariantMap &searchParams);
     Q_INVOKABLE void searchSmartByParameters(const QVariantMap &searchParams);
@@ -33,7 +40,7 @@ public:
     Q_INVOKABLE void updateAsset(const QString &assetId, const QString &description, double latitude = 0, double longitude = 0, bool updateLocation = false);
     Q_INVOKABLE void uploadAssets(const QStringList &filePaths);
     Q_INVOKABLE void cancelUpload();
-    Q_INVOKABLE void deleteAssets(const QStringList &assetIds);
+    Q_INVOKABLE void deleteAssets(const QStringList &assetIds, bool force = false);
     Q_INVOKABLE void downloadAsset(const QString &assetId);
     Q_INVOKABLE void addAssetsToAlbum(const QString &albumId, const QStringList &assetIds);
     Q_INVOKABLE void removeAssetsFromAlbum(const QString &albumId, const QStringList &assetIds);
@@ -42,16 +49,13 @@ public:
     Q_INVOKABLE void addUsersToAlbum(const QString &albumId, const QStringList &userIds, const QString &role = QStringLiteral("editor"));
     Q_INVOKABLE void updateAlbumUserRole(const QString &albumId, const QString &userId, const QString &role);
     Q_INVOKABLE void removeAlbumUser(const QString &albumId, const QString &userId);
-    Q_INVOKABLE void fetchMemories();
-    Q_INVOKABLE void fetchMemoriesStatistics(const QVariantMap &params);
-    Q_INVOKABLE void searchMemories(const QVariantMap &params);
+    Q_INVOKABLE void fetchMemories(const QVariantMap &params = QVariantMap());
     Q_INVOKABLE void updateMemory(const QString &memoryId, const QVariantMap &fields);
     Q_INVOKABLE void fetchServerStatistics();
     Q_INVOKABLE void fetchServerAbout();
     Q_INVOKABLE void createAlbum(const QString &albumName, const QString &description);
     Q_INVOKABLE void updateAlbum(const QString &albumId, const QString &albumName, const QString &description, bool isActivityEnabled = true, const QString &albumThumbnailAssetId = QString());
-    void fetchTimelineBuckets(const QString &context, const QVariantMap &params);
-    void fetchTimelineBucket(const QString &context, const QString &timeBucket, const QVariantMap &params);
+    Q_INVOKABLE void removeAlbum(const QString &albumId);
     Q_INVOKABLE QString serverUrl() const;
     Q_INVOKABLE void bulkUploadCheck(const QJsonArray &assets, const QString &token = QString());
     Q_INVOKABLE void getStack(const QString &stackId);
@@ -66,6 +70,11 @@ public:
     Q_INVOKABLE void deleteSharedLink(const QString &id);
     Q_INVOKABLE void updateSharedLink(const QString &id, const QString &description, const QString &password, bool changePassword, const QString &expiresAt, bool allowDownload, bool allowUpload, bool showMetadata, const QString &slug = QString());
     Q_INVOKABLE void updatePerson(const QString &personId, const QVariantMap &fields);
+    Q_INVOKABLE QString personUpdateStrategy() const;
+    Q_INVOKABLE void fetchPersonShares();
+    Q_INVOKABLE void fetchClusterGroupUsers();
+    Q_INVOKABLE void sharePeople(const QStringList &personIds, const QStringList &userIds);
+    Q_INVOKABLE void unsharePerson(const QString &personId, const QString &userId);
     Q_INVOKABLE void fetchAlbumsForAsset(const QString &assetId);
     Q_INVOKABLE void fetchCities();
     Q_INVOKABLE void fetchUniqueFolderPaths();
@@ -92,32 +101,27 @@ signals:
     void uploadFileProgress(int fileIndex, int totalFiles, qint64 bytesSent, qint64 bytesTotal);
     void uploadAllComplete(int successCount, int failCount);
     void uploadFailed(const QString &filePath, const QString &error);
-    void assetsDeleted(const QStringList &assetIds);
+    void assetsDeleted(const QStringList &assetIds, bool force);
     void assetDownloaded(const QString &assetId, const QString &filePath);
-    void assetsAddedToAlbum(const QString &albumId);
-    void assetsRemovedFromAlbum(const QString &albumId);
+    void assetsAddedToAlbum(const QString &albumId, const QStringList &assetIds);
+    void assetsRemovedFromAlbum(const QString &albumId, const QStringList &assetIds);
     void sharedLinkCreated(const QString &shareKey, bool isSlug);
     void usersReceived(const QJsonArray &users);
     void usersAddedToAlbum(const QString &albumId);
     void albumUserRoleUpdated(const QString &albumId);
     void albumUserRemoved(const QString &albumId);
-    void memoriesReceived(const QJsonArray &memories);
-    void memoriesStatisticsReceived(int total);
-    void memoriesSearchReceived(const QJsonArray &memories, int pageNumber);
+    void memoriesReceived(const QJsonArray &memories, const QString &tag);
     void memoryUpdated(const QString &memoryId, bool isSaved);
     void serverStatisticsReceived(const QJsonObject &stats);
     void serverAboutReceived(const QJsonObject &about);
     void albumCreated(const QString &albumId, const QString &albumName);
     void albumUpdated(const QString &albumId, const QString &albumName, const QString &description, bool isActivityEnabled, const QString &albumThumbnailAssetId);
-    void timelineBucketsReceived(const QString &context, const QJsonArray &buckets);
-    void timelineBucketReceived(const QString &context, const QString &timeBucket, const QJsonObject &bucketData);
-    void timelineBucketsFailed(const QString &context);
-    void timelineBucketFailed(const QString &context, const QString &timeBucket);
+    void albumRemoved(const QString &albumId);
     void errorOccurred(const QString &error);
     void bulkUploadCheckCompleted(const QJsonArray &results, const QString &token);
     void bulkUploadCheckFailed(const QString &token);
     void stackReceived(const QString &stackId, const QJsonArray &assets);
-    void stackCreated(const QString &stackId);
+    void stackCreated(const QString &stackId, const QString &primaryAssetId, const QStringList &assetIds);
     void stackDeleted(const QString &stackId);
     void assetVisibilityChanged(const QStringList &assetIds, const QString &visibility);
     void trashRestored(const QStringList &assetIds);
@@ -128,6 +132,10 @@ signals:
     void sharedLinkDeleted(const QString &id);
     void sharedLinkUpdated(const QString &id);
     void personUpdated(const QString &personId);
+    void personSharesReceived(const QJsonArray &shares);
+    void clusterGroupUsersReceived(const QJsonArray &users);
+    void peopleShared(const QStringList &personIds);
+    void personUnshared(const QString &personId, const QString &userId);
     void assetAlbumsReceived(const QString &assetId, const QJsonArray &albums);
     void citiesReceived(const QJsonArray &cities);
     void uniqueFolderPathsReceived(const QJsonArray &paths);
@@ -135,7 +143,7 @@ signals:
     void partnersReceived(const QString &direction, const QJsonArray &partners);
     void partnerCreated(const QString &userId);
     void partnerRemoved(const QString &userId);
-    void partnerUpdated(const QString &userId);
+    void partnerUpdated(const QString &userId, bool inTimeline);
     void pinCodeCreated();
     void pinCodeVerified(bool success);
     void authStatusReceived(bool pinCodeExists);
@@ -155,12 +163,17 @@ private:
 
     QNetworkRequest createAuthenticatedRequest(const QUrl &url) const;
     void handleNetworkError(QNetworkReply *reply);
-    void fetchPeoplePage(bool withHidden, int page, QJsonArray accumulated);
+
+    QJsonArray albumsFromCatalog(const QString &filter) const;
+    QJsonObject albumJsonFromCatalog(const QString &albumId) const;
+    QJsonArray peopleFromCatalog(bool withHidden) const;
+    QJsonObject userPreferences() const;
+    QJsonArray memoriesFromCatalog(const QVariantMap &params) const;
+    QJsonObject assetInfoFromCatalog(const QString &assetId) const;
     void populateBaseSearchParams(QJsonObject &json, const QVariantMap &searchParams);
     void uploadNextFile();
     void startAssetDownload(const QString &assetId, const QString &fileName);
 
-    // Generic reply handler
     void connectReply(QNetworkReply *reply, std::function<void(const QByteArray&)> onSuccess, int timeoutMs = 30000, std::function<void()> onFailure = nullptr);
 
     // Upload queue state
