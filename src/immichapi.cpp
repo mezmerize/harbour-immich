@@ -2,8 +2,11 @@
 #include "authmanager.h"
 #include "clientcertmanager.h"
 #include "settingsmanager.h"
+#include "assetdatabase.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QSqlQuery>
+#include <QSqlError>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -20,6 +23,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <QTimer>
+#include <algorithm>
 #include <QLocale>
 
 namespace {
@@ -66,52 +70,34 @@ QNetworkRequest ImmichApi::createAuthenticatedRequest(const QUrl &url) const
     return request;
 }
 
-void ImmichApi::fetchAlbums(const QString &shared)
+void ImmichApi::fetchAlbums(const QString &filter)
 {
-    qInfo() << "ImmichApi: Fetching albums, shared:" << shared;
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/albums"));
-    if (!shared.isEmpty()) {
-        QUrlQuery query;
-        query.addQueryItem(QStringLiteral("isShared"), shared);
-        url.setQuery(query);
-    }
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    connectReply(reply, [this](const QByteArray &response) {
-        QJsonDocument doc = QJsonDocument::fromJson(response);
-        qInfo() << "ImmichApi: Albums received, count:" << doc.array().size();
-        emit albumsReceived(doc.array());
-    });
+    qInfo() << "ImmichApi: Fetching albums, filter:" << filter;
+    QJsonArray albums = albumsFromCatalog(filter);
+    qInfo() << "ImmichApi: Albums from catalog, count:" << albums.size();
+    emit albumsReceived(albums);
 }
 
 void ImmichApi::fetchAlbumDetails(const QString &albumId)
 {
     qInfo() << "ImmichApi: Fetching album details for:" << albumId;
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/albums/") + albumId);
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    connectReply(reply, [this](const QByteArray &response) {
-        QJsonDocument doc = QJsonDocument::fromJson(response);
-        emit albumDetailsReceived(doc.object());
-    });
+    emit albumDetailsReceived(albumJsonFromCatalog(albumId));
 }
 
 void ImmichApi::fetchAlbumsForAsset(const QString &assetId)
 {
     qInfo() << "ImmichApi: Fetching albums for asset:" << assetId;
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/albums"));
-    QUrlQuery query;
-    query.addQueryItem(QStringLiteral("assetId"), assetId);
-    url.setQuery(query);
-
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QString savedAssetId = assetId;
-    QNetworkReply *reply = m_networkManager->get(request);
-    connectReply(reply, [this, savedAssetId](const QByteArray &response) {
-        QJsonDocument doc = QJsonDocument::fromJson(response);
-        qInfo() << "ImmichApi: Albums for asset received, count:" << doc.array().size();
-        emit assetAlbumsReceived(savedAssetId, doc.array());
-    });
+    AssetDatabase *db = AssetDatabase::instance();
+    QJsonArray albums;
+    QSqlQuery q(db->db());
+    q.prepare(QStringLiteral("SELECT DISTINCT album_id FROM album_to_asset WHERE asset_id = ?"));
+    q.addBindValue(assetId);
+    if (q.exec()) {
+        while (q.next()) {
+            albums.append(albumJsonFromCatalog(q.value(0).toString()));
+        }
+    }
+    emit assetAlbumsReceived(assetId, albums);
 }
 
 void ImmichApi::populateBaseSearchParams(QJsonObject &json, const QVariantMap &searchParams)
@@ -182,9 +168,9 @@ void ImmichApi::populateBaseSearchParams(QJsonObject &json, const QVariantMap &s
     if (searchParams.contains("page")) {
         json["page"] = searchParams["page"].toInt();
     }
-    json["size"] = searchParams.contains("size") ? searchParams["size"].toInt() : 100;
+    json["size"] = searchParams.contains("size") ? searchParams["size"].toInt() : 250;
 
-    json["withExif"] = true;
+    json["withExif"] = searchParams.contains("withExif") ? searchParams["withExif"].toBool() : false;
 }
 
 void ImmichApi::searchByParameters(const QVariantMap &searchParams)
@@ -269,41 +255,9 @@ void ImmichApi::searchSmartByParameters(const QVariantMap &searchParams)
 void ImmichApi::fetchPeople(bool withHidden)
 {
     qInfo() << "ImmichApi: Fetching people, withHidden:" << withHidden;
-    fetchPeoplePage(withHidden, 1, QJsonArray());
-}
-
-void ImmichApi::fetchPeoplePage(bool withHidden, int page, QJsonArray accumulated)
-{
-    const int pageSize = 500;
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/people"));
-    QUrlQuery query;
-    query.addQueryItem(QStringLiteral("withHidden"), withHidden ? QStringLiteral("true") : QStringLiteral("false"));
-    query.addQueryItem(QStringLiteral("page"), QString::number(page));
-    query.addQueryItem(QStringLiteral("size"), QString::number(pageSize));
-    url.setQuery(query);
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    connectReply(reply, [this, withHidden, page, accumulated](const QByteArray &response) mutable {
-        QJsonDocument doc = QJsonDocument::fromJson(response);
-        QJsonObject obj = doc.object();
-
-        QJsonArray people;
-        bool hasNextPage = false;
-        people = obj[QStringLiteral("people")].toArray();
-        hasNextPage = obj[QStringLiteral("hasNextPage")].toBool();
-
-        for (const QJsonValue &p : people) {
-            accumulated.append(p);
-        }
-
-        bool morePages = !people.isEmpty() && (hasNextPage || (people.size() >= pageSize));
-        if (morePages) {
-            fetchPeoplePage(withHidden, page + 1, accumulated);
-        } else {
-            qInfo() << "ImmichApi: People received, count:" << accumulated.size();
-            emit peopleReceived(accumulated);
-        }
-    });
+    QJsonArray people = peopleFromCatalog(withHidden);
+    qInfo() << "ImmichApi: People from catalog, count:" << people.size();
+    emit peopleReceived(people);
 }
 
 void ImmichApi::fetchSearchSuggestions(const QString &type)
@@ -377,6 +331,12 @@ void ImmichApi::onFavoriteReplyFinished()
 void ImmichApi::getAssetInfo(const QString &assetId)
 {
     qInfo() << "ImmichApi: Getting asset info for:" << assetId;
+    const QJsonObject info = assetInfoFromCatalog(assetId);
+    if (!info.isEmpty()) {
+        emit assetInfoReceived(info);
+        return;
+    }
+    // Fallback - asset not in catalog
     QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/assets/") + assetId);
     QNetworkRequest request = createAuthenticatedRequest(url);
     QNetworkReply *reply = m_networkManager->get(request);
@@ -510,7 +470,8 @@ void ImmichApi::connectReply(QNetworkReply *reply, std::function<void(const QByt
 
 void ImmichApi::uploadAssets(const QStringList &filePaths)
 {
-    if (filePaths.isEmpty()) return;
+    if (filePaths.isEmpty())
+        return;
 
     qInfo() << "ImmichApi: Starting upload of" << filePaths.size() << "files";
     m_uploadQueue = filePaths;
@@ -547,7 +508,6 @@ QHttpMultiPart* ImmichApi::buildUploadMultiPart(QFile *file, const QFileInfo &fi
         multiPart->append(part);
     };
 
-    // assetData
     QHttpPart filePart;
     filePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(mimeType));
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"assetData\"; filename=\"" + fileInfo.fileName() + "\""));
@@ -635,19 +595,21 @@ void ImmichApi::uploadNextFile()
     });
 }
 
-void ImmichApi::deleteAssets(const QStringList &assetIds)
+void ImmichApi::deleteAssets(const QStringList &assetIds, bool force)
 {
     QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/assets"));
     QNetworkRequest request = createAuthenticatedRequest(url);
 
     QJsonObject json;
     json["ids"] = toJsonStringArray(assetIds);
+    json["force"] = force;
 
     QBuffer *buffer = createJsonBuffer(json);
 
     QNetworkReply *reply = m_networkManager->sendCustomRequest(request, "DELETE", buffer);
     buffer->setParent(reply);
     reply->setProperty("assetIds", assetIds);
+    reply->setProperty("force", force);
     connect(reply, &QNetworkReply::finished, this, &ImmichApi::onDeleteReplyFinished);
 }
 
@@ -658,7 +620,7 @@ void ImmichApi::onDeleteReplyFinished()
 
     if (reply->error() == QNetworkReply::NoError) {
         QStringList assetIds = reply->property("assetIds").toStringList();
-        emit assetsDeleted(assetIds);
+        emit assetsDeleted(assetIds, reply->property("force").toBool());
     } else {
         handleNetworkError(reply);
     }
@@ -762,6 +724,7 @@ void ImmichApi::addAssetsToAlbum(const QString &albumId, const QStringList &asse
 
     QNetworkReply *reply = m_networkManager->put(request, doc.toJson());
     reply->setProperty("albumId", albumId);
+    reply->setProperty("assetIds", assetIds);
     connect(reply, &QNetworkReply::finished, this, &ImmichApi::onAddToAlbumReplyFinished);
 }
 
@@ -779,8 +742,9 @@ void ImmichApi::removeAssetsFromAlbum(const QString &albumId, const QStringList 
     QNetworkReply *reply = m_networkManager->sendCustomRequest(request, "DELETE", buffer);
     buffer->setParent(reply);
     QString savedAlbumId = albumId;
-    connectReply(reply, [this, savedAlbumId](const QByteArray &) {
-        emit assetsRemovedFromAlbum(savedAlbumId);
+    QStringList savedAssetIds = assetIds;
+    connectReply(reply, [this, savedAlbumId, savedAssetIds](const QByteArray &) {
+        emit assetsRemovedFromAlbum(savedAlbumId, savedAssetIds);
     });
 }
 
@@ -791,7 +755,23 @@ void ImmichApi::onAddToAlbumReplyFinished()
 
     if (reply->error() == QNetworkReply::NoError) {
         QString albumId = reply->property("albumId").toString();
-        emit assetsAddedToAlbum(albumId);
+        QStringList assetIds = reply->property("assetIds").toStringList();
+
+        QStringList applied;
+        const QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+        if (doc.isArray()) {
+            const QJsonArray results = doc.array();
+            for (const QJsonValue &v : results) {
+                const QJsonObject r = v.toObject();
+                const QString id = r["id"].toString();
+                if (r["success"].toBool() || r["error"].toString() == QLatin1String("duplicate")) {
+                    applied.append(id);
+                }
+            }
+        } else {
+            applied = assetIds;
+        }
+        emit assetsAddedToAlbum(albumId, applied);
     } else {
         handleNetworkError(reply);
     }
@@ -825,15 +805,24 @@ void ImmichApi::onSharedLinkReplyFinished()
 void ImmichApi::fetchUsers()
 {
     qInfo() << "ImmichApi: Fetching users";
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/users"));
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    connectReply(reply, [this](const QByteArray &response) {
-        QJsonDocument doc = QJsonDocument::fromJson(response);
-        QJsonArray users = doc.isArray() ? doc.array() : QJsonArray();
-        qInfo() << "ImmichApi: Users received, count:" << users.size();
-        emit usersReceived(users);
-    });
+    AssetDatabase *db = AssetDatabase::instance();
+    QJsonArray users;
+    QSqlQuery q(db->db());
+    q.exec(QStringLiteral(
+        "SELECT id, name, email"
+        " FROM sync_user"
+        " WHERE deleted_at IS NULL"
+        " AND id != (SELECT value FROM sync_meta WHERE key = 'current_user_id')"
+        " ORDER BY name"));
+    while (q.next()) {
+        QJsonObject u;
+        u[QStringLiteral("id")] = q.value(0).toString();
+        u[QStringLiteral("name")] = q.value(1).toString();
+        u[QStringLiteral("email")] = q.value(2).toString();
+        users.append(u);
+    }
+    qInfo() << "ImmichApi: Users from catalog, count:" << users.size();
+    emit usersReceived(users);
 }
 
 void ImmichApi::addUsersToAlbum(const QString &albumId, const QStringList &userIds, const QString &role)
@@ -890,58 +879,12 @@ void ImmichApi::removeAlbumUser(const QString &albumId, const QString &userId)
     });
 }
 
-void ImmichApi::fetchMemories()
+void ImmichApi::fetchMemories(const QVariantMap &params)
 {
     qInfo() << "ImmichApi: Fetching memories";
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/memories"));
-    QUrlQuery query;
-    query.addQueryItem(QStringLiteral("for"), QDate::currentDate().toString(Qt::ISODate));
-    url.setQuery(query);
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    connectReply(reply, [this](const QByteArray &response) {
-        QJsonDocument doc = QJsonDocument::fromJson(response);
-        qInfo() << "ImmichApi: Memories received, count:" << doc.array().size();
-        emit memoriesReceived(doc.array());
-    });
-}
-
-void ImmichApi::fetchMemoriesStatistics(const QVariantMap &params)
-{
-    qInfo().noquote() << "ImmichApi: Fetching memories statistics, params:" << QJsonDocument::fromVariant(params).toJson(QJsonDocument::Compact);
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/memories/statistics"));
-    QUrlQuery query;
-    for (auto it = params.constBegin(); it != params.constEnd(); ++it) {
-        query.addQueryItem(it.key(), it.value().toString());
-    }
-    url.setQuery(query);
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    connectReply(reply, [this](const QByteArray &response) {
-        QJsonObject obj = QJsonDocument::fromJson(response).object();
-        const int total = obj.value(QStringLiteral("total")).toInt();
-        qInfo() << "ImmichApi: Memories statistics received, total:" << total;
-        emit memoriesStatisticsReceived(total);
-    });
-}
-
-void ImmichApi::searchMemories(const QVariantMap &params)
-{
-    qInfo().noquote() << "ImmichApi: Searching memories, params:" << QJsonDocument::fromVariant(params).toJson(QJsonDocument::Compact);
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/memories"));
-    QUrlQuery query;
-    for (auto it = params.constBegin(); it != params.constEnd(); ++it) {
-        query.addQueryItem(it.key(), it.value().toString());
-    }
-    url.setQuery(query);
-    const int pageNumber = params.value(QStringLiteral("page"), 1).toInt();
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    connectReply(reply, [this, pageNumber](const QByteArray &response) {
-        QJsonArray memories = QJsonDocument::fromJson(response).array();
-        qInfo() << "ImmichApi: Memories search received, page:" << pageNumber << "count:" << memories.size();
-        emit memoriesSearchReceived(memories, pageNumber);
-    });
+    QJsonArray memories = memoriesFromCatalog(params);
+    qInfo() << "ImmichApi: Memories from catalog, count:" << memories.size();
+    emit memoriesReceived(memories, params.value(QStringLiteral("requestTag")).toString());
 }
 
 void ImmichApi::updateMemory(const QString &memoryId, const QVariantMap &fields)
@@ -1037,50 +980,16 @@ void ImmichApi::updateAlbum(const QString &albumId, const QString &albumName, co
     });
 }
 
-void ImmichApi::fetchTimelineBuckets(const QString &context, const QVariantMap &params)
+void ImmichApi::removeAlbum(const QString &albumId)
 {
-    qInfo().noquote().nospace() << "ImmichApi: Fetching timeline buckets, context: \"" << context << "\" params: " << QJsonDocument::fromVariant(params).toJson(QJsonDocument::Compact);
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/timeline/buckets"));
-    QUrlQuery query;
-    for (auto it = params.constBegin(); it != params.constEnd(); ++it) {
-        query.addQueryItem(it.key(), it.value().toString());
-    }
-    url.setQuery(query);
-
+    qInfo() << "ImmichApi: Removing album:" << albumId;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/albums/") + albumId);
     QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    QString savedContext = context;
-
-    connectReply(reply, [this, savedContext](const QByteArray &response) {
-        QJsonArray buckets = QJsonDocument::fromJson(response).array();
-        qInfo() << "ImmichApi: Context buckets for" << savedContext << "count:" << buckets.size();
-        emit timelineBucketsReceived(savedContext, buckets);
-    }, 30000, [this, savedContext]() {
-        emit timelineBucketsFailed(savedContext);
-    });
-}
-
-void ImmichApi::fetchTimelineBucket(const QString &context, const QString &timeBucket, const QVariantMap &params)
-{
-    qInfo().noquote().nospace() << "ImmichApi: Fetching timeline bucket: \"" << timeBucket << "\" context: " << QJsonDocument::fromVariant(params).toJson(QJsonDocument::Compact);
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/timeline/bucket"));
-    QUrlQuery query;
-    query.addQueryItem(QStringLiteral("timeBucket"), timeBucket);
-    for (auto it = params.constBegin(); it != params.constEnd(); ++it) {
-        query.addQueryItem(it.key(), it.value().toString());
-    }
-    url.setQuery(query);
-
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    QString savedContext = context;
-    QString savedTimeBucket = timeBucket;
-
-    connectReply(reply, [this, savedContext, savedTimeBucket](const QByteArray &response) {
-        QJsonObject data = QJsonDocument::fromJson(response).object();
-        emit timelineBucketReceived(savedContext, savedTimeBucket, data);
-    }, 30000, [this, savedContext, savedTimeBucket]() {
-        emit timelineBucketFailed(savedContext, savedTimeBucket);
+    QNetworkReply *reply = m_networkManager->deleteResource(request);
+    QString savedAlbumId = albumId;
+    connectReply(reply, [this, savedAlbumId](const QByteArray &) {
+        qInfo() << "ImmichApi: Album removed:" << savedAlbumId;
+        emit albumRemoved(savedAlbumId);
     });
 }
 
@@ -1112,17 +1021,34 @@ void ImmichApi::bulkUploadCheck(const QJsonArray &assets, const QString &token)
 void ImmichApi::getStack(const QString &stackId)
 {
     qInfo() << "ImmichApi: Getting stack:" << stackId;
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/stacks/") + stackId);
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    QString savedStackId = stackId;
-    connectReply(reply, [this, savedStackId](const QByteArray &response) {
-        QJsonDocument doc = QJsonDocument::fromJson(response);
-        QJsonObject obj = doc.object();
-        QJsonArray assets = obj["assets"].toArray();
-        qInfo() << "ImmichApi: Stack received with" << assets.size() << "assets";
-        emit stackReceived(savedStackId, assets);
-    });
+    AssetDatabase *db = AssetDatabase::instance();
+    QJsonArray assets;
+    QSqlQuery q(db->db());
+    q.prepare(QStringLiteral(
+        "SELECT ra.id, ra.type, ra.name, ra.is_favorite, ra.thumb_hash, ra.created_at,"
+        " ra.local_date_time, ra.live_photo_video_id"
+        " FROM remote_asset ra"
+        " LEFT JOIN stack s ON s.id = ra.stack_id"
+        " WHERE ra.stack_id = ? AND ra.deleted_at IS NULL"
+        " ORDER BY (ra.id = s.primary_asset_id) DESC, ra.created_at"));
+    q.addBindValue(stackId);
+    if (q.exec()) {
+        while (q.next()) {
+            QJsonObject a;
+            a[QStringLiteral("id")] = q.value(0).toString();
+            a[QStringLiteral("type")] = q.value(1).toString();
+            a[QStringLiteral("originalFileName")] = q.value(2).toString();
+            a[QStringLiteral("isFavorite")] = q.value(3).toInt() != 0;
+            a[QStringLiteral("thumbhash")] = q.value(4).toString();
+            a[QStringLiteral("fileCreatedAt")] = q.value(5).toString();
+            a[QStringLiteral("localDateTime")] = q.value(6).toString();
+            a[QStringLiteral("livePhotoVideoId")] = q.value(7).toString();
+            assets.append(a);
+        }
+    } else {
+        qWarning() << "ImmichApi: Failed getStack catalog query:" << q.lastError().text();
+    }
+    emit stackReceived(stackId, assets);
 }
 
 void ImmichApi::createStack(const QStringList &assetIds)
@@ -1136,12 +1062,24 @@ void ImmichApi::createStack(const QStringList &assetIds)
 
     QJsonDocument doc(json);
     QNetworkReply *reply = m_networkManager->post(request, doc.toJson());
-    connectReply(reply, [this](const QByteArray &response) {
+    connectReply(reply, [this, assetIds](const QByteArray &response) {
         QJsonDocument doc = QJsonDocument::fromJson(response);
         QJsonObject obj = doc.object();
         QString stackId = obj["id"].toString();
+        QString primaryAssetId = obj["primaryAssetId"].toString();
+        QStringList stackAssetIds;
+        const QJsonArray assets = obj["assets"].toArray();
+        for (const QJsonValue &v : assets) {
+            stackAssetIds.append(v.toObject()["id"].toString());
+        }
+        if (stackAssetIds.isEmpty()) {
+            stackAssetIds = assetIds;
+        }
+        if (primaryAssetId.isEmpty() && !stackAssetIds.isEmpty()) {
+            primaryAssetId = stackAssetIds.first();
+        }
         qInfo() << "ImmichApi: Stack created:" << stackId;
-        emit stackCreated(stackId);
+        emit stackCreated(stackId, primaryAssetId, stackAssetIds);
     });
 }
 
@@ -1315,6 +1253,115 @@ void ImmichApi::updatePerson(const QString &personId, const QVariantMap &fields)
     });
 }
 
+QJsonObject ImmichApi::userPreferences() const
+{
+    AssetDatabase *db = AssetDatabase::instance();
+    QSqlQuery q(db->db());
+    q.prepare(QStringLiteral("SELECT value FROM user_metadata WHERE key = 'preferences' AND user_id = (SELECT value FROM sync_meta WHERE key = 'current_user_id')"));
+    if (q.exec() && q.next()) {
+        return QJsonDocument::fromJson(q.value(0).toString().toUtf8()).object();
+    }
+    return QJsonObject();
+}
+
+QString ImmichApi::personUpdateStrategy() const
+{
+    const QString strategy = userPreferences().value(QStringLiteral("people")).toObject().value(QStringLiteral("updateStrategy")).toString();
+    if (strategy == QLatin1String("self") || strategy == QLatin1String("everyone")) {
+        return strategy;
+    }
+    return QStringLiteral("everyone");
+}
+
+void ImmichApi::fetchPersonShares()
+{
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/people/users"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this](const QByteArray &response) {
+        emit personSharesReceived(QJsonDocument::fromJson(response).array());
+    });
+}
+
+void ImmichApi::fetchClusterGroupUsers()
+{
+    const QString groupId = m_authManager->clusterGroupId();
+    if (groupId.isEmpty()) {
+        emit clusterGroupUsersReceived(QJsonArray());
+        return;
+    }
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/cluster-groups/") + groupId + QStringLiteral("/users"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this](const QByteArray &response) {
+        const QString me = m_authManager->userId();
+        AssetDatabase *db = AssetDatabase::instance();
+        QSqlQuery q(db->db());
+        q.prepare(QStringLiteral("SELECT 1 FROM partner WHERE (shared_by_id = ? AND shared_with_id = ?) OR (shared_by_id = ? AND shared_with_id = ?)"));
+        QList<QJsonObject> users;
+        const QJsonArray arr = QJsonDocument::fromJson(response).array();
+        for (const QJsonValue &v : arr) {
+            QJsonObject u = v.toObject();
+            const QString uid = u.value(QStringLiteral("id")).toString();
+            if (uid.isEmpty() || uid == me) {
+                continue;
+            }
+            q.addBindValue(uid);
+            q.addBindValue(me);
+            q.addBindValue(me);
+            q.addBindValue(uid);
+            u[QStringLiteral("isPartner")] = q.exec() && q.next();
+            users.append(u);
+        }
+        std::sort(users.begin(), users.end(), [](const QJsonObject &a, const QJsonObject &b) {
+            return a.value(QStringLiteral("name")).toString().compare(b.value(QStringLiteral("name")).toString(), Qt::CaseInsensitive) < 0;
+        });
+        QJsonArray result;
+        for (const QJsonObject &u : users) {
+            result.append(u);
+        }
+        emit clusterGroupUsersReceived(result);
+    });
+}
+
+void ImmichApi::sharePeople(const QStringList &personIds, const QStringList &userIds)
+{
+    qInfo() << "ImmichApi: Sharing" << personIds.size() << "people with" << userIds.size() << "users";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/people/users"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    json[QStringLiteral("personIds")] = toJsonStringArray(personIds);
+    json[QStringLiteral("sharedWithIds")] = toJsonStringArray(userIds);
+    json[QStringLiteral("role")] = QStringLiteral("admin");
+
+    QNetworkReply *reply = m_networkManager->put(request, QJsonDocument(json).toJson());
+    connectReply(reply, [this, personIds](const QByteArray &) {
+        emit peopleShared(personIds);
+    });
+}
+
+void ImmichApi::unsharePerson(const QString &personId, const QString &userId)
+{
+    qInfo() << "ImmichApi: Unsharing person" << personId << "from" << userId;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/people/users"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject item;
+    item[QStringLiteral("personId")] = personId;
+    item[QStringLiteral("sharedWithId")] = userId;
+    const QByteArray payload = QJsonDocument(QJsonArray{item}).toJson(QJsonDocument::Compact);
+
+    auto *buffer = new QBuffer();
+    buffer->setData(payload);
+    buffer->open(QIODevice::ReadOnly);
+    QNetworkReply *reply = m_networkManager->sendCustomRequest(request, "DELETE", buffer);
+    buffer->setParent(reply);
+    connectReply(reply, [this, personId, userId](const QByteArray &) {
+        emit personUnshared(personId, userId);
+    });
+}
+
 void ImmichApi::fetchCities()
 {
     qInfo() << "ImmichApi: Fetching cities";
@@ -1368,28 +1415,45 @@ void ImmichApi::fetchServerFolders(const QString &path)
 void ImmichApi::fetchPartners(const QString &direction)
 {
     qInfo() << "ImmichApi: Fetching partners, direction:" << direction;
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/partners"));
-    QUrlQuery query;
-    query.addQueryItem(QStringLiteral("direction"), direction);
-    url.setQuery(query);
-
-    QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->get(request);
-    QString savedDirection = direction;
-    connectReply(reply, [this, savedDirection](const QByteArray &response) {
-        QJsonDocument doc = QJsonDocument::fromJson(response);
-        QJsonArray partners = doc.array();
-        qInfo() << "ImmichApi: Partners received, direction:" << savedDirection << "count:" << partners.size();
-        emit partnersReceived(savedDirection, partners);
-    });
+    AssetDatabase *db = AssetDatabase::instance();
+    QString me = db->metaValue(QStringLiteral("current_user_id"));
+    if (me.isEmpty()) {
+        me = m_authManager->userId();
+    }
+    const QString otherCol = direction == QLatin1String("shared-by") ? QStringLiteral("shared_with_id") : QStringLiteral("shared_by_id");
+    const QString meCol = direction == QLatin1String("shared-by") ? QStringLiteral("shared_by_id") : QStringLiteral("shared_with_id");
+    QJsonArray partners;
+    QSqlQuery q(db->db());
+    q.prepare(QStringLiteral(
+        "SELECT p.%1, p.in_timeline,"
+        " COALESCE(su.name, au.name), COALESCE(su.email, au.email)"
+        " FROM partner p"
+        " LEFT JOIN sync_user su ON su.id = p.%1"
+        " LEFT JOIN auth_user au ON au.id = p.%1"
+        " WHERE p.%2 = ?").arg(otherCol, meCol));
+    q.addBindValue(me);
+    if (q.exec()) {
+        while (q.next()) {
+            QJsonObject p;
+            p[QStringLiteral("id")] = q.value(0).toString();
+            p[QStringLiteral("inTimeline")] = q.value(1).toInt() != 0;
+            p[QStringLiteral("name")] = q.value(2).toString();
+            p[QStringLiteral("email")] = q.value(3).toString();
+            partners.append(p);
+        }
+    }
+    emit partnersReceived(direction, partners);
 }
 
 void ImmichApi::createPartner(const QString &userId)
 {
     qInfo() << "ImmichApi: Creating partner:" << userId;
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/partners/") + userId);
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/partners"));
     QNetworkRequest request = createAuthenticatedRequest(url);
-    QNetworkReply *reply = m_networkManager->post(request, QByteArray());
+
+    QJsonObject json;
+    json[QStringLiteral("sharedWithId")] = userId;
+    QNetworkReply *reply = m_networkManager->post(request, QJsonDocument(json).toJson());
     QString savedId = userId;
     connectReply(reply, [this, savedId](const QByteArray &) {
         emit partnerCreated(savedId);
@@ -1420,8 +1484,8 @@ void ImmichApi::updatePartner(const QString &userId, bool inTimeline)
 
     QNetworkReply *reply = m_networkManager->put(request, doc.toJson());
     QString savedId = userId;
-    connectReply(reply, [this, savedId](const QByteArray &) {
-        emit partnerUpdated(savedId);
+    connectReply(reply, [this, savedId, inTimeline](const QByteArray &) {
+        emit partnerUpdated(savedId, inTimeline);
     });
 }
 
@@ -1475,4 +1539,311 @@ void ImmichApi::fetchAuthStatus()
         qInfo() << "ImmichApi: Auth status - pinCode exists:" << pinCodeExists;
         emit authStatusReceived(pinCodeExists);
     });
+}
+
+QJsonObject ImmichApi::albumJsonFromCatalog(const QString &albumId) const
+{
+    AssetDatabase *db = AssetDatabase::instance();
+    const QString me = db->metaValue(QStringLiteral("current_user_id"));
+    QJsonObject album;
+    QSqlQuery q(db->db());
+
+    q.prepare(QStringLiteral(
+        "SELECT a.id, a.name, a.description, a.created_at, a.updated_at,"
+        " a.thumbnail_asset_id, a.is_activity_enabled,"
+        " (SELECT COUNT(*) FROM album_to_asset ata WHERE ata.album_id = a.id) AS asset_count,"
+        " (SELECT u.user_id FROM album_user u WHERE u.album_id = a.id AND u.role = 'owner' LIMIT 1) AS owner_id"
+        " FROM album a WHERE a.id = ?"));
+    q.addBindValue(albumId);
+    if (!q.exec() || !q.next()) {
+        return album;
+    }
+
+    const QString ownerId = q.value(8).toString();
+    album[QStringLiteral("id")] = q.value(0).toString();
+    album[QStringLiteral("ownerId")] = ownerId;
+    album[QStringLiteral("albumName")] = q.value(1).toString();
+    album[QStringLiteral("description")] = q.value(2).toString();
+    album[QStringLiteral("createdAt")] = q.value(3).toString();
+    album[QStringLiteral("updatedAt")] = q.value(4).toString();
+    album[QStringLiteral("albumThumbnailAssetId")] = q.value(5).toString();
+    album[QStringLiteral("isActivityEnabled")] = q.value(6).toInt() != 0;
+    album[QStringLiteral("assetCount")] = q.value(7).toInt();
+
+    // Date range for album assets
+    QSqlQuery range(db->db());
+    range.prepare(QStringLiteral("SELECT MIN(ra.created_at), MAX(ra.created_at) FROM album_to_asset x JOIN remote_asset ra ON ra.id = x.asset_id WHERE x.album_id = ?"));
+    range.addBindValue(albumId);
+    if (range.exec() && range.next()) {
+        album[QStringLiteral("startDate")] = range.value(0).toString();
+        album[QStringLiteral("endDate")] = range.value(1).toString();
+    }
+
+    // Album users
+    QJsonArray albumUsers;
+    QSqlQuery uq(db->db());
+    uq.prepare(QStringLiteral("SELECT u.role, u.user_id, su.name, su.email FROM album_user u LEFT JOIN sync_user su ON su.id = u.user_id WHERE u.album_id = ?"));
+    uq.addBindValue(albumId);
+    if (uq.exec()) {
+        while (uq.next()) {
+            QJsonObject user;
+            user[QStringLiteral("id")] = uq.value(1).toString();
+            user[QStringLiteral("name")] = uq.value(2).toString();
+            user[QStringLiteral("email")] = uq.value(3).toString();
+            QJsonObject entry;
+            entry[QStringLiteral("role")] = uq.value(0).toString();
+            entry[QStringLiteral("user")] = user;
+            albumUsers.append(entry);
+        }
+    }
+    album[QStringLiteral("albumUsers")] = albumUsers;
+    album[QStringLiteral("shared")] = (ownerId != me) || albumUsers.size() > 1;
+
+    return album;
+}
+
+QJsonArray ImmichApi::albumsFromCatalog(const QString &filter) const
+{
+    static const QString me = QStringLiteral("(SELECT value FROM sync_meta WHERE key = 'current_user_id')");
+
+    AssetDatabase *db = AssetDatabase::instance();
+    QJsonArray albums;
+    QSqlQuery q(db->db());
+    QString where;
+    if (filter == QLatin1String("shared")) {
+        where = QStringLiteral(" WHERE shared");
+    } else if (filter == QLatin1String("sharedWithMe")) {
+        where = QStringLiteral(" WHERE owner_id IS NOT %1").arg(me);
+    } else if (filter == QLatin1String("mine")) {
+        where = QStringLiteral(" WHERE owner_id = %1 AND NOT shared").arg(me);
+    }
+    const QString sql = QStringLiteral(
+        "SELECT * FROM ("
+        " SELECT a.id, a.name, a.description, a.created_at, a.updated_at, a.thumbnail_asset_id,"
+        " (SELECT COUNT(*) FROM album_to_asset x WHERE x.album_id = a.id) AS asset_count,"
+        " (SELECT MIN(ra.created_at) FROM album_to_asset x JOIN remote_asset ra ON ra.id = x.asset_id WHERE x.album_id = a.id) AS start_date,"
+        " (SELECT MAX(ra.created_at) FROM album_to_asset x JOIN remote_asset ra ON ra.id = x.asset_id WHERE x.album_id = a.id) AS end_date,"
+        " o.user_id AS owner_id,"
+        " COALESCE(NULLIF(su.name, ''), su.email) AS owner_name,"
+        " (o.user_id IS NOT %1 OR (SELECT COUNT(*) FROM album_user u WHERE u.album_id = a.id) > 1) AS shared"
+        " FROM album a"
+        " LEFT JOIN album_user o ON o.album_id = a.id AND o.role = 'owner'"
+        " LEFT JOIN sync_user su ON su.id = o.user_id"
+        ")%2 ORDER BY name").arg(me, where);
+    if (!q.exec(sql)) {
+        qWarning() << "ImmichApi: Failed albums catalog query:" << q.lastError().text();
+        return albums;
+    }
+    while (q.next()) {
+        QJsonObject album;
+        album[QStringLiteral("id")] = q.value(0).toString();
+        album[QStringLiteral("albumName")] = q.value(1).toString();
+        album[QStringLiteral("description")] = q.value(2).toString();
+        album[QStringLiteral("createdAt")] = q.value(3).toString();
+        album[QStringLiteral("updatedAt")] = q.value(4).toString();
+        album[QStringLiteral("albumThumbnailAssetId")] = q.value(5).toString();
+        album[QStringLiteral("assetCount")] = q.value(6).toInt();
+        album[QStringLiteral("startDate")] = q.value(7).toString();
+        album[QStringLiteral("endDate")] = q.value(8).toString();
+        album[QStringLiteral("ownerId")] = q.value(9).toString();
+        album[QStringLiteral("ownerName")] = q.value(10).toString();
+        album[QStringLiteral("shared")] = q.value(11).toInt() != 0;
+        albums.append(album);
+    }
+    return albums;
+}
+
+QJsonArray ImmichApi::peopleFromCatalog(bool withHidden) const
+{
+    AssetDatabase *db = AssetDatabase::instance();
+    QJsonArray people;
+    QSqlQuery q(db->db());
+    int minFaces = userPreferences().value(QStringLiteral("people")).toObject().value(QStringLiteral("minimumFaces")).toInt(3);
+    if (minFaces <= 0) {
+        minFaces = 3;
+    }
+    QString sql = QStringLiteral(
+        "SELECT p.id, p.name, p.birth_date, p.is_favorite, p.is_hidden, p.updated_at, p.face_asset_id"
+        " FROM person p"
+        " JOIN asset_face af ON af.person_id = p.id AND af.is_visible = 1 AND af.deleted_at IS NULL"
+        " JOIN remote_asset ra ON ra.id = af.asset_id AND ra.visibility = 'timeline' AND ra.deleted_at IS NULL");
+    if (!withHidden) {
+        sql += QStringLiteral(" WHERE p.is_hidden = 0");
+    }
+    sql += QStringLiteral(" GROUP BY p.id HAVING COALESCE(p.name, '') != '' OR COUNT(DISTINCT ra.id) >= ? ORDER BY p.name");
+    q.prepare(sql);
+    q.addBindValue(minFaces);
+    if (!q.exec()) {
+        qWarning() << "ImmichApi: Failed people catalog query:" << q.lastError().text();
+        return people;
+    }
+    while (q.next()) {
+        QJsonObject p;
+        p[QStringLiteral("id")] = q.value(0).toString();
+        p[QStringLiteral("name")] = q.value(1).toString();
+        p[QStringLiteral("birthDate")] = q.value(2).toString();
+        p[QStringLiteral("isFavorite")] = q.value(3).toInt() != 0;
+        p[QStringLiteral("isHidden")] = q.value(4).toInt() != 0;
+        p[QStringLiteral("updatedAt")] = q.value(5).toString();
+        p[QStringLiteral("hasThumbnail")] = !q.value(6).toString().isEmpty();
+        people.append(p);
+    }
+    return people;
+}
+
+QJsonArray ImmichApi::memoriesFromCatalog(const QVariantMap &params) const
+{
+    AssetDatabase *db = AssetDatabase::instance();
+    QJsonArray memories;
+    QSqlQuery q(db->db());
+    const QString now = QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyy-MM-dd'T'HH:mm:ss.zzz'Z'"));
+    const bool upcoming = params.value(QStringLiteral("isUpcoming")).toString() == QLatin1String("true");
+    const bool today = params.value(QStringLiteral("scope")).toString() == QLatin1String("today");
+
+    QString sql = QStringLiteral("SELECT id, type, data, is_saved, memory_at FROM memory WHERE deleted_at IS NULL");
+    if (params.value(QStringLiteral("isSaved")).toString() == QLatin1String("true")) {
+        sql += QStringLiteral(" AND is_saved = 1");
+    }
+    if (upcoming) {
+        sql += QStringLiteral(" AND show_at > ?");
+    } else {
+        sql += QStringLiteral(" AND (show_at IS NULL OR show_at <= ?)");
+    }
+    if (today) {
+        sql += QStringLiteral(" AND (hide_at IS NULL OR hide_at > ?)");
+    }
+    const QString ord = params.value(QStringLiteral("order")).toString() == QLatin1String("asc") ? QStringLiteral("ASC") : QStringLiteral("DESC");
+    if (today) {
+        sql += QStringLiteral(" ORDER BY (type = 'birthday') DESC, memory_at %1").arg(ord);
+    } else {
+        sql += QStringLiteral(" ORDER BY memory_at %1").arg(ord);
+    }
+    q.prepare(sql);
+    q.addBindValue(now);
+    if (today) {
+        q.addBindValue(now);
+    }
+    if (!q.exec()) {
+        return memories;
+    }
+    while (q.next()) {
+        QJsonObject m;
+        const QString memoryId = q.value(0).toString();
+        m[QStringLiteral("id")] = memoryId;
+        m[QStringLiteral("type")] = q.value(1).toString();
+        const QString dataText = q.value(2).toString();
+        QJsonObject data = QJsonDocument::fromJson(dataText.toUtf8()).object();
+        m[QStringLiteral("data")] = data;
+        m[QStringLiteral("isSaved")] = q.value(3).toInt() != 0;
+        m[QStringLiteral("memoryAt")] = q.value(4).toString();
+
+        QJsonArray assets;
+        QSqlQuery aq(db->db());
+        aq.prepare(QStringLiteral(
+            "SELECT ra.id, ra.thumb_hash, ra.type, ra.live_photo_video_id,"
+            " ra.local_date_time, ra.created_at"
+            " FROM memory_to_asset mta"
+            " JOIN remote_asset ra ON mta.asset_id = ra.id"
+            " WHERE mta.memory_id = ? AND ra.deleted_at IS NULL"
+            " ORDER BY ra.created_at"));
+        aq.addBindValue(memoryId);
+        if (aq.exec()) {
+            while (aq.next()) {
+                QJsonObject a;
+                a[QStringLiteral("id")] = aq.value(0).toString();
+                a[QStringLiteral("thumbhash")] = aq.value(1).toString();
+                a[QStringLiteral("type")] = aq.value(2).toString();
+                const QString liveId = aq.value(3).toString();
+                if (!liveId.isEmpty()) a[QStringLiteral("livePhotoVideoId")] = liveId;
+                a[QStringLiteral("localDateTime")] = aq.value(4).toString();
+                a[QStringLiteral("fileCreatedAt")] = aq.value(5).toString();
+                assets.append(a);
+            }
+        }
+        m[QStringLiteral("assets")] = assets;
+        memories.append(m);
+    }
+    return memories;
+}
+
+QJsonObject ImmichApi::assetInfoFromCatalog(const QString &assetId) const
+{
+    AssetDatabase *db = AssetDatabase::instance();
+    QJsonObject info;
+    QSqlQuery q(db->db());
+    q.prepare(QStringLiteral(
+        "SELECT id, type, name, owner_id, created_at, updated_at, local_date_time,"
+        " thumb_hash, is_favorite, live_photo_video_id"
+        " FROM remote_asset WHERE id = ?"));
+    q.addBindValue(assetId);
+    if (!q.exec() || !q.next()) {
+        return info;
+    }
+
+    info[QStringLiteral("id")] = q.value(0).toString();
+    info[QStringLiteral("type")] = q.value(1).toString();
+    info[QStringLiteral("originalFileName")] = q.value(2).toString();
+    const QString ownerId = q.value(3).toString();
+    info[QStringLiteral("ownerId")] = ownerId;
+    info[QStringLiteral("fileCreatedAt")] = q.value(4).toString();
+    info[QStringLiteral("fileModifiedAt")] = q.value(5).toString();
+    info[QStringLiteral("localDateTime")] = q.value(6).toString();
+    info[QStringLiteral("thumbhash")] = q.value(7).toString();
+    info[QStringLiteral("isFavorite")] = q.value(8).toInt() != 0;
+    info[QStringLiteral("livePhotoVideoId")] = q.value(9).toString();
+
+    QSqlQuery uq(db->db());
+    uq.prepare(QStringLiteral("SELECT id, name, email FROM sync_user WHERE id = ? UNION ALL SELECT id, name, email FROM auth_user WHERE id = ? LIMIT 1"));
+    uq.addBindValue(ownerId);
+    uq.addBindValue(ownerId);
+    if (uq.exec() && uq.next()) {
+        QJsonObject owner;
+        owner[QStringLiteral("id")] = uq.value(0).toString();
+        owner[QStringLiteral("name")] = uq.value(1).toString();
+        owner[QStringLiteral("email")] = uq.value(2).toString();
+        info[QStringLiteral("owner")] = owner;
+    }
+
+    // EXIF
+    QSqlQuery eq(db->db());
+    eq.prepare(QStringLiteral(
+        "SELECT description, exif_image_width, exif_image_height, file_size, latitude, longitude,"
+        " city, country, make, model, f_number, focal_length, iso, exposure_time"
+        " FROM remote_asset_exif WHERE asset_id = ?"));
+    eq.addBindValue(assetId);
+    if (eq.exec() && eq.next()) {
+        QJsonObject exif;
+        exif[QStringLiteral("description")] = eq.value(0).toString();
+        if (!eq.value(1).isNull()) exif[QStringLiteral("exifImageWidth")] = eq.value(1).toInt();
+        if (!eq.value(2).isNull()) exif[QStringLiteral("exifImageHeight")] = eq.value(2).toInt();
+        if (!eq.value(3).isNull()) exif[QStringLiteral("fileSizeInByte")] = eq.value(3).toLongLong();
+        if (!eq.value(4).isNull()) exif[QStringLiteral("latitude")] = eq.value(4).toDouble();
+        if (!eq.value(5).isNull()) exif[QStringLiteral("longitude")] = eq.value(5).toDouble();
+        exif[QStringLiteral("city")] = eq.value(6).toString();
+        exif[QStringLiteral("country")] = eq.value(7).toString();
+        exif[QStringLiteral("make")] = eq.value(8).toString();
+        exif[QStringLiteral("model")] = eq.value(9).toString();
+        if (!eq.value(10).isNull()) exif[QStringLiteral("fNumber")] = eq.value(10).toDouble();
+        if (!eq.value(11).isNull()) exif[QStringLiteral("focalLength")] = eq.value(11).toDouble();
+        if (!eq.value(12).isNull()) exif[QStringLiteral("iso")] = eq.value(12).toInt();
+        exif[QStringLiteral("exposureTime")] = eq.value(13).toString();
+        info[QStringLiteral("exifInfo")] = exif;
+    }
+
+    // People
+    QJsonArray people;
+    QSqlQuery pq(db->db());
+    pq.prepare(QStringLiteral("SELECT DISTINCT p.id, p.name FROM asset_face af JOIN person p ON af.person_id = p.id WHERE af.asset_id = ? AND af.is_visible = 1"));
+    pq.addBindValue(assetId);
+    if (pq.exec()) {
+        while (pq.next()) {
+            QJsonObject p;
+            p[QStringLiteral("id")] = pq.value(0).toString();
+            p[QStringLiteral("name")] = pq.value(1).toString();
+            people.append(p);
+        }
+    }
+    info[QStringLiteral("people")] = people;
+
+    return info;
 }
