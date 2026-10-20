@@ -25,6 +25,8 @@ struct Album {
 class AlbumModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(QString sortField READ sortField WRITE setSortField NOTIFY sortFieldChanged)
+    Q_PROPERTY(bool sortAscending READ sortAscending WRITE setSortAscending NOTIFY sortAscendingChanged)
 
 public:
     enum AlbumRoles {
@@ -50,13 +52,24 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
     void loadAlbums(const QJsonArray &albumsJson);
-    Q_INVOKABLE void sortAlbums(const QString &field, bool ascending);
     Q_INVOKABLE void updateAlbumMetadata(const QString &albumId, const QString &albumName, const QString &albumThumbnailAssetId);
+
+    QString sortField() const { return m_sortField; }
+    void setSortField(const QString &field);
+    bool sortAscending() const { return m_sortAscending; }
+    void setSortAscending(bool ascending);
+
+signals:
+    void sortFieldChanged();
+    void sortAscendingChanged();
 
 private:
     void refreshOwnershipFlags();
+    void applySort();
     QList<Album> m_albums;
     AuthManager *m_authManager;
+    QString m_sortField = QStringLiteral("endDate");
+    bool m_sortAscending = false;
 };
 
 #endif

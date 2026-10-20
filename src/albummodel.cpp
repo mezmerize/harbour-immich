@@ -109,35 +109,20 @@ void AlbumModel::loadAlbums(const QJsonArray &albumsJson)
         album.startDate = obj["startDate"].toString();
         album.endDate = obj["endDate"].toString();
         album.shared = obj["shared"].toBool();
-
-        // Owner info
-        QJsonObject ownerObj;
-        const QJsonArray albumUsers = obj["albumUsers"].toArray();
-        for (const QJsonValue &value : albumUsers) {
-            const QJsonObject albumUser = value.toObject();
-            if (albumUser["role"].toString() == QStringLiteral("owner")) {
-                ownerObj = albumUser["user"].toObject();
-                album.ownerId = ownerObj["id"].toString();
-                break;
-            }
-        }
-        QString ownerEmail = ownerObj["email"].toString();
-        album.ownerName = ownerObj["name"].toString();
-        if (album.ownerName.isEmpty()) {
-            album.ownerName = ownerEmail;
-        }
+        album.ownerName = obj["ownerName"].toString();
         album.isOwned = m_authManager && !m_authManager->userId().isEmpty() && album.ownerId == m_authManager->userId();
 
         m_albums.append(album);
     }
 
+    applySort();
     endResetModel();
 }
 
-void AlbumModel::sortAlbums(const QString &field, bool ascending)
+void AlbumModel::applySort()
 {
-    beginResetModel();
-
+    const QString field = m_sortField;
+    const bool ascending = m_sortAscending;
     std::sort(m_albums.begin(), m_albums.end(), [&field, ascending](const Album &a, const Album &b) {
         int cmp = 0;
         if (field == "albumName") {
@@ -155,7 +140,29 @@ void AlbumModel::sortAlbums(const QString &field, bool ascending)
         }
         return ascending ? cmp < 0 : cmp > 0;
     });
+}
 
+void AlbumModel::setSortField(const QString &field)
+{
+    if (m_sortField == field) {
+        return;
+    }
+    m_sortField = field;
+    emit sortFieldChanged();
+    beginResetModel();
+    applySort();
+    endResetModel();
+}
+
+void AlbumModel::setSortAscending(bool ascending)
+{
+    if (m_sortAscending == ascending) {
+        return;
+    }
+    m_sortAscending = ascending;
+    emit sortAscendingChanged();
+    beginResetModel();
+    applySort();
     endResetModel();
 }
 
