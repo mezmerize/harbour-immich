@@ -14,13 +14,14 @@ struct Memory {
     QString thumbhash;
     int assetCount = 0;
     QString assetsJson;
+    QString type;
+    QString personName;
 };
 
 class MemoriesModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY countChanged)
-    Q_PROPERTY(int totalCount READ totalCount WRITE setTotalCount NOTIFY totalCountChanged)
 
 public:
     enum MemoryRoles {
@@ -31,7 +32,9 @@ public:
         ThumbnailIdRole,
         ThumbhashRole,
         AssetCountRole,
-        AssetsJsonRole
+        AssetsJsonRole,
+        TypeRole,
+        PersonNameRole
     };
 
     explicit MemoriesModel(QObject *parent = nullptr);
@@ -43,22 +46,15 @@ public:
     int count() const {
         return m_memories.size();
     }
-    int totalCount() const {
-        return m_totalCount;
-    }
-    void setTotalCount(int total);
-
     Q_INVOKABLE void appendMemories(const QJsonArray &memories);
     Q_INVOKABLE void clear();
     Q_INVOKABLE void setSaved(const QString &memoryId, bool saved);
 
 signals:
     void countChanged();
-    void totalCountChanged();
 
 private:
     QList<Memory> m_memories;
-    int m_totalCount = 0;
 };
 
 #endif
