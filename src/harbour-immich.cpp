@@ -61,6 +61,9 @@ static void forwardActivationUrl(const QString &serviceName, const QString &url)
 
 int main(int argc, char *argv[])
 {
+    // Hacky way to fix video streaming issues on HTTP
+    constexpr int gstPlayFlagBuffering = 0x100;
+    qputenv("QT_GSTREAMER_PLAYBIN_FLAGS", QByteArray::number(qgetenv("QT_GSTREAMER_PLAYBIN_FLAGS").toInt() | gstPlayFlagBuffering));
     QGuiApplication *app = SailfishApp::application(argc, argv);
     app->setOrganizationName("mezmerize");
     app->setApplicationName("harbour-immich");
