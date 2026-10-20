@@ -5,16 +5,19 @@
 #include <QSortFilterProxyModel>
 #include <QJsonArray>
 #include <QVariantMap>
+#include <QSet>
+#include <QPair>
 
 struct Person {
     QString id;
     QString name;
     QString birthDate;
-    QString thumbnailPath;
-    QString thumbnailId;
+    bool hasThumbnail = false;
     bool isFavorite = false;
     bool isHidden = false;
     QString updatedAt;
+    QStringList sharedWithNames;
+    QStringList sharedByNames;
 };
 
 class PersonSourceModel : public QAbstractListModel
@@ -26,11 +29,15 @@ public:
         PersonIdRole = Qt::UserRole + 1,
         NameRole,
         BirthDateRole,
-        ThumbnailPathRole,
-        ThumbnailIdRole,
+        HasThumbnailRole,
         IsFavoriteRole,
         IsHiddenRole,
-        UpdatedAtRole
+        UpdatedAtRole,
+        IsSharedByMeRole,
+        IsSharedWithMeRole,
+        SharedWithNamesRole,
+        SharedByNamesRole,
+        SelectedRole
     };
 
     explicit PersonSourceModel(QObject *parent = nullptr);
@@ -40,11 +47,17 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
     void loadPeople(const QJsonArray &people);
+    void setShares(const QJsonArray &shares, const QString &me);
+    void setSelected(int sourceRow, bool selected);
+    void clearSelection();
+    QStringList selectedIds() const;
     const Person &personAt(int row) const;
 
 private:
     QList<Person> m_people;
-    QString extractThumbnailId(const QJsonObject &person) const;
+    QSet<QString> m_selectedIds;
+    QHash<QString, QPair<QStringList, QStringList>> m_shares;
+    void applyShares(Person &p) const;
 };
 
 class PeopleModel : public QSortFilterProxyModel
@@ -56,6 +69,7 @@ class PeopleModel : public QSortFilterProxyModel
     Q_PROPERTY(bool sortAscending READ sortAscending WRITE setSortAscending NOTIFY sortAscendingChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(int totalCount READ totalCount NOTIFY totalCountChanged)
+    Q_PROPERTY(int selectedCount READ selectedCount NOTIFY selectedCountChanged)
 
 public:
     explicit PeopleModel(QObject *parent = nullptr);
@@ -87,6 +101,11 @@ public:
 
     Q_INVOKABLE void loadPeople(const QJsonArray &people);
     Q_INVOKABLE QVariantMap get(int proxyRow) const;
+    Q_INVOKABLE void setShares(const QJsonArray &shares, const QString &me);
+    Q_INVOKABLE void toggleSelection(int proxyRow);
+    Q_INVOKABLE void clearSelection();
+    Q_INVOKABLE QStringList selectedIds() const;
+    int selectedCount() const;
 
 signals:
     void filterTextChanged();
@@ -95,6 +114,7 @@ signals:
     void sortAscendingChanged();
     void countChanged();
     void totalCountChanged();
+    void selectedCountChanged();
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;

@@ -21,15 +21,28 @@ QVariant MemoriesModel::data(const QModelIndex &index, int role) const
 
     const Memory &m = m_memories.at(index.row());
     switch (role) {
-    case MemoryIdRole: return m.id;
-    case MemoryAtRole: return m.memoryAt;
-    case YearRole: return m.year;
-    case IsSavedRole: return m.isSaved;
-    case ThumbnailIdRole: return m.thumbnailId;
-    case ThumbhashRole: return m.thumbhash;
-    case AssetCountRole: return m.assetCount;
-    case AssetsJsonRole: return m.assetsJson;
-    default: return QVariant();
+    case MemoryIdRole:
+        return m.id;
+    case MemoryAtRole:
+        return m.memoryAt;
+    case YearRole:
+        return m.year;
+    case IsSavedRole:
+        return m.isSaved;
+    case ThumbnailIdRole:
+        return m.thumbnailId;
+    case ThumbhashRole:
+        return m.thumbhash;
+    case AssetCountRole:
+        return m.assetCount;
+    case AssetsJsonRole:
+        return m.assetsJson;
+    case TypeRole:
+        return m.type;
+    case PersonNameRole:
+        return m.personName;
+    default:
+        return QVariant();
     }
 }
 
@@ -43,16 +56,10 @@ QHash<int, QByteArray> MemoriesModel::roleNames() const
         { ThumbnailIdRole, "thumbnailId" },
         { ThumbhashRole, "thumbhash" },
         { AssetCountRole, "assetCount" },
-        { AssetsJsonRole, "assetsJson" }
+        { AssetsJsonRole, "assetsJson" },
+        { TypeRole, "memoryType" },
+        { PersonNameRole, "personName" }
     };
-}
-
-void MemoriesModel::setTotalCount(int total)
-{
-    if (m_totalCount == total)
-        return;
-    m_totalCount = total;
-    emit totalCountChanged();
 }
 
 void MemoriesModel::appendMemories(const QJsonArray &memories)
@@ -67,9 +74,11 @@ void MemoriesModel::appendMemories(const QJsonArray &memories)
         m.id = o.value(QStringLiteral("id")).toString();
         m.memoryAt = o.value(QStringLiteral("memoryAt")).toString();
         m.isSaved = o.value(QStringLiteral("isSaved")).toBool();
+        m.type = o.value(QStringLiteral("type")).toString();
 
         const QJsonObject data = o.value(QStringLiteral("data")).toObject();
         m.year = data.value(QStringLiteral("year")).toInt();
+        m.personName = data.value(QStringLiteral("personName")).toString();
 
         const QJsonArray assets = o.value(QStringLiteral("assets")).toArray();
         m.assetCount = assets.size();
