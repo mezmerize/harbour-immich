@@ -20,15 +20,32 @@ QVariant PersonSourceModel::data(const QModelIndex &index, int role) const
 
     const Person &p = m_people.at(index.row());
     switch (role) {
-    case PersonIdRole: return p.id;
-    case NameRole: return p.name;
-    case BirthDateRole: return p.birthDate;
-    case ThumbnailPathRole: return p.thumbnailPath;
-    case ThumbnailIdRole: return p.thumbnailId;
-    case IsFavoriteRole: return p.isFavorite;
-    case IsHiddenRole: return p.isHidden;
-    case UpdatedAtRole: return p.updatedAt;
-    default: return QVariant();
+    case PersonIdRole:
+        return p.id;
+    case NameRole:
+        return p.name;
+    case BirthDateRole:
+        return p.birthDate;
+    case HasThumbnailRole:
+        return p.hasThumbnail;
+    case IsFavoriteRole:
+        return p.isFavorite;
+    case IsHiddenRole:
+        return p.isHidden;
+    case UpdatedAtRole:
+        return p.updatedAt;
+    case IsSharedByMeRole:
+        return !p.sharedWithNames.isEmpty();
+    case IsSharedWithMeRole:
+        return !p.sharedByNames.isEmpty();
+    case SharedWithNamesRole:
+        return p.sharedWithNames.join(QStringLiteral(", "));
+    case SharedByNamesRole:
+        return p.sharedByNames.join(QStringLiteral(", "));
+    case SelectedRole:
+        return m_selectedIds.contains(p.id);
+    default:
+        return QVariant();
     }
 }
 
@@ -38,11 +55,15 @@ QHash<int, QByteArray> PersonSourceModel::roleNames() const
         { PersonIdRole, "personId" },
         { NameRole, "name" },
         { BirthDateRole, "birthDate" },
-        { ThumbnailPathRole, "thumbnailPath" },
-        { ThumbnailIdRole, "thumbnailId" },
+        { HasThumbnailRole, "hasThumbnail" },
         { IsFavoriteRole, "isFavorite" },
         { IsHiddenRole, "isHidden" },
-        { UpdatedAtRole, "updatedAt" }
+        { UpdatedAtRole, "updatedAt" },
+        { IsSharedByMeRole, "isSharedByMe" },
+        { IsSharedWithMeRole, "isSharedWithMe" },
+        { SharedWithNamesRole, "sharedWithNames" },
+        { SharedByNamesRole, "sharedByNames" },
+        { SelectedRole, "selected" }
     };
 }
 
@@ -57,30 +78,96 @@ void PersonSourceModel::loadPeople(const QJsonArray &people)
         p.id = o.value(QStringLiteral("id")).toString();
         p.name = o.value(QStringLiteral("name")).toString();
         p.birthDate = o.value(QStringLiteral("birthDate")).toString();
-        p.thumbnailPath = o.value(QStringLiteral("thumbnailPath")).toString();
-        p.thumbnailId = extractThumbnailId(o);
+        p.hasThumbnail = o.value(QStringLiteral("hasThumbnail")).toBool();
         p.isFavorite = o.value(QStringLiteral("isFavorite")).toBool();
         p.isHidden = o.value(QStringLiteral("isHidden")).toBool();
         p.updatedAt = o.value(QStringLiteral("updatedAt")).toString();
+        applyShares(p);
         m_people.append(p);
     }
+    QSet<QString> presentIds;
+    for (const Person &p : m_people) {
+        presentIds.insert(p.id);
+    }
+    m_selectedIds.intersect(presentIds);
     endResetModel();
 }
 
-QString PersonSourceModel::extractThumbnailId(const QJsonObject &person) const
+void PersonSourceModel::applyShares(Person &p) const
 {
-    const QString personId = person.value(QStringLiteral("id")).toString();
-    const QString thumbnailPath = person.value(QStringLiteral("thumbnailPath")).toString();
-    if (thumbnailPath.isEmpty())
-        return personId;
+    const auto it = m_shares.constFind(p.id);
+    if (it != m_shares.constEnd()) {
+        p.sharedWithNames = it->first;
+        p.sharedByNames = it->second;
+    }
+}
 
-    const int slashPos = thumbnailPath.lastIndexOf('/');
-    QString fileName = (slashPos >= 0) ? thumbnailPath.mid(slashPos + 1) : thumbnailPath;
-    if (fileName.endsWith(".jpeg", Qt::CaseInsensitive))
-        fileName.chop(5);
-    else if (fileName.endsWith(".jpg", Qt::CaseInsensitive))
-        fileName.chop(4);
-    return fileName.isEmpty() ? personId : fileName;
+static QString shareUserName(const QJsonObject &user)
+{
+    const QString name = user.value(QStringLiteral("name")).toString();
+    return name.isEmpty() ? user.value(QStringLiteral("email")).toString() : name;
+}
+
+void PersonSourceModel::setShares(const QJsonArray &shares, const QString &me)
+{
+    m_shares.clear();
+    for (const QJsonValue &v : shares) {
+        const QJsonObject s = v.toObject();
+        const QString personId = s.value(QStringLiteral("personId")).toString();
+        if (personId.isEmpty()) {
+            continue;
+        }
+        if (s.value(QStringLiteral("sharedById")).toString() == me) {
+            m_shares[personId].first.append(shareUserName(s.value(QStringLiteral("sharedWith")).toObject()));
+        } else if (s.value(QStringLiteral("sharedWithId")).toString() == me) {
+            m_shares[personId].second.append(shareUserName(s.value(QStringLiteral("sharedBy")).toObject()));
+        }
+    }
+    for (int i = 0; i < m_people.size(); ++i) {
+        Person &p = m_people[i];
+        const QStringList oldWith = p.sharedWithNames;
+        const QStringList oldBy = p.sharedByNames;
+        p.sharedWithNames.clear();
+        p.sharedByNames.clear();
+        applyShares(p);
+        if (p.sharedWithNames != oldWith || p.sharedByNames != oldBy) {
+            const QModelIndex idx = index(i);
+            emit dataChanged(idx, idx, { IsSharedByMeRole, IsSharedWithMeRole, SharedWithNamesRole, SharedByNamesRole });
+        }
+    }
+}
+
+void PersonSourceModel::setSelected(int sourceRow, bool selected)
+{
+    if (sourceRow < 0 || sourceRow >= m_people.size()) {
+        return;
+    }
+    const QString id = m_people[sourceRow].id;
+    if (selected) {
+        m_selectedIds.insert(id);
+    } else {
+        m_selectedIds.remove(id);
+    }
+    const QModelIndex idx = index(sourceRow);
+    emit dataChanged(idx, idx, { SelectedRole });
+}
+
+void PersonSourceModel::clearSelection()
+{
+    for (int i = 0; i < m_people.size(); ++i) {
+        setSelected(i, false);
+    }
+}
+
+QStringList PersonSourceModel::selectedIds() const
+{
+    QStringList ids;
+    for (const Person &p : m_people) {
+        if (m_selectedIds.contains(p.id)) {
+            ids.append(p.id);
+        }
+    }
+    return ids;
 }
 
 const Person &PersonSourceModel::personAt(int row) const
@@ -167,12 +254,47 @@ QVariantMap PeopleModel::get(int proxyRow) const
     map[QStringLiteral("personId")] = p.id;
     map[QStringLiteral("name")] = p.name;
     map[QStringLiteral("birthDate")] = p.birthDate;
-    map[QStringLiteral("thumbnailPath")] = p.thumbnailPath;
-    map[QStringLiteral("thumbnailId")] = p.thumbnailId;
+    map[QStringLiteral("hasThumbnail")] = p.hasThumbnail;
     map[QStringLiteral("isFavorite")] = p.isFavorite;
     map[QStringLiteral("isHidden")] = p.isHidden;
     map[QStringLiteral("updatedAt")] = p.updatedAt;
+    map[QStringLiteral("isSharedByMe")] = !p.sharedWithNames.isEmpty();
+    map[QStringLiteral("isSharedWithMe")] = !p.sharedByNames.isEmpty();
+    map[QStringLiteral("sharedWithNames")] = p.sharedWithNames.join(QStringLiteral(", "));
+    map[QStringLiteral("sharedByNames")] = p.sharedByNames.join(QStringLiteral(", "));
+    map[QStringLiteral("selected")] = m_source->selectedIds().contains(p.id);
     return map;
+}
+
+void PeopleModel::setShares(const QJsonArray &shares, const QString &me)
+{
+    m_source->setShares(shares, me);
+}
+
+void PeopleModel::toggleSelection(int proxyRow)
+{
+    const QModelIndex sourceIndex = mapToSource(index(proxyRow, 0));
+    if (!sourceIndex.isValid())
+        return;
+    const Person &p = m_source->personAt(sourceIndex.row());
+    m_source->setSelected(sourceIndex.row(), !m_source->selectedIds().contains(p.id));
+    emit selectedCountChanged();
+}
+
+void PeopleModel::clearSelection()
+{
+    m_source->clearSelection();
+    emit selectedCountChanged();
+}
+
+QStringList PeopleModel::selectedIds() const
+{
+    return m_source->selectedIds();
+}
+
+int PeopleModel::selectedCount() const
+{
+    return m_source->selectedIds().size();
 }
 
 bool PeopleModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
