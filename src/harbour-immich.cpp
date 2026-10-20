@@ -11,6 +11,9 @@
 #include <QLocalServer>
 #include <QLocalSocket>
 #include <QTimer>
+#include <QDateTime>
+#include <QElapsedTimer>
+#include <QJsonArray>
 #include <QLocale>
 #ifndef HARBOUR_BUILD
 #include <QDBusConnection>
@@ -31,12 +34,17 @@
 #include "securestorage.h"
 #include "clientcertmanager.h"
 #include "imageprovider.h"
+#include "localthumbnailprovider.h"
 #include "thumbhashprovider.h"
 #include "logmanager.h"
 #include "backupmanager.h"
+#include "assetdatabase.h"
+#include "syncengine.h"
+#include "localmediaindex.h"
 #include "memoriesmodel.h"
 #include "peoplemodel.h"
 #include "videocontroller.h"
+#include "devicefoldermodel.h"
 
 #ifndef HARBOUR_BUILD
 static void forwardActivationUrl(const QString &serviceName, const QString &url)
@@ -131,10 +139,15 @@ int main(int argc, char *argv[])
         });
     }
 #endif
+    qmlRegisterType<DeviceFolderModel>("harbour.immich.models", 1, 0, "DeviceFolderModel");
     qmlRegisterType<MemoriesModel>("harbour.immich.models", 1, 0, "MemoriesModel");
     qmlRegisterType<PeopleModel>("harbour.immich.models", 1, 0, "PeopleModel");
     qmlRegisterType<TimelineModel>("harbour.immich.models", 1, 0, "TimelineModel");
     qmlRegisterType<VideoController>("harbour.immich.media", 1, 0, "VideoController");
+
+    AssetDatabase *assetDatabase = new AssetDatabase(app);
+    assetDatabase->initialize();
+
     ImmichApi *immichApi = new ImmichApi(authManager, app);
     AlbumModel *albumModel = new AlbumModel(authManager, app);
     TimelineModel *timelineModel = new TimelineModel(app);
@@ -144,38 +157,137 @@ int main(int argc, char *argv[])
     BackupManager *backupManager = new BackupManager(authManager, settingsManager, immichApi, app);
     backupManager->initialize();
 
-    // Connect manual upload to backup tracking
-    QObject::connect(immichApi, &ImmichApi::assetUploaded, [backupManager](const QString &assetId, const QString &filePath, const QString &status) {
-        Q_UNUSED(status)
-        backupManager->registerManualUpload(filePath, assetId);
-    });
-
-    // Connect asset deletion to backup state
-    QObject::connect(immichApi, &ImmichApi::assetsDeleted, [backupManager](const QStringList &assetIds) {
-        for (const QString &id : assetIds) {
-            backupManager->handleServerDeletion(id);
+    SyncEngine *syncEngine = new SyncEngine(authManager, assetDatabase, app);
+    QObject::connect(authManager, &AuthManager::loginSucceeded, syncEngine, &SyncEngine::sync);
+    QObject::connect(authManager, &AuthManager::isAuthenticatedChanged, assetDatabase, [authManager, assetDatabase, albumModel]() {
+        if (!authManager->isAuthenticated()) {
+            assetDatabase->clearSyncedData();
+            albumModel->loadAlbums(QJsonArray());
         }
     });
+
+    LocalMediaIndex *localMediaIndex = new LocalMediaIndex(backupManager, settingsManager, assetDatabase, app);
+    QObject::connect(syncEngine, &SyncEngine::syncFinished, localMediaIndex, [localMediaIndex](bool ok) {
+        if (ok) {
+            localMediaIndex->scan();
+        }
+    });
+    QObject::connect(syncEngine, &SyncEngine::syncFinished, backupManager, [backupManager, assetDatabase, syncEngine, authManager](bool ok) {
+        if (ok && authManager->isAuthenticated()) {
+            backupManager->reconcileWithServer(assetDatabase->ownRemoteAssetIds(), syncEngine->syncStartedAtMs());
+        }
+    });
+    QObject::connect(settingsManager, &SettingsManager::backupFoldersChanged, localMediaIndex, &LocalMediaIndex::scan);
+    QObject::connect(settingsManager, &SettingsManager::showDeviceMediaOnTimelineChanged, localMediaIndex, &LocalMediaIndex::scan);
+    QObject::connect(backupManager, &BackupManager::localMediaChanged, localMediaIndex, &LocalMediaIndex::scan);
+    QObject::connect(immichApi, &ImmichApi::favoritesToggled, assetDatabase, [assetDatabase](const QStringList &ids, bool fav) {
+        assetDatabase->patchRemoteAssets(ids, QStringLiteral("is_favorite"), fav ? 1 : 0);
+    });
+    QObject::connect(immichApi, &ImmichApi::assetVisibilityChanged, assetDatabase, [assetDatabase](const QStringList &ids, const QString &visibility) {
+        assetDatabase->patchRemoteAssets(ids, QStringLiteral("visibility"), visibility);
+    });
+    QObject::connect(immichApi, &ImmichApi::assetsDeleted, assetDatabase, [assetDatabase](const QStringList &ids, bool force) {
+        if (force) {
+            assetDatabase->deleteRemoteAssets(ids);
+        } else {
+            assetDatabase->patchRemoteAssets(ids, QStringLiteral("deleted_at"), QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyy-MM-dd'T'HH:mm:ss.zzz'Z'")));
+        }
+    });
+    QObject::connect(immichApi, &ImmichApi::trashRestored, assetDatabase, [assetDatabase](const QStringList &ids) {
+        assetDatabase->patchRemoteAssets(ids, QStringLiteral("deleted_at"), QVariant());
+    });
+    QObject::connect(immichApi, &ImmichApi::allTrashRestored, assetDatabase, [assetDatabase]() {
+        assetDatabase->restoreAllTrashedRemoteAssets();
+    });
+    QObject::connect(immichApi, &ImmichApi::trashEmptied, assetDatabase, [assetDatabase]() {
+        assetDatabase->clearTrashedRemoteAssets();
+    });
+    QObject::connect(immichApi, &ImmichApi::assetsAddedToAlbum, assetDatabase, [assetDatabase](const QString &albumId, const QStringList &ids) {
+        assetDatabase->addAlbumAssets(albumId, ids);
+    });
+    QObject::connect(immichApi, &ImmichApi::assetsRemovedFromAlbum, assetDatabase, [assetDatabase](const QString &albumId, const QStringList &ids) {
+        assetDatabase->removeAlbumAssets(albumId, ids);
+    });
+    QObject::connect(immichApi, &ImmichApi::partnerCreated, assetDatabase, [assetDatabase](const QString &userId) {
+        assetDatabase->upsertPartner(assetDatabase->metaValue(QStringLiteral("current_user_id")), userId, false);
+    });
+    QObject::connect(immichApi, &ImmichApi::partnerRemoved, assetDatabase, [assetDatabase](const QString &userId) {
+        assetDatabase->removePartner(assetDatabase->metaValue(QStringLiteral("current_user_id")), userId);
+    });
+    QObject::connect(immichApi, &ImmichApi::partnerUpdated, assetDatabase, [assetDatabase](const QString &userId, bool inTimeline) {
+        assetDatabase->upsertPartner(userId, assetDatabase->metaValue(QStringLiteral("current_user_id")), inTimeline);
+    });
+
+    auto *resyncTimer = new QTimer(app);
+    resyncTimer->setSingleShot(true);
+    resyncTimer->setInterval(1500);
+    auto *resyncPendingSince = new QElapsedTimer();
+    QObject::connect(resyncTimer, &QTimer::timeout, syncEngine, [syncEngine, resyncPendingSince]() {
+        resyncPendingSince->invalidate();
+        syncEngine->sync();
+    });
+    auto queueResync = [resyncTimer, resyncPendingSince, syncEngine]() {
+        if (!resyncPendingSince->isValid()) {
+            resyncPendingSince->start();
+        } else if (resyncPendingSince->elapsed() >= 10000) {
+            resyncTimer->stop();
+            resyncPendingSince->invalidate();
+            syncEngine->sync();
+            return;
+        }
+        resyncTimer->start();
+    };
+    QObject::connect(immichApi, &ImmichApi::assetsAddedToAlbum, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::assetsRemovedFromAlbum, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::albumCreated, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::albumUpdated, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::albumRemoved, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::memoryUpdated, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::uploadAllComplete, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::favoritesToggled, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::assetVisibilityChanged, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::assetsDeleted, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::trashRestored, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::allTrashRestored, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::trashEmptied, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::assetUpdated, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::personUpdated, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::partnerCreated, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::partnerRemoved, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::partnerUpdated, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::usersAddedToAlbum, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::albumUserRoleUpdated, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::albumUserRemoved, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::stackCreated, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::stackDeleted, resyncTimer, queueResync);
+    QObject::connect(backupManager, &BackupManager::fileBackedUp, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::stackCreated, assetDatabase, &AssetDatabase::applyStack);
+    QObject::connect(immichApi, &ImmichApi::stackDeleted, assetDatabase, &AssetDatabase::removeStack);
+    QObject::connect(app, &QGuiApplication::applicationStateChanged, syncEngine, [syncEngine, localMediaIndex](Qt::ApplicationState state) {
+        if (state == Qt::ApplicationActive) {
+            syncEngine->sync();
+            localMediaIndex->scan();
+        }
+    });
+    QObject::connect(immichApi, &ImmichApi::assetUploaded, [backupManager](const QString &assetId, const QString &filePath, const QString &) {
+        backupManager->registerManualUpload(filePath, assetId);
+    });
+    QObject::connect(syncEngine, &SyncEngine::remoteAssetsDeleted, backupManager, &BackupManager::handleServerDeletions);
 
     // Register custom image provider for authenticated image loading
     view->engine()->addImageProvider(QLatin1String("immich"), new ImmichImageProvider(authManager, settingsManager));
     view->engine()->addImageProvider(QLatin1String("thumbhash"), new ThumbhashProvider());
+    view->engine()->addImageProvider(QLatin1String("localthumbnail"), new LocalThumbnailProvider());
 
     QObject::connect(immichApi, &ImmichApi::albumsReceived, albumModel, &AlbumModel::loadAlbums);
 
     // Timeline model connections
-    timelineModel->setServerUrl(authManager->serverUrl());
     timelineModel->setUserId(authManager->userId());
-    timelineModel->setApi(immichApi);
     timelineModel->setContext(QStringLiteral("timeline"));
-    QObject::connect(authManager, &AuthManager::serverUrlChanged, [authManager, timelineModel]() {
-        timelineModel->setServerUrl(authManager->serverUrl());
-    });
+    timelineModel->setBackupManager(backupManager);
     QObject::connect(authManager, &AuthManager::userIdChanged, [authManager, timelineModel]() {
         timelineModel->setUserId(authManager->userId());
     });
-    QObject::connect(immichApi, &ImmichApi::favoritesToggled, timelineModel, &TimelineModel::updateFavorites);
-    QObject::connect(immichApi, &ImmichApi::assetsDeleted, timelineModel, &TimelineModel::removeAssets);
 
     view->rootContext()->setContextProperty("authManager", authManager);
     view->rootContext()->setContextProperty("oauthManager", oauthManager);
@@ -187,6 +299,8 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("clientCertManager", clientCertManager);
     view->rootContext()->setContextProperty("logManager", logManager);
     view->rootContext()->setContextProperty("backupManager", backupManager);
+    view->rootContext()->setContextProperty("syncEngine", syncEngine);
+    view->rootContext()->setContextProperty("assetDatabase", assetDatabase);
 
     view->setSource(SailfishApp::pathTo("qml/harbour-immich.qml"));
     view->show();
