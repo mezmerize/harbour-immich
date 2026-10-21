@@ -3,949 +3,1042 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
-   id: settingsPage
-
-   property var serverStats: null
-   property var serverAbout: null
-   property bool statsLoading: false
-   property bool aboutLoading: false
-   property bool statsFailed: false
-   property bool aboutFailed: false
-
-   Component.onCompleted: {
-       statsLoading = true
-       aboutLoading = true
-       immichApi.fetchServerStatistics()
-       immichApi.fetchServerAbout()
-   }
-
-   Connections {
-       target: immichApi
-       onServerStatisticsReceived: {
-           settingsPage.serverStats = stats
-           settingsPage.statsLoading = false
-       }
-       onServerAboutReceived: {
-           settingsPage.serverAbout = about
-           settingsPage.aboutLoading = false
-       }
-       onErrorOccurred: {
-           if (statsLoading && !serverStats) {
-               statsFailed = true
-               statsLoading = false
-           }
-           if (aboutLoading && !serverAbout) {
-               aboutFailed = true
-               aboutLoading = false
-           }
-       }
-   }
-
-   function formatBytes(bytes) {
-       if (bytes === 0) return "0 B"
-       var k = 1024
-       var sizes = ['B', 'KB', 'MB', 'GB', 'TB']
-       var i = Math.floor(Math.log(bytes) / Math.log(k))
-       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
-   }
-
-   SilicaFlickable {
-       anchors.fill: parent
-       contentHeight: column.height
-
-       PullDownMenu {
-           MenuItem {
-               //% "Library"
-               text: qsTrId("pullDownMenu.library")
-               onClicked: pageStack.push(Qt.resolvedUrl("LibraryPage.qml"))
-           }
-
-           MenuItem {
-               //% "Search"
-               text: qsTrId("pullDownMenu.search")
-               onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"))
-           }
-
-           MenuItem {
-               //% "Albums"
-               text: qsTrId("pullDownMenu.albums")
-               onClicked: pageStack.push(Qt.resolvedUrl("AlbumsPage.qml"))
-           }
-
-           MenuItem {
-               //% "Timeline"
-               text: qsTrId("pullDownMenu.timeline")
-               onClicked: pageStack.replaceAbove(null, Qt.resolvedUrl("TimelinePage.qml"))
-           }
-       }
-
-       Column {
-           id: column
-           width: settingsPage.width
-           spacing: Theme.paddingMedium
-
-           PageHeader {
-               //% "Settings"
-               title: qsTrId("settingsPage.settings")
-           }
-
-           SectionHeader {
-               //% "Display"
-               text: qsTrId("settingsPage.display")
-           }
-
-           Slider {
-               width: parent.width
-               //% "Assets per row (portrait)"
-               label: qsTrId("settingsPage.assetsPerRow")
-               minimumValue: 2
-               maximumValue: 6
-               stepSize: 1
-               value: settingsManager.assetsPerRow
-               valueText: value
-               onValueChanged: {
-                   if (value !== settingsManager.assetsPerRow) {
-                       settingsManager.assetsPerRow = value
-                   }
-               }
-           }
-
-           ComboBox {
-               //% "Detail viewer quality"
-               label: qsTrId("settingsPage.detailQuality")
-               //% "Controls image quality when viewing photos in full screen. Preview is faster and uses less data, Original shows the full resolution image."
-               description: qsTrId("settingsPage.detailQualityInfo")
-               currentIndex: settingsManager.detailQuality === "fullsize" ? 1 : 0
-               menu: ContextMenu {
-                   //% "Preview (faster, less data)"
-                   MenuItem { text: qsTrId("settingsPage.detailQualityPreview") }
-                   //% "Original (full resolution)"
-                   MenuItem { text: qsTrId("settingsPage.detailQualityOriginal") }
-               }
-               onCurrentIndexChanged: {
-                   var quality = currentIndex === 1 ? "fullsize" : "preview"
-                   if (quality !== settingsManager.detailQuality) {
-                       settingsManager.detailQuality = quality
-                   }
-               }
-           }
-
-           TextSwitch {
-               //% "Auto-play videos"
-               text: qsTrId("settingsPage.videoAutoPlay")
-               //% "Start playing videos automatically when opened in the detail view."
-               description: qsTrId("settingsPage.videoAutoPlayInfo")
-               checked: settingsManager.videoAutoPlay
-               onCheckedChanged: {
-                   settingsManager.videoAutoPlay = checked
-               }
-           }
-
-           TextSwitch {
-               //% "Auto-play on Wi-Fi only"
-               text: qsTrId("settingsPage.videoAutoPlayWifiOnly")
-               //% "Auto-play streamed videos only when connected to Wi-Fi. Videos stored on the device are not affected."
-               description: qsTrId("settingsPage.videoAutoPlayWifiOnlyInfo")
-               enabled: settingsManager.videoAutoPlay
-               checked: settingsManager.videoAutoPlayWifiOnly
-               onCheckedChanged: {
-                   settingsManager.videoAutoPlayWifiOnly = checked
-               }
-           }
-
-           TextSwitch {
-               //% "Motion photos"
-               text: qsTrId("settingsPage.motionPhotos")
-               //% "Show an indicator on motion photos and allow playing their video part in the detail view."
-               description: qsTrId("settingsPage.motionPhotosInfo")
-               checked: settingsManager.motionPhotosEnabled
-               onCheckedChanged: {
-                   settingsManager.motionPhotosEnabled = checked
-               }
-           }
-
-           TextSwitch {
-               //% "Show memories bar"
-               text: qsTrId("settingsPage.showMemoriesBar")
-               //% "Display memories at the top of the timeline."
-               description: qsTrId("settingsPage.showMemoriesBarInfo")
-               checked: settingsManager.showMemoriesBar
-               onCheckedChanged: {
-                   settingsManager.showMemoriesBar = checked
-               }
-           }
-
-           ComboBox {
-               //% "Memories thumbnail size"
-               label: qsTrId("settingsPage.memoriesThumbnailSize")
-               //% "Controls appearance size of the memory thumbnails on Timeline page."
-               description: qsTrId("settingsPage.memoriesThumbnailSizeInfo")
-               currentIndex: settingsManager.memoriesThumbnailSize
-               enabled: settingsManager.showMemoriesBar
-               menu: ContextMenu {
-                   //% "Small"
-                   MenuItem { text: qsTrId("settingsPage.memoriesThumbnailSizeSmall") }
-                   //% "Medium"
-                   MenuItem { text: qsTrId("settingsPage.memoriesThumbnailSizeMedium") }
-                   //% "Large"
-                   MenuItem { text: qsTrId("settingsPage.memoriesThumbnailSizeLarge") }
-               }
-               onCurrentIndexChanged: {
-                   if (currentIndex !== settingsManager.memoriesThumbnailSize) {
-                       settingsManager.memoriesThumbnailSize = currentIndex
-                   }
-               }
-           }
-
-           ComboBox {
-               //% "Scroll to top button position"
-               label: qsTrId("settingsPage.scrollToTopPosition")
-               //% "Controls position of the scroll to top button on the pages which display assets in lists exceeding the viewport height."
-               description: qsTrId("settingsPage.scrollToTopPositionInfo")
-               currentIndex: {
-                   var pos = settingsManager.scrollToTopPosition
-                   if (pos === "left") return 0
-                   if (pos === "center") return 1
-                   if (pos === "right") return 2
-                   return 2
-               }
-               menu: ContextMenu {
-                   //% "Left"
-                   MenuItem {
-                       text: qsTrId("settingsPage.scrollToTopPositionLeft")
-                       enabled: settingsManager.selectedCountPosition !== "bottom-left"
-                   }
-                   //% "Center"
-                   MenuItem {
-                       text: qsTrId("settingsPage.scrollToTopPositionCenter")
-                       enabled: settingsManager.selectedCountPosition !== "bottom-center"
-                   }
-                   //% "Right"
-                   MenuItem {
-                       text: qsTrId("settingsPage.scrollToTopPositionRight")
-                       enabled: settingsManager.selectedCountPosition !== "bottom-right"
-                   }
-               }
-               onCurrentIndexChanged: {
-                   var pos = ["left", "center", "right"][currentIndex]
-                   if (pos !== settingsManager.scrollToTopPosition) {
-                       settingsManager.scrollToTopPosition = pos
-                   }
-               }
-           }
-
-           ComboBox {
-               //% "Selected count button position"
-               label: qsTrId("settingsPage.selectedCountPosition")
-               //% "Controls position of the button showing the number of selected assets. Tap it to clear the selection. It cannot share a position with scroll to top button."
-               description: qsTrId("settingsPage.selectedCountPositionInfo")
-               currentIndex: {
-                   var pos = settingsManager.selectedCountPosition
-                   var values = ["top-left", "top-right", "bottom-left", "bottom-center", "bottom-right"]
-                   var idx = values.indexOf(pos)
-                   return idx >= 0 ? idx : 0
-               }
-               menu: ContextMenu {
-                   //% "Top left"
-                   MenuItem {
-                       text: qsTrId("settingsPage.selectedCountPositionTopLeft")
-                   }
-                   //% "Top right"
-                   MenuItem {
-                       text: qsTrId("settingsPage.selectedCountPositionTopRight")
-                   }
-                   //% "Bottom left"
-                   MenuItem {
-                       text: qsTrId("settingsPage.selectedCountPositionBottomLeft")
-                       enabled: settingsManager.scrollToTopPosition !== "left"
-                   }
-                   //% "Bottom center"
-                   MenuItem {
-                       text: qsTrId("settingsPage.selectedCountPositionBottomCenter")
-                       enabled: settingsManager.scrollToTopPosition !== "center"
-                   }
-                   //% "Bottom right"
-                   MenuItem {
-                       text: qsTrId("settingsPage.selectedCountPositionBottomRight")
-                       enabled: settingsManager.scrollToTopPosition !== "right"
-                   }
-               }
-               onCurrentIndexChanged: {
-                   var values = ["top-left", "top-right", "bottom-left", "bottom-center", "bottom-right"]
-                   var pos = values[currentIndex]
-                   if (pos !== settingsManager.selectedCountPosition) {
-                       settingsManager.selectedCountPosition = pos
-                   }
-               }
-           }
-
-           SectionHeader {
-               //% "Language"
-               text: qsTrId("settingsPage.language")
-           }
-
-           ComboBox {
-               label: qsTrId("settingsPage.language")
-               //% "Application language. Automatic follows the system language. Changes will take effect after application restart."
-               description: qsTrId("settingsPage.languageInfo")
-               property var languages: settingsManager.availableLanguages()
-               currentIndex: {
-                   for (var i = 0; i < languages.length; i++) {
-                       if (languages[i].code === settingsManager.language) return i + 1
-                   }
-                   return 0
-               }
-               menu: ContextMenu {
-                   MenuItem {
-                       //% "Automatic (system)"
-                       text: qsTrId("settingsPage.languageAutomatic")
-                   }
-                   Repeater {
-                       model: settingsManager.availableLanguages()
-                       MenuItem {
-                           text: modelData.name
-                       }
-                   }
-               }
-               onCurrentIndexChanged: {
-                   var code = currentIndex === 0 ? "" : languages[currentIndex - 1].code
-                   if (code !== settingsManager.language) {
-                       settingsManager.language = code
-                   }
-               }
-           }
-
-           SectionHeader {
-               //% "Security"
-               text: qsTrId("settingsPage.security")
-           }
-
-           ValueButton {
-               //% "Client certificate"
-               label: qsTrId("settingsPage.clientCertificate")
-               value:  {
-                   //% "Not configured"
-                   if (!clientCertManager.hasCertificate) return qsTrId("settingsPage.clientCertificateNone")
-                   //% "Expired"
-                   if (clientCertManager.isExpired) return qsTrId("settingsPage.clientCertificateExpired")
-                   //% "Expiring soon"
-                   if (clientCertManager.isExpiringSoon) return qsTrId("settingsPage.clientCertificateExpiringSoon")
-                   //% "Configured"
-                   return qsTrId("settingsPage.clientCertificateConfigured")
-               }
-               //% "Import a client (mTLS) certificate for servers that require it. Changes take effect immediately."
-               description: qsTrId("settingsPage.clientCertificateInfo")
-               onClicked: pageStack.push(Qt.resolvedUrl("ClientCertPage.qml"))
-           }
-
-           SectionHeader {
-               //% "Cover"
-               text: qsTrId("settingsPage.cover")
-           }
-
-           TextSwitch {
-               //% "Show assets on cover"
-               text: qsTrId("settingsPage.coverShowAssets")
-               //% "Display photos on the app cover instead of the default icon."
-               description: qsTrId("settingsPage.coverShowAssetsInfo")
-               checked: settingsManager.coverShowAssets
-               onCheckedChanged: {
-                   settingsManager.coverShowAssets = checked
-               }
-           }
-
-           TextSwitch {
-               //% "Slideshow rotation"
-               text: qsTrId("settingsPage.coverSlideshow")
-               //% "Continuously rotate through images while the cover is visible. When off, the image changes only once when the app is minimized."
-               description: qsTrId("settingsPage.coverSlideshowInfo")
-               enabled: settingsManager.coverShowAssets
-               checked: settingsManager.coverSlideshow
-               onCheckedChanged: {
-                   settingsManager.coverSlideshow = checked
-               }
-           }
-
-           SectionHeader {
-              //% "Downloads"
-              text: qsTrId("settingsPage.downloads")
-           }
-
-           ValueButton {
-               //% "Downloads folder"
-               label: qsTrId("settingsPage.downloadsFolder")
-               value: settingsManager.downloadFolder.split("/").pop()
-               //% "Folder where downloaded photos and videos will be saved."
-               description: qsTrId("settingsPage.downloadsFolderInfo")
-               onClicked: {
-                   pageStack.push(Qt.resolvedUrl("../components/DownloadFolderDialog.qml"))
-               }
-           }
-
-           SectionHeader {
-              //% "Backup"
-              text: qsTrId("settingsPage.backup")
-           }
-
-           TextSwitch {
-              //% "Automatic backup"
-              text: qsTrId("settingsPage.backupEnabled")
-              //% "Automatically back up photos and videos from selected folders to your Immich server."
-              description: qsTrId("settingsPage.backupEnabledInfo")
-              checked: settingsManager.backupEnabled
-              onCheckedChanged: {
-                  backupManager.enabled = checked
-              }
-           }
-
-           // Backup status
-           Column {
-              x: Theme.horizontalPageMargin
-              width: parent.width - 2 * Theme.horizontalPageMargin
-              spacing: Theme.paddingSmall
-              visible: settingsManager.backupEnabled
-
-              Row {
-                  width: parent.width
-                  spacing: Theme.paddingMedium
-
-                  Icon {
-                      source: backupManager.running ? "image://theme/icon-s-sync" : "image://theme/icon-s-cloud-download"
-                      width: Theme.iconSizeSmall
-                      height: Theme.iconSizeSmall
-                      anchors.verticalCenter: parent.verticalCenter
-                  }
-
-                  Label {
-                      anchors.verticalCenter: parent.verticalCenter
-                      font.pixelSize: Theme.fontSizeSmall
-                      color: Theme.highlightColor
-                      text: {
-                          if (backupManager.currentFile) {
-                              //% "Backing up: %1"
-                              return qsTrId("settingsPage.backingUp").arg(backupManager.currentFile)
-                          }
-                          if (backupManager.running && backupManager.backgroundActive) {
-                              //% "Backup active"
-                              return qsTrId("settingsPage.backupActive")
-                          }
-                          //% "Backup idle"
-                          return qsTrId("settingsPage.backupIdle")
-                      }
-                  }
-              }
-
-              // Progress bar (visible during upload)
-              Item {
-                  width: parent.width
-                  height: Theme.paddingSmall
-                  visible: backupManager.currentFile !== ""
-
-                  Rectangle {
-                      width: parent.width
-                      height: parent.height
-                      color: Theme.rgba(Theme.highlightColor, 0.2)
-                      radius: height / 2
-                  }
-
-                  Rectangle {
-                      width: parent.width * backupManager.currentProgress
-                      height: parent.height
-                      color: Theme.highlightColor
-                      radius: height / 2
-                      Behavior on width { NumberAnimation { duration: 200 } }
-                  }
-              }
-
-              Row {
-                  width: parent.width
-                  spacing: Theme.paddingLarge
-
-                  Label {
-                      font.pixelSize: Theme.fontSizeExtraSmall
-                      color: Theme.secondaryColor
-                      //% "Backed up: %1"
-                      text: qsTrId("settingsPage.backedUpCount").arg(backupManager.backedUpCount)
-                  }
-
-                  Label {
-                      font.pixelSize: Theme.fontSizeExtraSmall
-                      color: Theme.secondaryColor
-                      //% "Pending: %1"
-                      text: qsTrId("settingsPage.pendingCount").arg(backupManager.pendingCount)
-                  }
-
-                  Label {
-                      font.pixelSize: Theme.fontSizeExtraSmall
-                      color: backupManager.failedCount > 0 ? "#ff4444" : Theme.secondaryColor
-                      //% "Failed: %1"
-                      text: qsTrId("settingsPage.failedCount").arg(backupManager.failedCount)
-                  }
-              }
-           }
-
-           // Backup folders
-           BackgroundItem {
-              width: parent.width
-              visible: settingsManager.backupEnabled
-              onClicked: pageStack.push(Qt.resolvedUrl("FolderPickerPage.qml"))
-
-              Row {
-                  x: Theme.horizontalPageMargin
-                  width: parent.width - 2 * Theme.horizontalPageMargin
-                  anchors.verticalCenter: parent.verticalCenter
-                  spacing: Theme.paddingMedium
-
-                  Icon {
-                      source: "image://theme/icon-m-folder"
-                      width: Theme.iconSizeMedium
-                      height: Theme.iconSizeMedium
-                      anchors.verticalCenter: parent.verticalCenter
-                  }
-
-                  Column {
-                      anchors.verticalCenter: parent.verticalCenter
-                      width: parent.width - Theme.iconSizeMedium - Theme.paddingMedium
-
-                      Label {
-                          //% "Watched folders"
-                          text: qsTrId("settingsPage.watchedFolders")
-                          color: Theme.primaryColor
-                      }
-
-                      Label {
-                          width: parent.width
-                          //% "%1 folder(s) selected"
-                          text: qsTrId("settingsPage.foldersSelected").arg(settingsManager.backupFolders.length)
-                          font.pixelSize: Theme.fontSizeExtraSmall
-                          color: Theme.secondaryColor
-                      }
-                  }
-              }
-           }
-
-           TextSwitch {
-              visible: settingsManager.backupEnabled
-              //% "Back up photos on cellular"
-              text: qsTrId("settingsPage.backupPhotosOnCellular")
-              //% "Allow photo backup when not connected to Wi-Fi."
-              description: qsTrId("settingsPage.backupPhotosOnCellularInfo")
-              checked: settingsManager.backupPhotosOnCellular
-              onCheckedChanged: {
-                  settingsManager.backupPhotosOnCellular = checked
-              }
-           }
-
-           TextSwitch {
-              visible: settingsManager.backupEnabled
-              //% "Back up videos on cellular"
-              text: qsTrId("settingsPage.backupVideosOnCellular")
-              //% "Allow video backup when not connected to Wi-Fi."
-              description: qsTrId("settingsPage.backupVideosOnCellularInfo")
-              checked: settingsManager.backupVideosOnCellular
-              onCheckedChanged: {
-                  settingsManager.backupVideosOnCellular = checked
-              }
-           }
-
-           TextSwitch {
-              visible: settingsManager.backupEnabled
-              //% "Only while charging"
-              text: qsTrId("settingsPage.backupOnlyWhileCharging")
-              //% "Only run backup when the device is connected to a charger."
-              description: qsTrId("settingsPage.backupOnlyWhileChargingInfo")
-              checked: settingsManager.backupOnlyWhileCharging
-              onCheckedChanged: {
-                  settingsManager.backupOnlyWhileCharging = checked
-              }
-           }
-
-           TextSwitch {
-              visible: settingsManager.backupEnabled
-              //% "Delete after backup"
-              text: qsTrId("settingsPage.backupDeleteAfter")
-              //% "Remove photos and videos from device after successful backup."
-              description: qsTrId("settingsPage.backupDeleteAfterInfo")
-              checked: settingsManager.backupDeleteAfter
-              onCheckedChanged: {
-                  settingsManager.backupDeleteAfter = checked
-              }
-           }
-
-           TextSwitch {
-               visible: settingsManager.backupEnabled
-               //% "Auto-disable after backup"
-               text: qsTrId("settingsPage.backupAutoDisable")
-               //% "Automatically turn off backup after all pending files have been uploaded."
-               description: qsTrId("settingsPage.backupAutoDisableInfo")
-               checked: settingsManager.backupAutoDisable
-               onCheckedChanged: {
-                   settingsManager.backupAutoDisable = checked
-               }
-           }
-
-           TextSwitch {
-               visible: settingsManager.backupEnabled
-               //% "Skip asset verification"
-               text: qsTrId("settingsPage.backupSkipVerification")
-               //% "Skip checking of assets against the server before uploading. Faster scanning, but duplicates are only detected by the server during upload."
-               description: qsTrId("settingsPage.backupSkipVerificationInfo")
-               checked: settingsManager.backupSkipVerification
-               onCheckedChanged: {
-                   settingsManager.backupSkipVerification = checked
-               }
-           }
-
-           TextSwitch {
-               visible: settingsManager.backupEnabled
-               //% "Show asset backup status icon"
-               text: qsTrId("settingsPage.backupShowStatusIcon")
-               //% "Show an icon on the timeline for backed-up assets."
-               description: qsTrId("settingsPage.backupShowStatusIconInfo")
-               checked: settingsManager.backupShowStatusIcon
-               onCheckedChanged: {
-                   settingsManager.backupShowStatusIcon = checked
-               }
-           }
-
-           // Backup interval
-           ComboBox {
-               visible: settingsManager.backupEnabled
-               //% "Backup interval"
-               label: qsTrId("settingsPage.backupScanInterval")
-               //% "How often to run a backup cycle. Shorter intervals may impact battery life. Selecting manual only will require triggering the backup manually by the button below."
-               description: qsTrId("settingsPage.backupScanIntervalInfo")
-               currentIndex: {
-                   var mins = settingsManager.backupScanInterval
-                   if (mins <= 0) return 0
-                   if (mins <= 30) return 1
-                   if (mins <= 60) return 2
-                   if (mins <= 240) return 3
-                   return 4
-               }
-               menu: ContextMenu {
-                   MenuItem {
-                       //% "Manual only"
-                       text: qsTrId("settingsPage.backupScanIntervalManual")
-                       onClicked: settingsManager.backupScanInterval = 0
-                   }
-                   MenuItem {
-                       //% "30 minutes"
-                       text: qsTrId("settingsPage.backupScanInterval30")
-                       onClicked: settingsManager.backupScanInterval = 30
-                   }
-                   MenuItem {
-                       //% "1 hour"
-                       text: qsTrId("settingsPage.backupScanInterval60")
-                       onClicked: settingsManager.backupScanInterval = 60
-                   }
-                   MenuItem {
-                       //% "4 hours"
-                       text: qsTrId("settingsPage.backupScanInterval240")
-                       onClicked: settingsManager.backupScanInterval = 240
-                   }
-                   MenuItem {
-                       //% "8 hours"
-                       text: qsTrId("settingsPage.backupScanInterval480")
-                       onClicked: settingsManager.backupScanInterval = 480
-                   }
-               }
-           }
-
-           // Backup from date
-           ValueButton {
-               visible: settingsManager.backupEnabled
-               //% "Back up files from"
-               label: qsTrId("settingsPage.backupFromDate")
-               //% "All files (no limit)"
-               value: settingsManager.backupFromDate ? Qt.formatDate(new Date(settingsManager.backupFromDate), "dd MMM yyyy") : qsTrId("settingsPage.backupFromDateAll")
-               onClicked: {
-                   var currentDate = settingsManager.backupFromDate ? new Date(settingsManager.backupFromDate) : new Date()
-                   var dialog = pageStack.push("Sailfish.Silica.DatePickerDialog", {
-                       date: currentDate
-                   })
-                   dialog.accepted.connect(function() {
-                       settingsManager.backupFromDate = dialog.date.toISOString().substring(0, 10)
-                   })
-               }
-               onPressAndHold: {
-                   settingsManager.backupFromDate = ""
-               }
-           }
-
-           Label {
-               x: Theme.horizontalPageMargin
-               width: parent.width - 2 * Theme.horizontalPageMargin
-               visible: settingsManager.backupEnabled
-               //% "Only back up files modified after this date. Long press to clear."
-               text: qsTrId("settingsPage.backupFromDateInfo")
-               font.pixelSize: Theme.fontSizeExtraSmall
-               color: Theme.secondaryColor
-               wrapMode: Text.WordWrap
-           }
-
-           Button {
-               anchors.horizontalCenter: parent.horizontalCenter
-               visible: settingsManager.backupEnabled
-               text: backupManager.backgroundActive
-                   //% "Cancel backup"
-                   ? qsTrId("settingsPage.cancelBackup")
-                   //% "Backup now"
-                   : qsTrId("settingsPage.scanNow")
-               onClicked: {
-                   if (backupManager.backgroundActive) {
-                       backupManager.cancelBackup()
-                   } else {
-                       backupManager.scanNow()
-                   }
-               }
-           }
-
-           Button {
-               anchors.horizontalCenter: parent.horizontalCenter
-               visible: settingsManager.backupEnabled
-               //% "Retry failed"
-               text: qsTrId("settingsPage.backupRetryFailed")
-               enabled: backupManager.failedCount > 0 && !backupManager.backgroundActive
-               onClicked: backupManager.retryFailed()
-           }
-
-           // Clear database button
-           Button {
-               anchors.horizontalCenter: parent.horizontalCenter
-               visible: settingsManager.backupEnabled
-               enabled: !backupManager.backgroundActive
-               //% "Clear backup database"
-               text: qsTrId("settingsPage.backupClearDb")
-               color: "#ff4444"
-               onClicked: {
-                   //% "Clearing backup database"
-                   remorse.execute(qsTrId("notification.backupClearDbRemorse"), function() {
-                       backupManager.clearDatabase()
-                   })
-               }
-           }
-
-           SectionHeader {
-               //% "Account"
-               text: qsTrId("settingsPage.account")
-           }
-
-           DetailItem {
-               //% "Server"
-               label: qsTrId("settingsPage.server")
-               value: authManager.serverUrl
-           }
-
-           DetailItem {
-               //% "Email"
-               label: qsTrId("settingsPage.email")
-               value: authManager.email
-           }
-
-           Button {
-               anchors.horizontalCenter: parent.horizontalCenter
-               //% "Logout"
-               text: qsTrId("settingsPage.logout")
-               onClicked: {
-                   //% "Logging out"
-                   remorse.execute(qsTrId("notification.loggingOut"), function() {
-                       authManager.logout()
-                       pageStack.clear()
-                       pageStack.push(Qt.resolvedUrl("ServerPage.qml"))
-                   })
-               }
-           }
-
-           SectionHeader {
-               //% "Server Statistics"
-               text: qsTrId("settingsPage.serverStatistics")
-           }
-
-           Label {
-               x: Theme.horizontalPageMargin
-               width: parent.width - 2 * Theme.horizontalPageMargin
-               visible: statsFailed && !serverStats
-               //% "Server statistics are not available at the moment."
-               text: qsTrId("settingsPage.serverStatisticsNotAvailable")
-               font.pixelSize: Theme.fontSizeSmall
-               color: Theme.secondaryHighlightColor
-               wrapMode: Text.WordWrap
-               horizontalAlignment: Text.AlignHCenter
-           }
-
-           DetailItem {
-               visible: !statsFailed || serverStats
-               //% "Total photos"
-               label: qsTrId("settingsPage.totalPhotos")
-               //% "Loading..."
-               value: serverStats ? serverStats.photos : qsTrId("settingsPage.totalPhotosLoading")
-           }
-
-           DetailItem {
-               visible: !statsFailed || serverStats
-               //% "Total videos"
-               label: qsTrId("settingsPage.totalVideos")
-               //% "Loading..."
-               value: serverStats ? serverStats.videos : qsTrId("settingsPage.totalVideosLoading")
-           }
-
-           DetailItem {
-               visible: !statsFailed || serverStats
-               //% "Storage used"
-               label: qsTrId("settingsPage.storageUsed")
-               //% "Loading..."
-               value: serverStats ? formatBytes(serverStats.usage) : qsTrId("settingsPage.storageUsedLoading")
-           }
-
-           DetailItem {
-               visible: !statsFailed || serverStats
-               //% "Total assets"
-               label: qsTrId("settingsPage.totalAssets")
-               //% "Loading..."
-               value: serverStats ? (serverStats.photos + serverStats.videos) : qsTrId("settingsPage.totalAssetsLoading")
-           }
-
-           Button {
-               anchors.horizontalCenter: parent.horizontalCenter
-               //% "Refresh statistics"
-               text: qsTrId("settingsPage.refreshStatistics")
-               onClicked: {
-                   settingsPage.serverStats = null
-                   settingsPage.statsFailed = false
-                   settingsPage.statsLoading = true
-                   immichApi.fetchServerStatistics()
-               }
-           }
-
-           SectionHeader {
-               //% "About Server"
-               text: qsTrId("settingsPage.aboutServer")
-           }
-
-           Label {
-               x: Theme.horizontalPageMargin
-               width: parent.width - 2 * Theme.horizontalPageMargin
-               visible: aboutFailed && !serverAbout
-               //% "Server version info is not available at the moment."
-               text: qsTrId("settingsPage.aboutServerNotAvailable")
-               font.pixelSize: Theme.fontSizeSmall
-               color: Theme.secondaryHighlightColor
-               wrapMode: Text.WordWrap
-               horizontalAlignment: Text.AlignHCenter
-           }
-
-           BackgroundItem {
-               width: parent.width
-               height: serverVersionItem.height
-               visible: !aboutFailed || serverAbout
-               enabled: serverAbout && serverAbout.versionUrl
-               onClicked: {
-                   if (serverAbout && serverAbout.versionUrl) {
-                       Qt.openUrlExternally(serverAbout.versionUrl)
-                   }
-               }
-
-               DetailItem {
-                   id: serverVersionItem
-                   //% "Server version"
-                   label: qsTrId("settingsPage.serverVersion")
-                   //% "Loading..."
-                   value: serverAbout ? serverAbout.version : qsTrId("settingsPage.serverVersionLoading")
-               }
-           }
-
-           SectionHeader {
-               //% "About Application"
-               text: qsTrId("settingsPage.aboutApplication")
-           }
-
-           DetailItem {
-               //% "Version"
-               label: qsTrId("settingsPage.version")
-               value: "0.8.1"
-           }
-
-           DetailItem {
-               //% "Loaded assets"
-               label: qsTrId("settingsPage.loadedAssets")
-               value: timelineModel.totalCount
-           }
-
-           BackgroundItem {
-               width: parent.width
-               height: githubItem.height
-               onClicked: Qt.openUrlExternally("https://github.com/mezmerize/harbour-immich")
-               DetailItem {
-                   id: githubItem
-                   //% "Source code"
-                   label: qsTrId("settingsPage.sourceCode")
-                   value: "GitHub"
-               }
-           }
-
-           BackgroundItem {
-               width: parent.width
-               height: translationsItem.height
-               onClicked: Qt.openUrlExternally("https://hosted.weblate.org/projects/harbour-immich/")
-               DetailItem {
-                   id: translationsItem
-                   //% "Translations"
-                   label: qsTrId("settingsPage.translations")
-                   value: "Weblate"
-               }
-           }
-
-           Button {
-               anchors.horizontalCenter: parent.horizontalCenter
-               //% "View application logs"
-               text: qsTrId("settingsPage.viewLogs")
-               onClicked: pageStack.push(Qt.resolvedUrl("LogViewerPage.qml"))
-           }
-
-           Label {
-               x: Theme.horizontalPageMargin
-               width: parent.width - 2 * Theme.horizontalPageMargin
-               wrapMode: Text.WordWrap
-               horizontalAlignment: Text.AlignHCenter
-               color: Theme.secondaryColor
-               font.pixelSize: Theme.fontSizeSmall
-               //% "Harbour Immich - A native Immich client for Sailfish OS"
-               text: qsTrId("settingsPage.applicationInfo")
-           }
-
-           Item {
-               width: parent.width
-               height: Theme.paddingLarge
-           }
-       }
-
-       VerticalScrollDecorator {}
-   }
-
-   RemorsePopup {
-       id: remorse
-   }
-
-   Connections {
-       target: backupManager
-       onServerSyncComplete: {
-           //% "Verified: %1 already on server, %2 new to upload"
-           notification.show(qsTrId("notification.serverSyncResult").arg(matched).arg(pending))
-       }
-       onDatabaseCleared: {
-           //% "Backup database cleared"
-           notification.show(qsTrId("notification.dbCleared"))
-       }
-       onMediaTypesFetchFailed: {
-           //% "Could not fetch supported media types from server - backup disabled"
-           notification.showError(qsTrId("notification.mediaTypesFetchFailed"))
-       }
-   }
-
-   NotificationBanner {
-       id: notification
-       anchors.bottom: parent.bottom
-       z: 10
-   }
+    id: settingsPage
+
+    property var serverStats: null
+    property var serverAbout: null
+    property bool statsLoading: false
+    property bool aboutLoading: false
+    property bool statsFailed: false
+    property bool aboutFailed: false
+
+    Component.onCompleted: {
+        statsLoading = true
+        aboutLoading = true
+        immichApi.fetchServerStatistics()
+        immichApi.fetchServerAbout()
+    }
+
+    Connections {
+        target: immichApi
+        onServerStatisticsReceived: {
+            settingsPage.serverStats = stats
+            settingsPage.statsLoading = false
+        }
+        onServerAboutReceived: {
+            settingsPage.serverAbout = about
+            settingsPage.aboutLoading = false
+        }
+        onErrorOccurred: {
+            if (statsLoading && !serverStats) {
+                statsFailed = true
+                statsLoading = false
+            }
+            if (aboutLoading && !serverAbout) {
+                aboutFailed = true
+                aboutLoading = false
+            }
+        }
+    }
+
+    function formatBytes(bytes) {
+        if (bytes === 0) return "0 B"
+        var k = 1024
+        var sizes = ['B', 'KB', 'MB', 'GB', 'TB']
+        var i = Math.floor(Math.log(bytes) / Math.log(k))
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+    }
+
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: column.height
+
+        PullDownMenu {
+            MenuItem {
+                //% "Library"
+                text: qsTrId("pullDownMenu.library")
+                onClicked: pageStack.push(Qt.resolvedUrl("LibraryPage.qml"))
+            }
+
+            MenuItem {
+                //% "Search"
+                text: qsTrId("pullDownMenu.search")
+                onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"))
+            }
+
+            MenuItem {
+                //% "Albums"
+                text: qsTrId("pullDownMenu.albums")
+                onClicked: pageStack.push(Qt.resolvedUrl("AlbumsPage.qml"))
+            }
+
+            MenuItem {
+                //% "Timeline"
+                text: qsTrId("pullDownMenu.timeline")
+                onClicked: pageStack.replaceAbove(null, Qt.resolvedUrl("TimelinePage.qml"))
+            }
+        }
+
+        Column {
+            id: column
+            width: settingsPage.width
+            spacing: Theme.paddingMedium
+
+            PageHeader {
+                //% "Settings"
+                title: qsTrId("settingsPage.settings")
+            }
+
+            SectionHeader {
+                //% "Display"
+                text: qsTrId("settingsPage.display")
+            }
+
+            Slider {
+                width: parent.width
+                //% "Assets per row (portrait)"
+                label: qsTrId("settingsPage.assetsPerRow")
+                minimumValue: 2
+                maximumValue: 8
+                stepSize: 1
+                value: settingsManager.assetsPerRow
+                valueText: value
+                onValueChanged: {
+                    if (value !== settingsManager.assetsPerRow) {
+                        settingsManager.assetsPerRow = value
+                    }
+                }
+            }
+
+            ComboBox {
+                //% "Detail viewer quality"
+                label: qsTrId("settingsPage.detailQuality")
+                //% "Controls image quality when viewing photos in full screen. Preview is faster and uses less data, Original shows the full resolution image."
+                description: qsTrId("settingsPage.detailQualityInfo")
+                currentIndex: settingsManager.detailQuality === "fullsize" ? 1 : 0
+                menu: ContextMenu {
+                    //% "Preview (faster, less data)"
+                    MenuItem { text: qsTrId("settingsPage.detailQualityPreview") }
+                    //% "Original (full resolution)"
+                    MenuItem { text: qsTrId("settingsPage.detailQualityOriginal") }
+                }
+                onCurrentIndexChanged: {
+                    var quality = currentIndex === 1 ? "fullsize" : "preview"
+                    if (quality !== settingsManager.detailQuality) {
+                        settingsManager.detailQuality = quality
+                    }
+                }
+            }
+
+            TextSwitch {
+                //% "Auto-play videos"
+                text: qsTrId("settingsPage.videoAutoPlay")
+                //% "Start playing videos automatically when opened in the detail view."
+                description: qsTrId("settingsPage.videoAutoPlayInfo")
+                checked: settingsManager.videoAutoPlay
+                onCheckedChanged: {
+                    settingsManager.videoAutoPlay = checked
+                }
+            }
+
+            TextSwitch {
+                //% "Auto-play on Wi-Fi only"
+                text: qsTrId("settingsPage.videoAutoPlayWifiOnly")
+                //% "Auto-play streamed videos only when connected to Wi-Fi. Videos stored on the device are not affected."
+                description: qsTrId("settingsPage.videoAutoPlayWifiOnlyInfo")
+                enabled: settingsManager.videoAutoPlay
+                checked: settingsManager.videoAutoPlayWifiOnly
+                onCheckedChanged: {
+                    settingsManager.videoAutoPlayWifiOnly = checked
+                }
+            }
+
+            TextSwitch {
+                //% "Motion photos"
+                text: qsTrId("settingsPage.motionPhotos")
+                //% "Show an indicator on motion photos and allow playing their video part in the detail view."
+                description: qsTrId("settingsPage.motionPhotosInfo")
+                checked: settingsManager.motionPhotosEnabled
+                onCheckedChanged: {
+                    settingsManager.motionPhotosEnabled = checked
+                }
+            }
+
+            TextSwitch {
+                //% "Show memories bar"
+                text: qsTrId("settingsPage.showMemoriesBar")
+                //% "Display memories at the top of the timeline."
+                description: qsTrId("settingsPage.showMemoriesBarInfo")
+                checked: settingsManager.showMemoriesBar
+                onCheckedChanged: {
+                    settingsManager.showMemoriesBar = checked
+                }
+            }
+
+            ComboBox {
+                //% "Memories thumbnail size"
+                label: qsTrId("settingsPage.memoriesThumbnailSize")
+                //% "Controls appearance size of the memory thumbnails on Timeline page."
+                description: qsTrId("settingsPage.memoriesThumbnailSizeInfo")
+                currentIndex: settingsManager.memoriesThumbnailSize
+                enabled: settingsManager.showMemoriesBar
+                menu: ContextMenu {
+                    //% "Small"
+                    MenuItem { text: qsTrId("settingsPage.memoriesThumbnailSizeSmall") }
+                    //% "Medium"
+                    MenuItem { text: qsTrId("settingsPage.memoriesThumbnailSizeMedium") }
+                    //% "Large"
+                    MenuItem { text: qsTrId("settingsPage.memoriesThumbnailSizeLarge") }
+                }
+                onCurrentIndexChanged: {
+                    if (currentIndex !== settingsManager.memoriesThumbnailSize) {
+                        settingsManager.memoriesThumbnailSize = currentIndex
+                    }
+                }
+            }
+
+            ComboBox {
+                //% "Scroll to top button position"
+                label: qsTrId("settingsPage.scrollToTopPosition")
+                //% "Controls position of the scroll to top button on the pages which display assets in lists exceeding the viewport height."
+                description: qsTrId("settingsPage.scrollToTopPositionInfo")
+                currentIndex: {
+                    var pos = settingsManager.scrollToTopPosition
+                    if (pos === "left") return 0
+                    if (pos === "center") return 1
+                    if (pos === "right") return 2
+                    return 2
+                }
+                menu: ContextMenu {
+                    //% "Left"
+                    MenuItem {
+                        text: qsTrId("settingsPage.scrollToTopPositionLeft")
+                        enabled: settingsManager.selectedCountPosition !== "bottom-left"
+                    }
+                    //% "Center"
+                    MenuItem {
+                        text: qsTrId("settingsPage.scrollToTopPositionCenter")
+                        enabled: settingsManager.selectedCountPosition !== "bottom-center"
+                    }
+                    //% "Right"
+                    MenuItem {
+                        text: qsTrId("settingsPage.scrollToTopPositionRight")
+                        enabled: settingsManager.selectedCountPosition !== "bottom-right"
+                    }
+                }
+                onCurrentIndexChanged: {
+                    var pos = ["left", "center", "right"][currentIndex]
+                    if (pos !== settingsManager.scrollToTopPosition) {
+                        settingsManager.scrollToTopPosition = pos
+                    }
+                }
+            }
+
+            ComboBox {
+                //% "Selected count button position"
+                label: qsTrId("settingsPage.selectedCountPosition")
+                //% "Controls position of the button showing the number of selected assets. Tap it to clear the selection. It cannot share a position with scroll to top button."
+                description: qsTrId("settingsPage.selectedCountPositionInfo")
+                currentIndex: {
+                    var pos = settingsManager.selectedCountPosition
+                    var values = ["top-left", "top-right", "bottom-left", "bottom-center", "bottom-right"]
+                    var idx = values.indexOf(pos)
+                    return idx >= 0 ? idx : 0
+                }
+                menu: ContextMenu {
+                    //% "Top left"
+                    MenuItem {
+                        text: qsTrId("settingsPage.selectedCountPositionTopLeft")
+                    }
+                    //% "Top right"
+                    MenuItem {
+                        text: qsTrId("settingsPage.selectedCountPositionTopRight")
+                    }
+                    //% "Bottom left"
+                    MenuItem {
+                        text: qsTrId("settingsPage.selectedCountPositionBottomLeft")
+                        enabled: settingsManager.scrollToTopPosition !== "left"
+                    }
+                    //% "Bottom center"
+                    MenuItem {
+                        text: qsTrId("settingsPage.selectedCountPositionBottomCenter")
+                        enabled: settingsManager.scrollToTopPosition !== "center"
+                    }
+                    //% "Bottom right"
+                    MenuItem {
+                        text: qsTrId("settingsPage.selectedCountPositionBottomRight")
+                        enabled: settingsManager.scrollToTopPosition !== "right"
+                    }
+                }
+                onCurrentIndexChanged: {
+                    var values = ["top-left", "top-right", "bottom-left", "bottom-center", "bottom-right"]
+                    var pos = values[currentIndex]
+                    if (pos !== settingsManager.selectedCountPosition) {
+                        settingsManager.selectedCountPosition = pos
+                    }
+                }
+            }
+
+            SectionHeader {
+                //% "Language"
+                text: qsTrId("settingsPage.language")
+            }
+
+            ComboBox {
+                label: qsTrId("settingsPage.language")
+                //% "Application language. Automatic follows the system language. Changes will take effect after application restart."
+                description: qsTrId("settingsPage.languageInfo")
+                property var languages: settingsManager.availableLanguages()
+                currentIndex: {
+                    for (var i = 0; i < languages.length; i++) {
+                        if (languages[i].code === settingsManager.language) return i + 1
+                    }
+                    return 0
+                }
+                menu: ContextMenu {
+                    MenuItem {
+                        //% "Automatic (system)"
+                        text: qsTrId("settingsPage.languageAutomatic")
+                    }
+                    Repeater {
+                        model: settingsManager.availableLanguages()
+                        MenuItem {
+                            text: modelData.name
+                        }
+                    }
+                }
+                onCurrentIndexChanged: {
+                    var code = currentIndex === 0 ? "" : languages[currentIndex - 1].code
+                    if (code !== settingsManager.language) {
+                        settingsManager.language = code
+                    }
+                }
+            }
+
+            SectionHeader {
+                //% "Security"
+                text: qsTrId("settingsPage.security")
+            }
+
+            ValueButton {
+                //% "Client certificate"
+                label: qsTrId("settingsPage.clientCertificate")
+                value:  {
+                    //% "Not configured"
+                    if (!clientCertManager.hasCertificate) return qsTrId("settingsPage.clientCertificateNone")
+                    //% "Expired"
+                    if (clientCertManager.isExpired) return qsTrId("settingsPage.clientCertificateExpired")
+                    //% "Expiring soon"
+                    if (clientCertManager.isExpiringSoon) return qsTrId("settingsPage.clientCertificateExpiringSoon")
+                    //% "Configured"
+                    return qsTrId("settingsPage.clientCertificateConfigured")
+                }
+                //% "Import a client (mTLS) certificate for servers that require it. Changes take effect immediately."
+                description: qsTrId("settingsPage.clientCertificateInfo")
+                onClicked: pageStack.push(Qt.resolvedUrl("ClientCertPage.qml"))
+            }
+
+            SectionHeader {
+                //% "Cover"
+                text: qsTrId("settingsPage.cover")
+            }
+
+            TextSwitch {
+                //% "Show assets on cover"
+                text: qsTrId("settingsPage.coverShowAssets")
+                //% "Display photos on the app cover instead of the default icon."
+                description: qsTrId("settingsPage.coverShowAssetsInfo")
+                checked: settingsManager.coverShowAssets
+                onCheckedChanged: {
+                    settingsManager.coverShowAssets = checked
+                }
+            }
+
+            TextSwitch {
+                //% "Slideshow rotation"
+                text: qsTrId("settingsPage.coverSlideshow")
+                //% "Continuously rotate through images while the cover is visible. When off, the image changes only once when the app is minimized."
+                description: qsTrId("settingsPage.coverSlideshowInfo")
+                enabled: settingsManager.coverShowAssets
+                checked: settingsManager.coverSlideshow
+                onCheckedChanged: {
+                    settingsManager.coverSlideshow = checked
+                }
+            }
+
+            SectionHeader {
+                //% "Downloads"
+                text: qsTrId("settingsPage.downloads")
+            }
+
+            ValueButton {
+                //% "Downloads folder"
+                label: qsTrId("settingsPage.downloadsFolder")
+                value: settingsManager.downloadFolder.split("/").pop()
+                //% "Folder where downloaded photos and videos will be saved."
+                description: qsTrId("settingsPage.downloadsFolderInfo")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("../components/DownloadFolderDialog.qml"))
+                }
+            }
+
+            SectionHeader {
+                //% "Backup"
+                text: qsTrId("settingsPage.backup")
+            }
+
+            TextSwitch {
+                //% "Automatic backup"
+                text: qsTrId("settingsPage.backupEnabled")
+                //% "Automatically back up photos and videos from selected folders to your Immich server."
+                description: qsTrId("settingsPage.backupEnabledInfo")
+                checked: settingsManager.backupEnabled
+                onCheckedChanged: {
+                    backupManager.enabled = checked
+                }
+            }
+
+            // Backup status
+            Column {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                spacing: Theme.paddingSmall
+                visible: settingsManager.backupEnabled
+
+                Row {
+                    width: parent.width
+                    spacing: Theme.paddingMedium
+
+                    Icon {
+                        source: backupManager.running ? "image://theme/icon-s-sync" : "image://theme/icon-s-cloud-download"
+                        width: Theme.iconSizeSmall
+                        height: Theme.iconSizeSmall
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.highlightColor
+                        text: {
+                            if (backupManager.currentFile) {
+                                //% "Backing up: %1"
+                                return qsTrId("settingsPage.backingUp").arg(backupManager.currentFile)
+                            }
+                            if (backupManager.running && backupManager.backgroundActive) {
+                                //% "Backup active"
+                                return qsTrId("settingsPage.backupActive")
+                            }
+                            //% "Backup idle"
+                            return qsTrId("settingsPage.backupIdle")
+                        }
+                    }
+                }
+
+                // Progress bar (visible during upload)
+                Item {
+                    width: parent.width
+                    height: Theme.paddingSmall
+                    visible: backupManager.currentFile !== ""
+
+                    Rectangle {
+                        width: parent.width
+                        height: parent.height
+                        color: Theme.rgba(Theme.highlightColor, 0.2)
+                        radius: height / 2
+                    }
+
+                    Rectangle {
+                        width: parent.width * backupManager.currentProgress
+                        height: parent.height
+                        color: Theme.highlightColor
+                        radius: height / 2
+                        Behavior on width { NumberAnimation { duration: 200 } }
+                    }
+                }
+
+                Row {
+                    width: parent.width
+                    spacing: Theme.paddingLarge
+
+                    Label {
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        color: Theme.secondaryColor
+                        //% "Backed up: %1"
+                        text: qsTrId("settingsPage.backedUpCount").arg(backupManager.backedUpCount)
+                    }
+
+                    Label {
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        color: Theme.secondaryColor
+                        //% "Pending: %1"
+                        text: qsTrId("settingsPage.pendingCount").arg(backupManager.pendingCount)
+                    }
+
+                    Label {
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        color: backupManager.failedCount > 0 ? "#ff4444" : Theme.secondaryColor
+                        //% "Failed: %1"
+                        text: qsTrId("settingsPage.failedCount").arg(backupManager.failedCount)
+                    }
+                }
+            }
+
+            // Backup folders
+            BackgroundItem {
+                width: parent.width
+                visible: settingsManager.backupEnabled
+                onClicked: pageStack.push(Qt.resolvedUrl("FolderPickerPage.qml"))
+
+                Row {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: Theme.paddingMedium
+
+                    Icon {
+                        source: "image://theme/icon-m-folder"
+                        width: Theme.iconSizeMedium
+                        height: Theme.iconSizeMedium
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Column {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width - Theme.iconSizeMedium - Theme.paddingMedium
+
+                        Label {
+                            //% "Watched folders"
+                            text: qsTrId("settingsPage.watchedFolders")
+                            color: Theme.primaryColor
+                        }
+
+                        Label {
+                            width: parent.width
+                            //% "%1 folder(s) selected"
+                            text: qsTrId("settingsPage.foldersSelected").arg(settingsManager.backupFolders.length)
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            color: Theme.secondaryColor
+                        }
+                    }
+                }
+            }
+
+            TextSwitch {
+                visible: settingsManager.backupEnabled
+                //% "Back up photos on cellular"
+                text: qsTrId("settingsPage.backupPhotosOnCellular")
+                //% "Allow photo backup when not connected to Wi-Fi."
+                description: qsTrId("settingsPage.backupPhotosOnCellularInfo")
+                checked: settingsManager.backupPhotosOnCellular
+                onCheckedChanged: {
+                    settingsManager.backupPhotosOnCellular = checked
+                }
+            }
+
+            TextSwitch {
+                visible: settingsManager.backupEnabled
+                //% "Back up videos on cellular"
+                text: qsTrId("settingsPage.backupVideosOnCellular")
+                //% "Allow video backup when not connected to Wi-Fi."
+                description: qsTrId("settingsPage.backupVideosOnCellularInfo")
+                checked: settingsManager.backupVideosOnCellular
+                onCheckedChanged: {
+                    settingsManager.backupVideosOnCellular = checked
+                }
+            }
+
+            TextSwitch {
+                visible: settingsManager.backupEnabled
+                //% "Only while charging"
+                text: qsTrId("settingsPage.backupOnlyWhileCharging")
+                //% "Only run backup when the device is connected to a charger."
+                description: qsTrId("settingsPage.backupOnlyWhileChargingInfo")
+                checked: settingsManager.backupOnlyWhileCharging
+                onCheckedChanged: {
+                    settingsManager.backupOnlyWhileCharging = checked
+                }
+            }
+
+            TextSwitch {
+                visible: settingsManager.backupEnabled
+                //% "Delete after backup"
+                text: qsTrId("settingsPage.backupDeleteAfter")
+                //% "Remove photos and videos from device after successful backup."
+                description: qsTrId("settingsPage.backupDeleteAfterInfo")
+                checked: settingsManager.backupDeleteAfter
+                onCheckedChanged: {
+                    settingsManager.backupDeleteAfter = checked
+                }
+            }
+
+            TextSwitch {
+                visible: settingsManager.backupEnabled
+                //% "Auto-disable after backup"
+                text: qsTrId("settingsPage.backupAutoDisable")
+                //% "Automatically turn off backup after all pending files have been uploaded."
+                description: qsTrId("settingsPage.backupAutoDisableInfo")
+                checked: settingsManager.backupAutoDisable
+                onCheckedChanged: {
+                    settingsManager.backupAutoDisable = checked
+                }
+            }
+
+            TextSwitch {
+                visible: settingsManager.backupEnabled
+                //% "Skip asset verification"
+                text: qsTrId("settingsPage.backupSkipVerification")
+                //% "Skip checking of assets against the server before uploading. Faster scanning, but duplicates are only detected by the server during upload."
+                description: qsTrId("settingsPage.backupSkipVerificationInfo")
+                checked: settingsManager.backupSkipVerification
+                onCheckedChanged: {
+                    settingsManager.backupSkipVerification = checked
+                }
+            }
+
+            TextSwitch {
+                visible: settingsManager.backupEnabled
+                //% "Show asset backup status icon"
+                text: qsTrId("settingsPage.backupShowStatusIcon")
+                //% "Show an icon on the timeline for backed-up assets."
+                description: qsTrId("settingsPage.backupShowStatusIconInfo")
+                checked: settingsManager.backupShowStatusIcon
+                onCheckedChanged: {
+                    settingsManager.backupShowStatusIcon = checked
+                }
+            }
+
+            TextSwitch {
+                visible: settingsManager.backupEnabled
+                //% "Show device media on timeline"
+                text: qsTrId("settingsPage.showDeviceMediaOnTimeline")
+                //% "Display photos and videos from watched folders that are not yet backed up in the timeline."
+                description: qsTrId("settingsPage.showDeviceMediaOnTimelineInfo")
+                checked: settingsManager.showDeviceMediaOnTimeline
+                onCheckedChanged: {
+                    settingsManager.showDeviceMediaOnTimeline = checked
+                }
+            }
+
+            // Backup interval
+            ComboBox {
+                visible: settingsManager.backupEnabled
+                //% "Backup interval"
+                label: qsTrId("settingsPage.backupScanInterval")
+                //% "How often to run a backup cycle. Shorter intervals may impact battery life. Selecting manual only will require triggering the backup manually by the button below."
+                description: qsTrId("settingsPage.backupScanIntervalInfo")
+                currentIndex: {
+                    var mins = settingsManager.backupScanInterval
+                    if (mins <= 0) return 0
+                    if (mins <= 30) return 1
+                    if (mins <= 60) return 2
+                    if (mins <= 240) return 3
+                    return 4
+                }
+                menu: ContextMenu {
+                    MenuItem {
+                        //% "Manual only"
+                        text: qsTrId("settingsPage.backupScanIntervalManual")
+                        onClicked: settingsManager.backupScanInterval = 0
+                    }
+                    MenuItem {
+                        //% "30 minutes"
+                        text: qsTrId("settingsPage.backupScanInterval30")
+                        onClicked: settingsManager.backupScanInterval = 30
+                    }
+                    MenuItem {
+                        //% "1 hour"
+                        text: qsTrId("settingsPage.backupScanInterval60")
+                        onClicked: settingsManager.backupScanInterval = 60
+                    }
+                    MenuItem {
+                        //% "4 hours"
+                        text: qsTrId("settingsPage.backupScanInterval240")
+                        onClicked: settingsManager.backupScanInterval = 240
+                    }
+                    MenuItem {
+                        //% "8 hours"
+                        text: qsTrId("settingsPage.backupScanInterval480")
+                        onClicked: settingsManager.backupScanInterval = 480
+                    }
+                }
+            }
+
+            // Backup from date
+            ValueButton {
+                visible: settingsManager.backupEnabled
+                //% "Back up files from"
+                label: qsTrId("settingsPage.backupFromDate")
+                //% "All files (no limit)"
+                value: settingsManager.backupFromDate ? Qt.formatDate(new Date(settingsManager.backupFromDate), "dd MMM yyyy") : qsTrId("settingsPage.backupFromDateAll")
+                onClicked: {
+                    var currentDate = settingsManager.backupFromDate ? new Date(settingsManager.backupFromDate) : new Date()
+                    var dialog = pageStack.push("Sailfish.Silica.DatePickerDialog", {
+                                                    date: currentDate
+                                                })
+                    dialog.accepted.connect(function() {
+                        settingsManager.backupFromDate = dialog.date.toISOString().substring(0, 10)
+                    })
+                }
+                onPressAndHold: {
+                    settingsManager.backupFromDate = ""
+                }
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                visible: settingsManager.backupEnabled
+                //% "Only back up files modified after this date. Long press to clear."
+                text: qsTrId("settingsPage.backupFromDateInfo")
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryColor
+                wrapMode: Text.WordWrap
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: settingsManager.backupEnabled
+                text: backupManager.backgroundActive
+                //% "Cancel backup"
+                      ? qsTrId("settingsPage.cancelBackup")
+                        //% "Backup now"
+                      : qsTrId("settingsPage.scanNow")
+                onClicked: {
+                    if (backupManager.backgroundActive) {
+                        backupManager.cancelBackup()
+                    } else {
+                        backupManager.scanNow()
+                    }
+                }
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: settingsManager.backupEnabled
+                //% "Retry failed"
+                text: qsTrId("settingsPage.backupRetryFailed")
+                enabled: backupManager.failedCount > 0 && !backupManager.backgroundActive
+                onClicked: backupManager.retryFailed()
+            }
+
+            // Clear database button
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: settingsManager.backupEnabled
+                enabled: !backupManager.backgroundActive
+                //% "Clear backup database"
+                text: qsTrId("settingsPage.backupClearDb")
+                color: "#ff4444"
+                onClicked: {
+                    //% "Clearing backup database"
+                    remorse.execute(qsTrId("notification.backupClearDbRemorse"), function() {
+                        backupManager.clearDatabase()
+                    })
+                }
+            }
+
+            SectionHeader {
+                //% "Account"
+                text: qsTrId("settingsPage.account")
+            }
+
+            DetailItem {
+                //% "Server"
+                label: qsTrId("settingsPage.server")
+                value: authManager.serverUrl
+            }
+
+            DetailItem {
+                //% "Email"
+                label: qsTrId("settingsPage.email")
+                value: authManager.email
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                //% "Logout"
+                text: qsTrId("settingsPage.logout")
+                onClicked: {
+                    //% "Logging out"
+                    remorse.execute(qsTrId("notification.loggingOut"), function() {
+                        authManager.logout()
+                        pageStack.clear()
+                        pageStack.push(Qt.resolvedUrl("ServerPage.qml"))
+                    })
+                }
+            }
+
+            SectionHeader {
+                //% "Catalog Synchronization"
+                text: qsTrId("settingsPage.catalog")
+            }
+
+            DetailItem {
+                //% "Last synchronization"
+                label: qsTrId("settingsPage.syncLastTime")
+                //% "Sync in progress..."
+                value: {
+                    var last = syncEngine.lastSyncTime
+                    syncEngine.syncing
+                    //% "Sync in progress..."
+                            ? qsTrId("settingsPage.syncInProgress")
+                            : (last ? Qt.formatDateTime(new Date(last), "dd.MM.yyyy hh:mm:ss")
+                                      //% "Not synced yet"
+                                    : qsTrId("settingsPage.notSynced"))
+                }
+            }
+
+            DetailItem {
+                //% "Assets"
+                label: qsTrId("settingsPage.syncAssets")
+                //% "Sync in progress..."
+                value: !syncEngine.syncing ? assetDatabase.tableRowCount("remote_asset") : qsTrId("settingsPage.syncInProgress")
+            }
+
+            DetailItem {
+                //% "Albums"
+                label: qsTrId("settingsPage.syncAlbums")
+                //% "Sync in progress..."
+                value: !syncEngine.syncing ? assetDatabase.tableRowCount("album") : qsTrId("settingsPage.syncInProgress")
+            }
+
+            DetailItem {
+                //% "People"
+                label: qsTrId("settingsPage.syncPeople")
+                //% "Sync in progress..."
+                value: !syncEngine.syncing ? assetDatabase.tableRowCount("person") : qsTrId("settingsPage.syncInProgress")
+            }
+
+            DetailItem {
+                //% "Local files"
+                label: qsTrId("settingsPage.syncLocalFiles")
+                //% "Sync in progress..."
+                value: !syncEngine.syncing ? assetDatabase.tableRowCount("local_asset") : qsTrId("settingsPage.syncInProgress")
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                //% "Sync now"
+                text: qsTrId("settingsPage.syncNow")
+                enabled: !syncEngine.syncing
+                onClicked: syncEngine.sync()
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                //% "Rebuild catalog"
+                text: qsTrId("settingsPage.rebuildCatalog")
+                enabled: !syncEngine.syncing
+                color: "#ff4444"
+                onClicked: {
+                    //% "Rebuilding catalog"
+                    remorse.execute(qsTrId("notification.rebuildingCatalog"), function() {
+                        syncEngine.resyncCatalog()
+                    })
+                }
+            }
+
+            SectionHeader {
+                //% "Server Statistics"
+                text: qsTrId("settingsPage.serverStatistics")
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                visible: statsFailed && !serverStats
+                //% "Server statistics are not available at the moment."
+                text: qsTrId("settingsPage.serverStatisticsNotAvailable")
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryHighlightColor
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            DetailItem {
+                visible: !statsFailed || serverStats
+                //% "Total photos"
+                label: qsTrId("settingsPage.totalPhotos")
+                //% "Loading..."
+                value: serverStats ? serverStats.photos : qsTrId("settingsPage.totalPhotosLoading")
+            }
+
+            DetailItem {
+                visible: !statsFailed || serverStats
+                //% "Total videos"
+                label: qsTrId("settingsPage.totalVideos")
+                //% "Loading..."
+                value: serverStats ? serverStats.videos : qsTrId("settingsPage.totalVideosLoading")
+            }
+
+            DetailItem {
+                visible: !statsFailed || serverStats
+                //% "Storage used"
+                label: qsTrId("settingsPage.storageUsed")
+                //% "Loading..."
+                value: serverStats ? formatBytes(serverStats.usage) : qsTrId("settingsPage.storageUsedLoading")
+            }
+
+            DetailItem {
+                visible: !statsFailed || serverStats
+                //% "Total assets"
+                label: qsTrId("settingsPage.totalAssets")
+                //% "Loading..."
+                value: serverStats ? (serverStats.photos + serverStats.videos) : qsTrId("settingsPage.totalAssetsLoading")
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                //% "Refresh statistics"
+                text: qsTrId("settingsPage.refreshStatistics")
+                onClicked: {
+                    settingsPage.serverStats = null
+                    settingsPage.statsFailed = false
+                    settingsPage.statsLoading = true
+                    immichApi.fetchServerStatistics()
+                }
+            }
+
+            SectionHeader {
+                //% "About Server"
+                text: qsTrId("settingsPage.aboutServer")
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                visible: aboutFailed && !serverAbout
+                //% "Server version info is not available at the moment."
+                text: qsTrId("settingsPage.aboutServerNotAvailable")
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryHighlightColor
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            BackgroundItem {
+                width: parent.width
+                height: serverVersionItem.height
+                visible: !aboutFailed || serverAbout
+                enabled: serverAbout && serverAbout.versionUrl
+                onClicked: {
+                    if (serverAbout && serverAbout.versionUrl) {
+                        Qt.openUrlExternally(serverAbout.versionUrl)
+                    }
+                }
+
+                DetailItem {
+                    id: serverVersionItem
+                    //% "Server version"
+                    label: qsTrId("settingsPage.serverVersion")
+                    //% "Loading..."
+                    value: serverAbout ? serverAbout.version : qsTrId("settingsPage.serverVersionLoading")
+                }
+            }
+
+            SectionHeader {
+                //% "About Application"
+                text: qsTrId("settingsPage.aboutApplication")
+            }
+
+            DetailItem {
+                //% "Version"
+                label: qsTrId("settingsPage.version")
+                value: "0.9.0"
+            }
+
+            BackgroundItem {
+                width: parent.width
+                height: githubItem.height
+                onClicked: Qt.openUrlExternally("https://github.com/mezmerize/harbour-immich")
+
+                DetailItem {
+                    id: githubItem
+                    //% "Source code"
+                    label: qsTrId("settingsPage.sourceCode")
+                    value: "GitHub"
+                }
+            }
+
+            BackgroundItem {
+                width: parent.width
+                height: translationsItem.height
+                onClicked: Qt.openUrlExternally("https://hosted.weblate.org/projects/harbour-immich")
+
+                DetailItem {
+                    id: translationsItem
+                    //% "Translations"
+                    label: qsTrId("settingsPage.translations")
+                    value: "Weblate"
+                }
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                //% "View application logs"
+                text: qsTrId("settingsPage.viewLogs")
+                onClicked: pageStack.push(Qt.resolvedUrl("LogViewerPage.qml"))
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                //% "Clear image cache"
+                text: qsTrId("settingsPage.clearImageCache")
+                color: "#ff4444"
+                onClicked: {
+                    //% "Clearing image cache"
+                    remorse.execute(qsTrId("notification.clearingImageCache"), function() {
+                        settingsManager.clearImageCache()
+                        //% "Image cache cleared"
+                        notification.show(qsTrId("notification.imageCacheCleared"))
+                    })
+                }
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                color: Theme.secondaryColor
+                font.pixelSize: Theme.fontSizeSmall
+                //% "Harbour Immich - A native Immich client for Sailfish OS"
+                text: qsTrId("settingsPage.applicationInfo")
+            }
+
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+        }
+
+        VerticalScrollDecorator {}
+    }
+
+    RemorsePopup {
+        id: remorse
+    }
+
+    Connections {
+        target: backupManager
+        onServerSyncComplete: {
+            //% "Verified: %1 already on server, %2 new to upload"
+            notification.show(qsTrId("notification.serverSyncResult").arg(matched).arg(pending))
+        }
+        onDatabaseCleared: {
+            //% "Backup database cleared"
+            notification.show(qsTrId("notification.dbCleared"))
+        }
+        onMediaTypesFetchFailed: {
+            //% "Could not fetch supported media types from server - backup disabled"
+            notification.showError(qsTrId("notification.mediaTypesFetchFailed"))
+        }
+    }
+
+    NotificationBanner {
+        id: notification
+        anchors.bottom: parent.bottom
+        z: 10
+    }
 }
