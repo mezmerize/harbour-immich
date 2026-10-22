@@ -102,7 +102,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/SelectedCountButton.qml \
     qml/components/SelectionActionBar.qml \
     qml/components/SharedLinksHelper.js \
-    qml/components/TimelineBucketDelegate.qml \
+    qml/components/TimelineGrid.qml \
     qml/components/TimelineHelper.js \
     qml/components/VideoPlayer.qml \
     qml/components/ZoomSwipeArea.qml \
