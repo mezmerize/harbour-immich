@@ -1,19 +1,5 @@
 .pragma library
 
-function getHeroIds(model, maxCount) {
-    if (maxCount === undefined) maxCount = 5
-    var ids = []
-    var bucketCount = model.getBucketCount()
-    for (var b = 0; b < bucketCount && ids.length < maxCount; b++) {
-        if (!model.isBucketLoaded(b)) continue
-        var assets = model.getBucketAssets(b)
-        for (var a = 0; a < assets.length && ids.length < maxCount; a++) {
-            if (!assets[a].isVideo) ids.push(assets[a].id)
-        }
-    }
-    return ids
-}
-
 function computeDateRange(startDate, endDate) {
     if (!startDate || !endDate) return ""
     var fmt = function(d) {

@@ -94,7 +94,7 @@ Item {
                     assetId: modelData.id
                     isFavorite: modelData.isFavorite
                     isSelected: delegate.isAssetSelected(modelData.id)
-                    isVideo: modelData.isVideo
+                    isVideo: modelData.type === "VIDEO"
                     thumbhash: modelData.thumbhash || ""
                     duration: modelData.duration || ""
                     livePhotoVideoId: modelData.livePhotoVideoId || ""
@@ -103,7 +103,7 @@ Item {
                         if (delegate.selectionMode) {
                             delegate.assetPressAndHold(modelData.id)
                         } else {
-                            delegate.assetClicked(modelData.id, modelData.isFavorite, modelData.isVideo, modelData.thumbhash || "", modelData.assetIndex)
+                            delegate.assetClicked(modelData.id, modelData.isFavorite, modelData.type === "VIDEO", modelData.thumbhash || "", modelData.assetIndex)
                         }
                     }
                     onPressAndHold: delegate.assetPressAndHold(modelData.id)

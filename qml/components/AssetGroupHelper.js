@@ -23,9 +23,9 @@ function parseAssets(results, sortAsc, favorites, groupByCreatedAt) {
         parsed.push({
             id: a.id,
             isFavorite: a.isFavorite || false,
-            isVideo: a.type === "VIDEO",
+            type: a.type,
             thumbhash: a.thumbhash || "",
-            duration: a.duration || "",
+            duration: a.duration ? String(a.duration) : "",
             dateTime: dt,
             dateObj: new Date(dt)
         })
@@ -52,7 +52,7 @@ function pickHeroIds(parsed, maxCount) {
         indices[j] = tmp
     }
     for (var k = 0; k < indices.length && heroIds.length < maxCount; k++) {
-        if (!parsed[indices[k]].isVideo) heroIds.push(parsed[indices[k]].id)
+        if (parsed[indices[k]].type !== "VIDEO") heroIds.push(parsed[indices[k]].id)
     }
     if (heroIds.length === 0 && parsed.length > 0) heroIds.push(parsed[0].id)
     return heroIds
@@ -93,8 +93,8 @@ function groupByMonthAndDate(parsed) {
             month.dateOrder.push(dateKey)
         }
         month.dateMap[dateKey].assets.push({
-            id: asset.id, isFavorite: asset.isFavorite, isVideo: asset.isVideo,
-            thumbhash: asset.thumbhash, duration: asset.duration, assetIndex: g,
+            id: asset.id, isFavorite: asset.isFavorite, type: asset.type,
+            thumbhash: asset.thumbhash, duration: asset.duration ? String(asset.duration) : "", assetIndex: g,
             livePhotoVideoId: asset.livePhotoVideoId
         })
     }
