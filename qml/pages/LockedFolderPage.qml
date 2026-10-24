@@ -21,38 +21,25 @@ Page {
     property string sortOrder: "desc"
     property bool showFavorites: false
     property string contextId: "locked"
-    property var queryParams: ({"visibility": "locked", "order": sortOrder})
-    property var heroAssetIds: []
-    property bool heroInitialized: false
+    property var queryParams: ({"order": sortOrder})
+    readonly property var heroAssetIds: lockedModel.heroAssetIds
 
     TimelineModel {
         id: lockedModel
-        api: authenticated ? immichApi : null
         context: page.contextId
         queryParams: page.queryParams
     }
 
     function loadLockedAssets() {
+        bucketsList.resetScroll()
         lockedModel.clear()
         lockedModel.setLoading(true)
-        heroInitialized = false
         var showCreatedAt = page.activeFilter === "created"
         lockedModel.setGroupByCreatedAt(showCreatedAt)
-        var params = {"visibility": "locked", "order": sortOrder}
-        if (showFavorites) params["isFavorite"] = "true"
-        if (showCreatedAt) params["orderBy"] = "createdAt"
+        var params = {"order": sortOrder}
+        if (showFavorites) params["isFavorite"] = true
         queryParams = params
         lockedModel.fetchBuckets()
-    }
-
-    function updateHeroIds() {
-        if (heroInitialized) return
-        var ids = TimelineHelper.getHeroIds(lockedModel)
-        if (ids.length > 0) {
-            heroAssetIds = ids
-            heroInitialized = true
-            scrollToTopTimer.restart()
-        }
     }
 
     function pinEntryLabel() {
@@ -67,13 +54,6 @@ Page {
         }
         //% "Enter your 6-digit PIN to access the locked folder"
         return qsTrId("lockedFolderPage.enterPin")
-    }
-
-    Timer {
-        id: scrollToTopTimer
-        interval: 50
-        repeat: false
-        onTriggered: bucketsList.positionViewAtBeginning()
     }
 
     // PIN entry view (not authenticated)
@@ -228,15 +208,14 @@ Page {
     }
 
     // Authenticated: bucket-based asset list
-    SilicaListView {
+    TimelineGrid {
         id: bucketsList
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
-        clip: true
-        cacheBuffer: Math.max(height * 2, 2000)
-        model: lockedModel
+        assetModel: lockedModel
+        columns: page.assetsPerRow
         visible: authenticated
 
         PullDownMenu {
@@ -245,12 +224,13 @@ Page {
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.loadLockedAssets()
+                onClicked: syncEngine.sync()
             }
         }
 
-        header: Column {
-            width: bucketsList.width
+        headerComponent: Component {
+            Column {
+                width: bucketsList.width
 
             HeroImageRotator {
                 width: parent.width
@@ -334,33 +314,23 @@ Page {
             }
         }
 
-        delegate: TimelineBucketDelegate {
-            width: bucketsList.width
-            bucketIndex: index
-            bucketKey: lockedModel.getBucketTimeBucket(index)
-            cellSize: page.cellSize
-            assetsPerRow: page.assetsPerRow
-            assetModel: lockedModel
-
-            onAssetClicked: {
-                pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
-                    assetId: assetId,
-                    isFavorite: isFavorite,
-                    isVideo: isVideo,
-                    thumbhash: thumbhash,
-                    isLockedAsset: true,
-                    assetModel: lockedModel,
-                    currentIndex: currentIndex
-                })
-            }
         }
 
-        footer: Item {
-            width: parent.width
-            height: Theme.paddingLarge
+        onAssetClicked: {
+            pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                assetId: assetId,
+                isFavorite: isFavorite,
+                isVideo: isVideo,
+                thumbhash: thumbhash,
+                isLockedAsset: true,
+                assetModel: lockedModel,
+                currentIndex: currentIndex
+            })
         }
 
-        VerticalScrollDecorator {}
+        onColumnsSettled: {
+            settingsManager.assetsPerRow = isPortrait ? columns : Math.ceil(columns / 2)
+        }
     }
 
     // Loading
@@ -466,7 +436,6 @@ Page {
     }
 
     Component.onCompleted: {
-        lockedModel.setServerUrl(authManager.serverUrl)
         lockedModel.setUserId(authManager.userId)
         immichApi.fetchAuthStatus()
     }
@@ -496,7 +465,6 @@ Page {
         }
         onAssetsDeleted: {
             if (authenticated) {
-                page.loadLockedAssets()
                 notification.show(TimelineHelper.deletedNotification(assetIds.length))
             }
         }
@@ -507,16 +475,10 @@ Page {
                     notification.show(qsTrId("notification.removedFromLockedFolder"))
                 } else if (visibility === "archive") {
                     //% "Moved to archive"
-                    notification.show(qsTrId("notification.movedToLockedFolder"))
+                    notification.show(qsTrId("notification.movedToArchive"))
                 }
-                page.loadLockedAssets()
             }
             lockedModel.clearSelection()
         }
-    }
-
-    Connections {
-        target: lockedModel
-        onBucketAssetsLoaded: page.updateHeroIds()
     }
 }

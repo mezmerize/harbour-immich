@@ -12,66 +12,46 @@ Page {
     property string activeFilter: "taken"
     property string sortOrder: "desc"
     property string contextId: "favorites"
-    property var queryParams: ({"isFavorite": "true", "withStacked": "true", "order": sortOrder})
-    property var heroAssetIds: []
-    property bool heroInitialized: false
+    property var queryParams: ({"order": sortOrder})
+    readonly property var heroAssetIds: favoritesModel.heroAssetIds
 
     TimelineModel {
         id: favoritesModel
-        api: immichApi
         context: page.contextId
         queryParams: page.queryParams
     }
 
     function refresh() {
+        bucketsList.resetScroll()
         favoritesModel.clear()
         favoritesModel.setLoading(true)
-        heroInitialized = false
         var showCreatedAt = page.activeFilter === "created"
         favoritesModel.setGroupByCreatedAt(showCreatedAt)
-        var params = {"isFavorite": "true", "withStacked": "true", "order": sortOrder}
-        if (showCreatedAt) params["orderBy"] = "createdAt"
+        var params = {"order": sortOrder}
         queryParams = params
         favoritesModel.fetchBuckets()
     }
 
-    function updateHeroIds() {
-        if (heroInitialized) return
-        var ids = TimelineHelper.getHeroIds(favoritesModel)
-        if (ids.length > 0) {
-            heroAssetIds = ids
-            heroInitialized = true
-            scrollToTopTimer.restart()
-        }
-    }
-
-    Timer {
-        id: scrollToTopTimer
-        interval: 50
-        repeat: false
-        onTriggered: bucketsList.positionViewAtBeginning()
-    }
-
-    SilicaListView {
+    TimelineGrid {
         id: bucketsList
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
-        clip: true
-        cacheBuffer: Math.max(height * 2, 2000)
-        model: favoritesModel
+        assetModel: favoritesModel
+        columns: page.assetsPerRow
 
         PullDownMenu {
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.refresh()
+                onClicked: syncEngine.sync()
             }
         }
 
-        header: Column {
-            width: bucketsList.width
+        headerComponent: Component {
+            Column {
+                width: bucketsList.width
 
             HeroImageRotator {
                 width: parent.width
@@ -149,34 +129,23 @@ Page {
                 width: parent.width
                 height: Theme.paddingSmall
             }
-        }
-
-        delegate: TimelineBucketDelegate {
-            width: bucketsList.width
-            bucketIndex: index
-            bucketKey: favoritesModel.getBucketTimeBucket(index)
-            cellSize: page.cellSize
-            assetsPerRow: page.assetsPerRow
-            assetModel: favoritesModel
-
-            onAssetClicked: {
-                pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
-                    assetId: assetId,
-                    isFavorite: isFavorite,
-                    isVideo: isVideo,
-                    thumbhash: thumbhash,
-                    assetModel: favoritesModel,
-                    currentIndex: currentIndex
-                })
             }
         }
 
-        footer: Item {
-            width: parent.width
-            height: Theme.paddingLarge
+        onAssetClicked: {
+            pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                assetId: assetId,
+                isFavorite: isFavorite,
+                isVideo: isVideo,
+                thumbhash: thumbhash,
+                assetModel: favoritesModel,
+                currentIndex: currentIndex
+            })
         }
 
-        VerticalScrollDecorator {}
+        onColumnsSettled: {
+            settingsManager.assetsPerRow = isPortrait ? columns : Math.ceil(columns / 2)
+        }
     }
 
     // Loading
@@ -282,7 +251,6 @@ Page {
     }
 
     Component.onCompleted: {
-        favoritesModel.setServerUrl(authManager.serverUrl)
         favoritesModel.setUserId(authManager.userId)
         page.refresh()
     }
@@ -290,15 +258,12 @@ Page {
     Connections {
         target: immichApi
         onFavoritesToggled: {
-            favoritesModel.updateFavorites(assetIds, isFavorite)
             favoritesModel.clearSelection()
             if (!isFavorite) {
                 notification.show(TimelineHelper.favoritesNotification(false, assetIds.length))
-                page.refresh()
             }
         }
         onAssetsDeleted: {
-            page.refresh()
             notification.show(TimelineHelper.deletedNotification(assetIds.length))
         }
         onAssetVisibilityChanged: {
@@ -310,12 +275,6 @@ Page {
                 notification.show(qsTrId("notification.movedToLockedFolder"))
             }
             favoritesModel.clearSelection()
-            page.refresh()
         }
-    }
-
-    Connections {
-        target: favoritesModel
-        onBucketAssetsLoaded: page.updateHeroIds()
     }
 }

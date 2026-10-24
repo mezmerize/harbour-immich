@@ -25,7 +25,7 @@ Page {
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.refresh()
+                onClicked: syncEngine.sync()
             }
 
             MenuItem {
@@ -269,33 +269,18 @@ Page {
     Component.onCompleted: page.refresh()
 
     Connections {
+        target: syncEngine
+        onSyncFinished: if (ok) page.refresh()
+    }
+
+    Connections {
         target: immichApi
 
         onPartnersReceived: {
             if (direction === "shared-by") {
-                var byResult = []
-                for (var i = 0; i < partners.length; i++) {
-                    var pBy = partners[i]
-                    byResult.push({
-                        id: pBy.id || "",
-                        name: pBy.name || "",
-                        email: pBy.email || "",
-                        inTimeline: pBy.inTimeline || false
-                    })
-                }
-                page.sharedByPartners = byResult
+                page.sharedByPartners = partners
             } else if (direction === "shared-with") {
-                var withResult = []
-                for (var j = 0; j < partners.length; j++) {
-                    var pWith = partners[j]
-                    withResult.push({
-                        id: pWith.id || "",
-                        name: pWith.name || "",
-                        email: pWith.email || "",
-                        inTimeline: pWith.inTimeline || false
-                    })
-                }
-                page.sharedWithPartners = withResult
+                page.sharedWithPartners = partners
             }
             page.loading = false
         }
@@ -318,6 +303,8 @@ Page {
             page.refresh()
         }
 
+        onErrorOccurred: notification.showError(error)
+
         onUsersReceived: {
             var existingIds = {}
             for (var i = 0; i < sharedByPartners.length; i++) existingIds[sharedByPartners[i].id] = true
@@ -326,11 +313,7 @@ Page {
                 var u = users[j]
                 var uid = u.id || ""
                 if (uid !== "" && uid !== authManager.userId && !existingIds[uid]) {
-                    availableUsers.push({
-                        id: uid,
-                        name: u.name || "",
-                        email: u.email || ""
-                    })
+                    availableUsers.push(u)
                 }
             }
             if (availableUsers.length === 0) {
@@ -344,6 +327,7 @@ Page {
 
     Component {
         id: addPartnerDialog
+
         Page {
             property var availableUsers: []
 

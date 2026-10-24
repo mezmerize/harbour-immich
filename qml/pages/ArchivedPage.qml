@@ -13,56 +13,35 @@ Page {
     property string sortOrder: "desc"
     property bool showFavorites: false
     property string contextId: "archive"
-    property var queryParams: ({"visibility": "archive", "order": sortOrder})
-    property var heroAssetIds: []
-    property bool heroInitialized: false
+    property var queryParams: ({"order": sortOrder})
+    readonly property var heroAssetIds: archiveModel.heroAssetIds
 
     TimelineModel {
         id: archiveModel
-        api: immichApi
         context: page.contextId
         queryParams: page.queryParams
     }
 
     function refresh() {
+        bucketsList.resetScroll()
         archiveModel.clear()
         archiveModel.setLoading(true)
-        heroInitialized = false
         var showCreatedAt = page.activeFilter === "created"
         archiveModel.setGroupByCreatedAt(showCreatedAt)
-        var params = {"visibility": "archive", "order": sortOrder}
-        if (showFavorites) params["isFavorite"] = "true"
-        if (showCreatedAt) params["orderBy"] = "createdAt"
+        var params = {"order": sortOrder}
+        if (showFavorites) params["isFavorite"] = true
         queryParams = params
         archiveModel.fetchBuckets()
     }
 
-    function updateHeroIds() {
-        if (heroInitialized) return
-        var ids = TimelineHelper.getHeroIds(archiveModel)
-        if (ids.length > 0) {
-            heroAssetIds = ids
-            heroInitialized = true
-            scrollToTopTimer.restart()
-        }
-    }
-
-    Timer {
-        id: scrollToTopTimer
-        interval: 50
-        repeat: false
-        onTriggered: bucketsList.positionViewAtBeginning()
-    }
-
-    SilicaListView {
+    TimelineGrid {
         id: bucketsList
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
-        clip: true
-        cacheBuffer: Math.max(height * 2, 2000)
-        model: archiveModel
+        assetModel: archiveModel
+        columns: page.assetsPerRow
 
         PullDownMenu {
             enabled: archiveModel.selectedCount === 0
@@ -70,12 +49,13 @@ Page {
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.refresh()
+                onClicked: syncEngine.sync()
             }
         }
 
-        header: Column {
-            width: bucketsList.width
+        headerComponent: Component {
+            Column {
+                width: bucketsList.width
 
             HeroImageRotator {
                 width: parent.width
@@ -157,34 +137,23 @@ Page {
                 width: parent.width
                 height: Theme.paddingSmall
             }
-        }
-
-        delegate: TimelineBucketDelegate {
-            width: bucketsList.width
-            bucketIndex: index
-            bucketKey: archiveModel.getBucketTimeBucket(index)
-            cellSize: page.cellSize
-            assetsPerRow: page.assetsPerRow
-            assetModel: archiveModel
-
-            onAssetClicked: {
-                pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
-                    assetId: assetId,
-                    isFavorite: isFavorite,
-                    isVideo: isVideo,
-                    thumbhash: thumbhash,
-                    assetModel: archiveModel,
-                    currentIndex: currentIndex
-                })
             }
         }
 
-        footer: Item {
-            width: parent.width
-            height: Theme.paddingLarge
+        onAssetClicked: {
+            pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                assetId: assetId,
+                isFavorite: isFavorite,
+                isVideo: isVideo,
+                thumbhash: thumbhash,
+                assetModel: archiveModel,
+                currentIndex: currentIndex
+            })
         }
 
-        VerticalScrollDecorator {}
+        onColumnsSettled: {
+            settingsManager.assetsPerRow = isPortrait ? columns : Math.ceil(columns / 2)
+        }
     }
 
     // Loading
@@ -294,7 +263,6 @@ Page {
     }
 
     Component.onCompleted: {
-        archiveModel.setServerUrl(authManager.serverUrl)
         archiveModel.setUserId(authManager.userId)
         page.refresh()
     }
@@ -302,7 +270,6 @@ Page {
     Connections {
         target: immichApi
         onFavoritesToggled: {
-            archiveModel.updateFavorites(assetIds, isFavorite)
             archiveModel.clearSelection()
             notification.show(TimelineHelper.favoritesNotification(isFavorite, assetIds.length))
         }
@@ -315,16 +282,9 @@ Page {
                 notification.show(qsTrId("notification.movedToLockedFolder"))
             }
             archiveModel.clearSelection()
-            page.refresh()
         }
         onAssetsDeleted: {
-            page.refresh()
             notification.show(TimelineHelper.deletedNotification(assetIds.length))
         }
-    }
-
-    Connections {
-        target: archiveModel
-        onBucketAssetsLoaded: page.updateHeroIds()
     }
 }

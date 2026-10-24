@@ -2,7 +2,6 @@ import QtQuick 2.6
 import Sailfish.Silica 1.0
 import harbour.immich.models 1.0
 import "../components"
-import "../components/TimelineHelper.js" as TimelineHelper
 
 Page {
     id: page
@@ -16,54 +15,33 @@ Page {
     property string activeFilter: "taken"
     property string sortOrder: "desc"
     property string contextId: "partner-" + partnerId
-    property var queryParams: ({"userId": partnerId, "order": sortOrder})
-    property var heroAssetIds: []
-    property bool heroInitialized: false
+    property var queryParams: ({"order": sortOrder})
+    readonly property var heroAssetIds: partnerModel.heroAssetIds
 
     TimelineModel {
         id: partnerModel
-        api: immichApi
         context: page.contextId
         queryParams: page.queryParams
     }
 
     function refresh() {
+        bucketsList.resetScroll()
         partnerModel.clear()
         partnerModel.setLoading(true)
-        heroInitialized = false
         var showCreatedAt = page.activeFilter === "created"
-        var params = {"userId": partnerId, "order": sortOrder}
-        if (showCreatedAt) params["orderBy"] = "createdAt"
+        var params = {"order": sortOrder}
         queryParams = params
         partnerModel.fetchBuckets()
     }
 
-    function updateHeroIds() {
-        if (heroInitialized) return
-        var ids = TimelineHelper.getHeroIds(partnerModel)
-        if (ids.length > 0) {
-            heroAssetIds = ids
-            heroInitialized = true
-            scrollToTopTimer.restart()
-        }
-    }
-
-    Timer {
-        id: scrollToTopTimer
-        interval: 50
-        repeat: false
-        onTriggered: bucketsList.positionViewAtBeginning()
-    }
-
-    SilicaListView {
+    TimelineGrid {
         id: bucketsList
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
-        clip: true
-        cacheBuffer: Math.max(height * 2, 2000)
-        model: partnerModel
+        assetModel: partnerModel
+        columns: page.assetsPerRow
 
         PullDownMenu {
             enabled: partnerModel.selectedCount === 0
@@ -71,7 +49,7 @@ Page {
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.refresh()
+                onClicked: syncEngine.sync()
             }
 
             MenuItem {
@@ -87,8 +65,9 @@ Page {
             }
         }
 
-        header: Column {
-            width: bucketsList.width
+        headerComponent: Component {
+            Column {
+                width: bucketsList.width
 
             HeroImageRotator {
                 width: parent.width
@@ -168,33 +147,23 @@ Page {
             }
         }
 
-        delegate: TimelineBucketDelegate {
-            width: bucketsList.width
-            bucketIndex: index
-            bucketKey: partnerModel.getBucketTimeBucket(index)
-            cellSize: page.cellSize
-            assetsPerRow: page.assetsPerRow
-            assetModel: partnerModel
-
-            onAssetClicked: {
-                pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
-                    assetId: assetId,
-                    isFavorite: isFavorite,
-                    isVideo: isVideo,
-                    thumbhash: thumbhash,
-                    assetModel: partnerModel,
-                    currentIndex: currentIndex,
-                    partnerShowInTimeline: inTimeline
-                })
-            }
         }
 
-        footer: Item {
-            width: parent.width
-            height: Theme.paddingLarge
+        onAssetClicked: {
+            pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                assetId: assetId,
+                isFavorite: isFavorite,
+                isVideo: isVideo,
+                thumbhash: thumbhash,
+                assetModel: partnerModel,
+                currentIndex: currentIndex,
+                partnerShowInTimeline: inTimeline
+            })
         }
 
-        VerticalScrollDecorator {}
+        onColumnsSettled: {
+            settingsManager.assetsPerRow = isPortrait ? columns : Math.ceil(columns / 2)
+        }
     }
 
     // Loading
@@ -279,13 +248,7 @@ Page {
     }
 
     Component.onCompleted: {
-        partnerModel.setServerUrl(authManager.serverUrl)
         partnerModel.setUserId(authManager.userId)
         page.refresh()
-    }
-
-    Connections {
-        target: partnerModel
-        onBucketAssetsLoaded: page.updateHeroIds()
     }
 }

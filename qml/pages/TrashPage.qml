@@ -13,36 +13,34 @@ Page {
     property string sortOrder: "desc"
     property bool showFavorites: false
     property string contextId: "trash"
-    property var queryParams: ({"isTrashed": "true", "order": sortOrder})
+    property var queryParams: ({"order": sortOrder})
 
     TimelineModel {
         id: trashModel
-        api: immichApi
         context: page.contextId
         queryParams: page.queryParams
     }
 
     function refresh() {
+        bucketsList.resetScroll()
         trashModel.clear()
         trashModel.setLoading(true)
         var showCreatedAt = page.activeFilter === "created"
         trashModel.setGroupByCreatedAt(showCreatedAt)
-        var params = {"isTrashed": "true", "order": sortOrder}
-        if (showFavorites) params["isFavorite"] = "true"
-        if (showCreatedAt) params["orderBy"] = "createdAt"
+        var params = {"order": sortOrder}
+        if (showFavorites) params["isFavorite"] = true
         queryParams = params
         trashModel.fetchBuckets()
     }
 
-    SilicaListView {
+    TimelineGrid {
         id: bucketsList
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
-        clip: true
-        cacheBuffer: Math.max(height * 2, 2000)
-        model: trashModel
+        assetModel: trashModel
+        columns: page.assetsPerRow
 
         PullDownMenu {
             enabled: trashModel.selectedCount === 0
@@ -50,7 +48,7 @@ Page {
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.refresh()
+                onClicked: syncEngine.sync()
             }
 
             MenuItem {
@@ -80,8 +78,9 @@ Page {
             }
         }
 
-        header: Column {
-            width: bucketsList.width
+        headerComponent: Component {
+            Column {
+                width: bucketsList.width
 
             PageHeader {
                 //% "Trash"
@@ -159,32 +158,22 @@ Page {
             }
         }
 
-        delegate: TimelineBucketDelegate {
-            width: bucketsList.width
-            bucketIndex: index
-            bucketKey: trashModel.getBucketTimeBucket(index)
-            cellSize: page.cellSize
-            assetsPerRow: page.assetsPerRow
-            assetModel: trashModel
-
-            onAssetClicked: {
-                pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
-                    assetId: assetId,
-                    isFavorite: false,
-                    isVideo: isVideo,
-                    thumbhash: thumbhash,
-                    assetModel: trashModel,
-                    currentIndex: currentIndex
-                })
-            }
         }
 
-        footer: Item {
-            width: parent.width
-            height: Theme.paddingLarge
+        onAssetClicked: {
+            pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                assetId: assetId,
+                isFavorite: false,
+                isVideo: isVideo,
+                thumbhash: thumbhash,
+                assetModel: trashModel,
+                currentIndex: currentIndex
+            })
         }
 
-        VerticalScrollDecorator {}
+        onColumnsSettled: {
+            settingsManager.assetsPerRow = isPortrait ? columns : Math.ceil(columns / 2)
+        }
     }
 
     // Loading
@@ -225,7 +214,7 @@ Page {
                 ? qsTrId("notification.deletingAssets").arg(selectedIds.length)
                 //% "Deleting asset"
                 : qsTrId("notification.deletingAsset"), function() {
-                immichApi.deleteAssets(selectedIds)
+                immichApi.deleteAssets(selectedIds, true)
                 trashModel.clearSelection()
             })
         }
@@ -253,7 +242,6 @@ Page {
     }
 
     Component.onCompleted: {
-        trashModel.setServerUrl(authManager.serverUrl)
         trashModel.setUserId(authManager.userId)
         page.refresh()
     }
@@ -264,20 +252,16 @@ Page {
             //% "Restored from trash"
             notification.show(qsTrId("notification.restored"))
             trashModel.clearSelection()
-            page.refresh()
         }
         onTrashEmptied: {
             //% "Trash emptied"
             notification.show(qsTrId("notification.emptied"))
-            page.refresh()
         }
         onAllTrashRestored: {
             //% "All items restored"
             notification.show(qsTrId("notification.allRestored"))
-            page.refresh()
         }
         onAssetsDeleted: {
-            page.refresh()
             notification.show(TimelineHelper.deletedNotification(assetIds.length))
         }
     }
