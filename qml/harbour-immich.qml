@@ -29,7 +29,7 @@ ApplicationWindow
         }
         onTriggered: {
             console.log("BackgroundJob: Wakeup triggered, starting backup scan")
-            backupManager.scanNow()
+            backupManager.scanNowIfDue()
             // If no active work finish immediately, otherwise wait for completion
             if (!backupManager.backgroundActive) {
                 backupJob.finished()

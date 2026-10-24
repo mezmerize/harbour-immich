@@ -156,7 +156,7 @@ Dialog {
                         anchors.rightMargin: Theme.horizontalPageMargin
                         spacing: Theme.paddingMedium
 
-                        Image {
+                        Icon {
                             width: Theme.iconSizeMedium
                             height: Theme.iconSizeMedium
                             anchors.verticalCenter: parent.verticalCenter
@@ -226,7 +226,7 @@ Dialog {
                     anchors.rightMargin: Theme.horizontalPageMargin
                     spacing: Theme.paddingMedium
 
-                    Image {
+                    Icon {
                         width: Theme.iconSizeMedium
                         height: Theme.iconSizeMedium
                         anchors.verticalCenter: parent.verticalCenter
@@ -286,7 +286,7 @@ Dialog {
                         anchors.rightMargin: Theme.horizontalPageMargin
                         spacing: Theme.paddingMedium
 
-                        Image {
+                        Icon {
                             width: Theme.iconSizeMedium
                             height: Theme.iconSizeMedium
                             anchors.verticalCenter: parent.verticalCenter
@@ -624,11 +624,7 @@ Dialog {
             if (!dialog.albumShare || !dialog.isOwner) {
                 return
             }
-            var all = []
-            for (var i = 0; i < users.length; i++) {
-                all.push(users[i])
-            }
-            dialog.allUsers = all
+            dialog.allUsers = users
             dialog.usersLoaded = true
             dialog.rebuildAvailableModel()
         }

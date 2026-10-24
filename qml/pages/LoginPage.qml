@@ -8,7 +8,8 @@ Page {
 
     property bool isLoggingIn: false
     property bool hasError: false
-    property bool versionUnsupported: false
+    property string minimumVersion: "3.0.0"
+    property bool versionUnsupported: !authManager.serverSupported
 
     function processLogin() {
         hasError = false
@@ -131,8 +132,8 @@ Page {
                         wrapMode: Text.WordWrap
                         color: Theme.highlightColor
                         font.pixelSize: Theme.fontSizeSmall
-                        //% "The Immich server you are trying to log in to is running an unsupported version (minimum required: 3.0.0). Some features may not work correctly."
-                        text: qsTrId("loginPage.versionUnsupported")
+                        //% "The Immich server you are trying to log in to is running an unsupported version (minimum required: %1). Some features may not work correctly."
+                        text: qsTrId("loginPage.versionUnsupported").arg(page.minimumVersion)
                         anchors.verticalCenter: parent.verticalCenter
                     }
                 }

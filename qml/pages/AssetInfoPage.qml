@@ -325,7 +325,7 @@ Page {
                                 visible: albumThumbnail.status !== Image.Ready
                             }
 
-                            Image {
+                            Icon {
                                 anchors.centerIn: parent
                                 source: "image://theme/icon-m-image"
                                 visible: albumThumbnail.status !== Image.Ready

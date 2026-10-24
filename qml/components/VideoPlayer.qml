@@ -253,7 +253,7 @@ Item {
         opacity: (root.controlsEnabled && root.controlsVisible) ? 1.0 : 0.0
         Behavior on opacity { FadeAnimation { duration: 200 } }
 
-        Image {
+        Icon {
             anchors.centerIn: parent
             source: controller.playbackState === VideoController.PlayingState ? "image://theme/icon-l-pause" : "image://theme/icon-l-play"
         }

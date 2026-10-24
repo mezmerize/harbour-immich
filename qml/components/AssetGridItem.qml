@@ -9,6 +9,8 @@ BackgroundItem {
     property bool isFavorite
     property bool isSelected
     property bool isVideo
+    property bool isLocal: false
+    property string localPath: ""
     property int assetIndex: -1
     property string thumbhash: ""
     property string duration: ""
@@ -20,7 +22,7 @@ BackgroundItem {
     property bool currentBackupState: false
 
     function syncBackupState() {
-        currentBackupState = assetId && backupManager.isAssetBackedUp(assetId)
+        currentBackupState = !isLocal && assetId && backupManager.isAssetBackedUp(assetId)
     }
 
     function formatDuration(dur) {
@@ -73,7 +75,7 @@ BackgroundItem {
         anchors.fill: parent
         anchors.margins: 2
         fillMode: Image.PreserveAspectCrop
-        source: assetId ? "image://immich/thumbnail/" + assetId : ""
+        source: isLocal ? (localPath ? "image://localthumbnail/crop/" + localPath : "") : (assetId ? "image://immich/thumbnail/" + assetId : "")
         asynchronous: true
         smooth: false
         cache: true
@@ -94,7 +96,7 @@ BackgroundItem {
 
         Icon {
             anchors.centerIn: parent
-            source: "image://theme/icon-m-image"
+            source: isVideo ? "image://theme/icon-m-video" : "image://theme/icon-m-image"
             visible: thumbnail.status === Image.Error && !thumbhash
             opacity: 0.3
         }
@@ -104,7 +106,7 @@ BackgroundItem {
         anchors.fill: parent
         color: isSelected ? Theme.rgba(Theme.highlightBackgroundColor, 0.2) : "transparent"
         border.width: isSelected ? 2 : 0
-        border.color: isSelected ? Theme.highlightColor : "transparent"
+        border.color: Theme.highlightColor
         z: 10
     }
 
@@ -146,7 +148,7 @@ BackgroundItem {
         width: Theme.iconSizeSmall
         height: Theme.iconSizeSmall
         source: "image://theme/icon-m-favorite-selected"
-        visible: isFavorite
+        visible: isFavorite && !isLocal
     }
 
     // Stack indicator
@@ -180,7 +182,19 @@ BackgroundItem {
         width: Theme.iconSizeSmall
         height: Theme.iconSizeSmall
         source: "image://theme/icon-m-cloud-download"
-        visible: item.currentBackupState && settingsManager.backupEnabled && settingsManager.backupShowStatusIcon
+        visible: !isLocal && item.currentBackupState && settingsManager.backupEnabled && settingsManager.backupShowStatusIcon
+    }
+
+    // Local-only asset indicator
+    Icon {
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.margins: Theme.paddingSmall
+        width: Theme.iconSizeSmall
+        height: Theme.iconSizeSmall
+        source: "image://theme/icon-m-phone"
+        opacity: 0.9
+        visible: isLocal
     }
 
     // Highlight overlay for scroll-to-asset

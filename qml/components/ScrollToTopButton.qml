@@ -68,12 +68,14 @@ MouseArea {
 
     onClicked: {
         if (targetFlickable) {
-            if (targetFlickable.cancelFlick()) {
+            if (typeof targetFlickable.cancelFlick === "function") {
                 targetFlickable.cancelFlick()
             }
-            if (targetFlickable.positionViewAtBeginning()) {
+            if (typeof targetFlickable.resetScroll === "function") {
+                targetFlickable.resetScroll()
+            } else if (typeof targetFlickable.positionViewAtBeginning === "function") {
                 targetFlickable.positionViewAtBeginning()
-            } else if (targetFlickable.scrollToTop()) {
+            } else if (typeof targetFlickable.scrollToTop === "function") {
                 targetFlickable.scrollToTop()
             }
             targetFlickable.contentY = targetFlickable.originY

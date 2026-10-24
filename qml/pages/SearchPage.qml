@@ -7,8 +7,7 @@ Page {
    id: searchPage
 
    property var selectedPeople: []
-   property var peopleData: []  // Array of {id, name, thumbnailPath}
-   property var searchSuggestions: ({})
+   property var peopleData: []
 
    // Store selection data for filterable pickers
    //% "Any"
@@ -275,7 +274,7 @@ Page {
                    } else if (selectedPeople.length === 1) {
                        // Find the name of the selected person
                        for (var i = 0; i < peopleData.length; i++) {
-                           if (peopleData[i].personId === selectedPeople[0]) {
+                           if (peopleData[i].id === selectedPeople[0]) {
                                //% "Unknown"
                                return peopleData[i].name || qsTrId("searchPage.peopleUnknown")
                            }
@@ -558,21 +557,7 @@ Page {
 
    Connections {
        target: immichApi
-
-       onPeopleReceived: {
-           var newPeopleData = []
-           for (var i = 0; i < people.length; i++) {
-               var person = people[i]
-               var personData = {
-                   id: person.id,
-                   name: person.name || "",
-                   thumbnailPath: person.thumbnailPath || ""
-               }
-               newPeopleData.push(personData)
-           }
-           peopleData = newPeopleData
-       }
-
+       onPeopleReceived: peopleData = people
        onSearchSuggestionsReceived: {
            var result = normalizeSuggestions(suggestions)
 

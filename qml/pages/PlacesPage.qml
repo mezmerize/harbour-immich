@@ -128,7 +128,7 @@ Page {
                                 visible: placeThumbnail.status !== Image.Ready && !listItem.thumbhash
                             }
 
-                            Image {
+                            Icon {
                                 anchors.centerIn: parent
                                 source: "image://theme/icon-m-location"
                                 visible: placeThumbnail.status !== Image.Ready && !listItem.thumbhash

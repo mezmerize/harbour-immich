@@ -190,7 +190,7 @@ Page {
                     pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
                         assetId: item.id,
                         isFavorite: item.isFavorite || false,
-                        isVideo: item.isVideo || false,
+                        isVideo: item.type === "VIDEO",
                         thumbhash: item.thumbhash || "",
                         albumAssets: assetsOnly,
                         currentIndex: assetIndex
@@ -256,9 +256,9 @@ Page {
                         id: item.id || "",
                         name: item.originalFileName || item.originalPath || "",
                         isFavorite: item.isFavorite || false,
-                        isVideo: item.type === "VIDEO",
+                        type: item.type,
                         thumbhash: item.thumbhash || "",
-                        duration: item.duration || "",
+                        duration: item.duration ? String(item.duration) : "",
                         livePhotoVideoId: item.livePhotoVideoId || "",
                         fileSize: item.exifInfo ? (item.exifInfo.fileSizeInByte || 0) : 0,
                         fileCreatedAt: fileDate

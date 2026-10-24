@@ -196,7 +196,7 @@ CoverBackground {
             spacing: Theme.paddingSmall
             visible: settingsManager.backupEnabled && authManager.isAuthenticated
 
-            Image {
+            Icon {
                 width: Theme.iconSizeExtraSmall
                 height: width
                 anchors.verticalCenter: parent.verticalCenter
@@ -276,9 +276,7 @@ CoverBackground {
 
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-            onTriggered: {
-                immichApi.fetchMemories()
-            }
+            onTriggered: immichApi.fetchMemories({"scope": "today", "requestTag": "cover"})
         }
 
         CoverAction {
@@ -293,15 +291,14 @@ CoverBackground {
 
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-            onTriggered: {
-                immichApi.fetchMemories()
-            }
+            onTriggered: immichApi.fetchMemories({"scope": "today", "requestTag": "cover"})
         }
     }
 
     Connections {
         target: immichApi
         onMemoriesReceived: {
+            if (tag !== "cover") return
             var filtered = []
             for (var i = 0; i < memories.length; i++) {
                 var memory = memories[i]

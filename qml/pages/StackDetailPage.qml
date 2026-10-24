@@ -22,7 +22,7 @@ Page {
     property int pendingTimelineIndex: -1
 
     property var currentAsset: (assets && currentIndex >= 0 && currentIndex < assets.length) ? assets[currentIndex] : null
-    property bool currentIsVideo: currentAsset ? (currentAsset.isVideo || false) : false
+    property bool currentIsVideo: currentAsset ? (currentAsset.type === "VIDEO") : false
     property string currentLivePhotoVideoId: (currentAsset && currentAsset.livePhotoVideoId) ? currentAsset.livePhotoVideoId : ""
     property bool motionPlaying: false
     property bool motionAvailable: settingsManager.motionPhotosEnabled && currentLivePhotoVideoId !== "" && !currentIsVideo
@@ -69,7 +69,7 @@ Page {
         assetInfo = null
         var asset = assets[newIndex]
         if (asset) {
-            if (asset.isVideo) {
+            if (asset.type === "VIDEO") {
                 mainImage.source = ""
                 videoPlayer.active = true
             } else {
@@ -84,7 +84,11 @@ Page {
     function getTimelineAssetSource(index) {
         if (index < 0 || index >= totalTimelineAssets) return ""
         var asset = assetModel ? assetModel.getAssetByAssetIndex(index) : null
-        return asset && asset.id ? "image://immich/detail/" + asset.id : ""
+        if (!asset || !asset.id) return ""
+        if (asset.isLocal) {
+            return asset.type === "VIDEO" ? "image://localthumbnail/fit/" + asset.localPath : "file://" + asset.localPath
+        }
+        return "image://immich/detail/" + asset.id
     }
 
     // Navigate to a different timeline asset (swipe left/right)
@@ -92,6 +96,16 @@ Page {
         if (newTimelineIndex < 0 || newTimelineIndex >= totalTimelineAssets) return
 
         var asset = assetModel.getAssetByAssetIndex(newTimelineIndex)
+        // Local file
+        if (asset && asset.isLocal) {
+            pageStack.replace(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                "assetId": "",
+                "currentIndex": newTimelineIndex,
+                "assetModel": page.assetModel,
+                "controlsShown": page.controlsShown
+            }, PageStackAction.Immediate)
+            return
+        }
         if (!asset || !asset.id) {
             var location = assetModel.getAssetLocation(newTimelineIndex)
             if (location && location.bucketIndex !== undefined && location.bucketIndex >= 0) {
@@ -103,7 +117,7 @@ Page {
         if (!asset || !asset.id) return
 
         if (asset.stackId && asset.stackId !== "") {
-            // Target is a stack — replace this page with a new StackDetailPage
+            // Stack
             pageStack.replace(Qt.resolvedUrl("StackDetailPage.qml"), {
                 "stackId": asset.stackId,
                 "primaryAssetId": asset.id,
@@ -114,11 +128,11 @@ Page {
                 "controlsShown": page.controlsShown
             }, PageStackAction.Immediate)
         } else {
-            // Target is a regular asset — replace with AssetDetailPage
+            // Regular asset
             pageStack.replace(Qt.resolvedUrl("AssetDetailPage.qml"), {
                 "assetId": asset.id,
                 "isFavorite": asset.isFavorite || false,
-                "isVideo": asset.isVideo || false,
+                "isVideo": asset.type === "VIDEO",
                 "thumbhash": asset.thumbhash || "",
                 "currentIndex": newTimelineIndex,
                 "assetModel": page.assetModel,
@@ -177,6 +191,7 @@ Page {
                 source: timelineAssetIndex > 0 ? getTimelineAssetSource(timelineAssetIndex - 1) : ""
                 asynchronous: true
                 cache: true
+                autoTransform: true
             }
 
             // Thumbhash placeholder for current asset
@@ -205,6 +220,7 @@ Page {
                 width: imageViewport.width
                 height: imageViewport.height
                 fillMode: Image.PreserveAspectFit
+                autoTransform: true
                 source: primaryAssetId ? "image://immich/detail/" + primaryAssetId : ""
                 asynchronous: true
                 smooth: true
@@ -240,6 +256,7 @@ Page {
                 source: timelineAssetIndex < totalTimelineAssets - 1 ? getTimelineAssetSource(timelineAssetIndex + 1) : ""
                 asynchronous: true
                 cache: true
+                autoTransform: true
             }
 
             // Transition cover to prevent flash during asset switch
@@ -251,6 +268,7 @@ Page {
                 visible: false
                 asynchronous: false
                 cache: true
+                autoTransform: true
                 z: 2
             }
 
@@ -270,6 +288,7 @@ Page {
             visible: page.currentIsVideo || page.motionPlaying
             videoId: page.currentIsVideo && page.currentAsset ? page.currentAsset.id : (page.motionPlaying ? page.currentLivePhotoVideoId : "")
             thumbhash: page.currentAsset && page.currentAsset.thumbhash ? page.currentAsset.thumbhash : page.primaryThumbhash
+            posterSource: page.currentAsset && page.currentAsset.id ? "image://immich/detail/" + page.currentAsset.id : ""
             controlsEnabled: !page.motionPlaying
             controlsBottomMargin: bottomPanel.height
             onLoaded: {
@@ -285,6 +304,14 @@ Page {
                 if (page.motionPlaying) {
                     page.motionPlaying = false
                     videoPlayer.active = false
+                }
+            }
+            onPlaybackFailed: {
+                if (page.motionPlaying) {
+                    page.motionPlaying = false
+                    videoPlayer.active = false
+                    //% "Failed to play motion photo"
+                    notification.showError(qsTrId("notification.motionPhotoFailed"))
                 }
             }
         }
@@ -403,8 +430,7 @@ Page {
                 Label {
                     anchors.horizontalCenter: parent.horizontalCenter
                     topPadding: Theme.paddingMedium
-                    //% "%1 / %2"
-                    text: assets.length > 0 ? qsTrId("stackDetailPage.assetCounter").arg(currentIndex + 1).arg(assets.length) : ""
+                    text: assets.length > 0 ? currentIndex + 1 + " / " + assets.length : ""
                     color: Theme.lightSecondaryColor
                     font.pixelSize: Theme.fontSizeSmall
                 }
@@ -558,11 +584,10 @@ Page {
                         onClicked: {
                             var asset = getCurrentAsset()
                             if (asset) {
-                                var assetDate = asset.localDateTime || asset.fileCreatedAt || ""
                                 pageStack.pop(pageStack.find(function(p) {
                                     return p.objectName === "timelinePage"
                                 }))
-                                timelineModel.scrollToAsset(asset.id, assetDate)
+                                timelineModel.scrollToAsset(asset.id)
                             }
                         }
                     }
@@ -603,10 +628,14 @@ Page {
 
     Connections {
         target: assetModel
-        onBucketAssetsLoaded: {
-            if (page.pendingTimelineIndex < 0) {
-                return
+        onRenderLayoutChanged: {
+            if (page.primaryAssetId !== "") {
+                var i = assetModel.globalIndexForAssetId(page.primaryAssetId)
+                if (i >= 0 && i !== page.timelineAssetIndex) page.timelineAssetIndex = i
             }
+        }
+        onBucketAssetsLoaded: {
+            if (page.pendingTimelineIndex < 0) return
             var location = assetModel.getAssetLocation(page.pendingTimelineIndex)
             if (location && location.bucketIndex === bucketIndex) {
                 var targetIndex = page.pendingTimelineIndex
@@ -639,7 +668,7 @@ Page {
                     // Load detail image or video for current asset
                     var current = page.getCurrentAsset()
                     if (current) {
-                        if (current.isVideo) {
+                        if (current.type === "VIDEO") {
                             mainImage.source = ""
                             videoPlayer.active = true
                         } else {
@@ -678,9 +707,6 @@ Page {
         }
         onStackDeleted: {
             if (stackId === page.stackId) {
-                // Refresh timeline and go back
-                timelineModel.queryParams = {"visibility": "timeline", "withStacked": "true", "order": "desc", "withPartners": "true"}
-                timelineModel.fetchBuckets()
                 pageStack.pop()
             }
         }

@@ -107,7 +107,7 @@ Page {
                             visible: thumbnail.status !== Image.Ready
                         }
 
-                        Image {
+                        Icon {
                             anchors.centerIn: parent
                             source: "image://theme/icon-m-link"
                             visible: thumbnail.status !== Image.Ready
