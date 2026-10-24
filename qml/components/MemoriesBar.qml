@@ -16,16 +16,18 @@ Item {
     property int baseSize: Math.min(Screen.width, Screen.height)
     property int itemSize: thumbnailSize == 0 ? Math.floor(baseSize / 4) : thumbnailSize == 1 ? Math.floor(baseSize / 3) : Math.floor(baseSize / 2)
 
-    MemoriesModel {
-        id: memoriesModel
-    }
-
     function loadMemories() {
         loading = true
-        immichApi.fetchMemories()
+        immichApi.fetchMemories({"scope": "today", "requestTag": "memoriesBar"})
     }
 
-    function titleFor(year, memoryDate) {
+    function titleFor(year, memoryDate, type, personName) {
+        if (type === "birthday") {
+            //% "%1's birthday"
+            return qsTrId("memoriesBar.birthdayTitle").arg(personName ||
+                //% "Unknown"
+                qsTrId("memoriesBar.unknownPerson"))
+        }
         if (year <= 0 && memoryDate) {
             year = new Date(memoryDate).getFullYear()
         }
@@ -39,11 +41,19 @@ Item {
             : qsTrId("memoriesBar.yearsAgo").arg(yearsAgo)
     }
 
-    Component.onCompleted: loadMemories()
+    MemoriesModel {
+        id: memoriesModel
+    }
+
+    Connections {
+        target: syncEngine
+        onSyncFinished: if (ok) memoriesBar.loadMemories()
+    }
 
     Connections {
         target: immichApi
         onMemoriesReceived: {
+            if (tag !== "memoriesBar") return
             memoriesModel.clear()
             memoriesModel.appendMemories(memories)
             memoriesBar.memoriesLoaded = true
@@ -132,7 +142,7 @@ Item {
                     Label {
                         id: yearsAgoLabel
                         anchors.centerIn: parent
-                        text: memoriesBar.titleFor(model.memoryYear, model.memoryDate)
+                        text: memoriesBar.titleFor(model.memoryYear, model.memoryDate, model.memoryType, model.personName)
                         font.pixelSize: Theme.fontSizeTiny
                         font.bold: true
                         color: Theme.primaryColor
@@ -163,7 +173,8 @@ Item {
             onClicked: {
                 var assetsArray = JSON.parse(model.assetsJson)
                 pageStack.push(Qt.resolvedUrl("../pages/MemoryDetailPage.qml"), {
-                    memoryTitle: memoriesBar.titleFor(model.memoryYear, model.memoryDate),
+                    memoryTitle: memoriesBar.titleFor(model.memoryYear, model.memoryDate, model.memoryType, model.personName),
+                    birthYear: model.memoryType === "birthday" ? model.memoryYear : 0,
                     memoryId: model.memoryId,
                     memoryIsSaved: model.isSaved,
                     assets: assetsArray

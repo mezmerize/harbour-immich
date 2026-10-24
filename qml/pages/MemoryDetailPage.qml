@@ -6,6 +6,7 @@ Page {
     id: page
 
     property string memoryTitle: ""
+    property int birthYear: 0
     property string memoryId: ""
     property bool memoryIsSaved: false
     property var assets: []
@@ -13,7 +14,8 @@ Page {
     property bool slideshowRunning: false
 
     property var currentAsset: (assets && currentIndex >= 0 && currentIndex < assets.length) ? assets[currentIndex] : null
-    property bool currentIsVideo: currentAsset ? (currentAsset.isVideo || false) : false
+    property var assetInfo: null
+    property bool currentIsVideo: currentAsset ? (currentAsset.type === "VIDEO") : false
     property string currentLivePhotoVideoId: (currentAsset && currentAsset.livePhotoVideoId) ? currentAsset.livePhotoVideoId : ""
     property bool motionPlaying: false
     property bool motionAvailable: settingsManager.motionPhotosEnabled && currentLivePhotoVideoId !== "" && !currentIsVideo
@@ -40,7 +42,7 @@ Page {
     function crossfadeTo(newIndex) {
         if (!assets || assets.length === 0) return
         motionPlaying = false
-        if (assets[newIndex] && assets[newIndex].isVideo) {
+        if (assets[newIndex] && assets[newIndex].type === "VIDEO") {
             slideshowRunning = false
             switchTo(newIndex)
             return
@@ -56,6 +58,7 @@ Page {
         }
         currentIndex = newIndex
         showingA = !showingA
+        requestInfo()
     }
 
     function switchTo(newIndex) {
@@ -64,7 +67,7 @@ Page {
         crossfadeToA.stop()
         crossfadeToB.stop()
         currentIndex = newIndex
-        if (assets[newIndex] && assets[newIndex].isVideo) {
+        if (assets[newIndex] && assets[newIndex].type === "VIDEO") {
             videoPlayer.active = true
             return
         }
@@ -76,6 +79,14 @@ Page {
         slideshowImageB.source = ""
         showingA = true
         currentIndex = newIndex
+        requestInfo()
+    }
+
+    function requestInfo() {
+        assetInfo = null
+        if (currentAsset && currentAsset.id && memoryId === page.memoryId) {
+            immichApi.getAssetInfo(currentAsset.id)
+        }
     }
 
     Timer {
@@ -101,10 +112,15 @@ Page {
         }
     }
 
+    Component.onCompleted: requestInfo()
+
     Connections {
         target: immichApi
         onMemoryUpdated: {
             if (memoryId === page.memoryId) page.memoryIsSaved = isSaved
+        }
+        onAssetInfoReceived: {
+            if (page.currentAsset && info.id === page.currentAsset.id) page.assetInfo = info
         }
     }
 
@@ -125,7 +141,7 @@ Page {
     AssetInfoPeek {
         dragOffsetY: page.dragOffsetY
         openThreshold: page.dismissThreshold
-        assetInfo: page.currentAsset
+        assetInfo: (page.assetInfo && page.currentAsset && page.assetInfo.id === page.currentAsset.id) ? page.assetInfo : page.currentAsset
     }
 
     // Main content container - moves vertically during drag-to-dismiss
@@ -189,7 +205,7 @@ Page {
                             memoryTransitionCover.source = ""
                         }
                     }
-                    source: (assets && assets.length > 0 && assets[0] && !assets[0].isVideo) ? "image://immich/detail/" + assets[0].id : ""
+                    source: (assets && assets.length > 0 && assets[0] && assets[0].type !== "VIDEO") ? "image://immich/detail/" + assets[0].id : ""
                 }
 
                 // Slideshow image B (for crossfade)
@@ -288,7 +304,7 @@ Page {
                     slideshowRunning = false
                     pageStack.push(Qt.resolvedUrl("AssetInfoPage.qml"), {
                         assetId: asset.id,
-                        assetInfo: asset
+                        assetInfo: (page.assetInfo && page.assetInfo.id === asset.id) ? page.assetInfo : asset
                     })
                 }
             }
@@ -303,6 +319,7 @@ Page {
             visible: page.currentIsVideo || page.motionPlaying
             videoId: page.currentIsVideo && page.currentAsset ? page.currentAsset.id : (page.motionPlaying ? page.currentLivePhotoVideoId : "")
             thumbhash: page.currentAsset && page.currentAsset.thumbhash ? page.currentAsset.thumbhash : ""
+            posterSource: page.currentAsset && page.currentAsset.id ? "image://immich/detail/" + page.currentAsset.id : ""
             controlsEnabled: !page.motionPlaying
             controlsBottomMargin: bottomPanel.height
             onLoaded: {
@@ -320,6 +337,14 @@ Page {
                     videoPlayer.active = false
                 }
             }
+            onPlaybackFailed: {
+                if (page.motionPlaying) {
+                    page.motionPlaying = false
+                    videoPlayer.active = false
+                    //% "Failed to play motion photo"
+                    notification.showError(qsTrId("notification.motionPhotoFailed"))
+                }
+            }
         }
 
         // Title overlay (top)
@@ -329,7 +354,7 @@ Page {
                 left: parent.left
                 right: parent.right
             }
-            height: titleLabel.height + Theme.paddingLarge * 2
+            height: titleLabel.height + (ageLabel.visible ? ageLabel.height : 0) + Theme.paddingLarge * 2
             visible: opacity > 0
             opacity: (controlsShown && !draggingVertical) ? 1.0 : 0.0
             Behavior on opacity { FadeAnimation { duration: 200 } }
@@ -356,6 +381,24 @@ Page {
                 text: memoryTitle
                 color: Theme.lightPrimaryColor
                 font.pixelSize: Theme.fontSizeLarge
+                truncationMode: TruncationMode.Fade
+            }
+
+            Label {
+                id: ageLabel
+                anchors {
+                    left: titleLabel.left
+                    right: titleLabel.right
+                    top: titleLabel.bottom
+                }
+
+                property int age: page.birthYear > 0 && page.currentAsset && page.currentAsset.localDateTime ? parseInt(page.currentAsset.localDateTime.substring(0, 4)) - page.birthYear : -1
+
+                visible: age >= 0
+                //% "%1 years old"
+                text: qsTrId("memoryDetailPage.birthdayAge").arg(age)
+                color: Theme.lightPrimaryColor
+                font.pixelSize: Theme.fontSizeSmall
                 truncationMode: TruncationMode.Fade
             }
 
@@ -414,8 +457,7 @@ Page {
                 Label {
                     anchors.horizontalCenter: parent.horizontalCenter
                     topPadding: Theme.paddingMedium
-                    //% "%1 / %2"
-                    text: assets && assets.length > 0 ? qsTrId("memoryDetailPage.assetCounter").arg(currentIndex + 1).arg(assets.length) : ""
+                    text: assets && assets.length > 0 ? currentIndex + 1 + " / " + assets.length : ""
                     color: Theme.lightSecondaryColor
                     font.pixelSize: Theme.fontSizeSmall
                 }
@@ -545,11 +587,10 @@ Page {
                         onClicked: {
                             var asset = assets[currentIndex]
                             if (asset && asset.id) {
-                                var assetDate = asset.localDateTime || asset.fileCreatedAt || ""
                                 pageStack.pop(pageStack.find(function(p) {
                                     return p.objectName === "timelinePage"
                                 }))
-                                timelineModel.scrollToAsset(asset.id, assetDate)
+                                timelineModel.scrollToAsset(asset.id)
                             }
                         }
                     }
@@ -561,6 +602,12 @@ Page {
                     height: Theme.paddingMedium
                 }
             }
+        }
+
+        NotificationBanner {
+            id: notification
+            anchors.bottom: bottomPanel.top
+            z: 10
         }
     }
 }

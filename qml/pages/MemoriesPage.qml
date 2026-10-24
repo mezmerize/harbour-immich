@@ -7,19 +7,16 @@ Page {
     id: page
 
     property bool loading: true
-    property bool loadingPage: false
     property bool showFavorites: false
     property bool showUpcoming: false
     property string sortOrder: "desc"
-    property int pageSize: 20
-    property int currentPage: 0
 
     MemoriesModel {
         id: memoriesModel
     }
 
     function queryParams() {
-        var params = {"order": sortOrder, "isTrashed": "false"}
+        var params = {"order": sortOrder, "requestTag": "memoriesPage"}
         if (showFavorites) params["isSaved"] = "true"
         if (showUpcoming) params["isUpcoming"] = "true"
         return params
@@ -27,23 +24,16 @@ Page {
 
     function refresh() {
         loading = true
-        loadingPage = false
-        currentPage = 0
-        memoriesModel.clear()
-        immichApi.fetchMemoriesStatistics(queryParams())
+        immichApi.fetchMemories(queryParams())
     }
 
-    function loadNextPage() {
-        if (loadingPage) return
-        if (memoriesModel.count >= memoriesModel.totalCount) return
-        loadingPage = true
-        var params = queryParams()
-        params["page"] = currentPage + 1
-        params["size"] = pageSize
-        immichApi.searchMemories(params)
-    }
-
-    function memoryDetailTitle(year) {
+    function memoryDetailTitle(year, type, personName) {
+        if (type === "birthday") {
+            //% "%1's birthday"
+            return qsTrId("memoriesPage.birthdayTitle").arg(personName ||
+                //% "Unknown"
+                qsTrId("memoriesPage.unknownPerson"))
+        }
         //% "Memory"
         if (year <= 0) return qsTrId("memoriesPage.memory")
         var yearsAgo = new Date().getFullYear() - year
@@ -70,7 +60,7 @@ Page {
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.refresh()
+                onClicked: syncEngine.sync()
             }
         }
 
@@ -188,16 +178,13 @@ Page {
 
             onClicked: {
                 pageStack.push(Qt.resolvedUrl("MemoryDetailPage.qml"), {
-                    memoryTitle: page.memoryDetailTitle(model.memoryYear),
+                    memoryTitle: page.memoryDetailTitle(model.memoryYear, model.memoryType, model.personName),
+                    birthYear: model.memoryType === "birthday" ? model.memoryYear : 0,
                     memoryId: model.memoryId,
                     memoryIsSaved: model.isSaved,
                     assets: JSON.parse(model.assetsJson)
                 })
             }
-        }
-
-        onContentYChanged: {
-            if (contentHeight > 0 && contentY + height > contentHeight - cellHeight * 2) page.loadNextPage()
         }
 
         VerticalScrollDecorator {}
@@ -221,25 +208,17 @@ Page {
     Component.onCompleted: page.refresh()
 
     Connections {
+        target: syncEngine
+        onSyncFinished: if (ok) page.refresh()
+    }
+
+    Connections {
         target: immichApi
-        onMemoriesStatisticsReceived: {
-            memoriesModel.totalCount = total
-            if (total > 0) {
-                page.loadNextPage()
-            } else {
-                page.loading = false
-                page.loadingPage = false
-            }
-        }
-        onMemoriesSearchReceived: {
+        onMemoriesReceived: {
+            if (tag !== "memoriesPage") return
+            memoriesModel.clear()
             memoriesModel.appendMemories(memories)
-            page.currentPage = pageNumber
             page.loading = false
-            page.loadingPage = false
-            // Keep loading until the viewport filled
-            if (memoriesModel.count < memoriesModel.totalCount && memoriesGrid.contentHeight <= memoriesGrid.height) {
-                page.loadNextPage()
-            }
         }
         onMemoryUpdated: memoriesModel.setSaved(memoryId, isSaved)
     }
