@@ -20,69 +20,57 @@ Page {
     property bool showFavorites: false
     property string contextId: "album-" + albumId
     property var queryParams: ({"albumId": albumId, "order": sortOrder})
-    property var heroAssetIds: []
-    property bool heroInitialized: false
+    readonly property var heroAssetIds: albumModel.heroAssetIds
     property string dateRange: ""
     property bool showDateRange: dateRange !== "" && albumModel.totalCount > 0 && activeFilter === "taken" && !showFavorites
 
     TimelineModel {
         id: albumModel
-        api: immichApi
         context: page.contextId
         queryParams: page.queryParams
     }
 
     function refresh() {
+        bucketsList.resetScroll()
         albumModel.clear()
         albumModel.setLoading(true)
-        heroInitialized = false
         var showCreatedAt = page.activeFilter === "created"
         albumModel.setGroupByCreatedAt(showCreatedAt)
         var params = {"albumId": albumId, "order": sortOrder}
-        if (showFavorites) params["isFavorite"] = "true"
-        if (showCreatedAt) params["orderBy"] = "createdAt"
+        if (showFavorites) params["isFavorite"] = true
         queryParams = params
         albumModel.fetchBuckets()
-    }
-
-    function updateHeroIds() {
-        if (heroInitialized) return
-        var ids = TimelineHelper.getHeroIds(albumModel)
-        if (ids.length > 0) {
-            heroAssetIds = ids
-            heroInitialized = true
-            scrollToTopTimer.restart()
-        }
     }
 
     function updateDateRange() {
         dateRange = TimelineHelper.computeDateRange(albumStartDate, albumEndDate)
     }
 
-    Timer {
-        id: scrollToTopTimer
-        interval: 50
-        repeat: false
-        onTriggered: bucketsList.positionViewAtBeginning()
-    }
-
-    SilicaListView {
+    TimelineGrid {
         id: bucketsList
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
-        clip: true
-        cacheBuffer: Math.max(height * 2, 2000)
-        model: albumModel
+        assetModel: albumModel
+        columns: page.assetsPerRow
 
         PullDownMenu {
             enabled: albumModel.selectedCount === 0
 
             MenuItem {
+                //% "Remove album"
+                text: qsTrId("pullDownMenu.removeAlbum")
+                //% "Removing album"
+                onClicked: deleteRemorse.execute(qsTrId("notification.removingAlbum"), function() {
+                    immichApi.removeAlbum(albumId)
+                })
+            }
+
+            MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.refresh()
+                onClicked: syncEngine.sync()
             }
 
             MenuItem {
@@ -107,8 +95,9 @@ Page {
             }
         }
 
-        header: Column {
-            width: bucketsList.width
+        headerComponent: Component {
+            Column {
+                width: bucketsList.width
 
             // Hero section
             HeroImageRotator {
@@ -245,35 +234,24 @@ Page {
                 width: parent.width
                 height: Theme.paddingSmall
             }
-        }
-
-        delegate: TimelineBucketDelegate {
-            width: bucketsList.width
-            bucketIndex: index
-            bucketKey: albumModel.getBucketTimeBucket(index)
-            cellSize: page.cellSize
-            assetsPerRow: page.assetsPerRow
-            assetModel: albumModel
-
-            onAssetClicked: {
-                pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
-                    assetId: assetId,
-                    isFavorite: isFavorite,
-                    isVideo: isVideo,
-                    thumbhash: thumbhash,
-                    assetModel: albumModel,
-                    currentIndex: currentIndex,
-                    albumId: page.albumId
-                })
             }
         }
 
-        footer: Item {
-            width: parent.width
-            height: Theme.paddingLarge
+        onAssetClicked: {
+            pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                assetId: assetId,
+                isFavorite: isFavorite,
+                isVideo: isVideo,
+                thumbhash: thumbhash,
+                assetModel: albumModel,
+                currentIndex: currentIndex,
+                albumId: page.albumId
+            })
         }
 
-        VerticalScrollDecorator {}
+        onColumnsSettled: {
+            settingsManager.assetsPerRow = isPortrait ? columns : Math.ceil(columns / 2)
+        }
     }
 
     // Loading
@@ -309,7 +287,6 @@ Page {
     }
 
     Component.onCompleted: {
-        albumModel.setServerUrl(authManager.serverUrl)
         albumModel.setUserId(authManager.userId)
         page.refresh()
     }
@@ -322,19 +299,13 @@ Page {
                 page.albumDescription = description
             }
         }
+        onAlbumRemoved: if (albumId === page.albumId) pageStack.pop()
         onFavoritesToggled: {
-            albumModel.updateFavorites(assetIds, isFavorite)
             albumModel.clearSelection()
             notification.show(TimelineHelper.favoritesNotification(isFavorite, assetIds.length))
         }
         onAssetsDeleted: {
-            page.refresh()
             notification.show(TimelineHelper.deletedNotification(assetIds.length))
-        }
-        onAssetsRemovedFromAlbum: {
-            if (albumId === page.albumId) {
-                page.refresh()
-            }
         }
         onAssetVisibilityChanged: {
             if (visibility === "archive") {
@@ -345,14 +316,12 @@ Page {
                 notification.show(qsTrId("notification.movedToLockedFolder"))
             }
             albumModel.clearSelection()
-            page.refresh()
         }
     }
 
     Connections {
         target: albumModel
         onBucketsLoaded: page.updateDateRange()
-        onBucketAssetsLoaded: page.updateHeroIds()
     }
 
     // Selection Action Bar

@@ -18,10 +18,6 @@ Page {
     // Text filter
     property string filterText: ""
 
-    // Sort state
-    property string sortField: "endDate"
-    property bool sortAscending: false
-
     // Sort field mapping (index matches ComboBox MenuItem order)
     property var sortOptions: [
         { field: "endDate" },
@@ -31,10 +27,6 @@ Page {
         { field: "updatedAt" },
         { field: "createdAt" }
     ]
-
-    function applySorting() {
-        albumModel.sortAlbums(sortField, sortAscending)
-    }
 
     function setActiveFilter(filterId) {
         if (activeFilter !== filterId) {
@@ -51,22 +43,20 @@ Page {
         }
     }
 
+    Connections {
+        target: syncEngine
+        onSyncFinished: if (ok) page.applyFilter()
+    }
+
     function applyFilter() {
         page.loading = true
-        if (activeFilter === "shared" || activeFilter === "sharedWithMe") {
-            immichApi.fetchAlbums("true")
-        } else if (activeFilter === "mine") {
-            immichApi.fetchAlbums("false")
-        } else {
-            immichApi.fetchAlbums()
-        }
+        immichApi.fetchAlbums(activeFilter)
     }
 
     function updateFilteredCount() {
         var count = 0
         for (var i = 0; i < loadedAlbums.length; i++) {
             var album = loadedAlbums[i]
-            if (activeFilter === "sharedWithMe" && album.ownerId === authManager.userId) continue
             if (filterText.length > 0 && (!album.albumName || album.albumName.toLowerCase().indexOf(filterText) === -1)) continue
             count++
         }
@@ -109,7 +99,7 @@ Page {
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.applyFilter()
+                onClicked: syncEngine.sync()
             }
         }
 
@@ -153,15 +143,12 @@ Page {
 
                     Icon {
                         anchors.centerIn: parent
-                        source: page.sortAscending ? "image://theme/icon-m-up" : "image://theme/icon-m-down"
+                        source: albumModel.sortAscending ? "image://theme/icon-m-up" : "image://theme/icon-m-down"
                         width: Theme.iconSizeSmall
                         height: Theme.iconSizeSmall
                     }
 
-                    onClicked: {
-                        page.sortAscending = !page.sortAscending
-                        page.applySorting()
-                    }
+                    onClicked: albumModel.sortAscending = !albumModel.sortAscending
                 }
 
                 BackgroundItem {
@@ -199,7 +186,12 @@ Page {
                     anchors.verticalCenter: parent.verticalCenter
                     //% "Sort by"
                     label: qsTrId("albumsPage.sortBy")
-                    currentIndex: 0
+                    currentIndex: {
+                        for (var i = 0; i < page.sortOptions.length; i++) {
+                            if (page.sortOptions[i].field === albumModel.sortField) return i
+                        }
+                        return 0
+                    }
 
                     menu: ContextMenu {
                         //% "Most recent photo"
@@ -218,8 +210,7 @@ Page {
 
                     onCurrentIndexChanged: {
                         if (currentIndex >= 0 && currentIndex < page.sortOptions.length) {
-                            page.sortField = page.sortOptions[currentIndex].field
-                            page.applySorting()
+                            albumModel.sortField = page.sortOptions[currentIndex].field
                         }
                     }
                 }
@@ -241,10 +232,9 @@ Page {
             id: listItem
 
             property bool matchesFilter: page.filterText.length === 0 || albumName.toLowerCase().indexOf(page.filterText) !== -1
-            property bool matchesAlbumFilter: page.activeFilter !== "sharedWithMe" || !isOwned
 
-            contentHeight: matchesFilter && matchesAlbumFilter ? page.thumbnailSize + 2 * Theme.paddingMedium : 0
-            visible: matchesFilter && matchesAlbumFilter
+            contentHeight: matchesFilter ? page.thumbnailSize + 2 * Theme.paddingMedium : 0
+            visible: matchesFilter
 
             Row {
                 anchors.fill: parent
@@ -268,7 +258,7 @@ Page {
                             visible: albumThumbnail.status !== Image.Ready
                         }
 
-                        Image {
+                        Icon {
                             anchors.centerIn: parent
                             source: "image://theme/icon-m-image"
                             visible: albumThumbnail.status !== Image.Ready
@@ -377,7 +367,6 @@ Page {
             if (page.status !== PageStatus.Active) return
             page.loading = false
             page.loadedAlbums = albums
-            page.applySorting()
             page.updateFilteredCount()
             scrollToTopTimer.restart()
         }

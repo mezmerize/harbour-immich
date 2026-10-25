@@ -15,7 +15,7 @@ Page {
     property bool loading: false
     property string albumId: (linkData && linkData.album) ? linkData.album.id : ""
     property string contextId: "shared-" + (linkId || "")
-    property var heroAssetIds: []
+    readonly property var heroAssetIds: sharedLinkModel.heroAssetIds
     property string dateRange: ""
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
     property real cellSize: width / assetsPerRow
@@ -23,7 +23,6 @@ Page {
     property string sortOrder: "desc"
     property bool showFavorites: false
     property var queryParams: ({"albumId": albumId, "order": sortOrder})
-    property bool heroInitialized: false
     property bool showDateRange: dateRange !== "" && sharedLinkModel.totalCount > 0 && activeFilter === "taken" && !showFavorites
 
     function getTitle() {
@@ -41,26 +40,15 @@ Page {
     }
 
     function reloadFromLinkData() {
+        bucketsList.resetScroll()
         sharedLinkModel.clear()
         sharedLinkModel.setLoading(true)
-        heroInitialized = false
         var showCreatedAt = page.activeFilter === "created"
         sharedLinkModel.setGroupByCreatedAt(showCreatedAt)
         var params = {"albumId": albumId, "order": sortOrder}
-        if (showFavorites) params["isFavorite"] = "true"
-        if (showCreatedAt) params["orderBy"] = "createdAt"
+        if (showFavorites) params["isFavorite"] = true
         queryParams = params
         sharedLinkModel.fetchBuckets()
-    }
-
-    function updateHeroIds() {
-        if (heroInitialized) return
-        var ids = TimelineHelper.getHeroIds(sharedLinkModel)
-        if (ids.length > 0) {
-            heroAssetIds = ids
-            heroInitialized = true
-            scrollToTopTimer.restart()
-        }
     }
 
     function updateDateRange() {
@@ -69,24 +57,15 @@ Page {
 
     TimelineModel {
         id: sharedLinkModel
-        api: immichApi
         context: page.contextId
         queryParams: page.queryParams
     }
 
-    Timer {
-        id: scrollToTopTimer
-        interval: 50
-        repeat: false
-        onTriggered: bucketsList.positionViewAtBeginning()
-    }
-
-    SilicaListView {
+    TimelineGrid {
         id: bucketsList
         anchors.fill: parent
-        clip: true
-        cacheBuffer: Math.max(height * 2, 2000)
-        model: sharedLinkModel
+        assetModel: sharedLinkModel
+        columns: page.assetsPerRow
 
         PullDownMenu {
             enabled: sharedLinkModel.selectedCount === 0
@@ -98,8 +77,9 @@ Page {
             }
         }
 
-        header: Column {
-            width: bucketsList.width
+        headerComponent: Component {
+            Column {
+                width: bucketsList.width
 
             HeroImageRotator {
                 width: parent.width
@@ -234,32 +214,22 @@ Page {
             }
         }
 
-        delegate: TimelineBucketDelegate {
-            width: bucketsList.width
-            bucketIndex: index
-            bucketKey: sharedLinkModel.getBucketTimeBucket(index)
-            cellSize: page.cellSize
-            assetsPerRow: page.assetsPerRow
-            assetModel: sharedLinkModel
-
-            onAssetClicked: {
-                pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
-                    assetId: assetId,
-                    isFavorite: isFavorite,
-                    isVideo: isVideo,
-                    thumbhash: thumbhash,
-                    assetModel: sharedLinkModel,
-                    currentIndex: currentIndex
-                })
-            }
         }
 
-        footer: Item {
-            width: parent.width
-            height: Theme.paddingLarge
+        onAssetClicked: {
+            pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                assetId: assetId,
+                isFavorite: isFavorite,
+                isVideo: isVideo,
+                thumbhash: thumbhash,
+                assetModel: sharedLinkModel,
+                currentIndex: currentIndex
+            })
         }
 
-        VerticalScrollDecorator {}
+        onColumnsSettled: {
+            settingsManager.assetsPerRow = isPortrait ? columns : Math.ceil(columns / 2)
+        }
     }
 
     LoadingIndicator {
@@ -384,7 +354,6 @@ Page {
     }
 
     Component.onCompleted: {
-        sharedLinkModel.setServerUrl(authManager.serverUrl)
         sharedLinkModel.setUserId(authManager.userId)
         page.refresh()
     }
@@ -397,12 +366,10 @@ Page {
             loading = false
             page.reloadFromLinkData()
         }
-        onFavoritesToggled: sharedLinkModel.updateFavorites(assetIds, isFavorite)
     }
 
     Connections {
         target: sharedLinkModel
         onBucketsLoaded: page.updateDateRange()
-        onBucketAssetsLoaded: page.updateHeroIds()
     }
 }

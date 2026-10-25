@@ -15,13 +15,7 @@ Dialog {
     property var loadedAlbums: []
 
     function applyFilter() {
-        if (activeFilter === "shared") {
-            immichApi.fetchAlbums("true")
-        } else if (activeFilter === "mine") {
-            immichApi.fetchAlbums("false")
-        } else {
-            immichApi.fetchAlbums()
-        }
+        immichApi.fetchAlbums(activeFilter)
     }
 
     function updateFilteredCount() {
@@ -206,17 +200,21 @@ Dialog {
             }
         }
 
-        Label {
-            x: Theme.horizontalPageMargin
-            width: parent.width - 2 * Theme.horizontalPageMargin
-            text: filterText.length > 0
-                //% "No albums match filter"
-                ? qsTrId("albumPickerPage.noAlbumsMatch")
-                //% "No albums yet"
-                : qsTrId("albumPickerPage.noAlbums")
-            color: Theme.secondaryColor
-            visible: listView.count === 0 || (filterText.length > 0 && filteredCount === 0)
-            wrapMode: Text.Wrap
+        footer: Item {
+            width: listView.width
+            property bool shown: listView.count === 0 || (albumPickerDialog.filterText.length > 0 && albumPickerDialog.filteredCount === 0)
+            height: shown ? Math.max(Theme.itemSizeHuge, (albumPickerDialog.isPortrait ? Screen.height : Screen.width) - (listView.headerItem ? listView.headerItem.height : 0)) : 0
+
+            EmptyState {
+                anchors.fill: parent
+                visible: parent.shown
+                iconSource: "image://theme/icon-m-folder"
+                message: albumPickerDialog.filterText.length > 0
+                    //% "No albums match filter"
+                    ? qsTrId("albumPickerPage.noAlbumsMatch")
+                    //% "No albums yet"
+                    : qsTrId("albumPickerPage.noAlbums")
+            }
         }
 
         VerticalScrollDecorator {}

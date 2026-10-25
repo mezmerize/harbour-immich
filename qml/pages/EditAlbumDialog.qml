@@ -10,6 +10,7 @@ Dialog {
   property string albumDescription
   property bool isActivityEnabled: true
   property string albumThumbnailAssetId: ""
+  property bool isOwner: true
   property string selectedThumbnailAssetId: albumThumbnailAssetId
   // 3 and half images on the line so that it points to allowed horizontal scrolling
   property real thumbnailSize: Math.max(Theme.itemSizeLarge, Math.floor((width - 2 * Theme.horizontalPageMargin) / 3.5))
@@ -29,24 +30,19 @@ Dialog {
       while (nextBucketToLoad < bucketCount && pickerModel.isBucketLoaded(nextBucketToLoad)) {
           nextBucketToLoad++
       }
-      if (nextBucketToLoad < bucketCount)
-          pickerModel.requestBucketLoad(nextBucketToLoad)
+      if (nextBucketToLoad < bucketCount) pickerModel.requestBucketLoad(nextBucketToLoad)
   }
 
   TimelineModel {
       id: pickerModel
-      api: immichApi
       context: dialog.albumContext
       queryParams: dialog.albumQuery
   }
 
-  Component.onCompleted: {
-      pickerModel.setServerUrl(authManager.serverUrl)
-      pickerModel.fetchBuckets()
-  }
+  Component.onCompleted: if (dialog.isOwner) pickerModel.fetchBuckets()
 
   Connections {
-      target: immichApi
+      target: pickerModel
       onBucketsLoaded: {
           dialog.nextBucketToLoad = 0
           if (pickerModel.getBucketCount() > 0)
@@ -99,7 +95,7 @@ Dialog {
           SectionHeader {
               //% "Album thumbnail"
               text: qsTrId("editAlbumDialog.albumThumbnail")
-              visible: dialog.albumAssets.length > 0
+              visible: dialog.isOwner && dialog.albumAssets.length > 0
           }
 
           ListView {
@@ -111,7 +107,7 @@ Dialog {
               spacing: Theme.paddingSmall
               clip: true
               model: dialog.albumAssets
-              visible: dialog.albumAssets.length > 0
+              visible: dialog.isOwner && dialog.albumAssets.length > 0
               cacheBuffer: Math.round(dialog.thumbnailSize * 4)
 
               onContentXChanged: {
@@ -143,7 +139,7 @@ Dialog {
                           visible: thumbnailImage.status !== Image.Ready
                       }
 
-                      Image {
+                      Icon {
                           anchors.centerIn: parent
                           source: "image://theme/icon-m-image"
                           visible: thumbnailImage.status !== Image.Ready

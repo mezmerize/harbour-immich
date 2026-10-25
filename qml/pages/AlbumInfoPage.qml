@@ -6,7 +6,6 @@ Page {
 
     property string albumId
     property var albumInfo
-    property var albumAssetIds: []
     property var albumOwner: {
         if (albumInfo && albumInfo.albumUsers) {
             for (var i = 0; i < albumInfo.albumUsers.length; i++) {
@@ -14,6 +13,15 @@ Page {
             }
         }
         return null
+    }
+    property bool isOwner: !!(albumOwner && albumOwner.id === authManager.userId)
+    property bool isEditor: {
+        if (albumInfo && albumInfo.albumUsers) {
+            for (var i = 0; i < albumInfo.albumUsers.length; i++) {
+                if (albumInfo.albumUsers[i].role === "editor" && albumInfo.albumUsers[i].user.id === authManager.userId) return true
+            }
+        }
+        return false
     }
     property var sharedUsers: {
         var res = []
@@ -33,14 +41,15 @@ Page {
             MenuItem {
                 //% "Edit album"
                 text: qsTrId("pullDownMenu.editAlbum")
-                visible: !!(albumOwner && albumOwner.id === authManager.userId)
+                visible: page.isOwner || page.isEditor
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("EditAlbumDialog.qml"), {
                         albumId: page.albumId,
                         albumName: !!albumInfo && albumInfo.albumName ? albumInfo.albumName : "",
                         albumDescription: !!albumInfo && albumInfo.description ? albumInfo.description : "",
                         isActivityEnabled: !!albumInfo && albumInfo.isActivityEnabled !== undefined ? albumInfo.isActivityEnabled : true,
-                        albumThumbnailAssetId: !!albumInfo && albumInfo.albumThumbnailAssetId ? albumInfo.albumThumbnailAssetId : ""
+                        albumThumbnailAssetId: !!albumInfo && albumInfo.albumThumbnailAssetId ? albumInfo.albumThumbnailAssetId : "",
+                        isOwner: page.isOwner
                     })
                 }
             }
