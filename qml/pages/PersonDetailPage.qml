@@ -10,9 +10,11 @@ Page {
     property string personId
     property string personName
     property string personBirthDate
-    property string thumbnailPath
     property bool personIsFavorite: false
     property bool personIsHidden: false
+    property bool isShared: false
+    property string sharedWithText: ""
+    property string sharedByText: ""
 
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
     property real cellSize: width / assetsPerRow
@@ -20,57 +22,36 @@ Page {
     property string sortOrder: "desc"
     property bool showFavorites: false
     property string contextId: "person-" + personId
-    property var queryParams: ({"personId": personId, "withStacked": "true", "order": sortOrder})
+    property var queryParams: ({"order": sortOrder})
 
-    property var heroAssetIds: []
-    property bool heroInitialized: false
+    readonly property var heroAssetIds: personModel.heroAssetIds
 
     TimelineModel {
         id: personModel
-        api: immichApi
         context: page.contextId
         queryParams: page.queryParams
     }
 
     function refresh() {
+        bucketsList.resetScroll()
         personModel.clear()
         personModel.setLoading(true)
-        heroInitialized = false
-        var params = {"personId": personId, "withStacked": "true", "order": sortOrder}
+        var params = {"order": sortOrder}
         var showCreatedAt = page.activeFilter === "created"
         personModel.setGroupByCreatedAt(showCreatedAt)
-        if (showFavorites) params["isFavorite"] = "true"
-        if (showCreatedAt) params["orderBy"] = "createdAt"
+        if (showFavorites) params["isFavorite"] = true
         queryParams = params
         personModel.fetchBuckets()
     }
 
-    function updateHeroIds() {
-        if (heroInitialized) return
-        var ids = TimelineHelper.getHeroIds(personModel)
-        if (ids.length > 0) {
-            heroAssetIds = ids
-            heroInitialized = true
-            scrollToTopTimer.restart()
-        }
-    }
-
-    Timer {
-        id: scrollToTopTimer
-        interval: 50
-        repeat: false
-        onTriggered: bucketsList.positionViewAtBeginning()
-    }
-
-    SilicaListView {
+    TimelineGrid {
         id: bucketsList
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
-        clip: true
-        cacheBuffer: Math.max(height * 2, 2000)
-        model: personModel
+        assetModel: personModel
+        columns: page.assetsPerRow
 
         PullDownMenu {
             enabled: personModel.selectedCount === 0
@@ -78,7 +59,18 @@ Page {
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.refresh()
+                onClicked: syncEngine.sync()
+            }
+
+            MenuItem {
+                //% "Manage access"
+                text: qsTrId("peoplePage.manageAccess")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("PersonAccessPage.qml"), {
+                        personId: page.personId,
+                        personName: page.personName
+                    })
+                }
             }
 
             MenuItem {
@@ -89,174 +81,203 @@ Page {
                         personName: personName,
                         personBirthDate: personBirthDate,
                         personIsFavorite: personIsFavorite,
-                        personIsHidden: personIsHidden
+                        personIsHidden: personIsHidden,
+                        isShared: page.isShared
                     })
                     dialog.accepted.connect(function() {
                         personName = dialog.newName
                         personBirthDate = dialog.newBirthday
                         personIsFavorite = dialog.newFavorite
                         personIsHidden = dialog.newHidden
-                        immichApi.updatePerson(personId, { "name": personName, "isFavorite": personIsFavorite, "isHidden": personIsHidden })
+                        var fields = { "name": personName, "birthDate": personBirthDate, "isFavorite": personIsFavorite, "isHidden": personIsHidden }
+                        if (dialog.onlyMe) fields.userId = authManager.userId
+                        immichApi.updatePerson(personId, fields)
                     })
                 }
             }
         }
 
-        header: Column {
-            width: bucketsList.width
+        headerComponent: Component {
+            Column {
+                width: bucketsList.width
 
-            // Hero section
-            HeroImageRotator {
-                width: parent.width
-                height: heroAssetIds.length > 0 ? page.height / 2 : 0
-                assetIds: heroAssetIds
-                active: page.status === PageStatus.Active && heroAssetIds.length > 0
-                visible: heroAssetIds.length > 0
+                // Hero section
+                HeroImageRotator {
+                    width: parent.width
+                    height: heroAssetIds.length > 0 ? page.height / 2 : 0
+                    assetIds: heroAssetIds
+                    active: page.status === PageStatus.Active && heroAssetIds.length > 0
+                    visible: heroAssetIds.length > 0
 
-                Row {
-                    anchors {
-                        top: parent.top
-                        right: parent.right
-                        topMargin: Theme.paddingLarge
-                        rightMargin: Theme.horizontalPageMargin
+                    Row {
+                        anchors {
+                            top: parent.top
+                            right: parent.right
+                            topMargin: Theme.paddingLarge
+                            rightMargin: Theme.horizontalPageMargin
+                        }
+                        spacing: Theme.paddingMedium
+
+                        Icon {
+                            width: Theme.iconSizeMedium
+                            height: Theme.iconSizeMedium
+                            source: "image://theme/icon-m-incognito"
+                            visible: page.personIsHidden
+                        }
+
+                        Icon {
+                            width: Theme.iconSizeMedium
+                            height: Theme.iconSizeMedium
+                            source: "image://theme/icon-m-favorite-selected"
+                            visible: page.personIsFavorite
+                        }
                     }
-                    spacing: Theme.paddingMedium
 
-                    Icon {
-                        width: Theme.iconSizeMedium
-                        height: Theme.iconSizeMedium
-                        source: "image://theme/icon-m-incognito"
-                        visible: page.personIsHidden
-                    }
+                    Column {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        anchors.leftMargin: Theme.horizontalPageMargin
+                        anchors.rightMargin: Theme.horizontalPageMargin
+                        anchors.bottomMargin: Theme.paddingLarge
+                        spacing: Theme.paddingSmall / 2
 
-                    Icon {
-                        width: Theme.iconSizeMedium
-                        height: Theme.iconSizeMedium
-                        source: "image://theme/icon-m-favorite-selected"
-                        visible: page.personIsFavorite
+                        Label {
+                            width: parent.width
+                            //% "Unknown"
+                            text: personName || qsTrId("personDetailPage.unknown")
+                            font.pixelSize: Theme.fontSizeExtraLarge; font.bold: true
+                            color: Theme.primaryColor
+                            truncationMode: TruncationMode.Fade
+                        }
+
+                        Label {
+                            width: parent.width
+                            visible: personBirthDate !== ""
+                            text: personBirthDate !== "" ? Qt.formatDate(new Date(personBirthDate), "dd.MM.yyyy") : ""
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: Theme.secondaryColor
+                        }
+
+                        Label {
+                            width: parent.width
+                            visible: page.sharedWithText !== ""
+                            //% "Shared with %1"
+                            text: qsTrId("personDetailPage.sharedWith").arg(page.sharedWithText)
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: Theme.secondaryColor
+                        }
+
+                        Label {
+                            width: parent.width
+                            visible: page.sharedByText !== ""
+                            //% "Shared by %1"
+                            text: qsTrId("personDetailPage.sharedBy").arg(page.sharedByText)
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: Theme.secondaryColor
+                        }
+
+                        Row {
+                            spacing: Theme.paddingMedium
+
+                            Label {
+                                text: personModel.totalCount === 1
+                                    //% "1 asset"
+                                    ? qsTrId("personDetailPage.asset")
+                                    //% "%1 assets"
+                                    : qsTrId("personDetailPage.assets").arg(personModel.totalCount)
+                                font.pixelSize: Theme.fontSizeExtraSmall
+                                color: Theme.secondaryHighlightColor
+                            }
+                        }
                     }
                 }
 
+                // No hero images (most likely due to no assets at all)
                 Column {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-                    anchors.leftMargin: Theme.horizontalPageMargin
-                    anchors.rightMargin: Theme.horizontalPageMargin
-                    anchors.bottomMargin: Theme.paddingLarge
-                    spacing: Theme.paddingSmall / 2
+                    width: parent.width
+                    visible: heroAssetIds.length === 0
 
-                    Label {
-                        width: parent.width
-                        //% "Unknown"
-                        text: personName || qsTrId("personDetailPage.unknown")
-                        font.pixelSize: Theme.fontSizeExtraLarge; font.bold: true
-                        color: Theme.primaryColor
-                        truncationMode: TruncationMode.Fade
+                    PageHeader {
+                        title: personName || qsTrId("personDetailPage.unknown")
                     }
 
                     Label {
-                        width: parent.width
+                        x: Theme.horizontalPageMargin
+                        width: parent.width - 2 * Theme.horizontalPageMargin
                         visible: personBirthDate !== ""
                         text: personBirthDate !== "" ? Qt.formatDate(new Date(personBirthDate), "dd.MM.yyyy") : ""
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.secondaryColor
                     }
 
-                    Row {
-                        spacing: Theme.paddingMedium
+                    Label {
+                        x: Theme.horizontalPageMargin
+                        width: parent.width - 2 * Theme.horizontalPageMargin
+                        visible: page.sharedWithText !== ""
+                        text: qsTrId("personDetailPage.sharedWith").arg(page.sharedWithText)
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.secondaryColor
+                    }
 
-                        Label {
-                            text: personModel.totalCount === 1
-                                //% "1 asset"
-                                ? qsTrId("personDetailPage.asset")
-                                //% "%1 assets"
-                                : qsTrId("personDetailPage.assets").arg(personModel.totalCount)
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                            color: Theme.secondaryHighlightColor
-                        }
+                    Label {
+                        x: Theme.horizontalPageMargin
+                        width: parent.width - 2 * Theme.horizontalPageMargin
+                        visible: page.sharedByText !== ""
+                        text: qsTrId("personDetailPage.sharedBy").arg(page.sharedByText)
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.secondaryColor
+                    }
+
+                    Label {
+                        x: Theme.horizontalPageMargin
+                        width: parent.width - 2 * Theme.horizontalPageMargin
+                        visible: personModel.totalCount > 0
+                        text: personModel.totalCount === 1 ? qsTrId("personDetailPage.asset") : qsTrId("personDetailPage.assets").arg(personModel.totalCount)
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.secondaryHighlightColor
                     }
                 }
-            }
 
-            // No hero images (most likely due to no assets at all)
-            Column {
-                width: parent.width
-                visible: heroAssetIds.length === 0
-
-                PageHeader {
-                    title: personName || qsTrId("personDetailPage.unknown")
+                FilterBar {
+                    activeFilter: page.activeFilter
+                    sortOrder: page.sortOrder
+                    showFavorites: page.showFavorites
+                    onFilterActivated: {
+                        page.activeFilter = filter
+                        page.refresh()
+                    }
+                    onFilterFavorites: {
+                        page.showFavorites = showFavorites
+                        page.refresh()
+                    }
+                    onSortOrderToggled: {
+                        page.sortOrder = order
+                        page.refresh()
+                    }
                 }
 
-                Label {
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - 2 * Theme.horizontalPageMargin
-                    visible: personBirthDate !== ""
-                    text: personBirthDate !== "" ? Qt.formatDate(new Date(personBirthDate), "dd.MM.yyyy") : ""
-                    font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.secondaryColor
+                Item {
+                    width: parent.width
+                    height: Theme.paddingSmall
                 }
-
-                Label {
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - 2 * Theme.horizontalPageMargin
-                    visible: personModel.totalCount > 0
-                    text: personModel.totalCount === 1 ? qsTrId("personDetailPage.asset") : qsTrId("personDetailPage.assets").arg(personModel.totalCount)
-                    font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.secondaryHighlightColor
-                }
-            }
-
-            FilterBar {
-                activeFilter: page.activeFilter
-                sortOrder: page.sortOrder
-                showFavorites: page.showFavorites
-                onFilterActivated: {
-                    page.activeFilter = filter
-                    page.refresh()
-                }
-                onFilterFavorites: {
-                    page.showFavorites = showFavorites
-                    page.refresh()
-                }
-                onSortOrderToggled: {
-                    page.sortOrder = order
-                    page.refresh()
-                }
-            }
-
-            Item {
-                width: parent.width
-                height: Theme.paddingSmall
             }
         }
 
-        delegate: TimelineBucketDelegate {
-            width: bucketsList.width
-            bucketIndex: index
-            bucketKey: personModel.getBucketTimeBucket(index)
-            cellSize: page.cellSize
-            assetsPerRow: page.assetsPerRow
-            assetModel: personModel
-
-            onAssetClicked: {
-                pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
-                    assetId: assetId,
-                    isFavorite: isFavorite,
-                    isVideo: isVideo,
-                    thumbhash: thumbhash,
-                    assetModel: personModel,
-                    currentIndex: currentIndex
-                })
-            }
+        onAssetClicked: {
+            pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                assetId: assetId,
+                isFavorite: isFavorite,
+                isVideo: isVideo,
+                thumbhash: thumbhash,
+                assetModel: personModel,
+                currentIndex: currentIndex
+            })
         }
 
-        footer: Item {
-            width: parent.width
-            height: Theme.paddingLarge
+        onColumnsSettled: {
+            settingsManager.assetsPerRow = isPortrait ? columns : Math.ceil(columns / 2)
         }
-
-        VerticalScrollDecorator {}
     }
 
     // Loading
@@ -286,6 +307,8 @@ Page {
         iconSource: "image://theme/icon-m-people"
         //% "No assets"
         message: qsTrId("personDetailPage.noAssets")
+        //% "Only photos from partners and shared albums are shown"
+        hint: page.sharedByText !== "" ? qsTrId("personDetailPage.sharedEmptyHint") : ""
     }
 
     SelectionActionBar {
@@ -356,18 +379,37 @@ Page {
     }
 
     Component.onCompleted: {
-        personModel.setServerUrl(authManager.serverUrl)
         personModel.setUserId(authManager.userId)
         page.refresh()
+        immichApi.fetchPersonShares()
     }
 
     Connections {
         target: immichApi
         onFavoritesToggled: {
-            personModel.updateFavorites(assetIds, isFavorite)
             personModel.clearSelection()
             notification.show(TimelineHelper.favoritesNotification(isFavorite, assetIds.length))
         }
+        onPersonSharesReceived: {
+            var withNames = []
+            var byNames = []
+            for (var i = 0; i < shares.length; i++) {
+                var s = shares[i]
+                if (s.personId !== page.personId) continue
+                if (s.sharedById === authManager.userId) {
+                    var u = s.sharedWith
+                    withNames.push(u.name || u.email || "")
+                } else if (s.sharedWithId === authManager.userId) {
+                    var u2 = s.sharedBy
+                    byNames.push(u2.name || u2.email || "")
+                }
+            }
+            page.sharedWithText = withNames.join(", ")
+            page.sharedByText = byNames.join(", ")
+            page.isShared = page.sharedWithText !== "" || page.sharedByText !== ""
+        }
+        onPeopleShared: immichApi.fetchPersonShares()
+        onPersonUnshared: immichApi.fetchPersonShares()
         onPersonUpdated: {
             if (personId === page.personId)
                 //% "Person updated"
@@ -382,16 +424,9 @@ Page {
                 notification.show(qsTrId("notification.movedToLockedFolder"))
             }
             personModel.clearSelection()
-            page.refresh()
         }
         onAssetsDeleted: {
-            page.refresh()
             notification.show(TimelineHelper.deletedNotification(assetIds.length))
         }
-    }
-
-    Connections {
-        target: personModel
-        onBucketAssetsLoaded: page.updateHeroIds()
     }
 }

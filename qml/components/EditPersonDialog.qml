@@ -8,10 +8,12 @@ Dialog {
     property string personBirthDate
     property bool personIsFavorite
     property bool personIsHidden
+    property bool isShared: false
     property string newName: nameField.text
     property string newBirthday: personBirthDate
     property bool newFavorite: favoriteSwitch.checked
     property bool newHidden: hiddenSwitch.checked
+    readonly property bool onlyMe: isShared && applyToCombo.currentIndex === 1
 
     canAccept: newName.length > 0 && (newName !== personName || newBirthday !== personBirthDate || newFavorite !== personIsFavorite || newHidden !== personIsHidden)
 
@@ -82,6 +84,21 @@ Dialog {
             //% "Hidden"
             text: qsTrId("editPersonDialog.hidden")
             checked: editPersonDialog.personIsHidden
+        }
+
+        ComboBox {
+            id: applyToCombo
+            visible: editPersonDialog.isShared
+            //% "Apply name and birthday to"
+            label: qsTrId("editPersonDialog.applyTo")
+            currentIndex: immichApi.personUpdateStrategy() === "self" ? 1 : 0
+
+            menu: ContextMenu {
+                //% "Everyone with access"
+                MenuItem { text: qsTrId("editPersonDialog.applyEveryone") }
+                //% "Only me"
+                MenuItem { text: qsTrId("editPersonDialog.applyOnlyMe") }
+            }
         }
     }
 

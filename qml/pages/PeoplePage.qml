@@ -14,9 +14,15 @@ Page {
         id: peopleModel
     }
 
+    Connections {
+        target: syncEngine
+        onSyncFinished: if (ok) page.refresh()
+    }
+
     function refresh() {
         loading = true
         immichApi.fetchPeople(showHidden)
+        immichApi.fetchPersonShares()
     }
 
     SilicaGridView {
@@ -34,7 +40,7 @@ Page {
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
-                onClicked: page.refresh()
+                onClicked: syncEngine.sync()
             }
 
             MenuItem {
@@ -125,7 +131,7 @@ Page {
                             id: personImage
                             anchors.fill: parent
                             anchors.margins: 2
-                            source: model.thumbnailId ? "image://immich/person/" + model.thumbnailId : ""
+                            source: model.hasThumbnail ? "image://immich/person/" + model.personId : ""
                             fillMode: Image.PreserveAspectCrop
                             asynchronous: true
                             sourceSize.width: personDelegate.thumbnailSize
@@ -148,7 +154,7 @@ Page {
                             text: ((model.name || "?").charAt(0)).toUpperCase()
                             font.pixelSize: Theme.fontSizeHuge
                             color: Theme.secondaryColor
-                            visible: !model.thumbnailId
+                            visible: !model.hasThumbnail
                         }
                     }
 
@@ -169,6 +175,15 @@ Page {
                         source: "image://theme/icon-m-incognito"
                         visible: model.isHidden
                     }
+
+                    Icon {
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        width: Theme.iconSizeSmall
+                        height: Theme.iconSizeSmall
+                        source: "image://theme/icon-m-share"
+                        visible: model.isSharedByMe || model.isSharedWithMe
+                    }
                 }
 
                 Label {
@@ -187,9 +202,9 @@ Page {
                     personId: model.personId,
                     personName: model.name || "",
                     personBirthDate: model.birthDate || "",
-                    thumbnailPath: model.thumbnailPath || "",
                     personIsFavorite: model.isFavorite || false,
-                    personIsHidden: model.isHidden || false
+                    personIsHidden: model.isHidden || false,
+                    isShared: model.isSharedByMe || model.isSharedWithMe
                 })
             }
 
@@ -214,6 +229,17 @@ Page {
                         //% "Hide person"
                         : qsTrId("peoplePage.hidePerson")
                     onClicked: immichApi.updatePerson(model.personId, { "isHidden": !model.isHidden })
+                }
+
+                MenuItem {
+                    //% "Manage access"
+                    text: qsTrId("peoplePage.manageAccess")
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("PersonAccessPage.qml"), {
+                            personId: model.personId,
+                            personName: model.name || ""
+                        })
+                    }
                 }
             }
         }
@@ -241,10 +267,11 @@ Page {
 
     Connections {
         target: immichApi
-        onPersonUpdated: page.refresh()
         onPeopleReceived: {
             peopleModel.loadPeople(people)
             page.loading = false
         }
+        onPersonSharesReceived: peopleModel.setShares(shares, authManager.userId)
+        onPersonUnshared: immichApi.fetchPersonShares()
     }
 }

@@ -8,8 +8,8 @@ Dialog {
 
     //% "Select People"
     property string title: qsTrId("peoplePickerDialog.selectPeople")
-    property var model: []  // Array of {personId, name, thumbnailId}
-    property var selectedPeople: []  // Array of personIds
+    property var model: []
+    property var selectedPeople: []
 
     // Internal selection state
     property var selectedSet: {
@@ -132,7 +132,7 @@ Dialog {
                         id: personImage
                         anchors.fill: parent
                         anchors.margins: 2
-                        source: model.thumbnailId ? "image://immich/person/" + model.thumbnailId : ""
+                        source: model.hasThumbnail ? "image://immich/person/" + model.personId : ""
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
                         sourceSize.width: personDelegate.thumbnailSize
@@ -156,7 +156,7 @@ Dialog {
                         text: (model.name || "?").charAt(0).toUpperCase()
                         font.pixelSize: Theme.fontSizeLarge
                         color: Theme.secondaryColor
-                        visible: !model.thumbnailId
+                        visible: !model.hasThumbnail
                     }
 
                     // Selection checkmark
@@ -170,7 +170,7 @@ Dialog {
                         color: Theme.highlightColor
                         visible: isSelected
 
-                        Image {
+                        Icon {
                             anchors.centerIn: parent
                             source: "image://theme/icon-s-installed"
                             width: Theme.iconSizeSmall * 0.7

@@ -104,6 +104,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/SharedLinksHelper.js \
     qml/components/TimelineGrid.qml \
     qml/components/TimelineHelper.js \
+    qml/components/UserPickerDialog.qml \
     qml/components/VideoPlayer.qml \
     qml/components/ZoomSwipeArea.qml \
     qml/cover/CoverPage.qml \
@@ -135,6 +136,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/LibraryPage.qml \
     qml/pages/LockedFolderPage.qml \
     qml/pages/PeoplePage.qml \
+    qml/pages/PersonAccessPage.qml \
     qml/pages/PersonDetailPage.qml \
     qml/pages/PlaceDetailPage.qml \
     qml/pages/PlacesPage.qml \
