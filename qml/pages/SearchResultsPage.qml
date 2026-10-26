@@ -1,305 +1,404 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
 import "../components"
+import "../components/AssetGroupHelper.js" as AssetGroupHelper
 
 Page {
-   id: page
+    id: page
 
-   property var searchParams: ({})
-   property string smartSearchAssetId: ""
-   property var personIds: []
-   property string searchTitle: ""
-   property var searchAssets: []
-   property bool selectionMode: false
-   property var selectedAssets: []
-   property bool allSelectedAreFavorites: false
+    property var searchParams: ({})
+    property string smartSearchAssetId: ""
+    property var personIds: []
+    property string searchTitle: ""
+    property var searchAssets: []
+    property bool selectionMode: false
+    property var selectedAssets: []
+    property bool allSelectedAreFavorites: false
+    property bool loading: true
+    property string activeFilter: "taken"
+    property string sortOrder: searchParams.order ? searchParams.order : "desc"
 
-   function updateAllSelectedAreFavorites() {
-       if (selectedAssets.length === 0) {
-           allSelectedAreFavorites = false
-           return
-       }
-       for (var i = 0; i < searchResultsModel.count; i++) {
-           var item = searchResultsModel.get(i)
-           if (selectedAssets.indexOf(item.assetId) > -1 && !item.isFavorite) {
-               allSelectedAreFavorites = false
-               return
-           }
-       }
-       allSelectedAreFavorites = true
-   }
+    property var allAssets: []
+    property var groupedAssets: []
+    property var heroAssetIds: []
+    property int totalCount: 0
+    property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
+    property real cellSize: width / assetsPerRow
 
-   function toggleAssetSelection(assetId) {
-       var index = selectedAssets.indexOf(assetId)
-       if (index > -1) {
-           selectedAssets.splice(index, 1)
-       } else {
-           selectedAssets.push(assetId)
-       }
-       selectedAssets = selectedAssets
-       if (selectedAssets.length === 0) {
-           selectionMode = false
-       }
-       updateAllSelectedAreFavorites()
-   }
+    function updateAllSelectedAreFavorites() {
+        if (selectedAssets.length === 0) {
+            allSelectedAreFavorites = false
+            return
+        }
+        for (var i = 0; i < allAssets.length; i++) {
+            if (selectedAssets.indexOf(allAssets[i].id) > -1 && !allAssets[i].isFavorite) {
+                allSelectedAreFavorites = false
+                return
+            }
+        }
+        allSelectedAreFavorites = true
+    }
 
-   function clearSelection() {
-       selectedAssets = []
-       selectionMode = false
-   }
+    function toggleAssetSelection(assetId) {
+        var index = selectedAssets.indexOf(assetId)
+        if (index > -1) selectedAssets.splice(index, 1)
+        else selectedAssets.push(assetId)
+        selectedAssets = selectedAssets
+        if (selectedAssets.length === 0) selectionMode = false
+        updateAllSelectedAreFavorites()
+    }
 
-   function buildAssetsArray() {
-       var assets = []
-       for (var i = 0; i < searchResultsModel.count; i++) {
-           var item = searchResultsModel.get(i)
-           assets.push({
-               id: item.assetId,
-               isFavorite: item.isFavorite,
-               isVideo: item.isVideo,
-               thumbhash: item.thumbhash || ""
-           })
-       }
-       searchAssets = assets
-   }
+    function setAssetsSelected(assets, select) {
+        var current = {}
+        for (var i = 0; i < selectedAssets.length; i++) current[selectedAssets[i]] = true
+        var changed = false
+        for (var j = 0; j < assets.length; j++) {
+            var id = assets[j].id
+            var has = current[id] === true
+            if (select && !has) {
+                current[id] = true
+                changed = true
+            } else if (!select && has) {
+                current[id] = false
+                changed = true
+            }
+        }
+        if (!changed) return
+        var next = []
+        for (var k = 0; k < selectedAssets.length; k++) {
+            if (current[selectedAssets[k]]) {
+                next.push(selectedAssets[k])
+                current[selectedAssets[k]] = false
+            }
+        }
+        if (select) {
+            for (var m = 0; m < assets.length; m++) {
+                if (current[assets[m].id]) {
+                    next.push(assets[m].id)
+                    current[assets[m].id] = false
+                }
+            }
+        }
+        selectedAssets = next
+        if (select) {
+            if (!selectionMode) selectionMode = true
+        } else if (selectedAssets.length === 0) {
+            selectionMode = false
+        }
+        updateAllSelectedAreFavorites()
+    }
 
-   SilicaGridView {
-       id: resultsGrid
-       anchors.top: parent.top
-       anchors.left: parent.left
-       anchors.right: parent.right
-       anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
+    function clearSelection() {
+        selectedAssets = []
+        selectionMode = false
+    }
 
-       property int assetsPerRow: page.isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
+    function isAssetSelected(assetId) {
+        return selectedAssets.indexOf(assetId) > -1
+    }
 
-       cellWidth: width / assetsPerRow
-       cellHeight: cellWidth
+    function refresh() {
+        loading = true
+        if (smartSearchAssetId !== "") {
+            immichApi.searchSmartByParameters({ "queryAssetId": smartSearchAssetId })
+        } else {
+            if (personIds.length > 0) {
+                var params = searchParams || {}
+                params.personIds = personIds
+                searchParams = params
+            }
+            if (searchParams.isSmartSearch) {
+                immichApi.searchSmartByParameters(searchParams)
+            } else {
+                immichApi.searchByParameters(searchParams)
+            }
+        }
+    }
 
-       PullDownMenu {
-           MenuItem {
-               //% "Refresh"
-               text: qsTrId("pullDownMenu.refresh")
-               onClicked: {
-                   searchResultsModel.clear()
-                   searchBusy.loading = true
-                   if (smartSearchAssetId !== "") {
-                       immichApi.searchSmartByParameters({ "queryAssetId": smartSearchAssetId })
-                   } else if (searchParams.isSmartSearch) {
-                       immichApi.searchSmartByParameters(searchParams)
-                   } else {
-                       immichApi.searchByParameters(searchParams)
-                   }
-               }
-           }
-       }
+    function processAssets(results) {
+        var r = AssetGroupHelper.processResults(results, sortOrder === "asc", false, activeFilter === "created")
+        allAssets = r.allAssets
+        if (r.heroAssetIds.length > 0) heroAssetIds = r.heroAssetIds
+        groupedAssets = AssetGroupHelper.buildGroupedAssets(allAssets, assetsPerRow)
+        totalCount = r.totalCount
+        loading = false
+        scrollToTopTimer.restart()
+    }
 
-       header: PageHeader {
-           //% "Search Results"
-           title: searchTitle !== "" ? searchTitle : qsTrId("searchResultsPage.searchResults")
-           description: resultsGrid.count === 1
-                //% "1 result"
-                ? qsTrId("searchResultsPage.result")
-                //% "%1 results"
-                : qsTrId("searchResultsPage.results").arg(resultsGrid.count)
-       }
+    onAssetsPerRowChanged: groupedAssets = AssetGroupHelper.buildGroupedAssets(allAssets, assetsPerRow)
 
-       model: ListModel {
-           id: searchResultsModel
-       }
+    Timer {
+        id: scrollToTopTimer
+        interval: 50
+        repeat: false
+        onTriggered: flickable.positionViewAtBeginning()
+    }
 
-       delegate: AssetGridItem {
-           id: searchGridItem
-           width: resultsGrid.cellWidth
-           height: resultsGrid.cellHeight
-           assetId: model.assetId
-           isFavorite: model.isFavorite
-           isSelected: page.selectedAssets.indexOf(model.assetId) > -1
-           isVideo: model.isVideo
-           thumbhash: model.thumbhash || ""
-           duration: model.duration || ""
-           livePhotoVideoId: model.livePhotoVideoId || ""
+    SilicaListView {
+        id: flickable
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: selectionActionBar.visible ? selectionActionBar.top : parent.bottom
+        clip: true
+        cacheBuffer: Math.max(height * 2, 2000)
+        pixelAligned: true
+        model: page.groupedAssets
 
-           onClicked: {
-               if (page.selectionMode) {
-                   page.toggleAssetSelection(model.assetId)
-               } else {
-                   buildAssetsArray()
-                   pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
-                       assetId: assetId,
-                       isFavorite: isFavorite,
-                       isVideo: isVideo,
-                       thumbhash: model.thumbhash || "",
-                       currentIndex: index,
-                       albumAssets: searchAssets
-                   })
-               }
-           }
+        PullDownMenu {
+            enabled: !page.selectionMode
 
-           onPressAndHold: {
-               if (!page.selectionMode) {
-                   page.selectionMode = true
-                   page.toggleAssetSelection(model.assetId)
-               }
-           }
+            MenuItem {
+                //% "Refresh"
+                text: qsTrId("pullDownMenu.refresh")
+                onClicked: page.refresh()
+            }
+        }
 
-           onAddToSelection: {
-               if (!page.selectionMode) {
-                   page.selectionMode = true
-                   page.toggleAssetSelection(model.assetId)
-               }
-           }
-       }
+        header: Column {
+            width: flickable.width
 
-       ViewPlaceholder {
-           enabled: resultsGrid.count === 0 && !searchBusy.loading
-           //% "No results found"
-           text: qsTrId("searchResultsPage.noResults")
-           //% "Try adjusting your search filters"
-           hintText: qsTrId("searchResultsPage.noResultsHint")
-       }
+            // Hero section
+            HeroImageRotator {
+                width: parent.width
+                height: heroAssetIds.length > 0 ? page.height / 2 : 0
+                assetIds: heroAssetIds
+                active: page.status === PageStatus.Active && heroAssetIds.length > 0
+                visible: heroAssetIds.length > 0
 
-       VerticalScrollDecorator {}
-   }
+                Column {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    anchors.leftMargin: Theme.horizontalPageMargin
+                    anchors.rightMargin: Theme.horizontalPageMargin
+                    anchors.bottomMargin: Theme.paddingLarge
+                    spacing: Theme.paddingSmall / 2
 
-   LoadingIndicator {
-       id: searchBusy
-       anchors.centerIn: parent
-       loading: false
-   }
+                    Label {
+                        width: parent.width
+                        //% "Search Results"
+                        text: searchTitle !== "" ? searchTitle : qsTrId("searchResultsPage.searchResults")
+                        font.pixelSize: Theme.fontSizeExtraLarge
+                        font.bold: true
+                        color: Theme.primaryColor
+                        truncationMode: TruncationMode.Fade
+                    }
 
-   Connections {
-       target: immichApi
+                    Row {
+                        spacing: Theme.paddingMedium
 
-       onSearchResultsReceived: {
-           searchBusy.loading = false
-           searchResultsModel.clear()
+                        Label {
+                            text: totalCount === 1
+                                //% "1 asset"
+                                ? qsTrId("searchResultsPage.asset")
+                                //% "%1 assets"
+                                : qsTrId("searchResultsPage.assets").arg(totalCount)
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            color: Theme.secondaryHighlightColor
+                        }
+                    }
+                }
+            }
 
-           var items = []
-           for (var i = 0; i < results.length; i++) {
-               var asset = results[i]
-               items.push({
-                   assetId: asset.id,
-                   isFavorite: asset.isFavorite || false,
-                   isVideo: asset.type === "VIDEO",
-                   thumbhash: asset.thumbhash || "",
-                   duration: asset.duration || "",
-                   livePhotoVideoId: asset.livePhotoVideoId || "",
-                   fileCreatedAt: asset.fileCreatedAt || asset.createdAt || ""
-               })
-           }
-           // Sorting is done after results are received for smart search because there is no server side sorting
-           if (searchParams.isSmartSearch && smartSearchAssetId === "") {
-               var asc = searchParams.order === "asc"
-               items.sort(function(a, b) {
-                   if (a.fileCreatedAt < b.fileCreatedAt) return asc ? -1 : 1
-                   if (a.fileCreatedAt > b.fileCreatedAt) return asc ? 1 : -1
-                   return 0
-               })
-           }
-           for (var j = 0; j < items.length; j++) {
-               searchResultsModel.append(items[j])
-           }
-       }
+            // No hero images (most likely due to no assets at all)
+            Column {
+                width: parent.width
+                visible: heroAssetIds.length === 0
 
-       onFavoritesToggled: {
-           // Update model items
-           for (var i = 0; i < searchResultsModel.count; i++) {
-               var item = searchResultsModel.get(i)
-               if (assetIds.indexOf(item.assetId) > -1) {
-                   searchResultsModel.setProperty(i, "isFavorite", isFavorite)
-               }
-           }
-           notification.show(isFavorite
-                //% "Added to favorites"
-                ? qsTrId("notification.addedToFavorites")
-                //% "Removed from favorites"
-                : qsTrId("notification.removedFromFavorites"))
-       }
-   }
+                PageHeader {
+                    title: searchTitle !== "" ? searchTitle : qsTrId("searchResultsPage.searchResults")
+                }
 
-   // Selection Action Bar
-   SelectionActionBar {
-       id: selectionActionBar
-       anchors.left: parent.left
-       anchors.right: parent.right
-       anchors.bottom: parent.bottom
-       visible: page.selectionMode
-       selectedCount: page.selectedAssets.length
-       allAreFavorites: page.allSelectedAreFavorites
+                Row {
+                    x: Theme.horizontalPageMargin
+                    spacing: Theme.paddingMedium
 
-       onAddToFavorites: immichApi.toggleFavorite(page.selectedAssets, true)
-       onRemoveFromFavorites: immichApi.toggleFavorite(page.selectedAssets, false)
-       onShare: {
-           pageStack.push(Qt.resolvedUrl("SharePage.qml"), {
-               assetIds: page.selectedAssets,
-               shareType: "INDIVIDUAL"
-           })
-       }
-       onAddToAlbum: {
-           pageStack.push(Qt.resolvedUrl("AlbumPickerPage.qml"), {
-               assetIds: page.selectedAssets
-           })
-       }
-       onDownload: {
-           for (var i = 0; i < page.selectedAssets.length; i++) {
-               immichApi.downloadAsset(page.selectedAssets[i])
-           }
-           page.clearSelection()
-           notification.show(page.selectedAssets.length === 1
+                    Label {
+                        text: totalCount === 1 ? qsTrId("searchResultsPage.asset") : qsTrId("searchResultsPage.assets").arg(totalCount)
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.secondaryHighlightColor
+                    }
+                }
+            }
+
+            FilterBar {
+                activeFilter: page.activeFilter
+                sortOrder: page.sortOrder
+                favoritesButtonVisible: false
+                onFilterActivated: {
+                    page.activeFilter = filter
+                    page.refresh()
+                }
+                onSortOrderToggled: {
+                    page.sortOrder = order
+                    page.refresh()
+                }
+            }
+
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+        }
+
+        delegate: GroupedAssetListDelegate {
+            width: flickable.width
+            rowData: modelData
+            cellSize: page.cellSize
+            assetsPerRow: page.assetsPerRow
+            selectionMode: page.selectionMode
+            selectedAssets: page.selectedAssets
+            onAssetClicked: pageStack.push(Qt.resolvedUrl("AssetDetailPage.qml"), {
+                assetId: assetId,
+                isFavorite: isFavorite,
+                isVideo: isVideo,
+                thumbhash: thumbhash,
+                albumAssets: page.allAssets,
+                currentIndex: assetIndex
+            })
+            onAssetPressAndHold: {
+                if (!page.selectionMode) page.selectionMode = true
+                page.toggleAssetSelection(assetId)
+            }
+            onSubGroupSelectToggled: page.setAssetsSelected(assets, !allSelected)
+        }
+
+        footer: Item {
+            width: parent.width
+            height: Theme.paddingSmall
+        }
+
+        VerticalScrollDecorator {}
+    }
+
+    // Loading
+    LoadingIndicator {
+        anchors {
+            left: flickable.left
+            right: flickable.right
+            bottom: flickable.bottom
+            top: flickable.top
+            topMargin: heroAssetIds.length > 0 ? page.height / 2 : 0
+        }
+        loading: page.loading && allAssets.length === 0
+        //% "Loading search results..."
+        message: qsTrId("searchResultsPage.loading")
+    }
+
+    // Empty state
+    EmptyState {
+        anchors {
+            left: flickable.left
+            right: flickable.right
+            bottom: flickable.bottom
+            top: flickable.top
+            topMargin: heroAssetIds.length > 0 ? page.height / 2 : 0
+        }
+        visible: !page.loading && allAssets.length === 0
+        iconSource: "image://theme/icon-m-search"
+        //% "No assets"
+        message: qsTrId("searchResultsPage.noAssets")
+    }
+
+    SelectionActionBar {
+        id: selectionActionBar
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        visible: page.selectionMode
+        selectedCount: page.selectedAssets.length
+        allAreFavorites: page.allSelectedAreFavorites
+        showArchive: true
+
+        onAddToFavorites: immichApi.toggleFavorite(page.selectedAssets, true)
+        onRemoveFromFavorites: immichApi.toggleFavorite(page.selectedAssets, false)
+        onShare: pageStack.push(Qt.resolvedUrl("SharePage.qml"), {
+            assetIds: page.selectedAssets,
+            shareType: "INDIVIDUAL"
+        })
+        onAddToAlbum: pageStack.push(Qt.resolvedUrl("AlbumPickerPage.qml"), {
+            assetIds: page.selectedAssets
+        })
+        onDownload: {
+            for (var i = 0; i < page.selectedAssets.length; i++) immichApi.downloadAsset(page.selectedAssets[i])
+            page.clearSelection()
+            notification.show(page.selectedAssets.length === 1
                 //% "Downloading asset"
                 ? qsTrId("notification.downloadingAsset")
                 //% "Downloading %1 assets"
                 : qsTrId("notification.downloadingAssets").arg(page.selectedAssets.length))
-       }
-       onDeleteSelected: {
-           var selectedIds = page.selectedAssets.slice()
-           deleteRemorse.execute(selectedIds.length > 1
-                //% "Deleting %1 assets
-                ? qsTrId("notification.deletingAssets").arg(selectedIds.length)
-                //% "Deleting asset
+        }
+        onDeleteSelected: {
+            var ids = page.selectedAssets.slice()
+            deleteRemorse.execute(ids.length > 1
+                //% "Deleting %1 assets"
+                ? qsTrId("notification.deletingAssets").arg(ids.length)
+                //% "Deleting asset"
                 : qsTrId("notification.deletingAsset"), function() {
-                immichApi.deleteAssets(page.selectedAssets)
-                page.clearSelection()
-           })
-       }
-   }
+                    immichApi.deleteAssets(page.selectedAssets)
+                    page.clearSelection()
+            })
+        }
+        onMoveToArchive: immichApi.changeAssetVisibility(page.selectedAssets, "archive")
+    }
 
-   RemorsePopup {
-       id: deleteRemorse
-   }
+    RemorsePopup {
+        id: deleteRemorse
+    }
 
-   ScrollToTopButton {
-       targetFlickable: resultsGrid
-       actionBarHeight: selectionActionBar.visible ? selectionActionBar.contentHeight : 0
-       forceHidden: selectionActionBar.activeMenuType !== ""
-   }
+    ScrollToTopButton {
+        targetFlickable: flickable
+        actionBarHeight: selectionActionBar.visible ? selectionActionBar.contentHeight : 0
+        forceHidden: selectionActionBar.activeMenuType !== ""
+    }
 
-   SelectedCountButton {
-       selectedCount: page.selectedAssets.length
-       actionBarHeight: selectionActionBar.visible ? selectionActionBar.contentHeight : 0
-       forceHidden: selectionActionBar.activeMenuType !== ""
-       onClearSelection: page.clearSelection()
-   }
+    SelectedCountButton {
+        selectedCount: page.selectedAssets.length
+        actionBarHeight: selectionActionBar.visible ? selectionActionBar.contentHeight : 0
+        forceHidden: selectionActionBar.activeMenuType !== ""
+        onClearSelection: page.clearSelection()
+    }
 
-   NotificationBanner {
-       id: notification
-       anchors.bottom: page.selectionMode ? selectionActionBar.top : parent.bottom
-   }
+    NotificationBanner {
+        id: notification
+        anchors.bottom: page.selectionMode ? selectionActionBar.top : parent.bottom
+    }
 
-   Component.onCompleted: {
-       searchBusy.loading = true
-       if (smartSearchAssetId !== "") {
-           immichApi.searchSmartByParameters({ "queryAssetId": smartSearchAssetId })
-       } else {
-           if (personIds.length > 0) {
-               var params = searchParams || {}
-               params.personIds = personIds
-               searchParams = params
-           }
-           if (searchParams.isSmartSearch) {
-               immichApi.searchSmartByParameters(searchParams)
-           } else {
-               immichApi.searchByParameters(searchParams)
-           }
-       }
-   }
+    Component.onCompleted: page.refresh()
+
+    Connections {
+        target: immichApi
+        onSearchResultsReceived: page.processAssets(results)
+        onFavoritesToggled: {
+            var updated = allAssets
+            for (var i = 0; i < updated.length; i++) {
+                if (assetIds.indexOf(updated[i].id) > -1) updated[i].isFavorite = isFavorite
+            }
+            allAssets = updated.slice()
+            groupedAssets = AssetGroupHelper.buildGroupedAssets(allAssets, assetsPerRow)
+            page.clearSelection()
+            notification.show(isFavorite ? (updated.length === 1
+                //% "Added asset to favorites"
+                ? qsTrId("notification.addedAssetToFavorites")
+                //% "Added %1 assets to favorites"
+                : qsTrId("notification.addedAssetsToFavorites").arg(updated.length)) : (updated.length === 1
+                //% "Removed asset from favorites"
+                ? qsTrId("notification.removedAssetFromFavorites")
+                //% "Removed %1 assets from favorites"
+                : qsTrId("notification.removedAssetsFromFavorites").arg(updated.length)))
+        }
+        onAssetVisibilityChanged: {
+            if (visibility === "archive") {
+                //% "Moved to archive"
+                notification.show(qsTrId("notification.movedToArchive"))
+            } else if (visibility === "locked") {
+                //% "Moved to locked folder"
+                notification.show(qsTrId("notification.movedToLockedFolder"))
+            }
+            page.clearSelection()
+            page.refresh()
+        }
+        onAssetsDeleted: page.refresh()
+    }
 }
