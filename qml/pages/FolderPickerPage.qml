@@ -11,8 +11,10 @@ Dialog {
     property var suggestedFolders: {
         var home = settingsManager.homePath()
         var suggestions = []
-        suggestions.push(home + "/Pictures")
-        suggestions.push(home + "/Videos")
+        suggestions.push(StandardPaths.pictures)
+        suggestions.push(StandardPaths.videos)
+        suggestions.push(StandardPaths.pictures + "/Screenshots")
+        suggestions.push(StandardPaths.download)
         suggestions.push(home + "/android_storage/DCIM")
         suggestions.push(home + "/android_storage/Pictures")
         suggestions.push(home + "/android_storage/Download")
@@ -35,13 +37,39 @@ Dialog {
         return false
     }
 
+    function cleanPath(p) {
+        p = p.trim()
+        while (p.length > 1 && p.charAt(p.length - 1) === "/") p = p.slice(0, -1)
+        return p
+    }
+
+    function isWithin(path, folder) {
+        if (folder === "/") return path.charAt(0) === "/"
+        return path === folder || path.indexOf(folder + "/") === 0
+    }
+
+    function coveringFolder(path) {
+        for (var i = 0; i < selectedFolders.length; i++) {
+            var f = selectedFolders[i]
+            if (f !== path && isWithin(path, f)) return f
+        }
+        return ""
+    }
+
     function toggleFolder(path) {
+        path = cleanPath(path)
         var folders = selectedFolders.slice()
         var idx = folders.indexOf(path)
         if (idx >= 0) {
             folders.splice(idx, 1)
         } else {
+            if (coveringFolder(path) !== "") return
             folders.push(path)
+            for (var i = folders.length - 1; i >= 0; i--) {
+                if (folders[i] !== path && isWithin(folders[i], path)) {
+                    folders.splice(i, 1)
+                }
+            }
         }
         selectedFolders = folders
     }
@@ -121,7 +149,9 @@ Dialog {
                     width: parent.width
 
                     property bool isSelected: isFolderSelected(model.folderPath)
+                    property string coveredBy: coveringFolder(model.folderPath)
 
+                    enabled: coveredBy === ""
                     onClicked: toggleFolder(model.folderPath)
 
                     Row {
@@ -131,10 +161,11 @@ Dialog {
                         spacing: Theme.paddingMedium
 
                         Icon {
-                            source: folderDelegate.isSelected ? "image://theme/icon-m-acknowledge" : "image://theme/icon-m-folder"
+                            source: (folderDelegate.isSelected || folderDelegate.coveredBy !== "") ? "image://theme/icon-m-acknowledge" : "image://theme/icon-m-folder"
                             width: Theme.iconSizeMedium
                             height: Theme.iconSizeMedium
                             anchors.verticalCenter: parent.verticalCenter
+                            opacity: folderDelegate.coveredBy !== "" && !folderDelegate.isSelected ? Theme.opacityLow : 1.0
                         }
 
                         Column {
@@ -151,7 +182,8 @@ Dialog {
 
                             Label {
                                 width: parent.width
-                                text: model.folderPath
+                                //% "Included via %1"
+                                text: folderDelegate.coveredBy !== "" ? qsTrId("folderPickerPage.includedVia").arg(folderDelegate.coveredBy) : model.folderPath
                                 font.pixelSize: Theme.fontSizeTiny
                                 color: Theme.secondaryColor
                                 truncationMode: TruncationMode.Fade
@@ -181,15 +213,24 @@ Dialog {
                 EnterKey.enabled: text.length > 0
                 EnterKey.iconSource: "image://theme/icon-m-enter-accept"
                 EnterKey.onClicked: {
-                    var path = text.trim()
+                    var path = cleanPath(text)
                     if (path.length > 0) {
                         if (!isFolderSelected(path)) {
+                            var listed = false
+                            for (var i = 0; i < folderModel.count; i++) {
+                                if (folderModel.get(i).folderPath === path) {
+                                    listed = true
+                                    break
+                                }
+                            }
+                            if (!listed) {
+                                folderModel.append({
+                                    "folderPath": path,
+                                    "folderName": path.split("/").pop(),
+                                    "isSuggested": false
+                                })
+                            }
                             toggleFolder(path)
-                            folderModel.append({
-                                "folderPath": path,
-                                "folderName": path.split("/").pop(),
-                                "isSuggested": false
-                            })
                         }
                         text = ""
                         focus = false

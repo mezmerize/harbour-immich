@@ -12,6 +12,9 @@ Page {
     }
 
     property string assetId
+    property bool isLocal: false
+    property string currentPath: ""
+    property string currentFileName: ""
     property bool isFavorite: false
     property bool isVideo: false
     property var assetInfo: null
@@ -49,7 +52,11 @@ Page {
     function getAssetSource(index) {
         if (index < 0 || index >= totalAssets) return ""
         var asset = albumAssets ? albumAssets[index] : (assetModel ? assetModel.getAssetByAssetIndex(index) : null)
-        return asset && asset.id ? "image://immich/detail/" + asset.id : ""
+        if (!asset || !asset.id) return ""
+        if (asset.isLocal) {
+            return asset.type === "VIDEO" ? "image://localthumbnail/fit/" + asset.localPath : "file://" + asset.localPath
+        }
+        return "image://immich/detail/" + asset.id
     }
 
     function navigateToAsset(assetIndex) {
@@ -69,6 +76,23 @@ Page {
             return
         }
         if (asset && asset.id) {
+            // Local file
+            if (!albumAssets && asset.isLocal) {
+                isLocal = true
+                currentPath = asset.localPath || ""
+                currentFileName = asset.fileName || ""
+                assetInfo = assetDatabase.localAssetInfo(currentPath)
+                isVideo = asset.type === "VIDEO"
+                assetId = ""
+                isFavorite = false
+                thumbhash = ""
+                currentIndex = assetIndex
+                motionPlaying = false
+                livePhotoVideoId = ""
+
+                videoPlayer.active = isVideo
+                return
+            }
             // If timeline asset is a stack, replace with stack detail
             if (!albumAssets && asset.stackId && asset.stackId !== "") {
                 pageStack.replace(Qt.resolvedUrl("StackDetailPage.qml"), {
@@ -83,7 +107,10 @@ Page {
                 return
             }
 
-            isVideo = asset.isVideo || false
+            isLocal = false
+            currentPath = ""
+            currentFileName = ""
+            isVideo = asset.type === "VIDEO"
             assetId = asset.id
             isFavorite = asset.isFavorite || false
             thumbhash = asset.thumbhash || ""
@@ -99,6 +126,7 @@ Page {
     }
 
     function getButtonCount() {
+        if (isLocal) return 2
         var motion = motionAvailable ? 1 : 0
         if (isLockedAsset || (isOwnedByOther && !partnerShowInTimeline)) return 3 + motion
         if (isOwnedByOther && partnerShowInTimeline) return 4 + motion
@@ -135,7 +163,7 @@ Page {
         dragOffsetY: page.dragOffsetY
         openThreshold: page.dismissThreshold
         assetInfo: page.assetInfo
-        assetId: page.assetId
+        assetId: page.isLocal ? page.currentFileName : page.assetId
     }
 
     // Main content container - moves vertically during drag-to-dismiss
@@ -161,6 +189,7 @@ Page {
                 source: getAssetSource(currentIndex - 1)
                 asynchronous: true
                 cache: true
+                autoTransform: true
             }
 
             // Thumbhash placeholder for current asset
@@ -184,7 +213,8 @@ Page {
                 width: imageViewport.width
                 height: imageViewport.height
                 fillMode: Image.PreserveAspectFit
-                source: (assetId && !isVideo) ? "image://immich/detail/" + assetId : ""
+                autoTransform: true
+                source: isLocal ? (isVideo || !currentPath ? "" : "file://" + currentPath) : ((assetId && !isVideo) ? "image://immich/detail/" + assetId : "")
                 asynchronous: true
                 smooth: true
                 scale: imageScale
@@ -226,6 +256,7 @@ Page {
                 source: getAssetSource(currentIndex + 1)
                 asynchronous: true
                 cache: true
+                autoTransform: true
             }
 
             // Transition cover to prevent flash during asset switch
@@ -237,6 +268,7 @@ Page {
                 visible: false
                 asynchronous: false
                 cache: true
+                autoTransform: true
                 z: 2
             }
         }
@@ -248,7 +280,9 @@ Page {
             height: page.height
             z: 2
             visible: page.isVideo || page.motionPlaying
-            videoId: page.isVideo ? page.assetId : (page.motionPlaying ? page.livePhotoVideoId : "")
+            videoId: (page.isVideo && !page.isLocal) ? page.assetId : (page.motionPlaying ? page.livePhotoVideoId : "")
+            filePath: (page.isLocal && page.isVideo) ? page.currentPath : ""
+            posterSource: page.motionPlaying ? (page.assetId ? "image://immich/detail/" + page.assetId : "") : (page.isVideo ? (page.isLocal ? (page.currentPath ? "image://localthumbnail/fit/" + page.currentPath : "") : (page.assetId ? "image://immich/detail/" + page.assetId : "")) : "")
             controlsEnabled: !page.motionPlaying
             thumbhash: page.currentThumbhash
             controlsBottomMargin: actionBar.height
@@ -265,6 +299,14 @@ Page {
                 if (page.motionPlaying) {
                     page.motionPlaying = false
                     videoPlayer.active = false
+                }
+            }
+            onPlaybackFailed: {
+                if (page.motionPlaying) {
+                    page.motionPlaying = false
+                    videoPlayer.active = false
+                    //% "Failed to play motion photo"
+                    notification.showError(qsTrId("notification.motionPhotoFailed"))
                 }
             }
         }
@@ -298,10 +340,17 @@ Page {
             }
             onDismissRequested: pageStack.pop()
             onInfoRequested: {
-                pageStack.push(Qt.resolvedUrl("AssetInfoPage.qml"), {
-                    assetId: assetId,
-                    assetInfo: assetInfo
-                })
+                if (page.isLocal) {
+                    pageStack.push(Qt.resolvedUrl("DeviceAssetInfoPage.qml"), {
+                        filePath: page.currentPath,
+                        backedUp: false
+                    })
+                } else {
+                    pageStack.push(Qt.resolvedUrl("AssetInfoPage.qml"), {
+                        assetId: assetId,
+                        assetInfo: assetInfo
+                    })
+                }
             }
         }
 
@@ -361,7 +410,7 @@ Page {
                     width: parent.width / actionRow.buttonCount
                     icon.source: isFavorite ? "image://theme/icon-m-favorite-selected" : "image://theme/icon-m-favorite"
                     icon.color: Theme.lightPrimaryColor
-                    visible: !isOwnedByOther
+                    visible: !isOwnedByOther && !page.isLocal
                     onClicked: {
                         hapticFeedback.play()
                         immichApi.toggleFavorite([assetId], !isFavorite)
@@ -372,6 +421,7 @@ Page {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-cloud-download"
                     icon.color: Theme.lightPrimaryColor
+                    visible: !page.isLocal
                     onClicked: {
                         hapticFeedback.play()
                         immichApi.downloadAsset(assetId)
@@ -384,7 +434,7 @@ Page {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-share"
                     icon.color: Theme.lightPrimaryColor
-                    visible: !isLockedAsset
+                    visible: !isLockedAsset && !page.isLocal
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("SharePage.qml"), {
                             shareType: "INDIVIDUAL",
@@ -397,6 +447,7 @@ Page {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-search"
                     icon.color: Theme.lightPrimaryColor
+                    visible: !page.isLocal
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("SearchResultsPage.qml"), {
                             smartSearchAssetId: assetId
@@ -408,7 +459,7 @@ Page {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-video"
                     icon.color: page.motionPlaying ? Theme.highlightColor : Theme.lightPrimaryColor
-                    visible: page.motionAvailable
+                    visible: page.motionAvailable && !page.isLocal
                     onClicked: {
                         if (!page.motionPlaying) {
                             hapticFeedback.play()
@@ -422,22 +473,18 @@ Page {
                     width: parent.width / actionRow.buttonCount
                     icon.source: "image://theme/icon-m-whereami"
                     icon.color: Theme.lightPrimaryColor
-                    visible: (!isLockedAsset && !isOwnedByOther) || (isOwnedByOther && partnerShowInTimeline)
+                    visible: ((!isLockedAsset && !isOwnedByOther) || (isOwnedByOther && partnerShowInTimeline)) && !page.isLocal
                     onClicked: {
-                        var assetDate = ""
-                        if (assetInfo) {
-                            assetDate = assetInfo.localDateTime || assetInfo.fileCreatedAt || ""
-                        }
                         pageStack.pop(pageStack.find(function(p) {
                             return p.objectName === "timelinePage"
                         }))
-                        timelineModel.scrollToAsset(assetId, assetDate)
+                        timelineModel.scrollToAsset(assetId)
                     }
                 }
 
                 IconButton {
                     width: parent.width / actionRow.buttonCount
-                    visible: albumId !== ""
+                    visible: albumId !== "" && !page.isLocal
                     icon.source: "image://theme/icon-m-delete"
                     icon.color: Theme.lightPrimaryColor
                     onClicked: {
@@ -445,6 +492,34 @@ Page {
                         //% "Removing from album"
                         removeRemorse.execute(qsTrId("notification.removingFromAlbum"), function() {
                             immichApi.removeAssetsFromAlbum(albumId, [assetId])
+                        })
+                    }
+                }
+
+                IconButton {
+                    width: parent.width / actionRow.buttonCount
+                    icon.source: "image://theme/icon-m-cloud-upload"
+                    icon.color: Theme.lightPrimaryColor
+                    visible: page.isLocal
+                    onClicked: {
+                        hapticFeedback.play()
+                        immichApi.uploadAssets([page.currentPath])
+                        //% "Uploading file"
+                        notification.show(qsTrId("notification.uploadingFile"))
+                    }
+                }
+
+                IconButton {
+                    width: parent.width / actionRow.buttonCount
+                    icon.source: "image://theme/icon-m-delete"
+                    icon.color: Theme.lightPrimaryColor
+                    visible: page.isLocal
+                    onClicked: {
+                        hapticFeedback.play()
+                        var path = page.currentPath
+                        //% "Deleting file from device"
+                        removeRemorse.execute(qsTrId("notification.deletingFile"), function() {
+                            timelineModel.removeLocalFiles([path])
                         })
                     }
                 }
@@ -475,10 +550,31 @@ Page {
                 page.navigateToAsset(targetIndex)
             }
         }
+        onRenderLayoutChanged: {
+            if (!page.isLocal && page.assetId !== "" && !albumAssets) {
+                var i = assetModel.globalIndexForAssetId(page.assetId)
+                if (i >= 0 && i !== page.currentIndex) page.currentIndex = i
+            }
+        }
+        onRenderDataChanged: {
+            if (!page.isLocal || page.currentIndex < 0) return
+            var asset = assetModel.getAssetByAssetIndex(page.currentIndex)
+            if (!asset || !asset.isLocal || asset.localPath !== page.currentPath) {
+                if (page.currentIndex >= page.totalAssets) {
+                    pageStack.pop()
+                } else {
+                    page.navigateToAsset(page.currentIndex)
+                }
+            }
+        }
     }
 
     Component.onCompleted: {
-        immichApi.getAssetInfo(assetId)
+        if (assetId === "" && currentIndex >= 0) {
+            navigateToAsset(currentIndex)
+        } else {
+            immichApi.getAssetInfo(assetId)
+        }
     }
 
     Connections {
@@ -509,6 +605,18 @@ Page {
         onAssetsRemovedFromAlbum: {
             if (albumId === page.albumId) {
                 pageStack.pop()
+            }
+        }
+        onAssetUploaded: {
+            if (page.isLocal && filePath === page.currentPath) {
+                //% "Uploaded"
+                notification.show(qsTrId("notification.uploadedFile"))
+            }
+        }
+        onUploadFailed: {
+            if (page.isLocal && filePath === page.currentPath) {
+                //% "Upload failed"
+                notification.showError(qsTrId("notification.uploadFileFailed"))
             }
         }
     }

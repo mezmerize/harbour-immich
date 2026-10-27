@@ -28,6 +28,10 @@ Item {
     property bool isLockedFolderPage: false
     property bool hasSelectedOtherOwner: false
 
+    property bool selectionHasLocal: false
+    property bool selectionHasRemote: true
+    property bool selectionLocalOnly: selectionHasLocal && !selectionHasRemote
+
     signal addToFavorites()
     signal removeFromFavorites()
     signal share()
@@ -35,6 +39,7 @@ Item {
     signal stackSelected()
     signal download()
     signal deleteSelected()
+    signal upload()
     signal moveToArchive()
     signal removeFromArchive()
     signal moveToLockedFolder()
@@ -215,6 +220,40 @@ Item {
         }
     }
 
+    // Buttons - local files mode
+    Row {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: contentHeight
+        anchors.leftMargin: Theme.horizontalPageMargin
+        anchors.rightMargin: Theme.horizontalPageMargin
+        z: 3
+        visible: !isTrashPage && !isLockedFolderPage && !hasSelectedOtherOwner && selectionLocalOnly
+
+        IconButton {
+            width: parent.width / 2
+            height: parent.height
+            icon.source: "image://theme/icon-m-cloud-upload"
+
+            onClicked: {
+                actionFeedback.play()
+                upload()
+            }
+        }
+
+        IconButton {
+            width: parent.width / 2
+            height: parent.height
+            icon.source: "image://theme/icon-m-delete"
+
+            onClicked: {
+                actionFeedback.play()
+                deleteSelected()
+            }
+        }
+    }
+
     // Buttons - normal mode
     Row {
         anchors.top: parent.top
@@ -224,7 +263,7 @@ Item {
         anchors.leftMargin: Theme.horizontalPageMargin
         anchors.rightMargin: Theme.horizontalPageMargin
         z: 3
-        visible: !isTrashPage && !isLockedFolderPage && !hasSelectedOtherOwner
+        visible: !isTrashPage && !isLockedFolderPage && !hasSelectedOtherOwner && !selectionLocalOnly
 
         IconButton {
             width: parent.width / 4
@@ -294,6 +333,25 @@ Item {
             id: menuColumn
             anchors.left: parent.left
             anchors.right: parent.right
+
+            BackgroundItem {
+                width: parent.width
+                height: Theme.itemSizeSmall
+                visible: activeMenuType === "add" && selectionHasLocal
+                highlightedColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
+
+                Label {
+                    anchors.centerIn: parent
+                    //% "Upload to server"
+                    text: qsTrId("selectionActionBar.upload")
+                    color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
+                }
+
+                onClicked: {
+                    activeMenuType = ""
+                    upload()
+                }
+            }
 
             BackgroundItem {
                 width: parent.width

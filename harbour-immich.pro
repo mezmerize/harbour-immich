@@ -114,6 +114,9 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/AssetDetailPage.qml \
     qml/pages/AssetInfoPage.qml \
     qml/pages/ClientCertPage.qml \
+    qml/pages/DeviceAssetDetailPage.qml \
+    qml/pages/DeviceAssetInfoPage.qml \
+    qml/pages/DeviceFolderPage.qml \
     qml/pages/EditAlbumDialog.qml \
     qml/pages/EditAssetDialog.qml \
     qml/pages/FavoritesPage.qml \
@@ -149,6 +152,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/TimelinePage.qml \
     qml/pages/TrashPage.qml \
     qml/pages/UploadPage.qml \
+    qml/pages/UploadPickerPage.qml \
     icons/cover-icon.png \
     rpm/harbour-immich.spec \
     translations/*.ts \

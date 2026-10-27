@@ -1,6 +1,5 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
-import Sailfish.Pickers 1.0
 import "../components"
 
 Page {
@@ -15,6 +14,7 @@ Page {
   property int failCount: 0
   property real fileProgress: 0
   property string currentFileName: ""
+  readonly property int queueSize: fileListModel.count
 
   ListModel {
       id: fileListModel
@@ -23,6 +23,39 @@ Page {
   function fileNameFromPath(path) {
       var parts = path.split("/")
       return parts[parts.length - 1]
+  }
+
+  function addPaths(paths) {
+      for (var p = 0; p < paths.length; p++) {
+          var path = paths[p]
+          if (!path || path.length === 0) continue
+          var dup = false
+          for (var i = 0; i < fileListModel.count; i++) {
+              if (fileListModel.get(i).filePath === path) { dup = true; break }
+          }
+          if (!dup) fileListModel.append({ "filePath": path, "status": "pending" })
+      }
+  }
+
+  function removePaths(paths) {
+      var lookup = {}
+      for (var p = 0; p < paths.length; p++) lookup[paths[p]] = true
+      for (var i = fileListModel.count - 1; i >= 0; i--) {
+          if (lookup[fileListModel.get(i).filePath]) fileListModel.remove(i)
+      }
+  }
+
+  function queuedPathsInFolder(folderPath) {
+      var folder = folderPath
+      while (folder.length > 1 && folder.charAt(folder.length - 1) === "/") {
+          folder = folder.substring(0, folder.length - 1)
+      }
+      var result = []
+      for (var i = 0; i < fileListModel.count; i++) {
+          var p = fileListModel.get(i).filePath
+          if (folder === "/" ? p.charAt(0) === "/" : p.indexOf(folder + "/") === 0) result.push(p)
+      }
+      return result
   }
 
   function startUpload() {
@@ -128,7 +161,7 @@ Page {
                       anchors.centerIn: parent
                       spacing: Theme.paddingMedium
 
-                      Image {
+                      Icon {
                           source: "image://theme/icon-m-add"
                           anchors.verticalCenter: parent.verticalCenter
                       }
@@ -142,7 +175,7 @@ Page {
                   }
 
                   onClicked: {
-                      pageStack.push(contentPickerComponent)
+                      pageStack.push(Qt.resolvedUrl("UploadPickerPage.qml"), { uploadPage: uploadPage })
                   }
               }
 
@@ -236,7 +269,7 @@ Page {
               spacing: Theme.paddingMedium
               visible: uploadState === "complete"
 
-              Image {
+              Icon {
                   anchors.horizontalCenter: parent.horizontalCenter
                   source: failCount === 0 ? "image://theme/icon-l-acknowledge" : "image://theme/icon-l-attention"
                   sourceSize.width: Theme.iconSizeLarge
@@ -282,7 +315,10 @@ Page {
                   visible: failCount > 0
               }
 
-              Item { width: 1; height: Theme.paddingLarge }
+              Item {
+                  width: parent.width
+                  height: Theme.paddingLarge
+              }
 
               Button {
                   anchors.horizontalCenter: parent.horizontalCenter
@@ -314,7 +350,7 @@ Page {
                       anchors.verticalCenter: parent.verticalCenter
                       spacing: Theme.paddingMedium
 
-                      Image {
+                      Icon {
                           id: statusIcon
                           anchors.verticalCenter: parent.verticalCenter
                           sourceSize.width: Theme.iconSizeSmall
@@ -353,23 +389,5 @@ Page {
       }
 
       VerticalScrollDecorator {}
-  }
-
-  Component {
-      id: contentPickerComponent
-      ContentPickerPage {
-          //% "Select files"
-          title: qsTrId("uploadPage.selectFiles")
-          onSelectedContentPropertiesChanged: {
-              var path = selectedContentProperties.filePath
-              if (path && path.length > 0) {
-                  // Avoid duplicates
-                  for (var i = 0; i < fileListModel.count; i++) {
-                      if (fileListModel.get(i).filePath === path) return
-                  }
-                  fileListModel.append({ "filePath": path, "status": "pending" })
-              }
-          }
-      }
   }
 }
