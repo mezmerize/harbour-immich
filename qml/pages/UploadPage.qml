@@ -25,6 +25,14 @@ Page {
       return parts[parts.length - 1]
   }
 
+  function addSelectedFile(path) {
+      // Avoid duplicates
+      for (var i = 0; i < fileListModel.count; i++) {
+          if (fileListModel.get(i).filePath === path) return
+      }
+      fileListModel.append({ "filePath": path, "status": "pending" })
+  }
+
   function startUpload() {
       if (fileListModel.count === 0) return
       var paths = []
@@ -142,7 +150,7 @@ Page {
                   }
 
                   onClicked: {
-                      pageStack.push(contentPickerComponent)
+                      contentPickerDialog.open()
                   }
               }
 
@@ -355,19 +363,17 @@ Page {
       VerticalScrollDecorator {}
   }
 
-  Component {
-      id: contentPickerComponent
-      ContentPickerPage {
-          //% "Select files"
-          title: qsTrId("uploadPage.selectFiles")
-          onSelectedContentPropertiesChanged: {
-              var path = selectedContentProperties.filePath
+  MultiContentPickerDialog {
+      id: contentPickerDialog
+      //% "Select files"
+      title: qsTrId("uploadPage.selectFiles")
+      //% "Select"
+      acceptText: qsTrId("uploadPage.select")
+      onAccepted: {
+          for (var i = 0; i < selectedContent.count; i++) {
+              var path = selectedContent.get(i).filePath
               if (path && path.length > 0) {
-                  // Avoid duplicates
-                  for (var i = 0; i < fileListModel.count; i++) {
-                      if (fileListModel.get(i).filePath === path) return
-                  }
-                  fileListModel.append({ "filePath": path, "status": "pending" })
+                  uploadPage.addSelectedFile(path)
               }
           }
       }

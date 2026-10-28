@@ -2419,6 +2419,11 @@
         <source>Select files</source>
         <translation>Vyberte soubory</translation>
     </message>
+    <message id="uploadPage.select">
+        <location filename="../qml/pages/UploadPage.qml" line="371"/>
+        <source>Select</source>
+        <translation>Vybrat</translation>
+    </message>
     <message id="stackDetailPage.releaseToClose">
         <location filename="../qml/pages/StackDetailPage.qml" line="142"/>
         <source>Release to close</source>

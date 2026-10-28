@@ -2307,6 +2307,11 @@
         <source>Select files</source>
         <translation>Välj filer</translation>
     </message>
+    <message id="uploadPage.select">
+        <location filename="../qml/pages/UploadPage.qml" line="371"/>
+        <source>Select</source>
+        <translation>Välj</translation>
+    </message>
     <message id="editAssetDialog.title">
         <location filename="../qml/pages/EditAssetDialog.qml" line="32"/>
         <source>Edit Asset</source>
