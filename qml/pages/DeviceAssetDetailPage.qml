@@ -4,6 +4,7 @@ import QtFeedback 5.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     // DeviceFolderModel instance and the index to start on

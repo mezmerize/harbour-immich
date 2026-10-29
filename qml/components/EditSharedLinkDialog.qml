@@ -154,6 +154,7 @@ Dialog {
                 property var durations: [-1, 0, 30*60*1000, 60*60*1000, 6*60*60*1000, 24*60*60*1000, 7*24*60*60*1000, 30*24*60*60*1000, 90*24*60*60*1000, 365*24*60*60*1000]
 
                 menu: ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                     MenuItem {
                         text: {
                             if (linkData.expiresAt) {

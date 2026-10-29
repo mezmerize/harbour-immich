@@ -5,6 +5,7 @@ import "../components"
 import "../components/TimelineHelper.js" as TimelineHelper
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property string personId
@@ -54,6 +55,7 @@ Page {
         columns: page.assetsPerRow
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             enabled: personModel.selectedCount === 0
 
             MenuItem {

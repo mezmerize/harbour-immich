@@ -15,6 +15,14 @@ Item {
         { id: "mine", label: qsTrId("albumsPage.filterMyAlbums"), icon: "image://theme/icon-m-person" }
     ]
     property string activeFilter: filterModel[0].id
+
+    // In the light scheme Theme.highlightColor has poor contrast on the selected
+    // pill, so the ACTIVE state uses the dark primary text color instead (the
+    // dark-scheme look is unchanged).
+    readonly property color activeTextColor: Theme.colorScheme === Theme.DarkOnLight
+        ? Theme.primaryColor
+        : Theme.highlightColor
+
     property real filterButtonWidth: (filterRow.width - Theme.paddingSmall - Theme.paddingMedium) / filterModel.length
 
     signal filterActivated(string filter)
@@ -57,14 +65,14 @@ Item {
                         source: modelData.icon
                         width: Theme.iconSizeSmall
                         height: Theme.iconSizeSmall
-                        color: filterBar.isActive(modelData.id) ? Theme.highlightColor : Theme.primaryColor
+                        color: filterBar.isActive(modelData.id) ? activeTextColor : Theme.primaryColor
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
                     Label {
                         text: modelData.label
                         font.pixelSize: Theme.fontSizeExtraSmall
-                        color: filterBar.isActive(modelData.id) ? Theme.highlightColor : Theme.primaryColor
+                        color: filterBar.isActive(modelData.id) ? activeTextColor : Theme.primaryColor
                         anchors.verticalCenter: parent.verticalCenter
                         truncationMode: TruncationMode.Fade
                     }

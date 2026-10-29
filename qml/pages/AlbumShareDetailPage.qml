@@ -6,6 +6,7 @@ import "../components/TimelineHelper.js" as TimelineHelper
 import "../components/SharedLinksHelper.js" as SharedLinksHelper
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property string linkId: ""
@@ -68,6 +69,7 @@ Page {
         columns: page.assetsPerRow
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             enabled: sharedLinkModel.selectedCount === 0
 
             MenuItem {

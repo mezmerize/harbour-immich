@@ -4144,5 +4144,96 @@
         <source>Enter the full path to a folder on your device. The folder must exist.</source>
         <translation>Vložte úplnou cestu ke složce na vašem zařízení. Složka musí existovat.</translation>
     </message>
-</context>
+    <message id="memoryDetailPage.assetCounter">
+            <location filename="../qml/pages/MemoryDetailPage.qml" line="382"/>
+            <source>%1 / %2</source>
+            <translation>%1 / %2</translation>
+        </message>
+    <message id="onThisDevicePage.empty">
+            <location filename="../qml/pages/OnThisDevicePage.qml" line="285"/>
+            <source>No media files in this folder</source>
+            <translation>Žádné multimediální soubory v této složce</translation>
+        </message>
+    <message id="searchResultsPage.noResults">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="154"/>
+            <source>No results found</source>
+            <translation>Nenalezeny žádné výsledky</translation>
+        </message>
+    <message id="searchResultsPage.noResultsHint">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="156"/>
+            <source>Try adjusting your search filters</source>
+            <translation>Zkuste upravit kriteria pro vyhledávání</translation>
+        </message>
+    <message id="searchResultsPage.result">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="100"/>
+            <source>1 result</source>
+            <translation>1 výsledek</translation>
+        </message>
+    <message id="searchResultsPage.results">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="102"/>
+            <source>%1 results</source>
+            <oldsource>%1 result(s)</oldsource>
+            <translation>%1 výsledků</translation>
+        </message>
+    <message id="selectionActionBar.clear">
+            <location filename="../qml/components/SelectionActionBar.qml" line="462"/>
+            <source>Clear selection</source>
+            <translation>Vymazat výběr</translation>
+        </message>
+    <message id="selectionActionBar.selected">
+            <location filename="../qml/components/SelectionActionBar.qml" line="106"/>
+            <source>%1 selected</source>
+            <translation>%1 vybráno</translation>
+        </message>
+    <message id="settingsPage.appearance">
+            <location filename="../qml/pages/SettingsPage.qml" line="101"/>
+            <source>Appearance</source>
+            <translation>Vzhled</translation>
+        </message>
+    <message id="settingsPage.appearanceDark">
+            <location filename="../qml/pages/SettingsPage.qml" line="119"/>
+            <source>Dark</source>
+            <translation>Tmavý</translation>
+        </message>
+    <message id="settingsPage.appearanceInfo">
+            <location filename="../qml/pages/SettingsPage.qml" line="103"/>
+            <source>Appearance of the app. System follows the phone's color scheme setting; changes apply immediately.</source>
+            <translation>Vzhled aplikace. Možnost Systém sleduje nastavení barevného schématu telefonu. Změny se projeví okamžitě.</translation>
+        </message>
+    <message id="settingsPage.appearanceLight">
+            <location filename="../qml/pages/SettingsPage.qml" line="115"/>
+            <source>Light</source>
+            <translation>Světlý</translation>
+        </message>
+    <message id="settingsPage.appearanceSystem">
+            <location filename="../qml/pages/SettingsPage.qml" line="111"/>
+            <source>System</source>
+            <translation>Systém</translation>
+        </message>
+    <message id="settingsPage.loadedAssets">
+            <location filename="../qml/pages/SettingsPage.qml" line="724"/>
+            <source>Loaded assets</source>
+            <translation>Počet aktuálně načtených položek</translation>
+        </message>
+    <message id="stackDetailPage.assetCounter">
+            <location filename="../qml/pages/StackDetailPage.qml" line="405"/>
+            <source>%1 / %2</source>
+            <translation>%1 / %2</translation>
+        </message>
+    <message id="timelineBucketDelegate.item">
+            <location filename="../qml/components/TimelineBucketDelegate.qml" line="276"/>
+            <source>1 item</source>
+            <translation>1 položka</translation>
+        </message>
+    <message id="timelineBucketDelegate.items">
+            <location filename="../qml/components/TimelineBucketDelegate.qml" line="278"/>
+            <source>%1 items</source>
+            <translation>%1 položek</translation>
+        </message>
+    <message id="uploadPage.selectFiles">
+            <location filename="../qml/pages/UploadPage.qml" line="364"/>
+            <source>Select files</source>
+            <translation>Vyberte soubory</translation>
+        </message>
+    </context>
 </TS>

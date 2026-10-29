@@ -7,6 +7,13 @@ Item {
     height: Theme.itemSizeExtraSmall + Theme.paddingMedium
 
     property string sortOrder: "desc" // desc, asc
+
+    // In the light scheme Theme.highlightColor has poor contrast on the selected
+    // pill, so the ACTIVE state uses the dark primary text color instead (the
+    // dark-scheme look is unchanged).
+    readonly property color activeTextColor: Theme.colorScheme === Theme.DarkOnLight
+        ? Theme.primaryColor
+        : Theme.highlightColor
     property bool showFavorites: false
     property bool showUpcoming: false
     property real filterButtonWidth: (filterRow.width - Theme.paddingSmall - sortButton.width - Theme.paddingMedium) / 2
@@ -46,7 +53,7 @@ Item {
                     source: "image://theme/icon-m-date"
                     width: Theme.iconSizeSmall
                     height: Theme.iconSizeSmall
-                    color: filterBar.showUpcoming ? Theme.highlightColor : Theme.primaryColor
+                    color: filterBar.showUpcoming ? activeTextColor : Theme.primaryColor
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
@@ -54,7 +61,7 @@ Item {
                     //% "Upcoming"
                     text: qsTrId("filterBar.upcoming")
                     font.pixelSize: Theme.fontSizeExtraSmall
-                    color: filterBar.showUpcoming ? Theme.highlightColor : Theme.primaryColor
+                    color: filterBar.showUpcoming ? activeTextColor : Theme.primaryColor
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -84,7 +91,7 @@ Item {
                     source: "image://theme/icon-m-favorite"
                     width: Theme.iconSizeSmall
                     height: Theme.iconSizeSmall
-                    color: filterBar.showFavorites ? Theme.highlightColor : Theme.primaryColor
+                    color: filterBar.showFavorites ? activeTextColor : Theme.primaryColor
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
@@ -92,7 +99,7 @@ Item {
                     //% "Favorites"
                     text: qsTrId("filterBar.favorites")
                     font.pixelSize: Theme.fontSizeExtraSmall
-                    color: filterBar.showFavorites ? Theme.highlightColor : Theme.primaryColor
+                    color: filterBar.showFavorites ? activeTextColor : Theme.primaryColor
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }

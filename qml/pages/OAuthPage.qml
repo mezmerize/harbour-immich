@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: oauthPage
     objectName: "oauthPage"
 

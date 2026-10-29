@@ -13,6 +13,13 @@ Item {
         { id: "created", label: qsTrId("filterBar.created"), icon: "image://theme/icon-m-clock" }
     ]
     property string activeFilter: filterModel[0].id
+
+    // In the light scheme Theme.highlightColor has poor contrast on the selected
+    // pill, so the ACTIVE state uses the dark primary text color instead (the
+    // dark-scheme look is unchanged).
+    readonly property color activeTextColor: Theme.colorScheme === Theme.DarkOnLight
+        ? Theme.primaryColor
+        : Theme.highlightColor
     property string sortOrder: "desc" // desc, asc
     property bool favoritesButtonVisible: true
     property bool showFavorites: false
@@ -57,13 +64,13 @@ Item {
                         width: Theme.iconSizeSmall
                         height: Theme.iconSizeSmall
                         anchors.verticalCenter: parent.verticalCenter
-                        color: filterBar.activeFilter === modelData.id ? Theme.highlightColor : Theme.primaryColor
+                        color: filterBar.activeFilter === modelData.id ? activeTextColor : Theme.primaryColor
                     }
 
                     Label {
                         text: modelData.label
                         font.pixelSize: Theme.fontSizeExtraSmall
-                        color: filterBar.activeFilter === modelData.id ? Theme.highlightColor : Theme.primaryColor
+                        color: filterBar.activeFilter === modelData.id ? activeTextColor : Theme.primaryColor
                         anchors.verticalCenter: parent.verticalCenter
                     }
                 }
@@ -105,7 +112,7 @@ Item {
                     //% "Favorites"
                     text: qsTrId("filterBar.favorites")
                     font.pixelSize: Theme.fontSizeExtraSmall
-                    color: filterBar.showFavorites ? Theme.highlightColor : Theme.primaryColor
+                    color: filterBar.showFavorites ? activeTextColor : Theme.primaryColor
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }

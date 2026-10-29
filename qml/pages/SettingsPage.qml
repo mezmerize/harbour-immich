@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: settingsPage
 
     property var serverStats: null
@@ -49,11 +50,23 @@ Page {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
     }
 
+    // Light (appearance) mode: a selected/pressed MenuItem resolves its label to
+    // palette.highlightColor, which is a light color and unreadable on our forced
+    // light menu surface. Force the label dark in light mode; otherwise keep
+    // Silica's stock behavior exactly (dark mode is byte-for-byte unchanged).
+    // Uses the item's own palette/down/highlighted so it is correct per item.
+    function menuItemColor(mi) {
+        if (Theme.colorScheme === Theme.DarkOnLight)
+            return "black"
+        return (mi.down || mi.highlighted) ? mi.palette.highlightColor : mi.palette.primaryColor
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             MenuItem {
                 //% "Library"
                 text: qsTrId("pullDownMenu.library")
@@ -94,6 +107,43 @@ Page {
                 text: qsTrId("settingsPage.display")
             }
 
+            ComboBox {
+                //% "Appearance"
+                label: qsTrId("settingsPage.appearance")
+                //% "Appearance of the app. System follows the phone's color scheme setting; changes apply immediately."
+                description: qsTrId("settingsPage.appearanceInfo")
+                currentIndex: {
+                    if (Theme.colorScheme === Theme.DarkOnLight) return 1
+                    if (settingsManager.themeMode === "dark") return 2
+                    return 0
+                }
+                menu: ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
+                    MenuItem {
+                        //% "System"
+                        text: qsTrId("settingsPage.appearanceSystem")
+                        color: settingsPage.menuItemColor(this)
+                    }
+                    MenuItem {
+                        //% "Light"
+                        text: qsTrId("settingsPage.appearanceLight")
+                        color: settingsPage.menuItemColor(this)
+                    }
+                    MenuItem {
+                        //% "Dark"
+                        text: qsTrId("settingsPage.appearanceDark")
+                        color: settingsPage.menuItemColor(this)
+                    }
+                }
+                onCurrentIndexChanged: {
+                    var modes = ["system", "light", "dark"]
+                    var mode = modes[currentIndex]
+                    if (mode !== settingsManager.themeMode) {
+                        settingsManager.themeMode = mode
+                    }
+                }
+            }
+
             Slider {
                 width: parent.width
                 //% "Assets per row (portrait)"
@@ -117,10 +167,17 @@ Page {
                 description: qsTrId("settingsPage.detailQualityInfo")
                 currentIndex: settingsManager.detailQuality === "fullsize" ? 1 : 0
                 menu: ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                     //% "Preview (faster, less data)"
-                    MenuItem { text: qsTrId("settingsPage.detailQualityPreview") }
+                    MenuItem {
+                        text: qsTrId("settingsPage.detailQualityPreview")
+                        color: settingsPage.menuItemColor(this)
+                    }
                     //% "Original (full resolution)"
-                    MenuItem { text: qsTrId("settingsPage.detailQualityOriginal") }
+                    MenuItem {
+                        text: qsTrId("settingsPage.detailQualityOriginal")
+                        color: settingsPage.menuItemColor(this)
+                    }
                 }
                 onCurrentIndexChanged: {
                     var quality = currentIndex === 1 ? "fullsize" : "preview"
@@ -183,12 +240,22 @@ Page {
                 currentIndex: settingsManager.memoriesThumbnailSize
                 enabled: settingsManager.showMemoriesBar
                 menu: ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                     //% "Small"
-                    MenuItem { text: qsTrId("settingsPage.memoriesThumbnailSizeSmall") }
+                    MenuItem {
+                        text: qsTrId("settingsPage.memoriesThumbnailSizeSmall")
+                        color: settingsPage.menuItemColor(this)
+                    }
                     //% "Medium"
-                    MenuItem { text: qsTrId("settingsPage.memoriesThumbnailSizeMedium") }
+                    MenuItem {
+                        text: qsTrId("settingsPage.memoriesThumbnailSizeMedium")
+                        color: settingsPage.menuItemColor(this)
+                    }
                     //% "Large"
-                    MenuItem { text: qsTrId("settingsPage.memoriesThumbnailSizeLarge") }
+                    MenuItem {
+                        text: qsTrId("settingsPage.memoriesThumbnailSizeLarge")
+                        color: settingsPage.menuItemColor(this)
+                    }
                 }
                 onCurrentIndexChanged: {
                     if (currentIndex !== settingsManager.memoriesThumbnailSize) {
@@ -210,20 +277,24 @@ Page {
                     return 2
                 }
                 menu: ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                     //% "Left"
                     MenuItem {
                         text: qsTrId("settingsPage.scrollToTopPositionLeft")
                         enabled: settingsManager.selectedCountPosition !== "bottom-left"
+                        color: settingsPage.menuItemColor(this)
                     }
                     //% "Center"
                     MenuItem {
                         text: qsTrId("settingsPage.scrollToTopPositionCenter")
                         enabled: settingsManager.selectedCountPosition !== "bottom-center"
+                        color: settingsPage.menuItemColor(this)
                     }
                     //% "Right"
                     MenuItem {
                         text: qsTrId("settingsPage.scrollToTopPositionRight")
                         enabled: settingsManager.selectedCountPosition !== "bottom-right"
+                        color: settingsPage.menuItemColor(this)
                     }
                 }
                 onCurrentIndexChanged: {
@@ -246,28 +317,34 @@ Page {
                     return idx >= 0 ? idx : 0
                 }
                 menu: ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                     //% "Top left"
                     MenuItem {
                         text: qsTrId("settingsPage.selectedCountPositionTopLeft")
+                        color: settingsPage.menuItemColor(this)
                     }
                     //% "Top right"
                     MenuItem {
                         text: qsTrId("settingsPage.selectedCountPositionTopRight")
+                        color: settingsPage.menuItemColor(this)
                     }
                     //% "Bottom left"
                     MenuItem {
                         text: qsTrId("settingsPage.selectedCountPositionBottomLeft")
                         enabled: settingsManager.scrollToTopPosition !== "left"
+                        color: settingsPage.menuItemColor(this)
                     }
                     //% "Bottom center"
                     MenuItem {
                         text: qsTrId("settingsPage.selectedCountPositionBottomCenter")
                         enabled: settingsManager.scrollToTopPosition !== "center"
+                        color: settingsPage.menuItemColor(this)
                     }
                     //% "Bottom right"
                     MenuItem {
                         text: qsTrId("settingsPage.selectedCountPositionBottomRight")
                         enabled: settingsManager.scrollToTopPosition !== "right"
+                        color: settingsPage.menuItemColor(this)
                     }
                 }
                 onCurrentIndexChanged: {
@@ -296,14 +373,17 @@ Page {
                     return 0
                 }
                 menu: ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                     MenuItem {
                         //% "Automatic (system)"
                         text: qsTrId("settingsPage.languageAutomatic")
+                        color: settingsPage.menuItemColor(this)
                     }
                     Repeater {
                         model: settingsManager.availableLanguages()
                         MenuItem {
                             text: modelData.name
+                            color: settingsPage.menuItemColor(this)
                         }
                     }
                 }
@@ -636,6 +716,7 @@ Page {
                     return 4
                 }
                 menu: ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                     MenuItem {
                         //% "Manual only"
                         text: qsTrId("settingsPage.backupScanIntervalManual")

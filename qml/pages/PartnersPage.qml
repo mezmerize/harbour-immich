@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property var sharedByPartners: [] // Partners I share with
@@ -22,6 +23,7 @@ Page {
         contentHeight: column.height
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
@@ -63,6 +65,7 @@ Page {
                     property var partner: modelData
 
                     menu: ContextMenu {
+                        backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                         MenuItem {
                             //% "Remove partner"
                             text: qsTrId("partnersPage.removePartner")
@@ -144,6 +147,7 @@ Page {
                     property var partner: modelData
 
                     menu: ContextMenu {
+                        backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                         MenuItem {
                             text: partner.inTimeline
                                 //% "Hide from timeline"

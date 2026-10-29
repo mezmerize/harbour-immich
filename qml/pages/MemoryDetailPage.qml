@@ -102,7 +102,7 @@ Page {
     }
 
     backNavigation: false
-    backgroundColor: "transparent"
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
 
     onStatusChanged: {
         if (status === PageStatus.Active && currentIsVideo && !videoPlayer.active) {

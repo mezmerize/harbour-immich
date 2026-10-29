@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     readonly property bool isLoggingIn: authManager.checkingServer
@@ -26,6 +27,7 @@ Page {
         contentHeight: column.height
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             MenuItem {
                 //% "Client certificate"
                 text: qsTrId("pullDownMenu.clientCertificate")

@@ -5,6 +5,7 @@ import "../components"
 import "../components/TimelineHelper.js" as TimelineHelper
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
     objectName: "timelinePage"
 
@@ -45,6 +46,7 @@ Page {
         highlightAssetId: page.highlightAssetId
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             MenuItem {
                 //% "Settings"
                 text: qsTrId("pullDownMenu.settings")

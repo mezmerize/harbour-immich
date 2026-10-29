@@ -4,6 +4,7 @@ import Sailfish.Pickers 1.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     function fileNameFromPath(path) {

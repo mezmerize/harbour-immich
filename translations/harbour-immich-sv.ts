@@ -4099,5 +4099,95 @@
         <source>Select folder</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
+    <message id="memoryDetailPage.assetCounter">
+            <location filename="../qml/pages/MemoryDetailPage.qml" line="382"/>
+            <source>%1 / %2</source>
+            <translation>%1 / %2</translation>
+        </message>
+    <message id="onThisDevicePage.empty">
+            <location filename="../qml/pages/OnThisDevicePage.qml" line="285"/>
+            <source>No media files in this folder</source>
+            <translation>Inga mediafiler i denna mapp</translation>
+        </message>
+    <message id="searchResultsPage.noResults">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="154"/>
+            <source>No results found</source>
+            <translation>Inga träffar</translation>
+        </message>
+    <message id="searchResultsPage.noResultsHint">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="156"/>
+            <source>Try adjusting your search filters</source>
+            <translation>Försök justera dina sökfilter</translation>
+        </message>
+    <message id="searchResultsPage.result">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="100"/>
+            <source>1 result</source>
+            <translation>1 träff</translation>
+        </message>
+    <message id="searchResultsPage.results">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="102"/>
+            <source>%1 results</source>
+            <translation>%1 träffar</translation>
+        </message>
+    <message id="selectionActionBar.clear">
+            <location filename="../qml/components/SelectionActionBar.qml" line="462"/>
+            <source>Clear selection</source>
+            <translation>Avmarkera alla</translation>
+        </message>
+    <message id="selectionActionBar.selected">
+            <location filename="../qml/components/SelectionActionBar.qml" line="106"/>
+            <source>%1 selected</source>
+            <translation>%1 markerad(e)</translation>
+        </message>
+    <message id="settingsPage.appearance">
+            <location filename="../qml/pages/SettingsPage.qml" line="101"/>
+            <source>Appearance</source>
+            <translation>Utseende</translation>
+        </message>
+    <message id="settingsPage.appearanceDark">
+            <location filename="../qml/pages/SettingsPage.qml" line="119"/>
+            <source>Dark</source>
+            <translation>Mörkt</translation>
+        </message>
+    <message id="settingsPage.appearanceInfo">
+            <location filename="../qml/pages/SettingsPage.qml" line="103"/>
+            <source>Appearance of the app. System follows the phone's color scheme setting; changes apply immediately.</source>
+            <translation>Utseendet på appen. Alternativet System följer telefonens färgschema. Ändringar tillämpas omedelbart.</translation>
+        </message>
+    <message id="settingsPage.appearanceLight">
+            <location filename="../qml/pages/SettingsPage.qml" line="115"/>
+            <source>Light</source>
+            <translation>Ljust</translation>
+        </message>
+    <message id="settingsPage.appearanceSystem">
+            <location filename="../qml/pages/SettingsPage.qml" line="111"/>
+            <source>System</source>
+            <translation>System</translation>
+        </message>
+    <message id="settingsPage.loadedAssets">
+            <location filename="../qml/pages/SettingsPage.qml" line="724"/>
+            <source>Loaded assets</source>
+            <translation>Inlästa tillgångar</translation>
+        </message>
+    <message id="stackDetailPage.assetCounter">
+            <location filename="../qml/pages/StackDetailPage.qml" line="405"/>
+            <source>%1 / %2</source>
+            <translation>%1 / %2</translation>
+        </message>
+    <message id="timelineBucketDelegate.item">
+            <location filename="../qml/components/TimelineBucketDelegate.qml" line="276"/>
+            <source>1 item</source>
+            <translation>1 objekt</translation>
+        </message>
+    <message id="timelineBucketDelegate.items">
+            <location filename="../qml/components/TimelineBucketDelegate.qml" line="278"/>
+            <source>%1 items</source>
+            <translation>%1 objekt</translation>
+        </message>
+    <message id="uploadPage.selectFiles">
+            <location filename="../qml/pages/UploadPage.qml" line="364"/>
+            <source>Select files</source>
+            <translation>Välj filer</translation>
+        </message>
+    </context>
 </TS>

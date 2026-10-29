@@ -5,6 +5,8 @@
 #include <QSettings>
 #include <QStringList>
 
+class QProcess;
+
 class SettingsManager : public QObject
 {
     Q_OBJECT
@@ -34,6 +36,9 @@ class SettingsManager : public QObject
     Q_PROPERTY(QString downloadFolder READ downloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged)
     Q_PROPERTY(QStringList customBrowseFolders READ customBrowseFolders WRITE setCustomBrowseFolders NOTIFY customBrowseFoldersChanged)
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
+    Q_PROPERTY(QString themeMode READ themeMode WRITE setThemeMode NOTIFY themeModeChanged)
+    Q_PROPERTY(int systemColorScheme READ systemColorScheme NOTIFY systemColorSchemeChanged)
+    Q_PROPERTY(int systemDefaultScheme READ systemDefaultScheme NOTIFY systemDefaultSchemeChanged)
 
 public:
     explicit SettingsManager(QObject *parent = nullptr);
@@ -133,6 +138,17 @@ public:
     void setLanguage(const QString &language);
     Q_INVOKABLE QVariantList availableLanguages() const;
 
+    QString themeMode() const;
+    void setThemeMode(const QString &mode);
+    // OS color scheme from dconf: 0 = dark, 1 = light, -1 = not (yet) known.
+    // Populated asynchronously by refreshSystemColorScheme().
+    int systemColorScheme() const;
+    // Silica's initial (system-derived) scheme, captured at app start — the
+    // fallback for "system" mode when dconf is unavailable.
+    int systemDefaultScheme() const;
+    Q_INVOKABLE void refreshSystemColorScheme();
+    Q_INVOKABLE void setSystemDefaultScheme(int scheme);
+
 signals:
     void detailQualityChanged();
     void assetsPerRowChanged();
@@ -160,9 +176,15 @@ signals:
     void downloadFolderChanged();
     void customBrowseFoldersChanged();
     void languageChanged();
+    void themeModeChanged();
+    void systemColorSchemeChanged();
+    void systemDefaultSchemeChanged();
 
 private:
     QSettings m_settings;
+    int m_systemColorScheme = -1; // dconf: 0=dark, 1=light, -1=unknown
+    int m_systemDefaultScheme = -1;
+    QProcess *m_dconfProcess = nullptr;
 };
 
 #endif

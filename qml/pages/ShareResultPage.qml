@@ -12,6 +12,7 @@ Page {
        contentHeight: column.height
 
        PullDownMenu {
+           backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
            MenuItem {
                //% "Copy to clipboard"
                text: qsTrId("pullDownMenu.copyToClipboard")
