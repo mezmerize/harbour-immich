@@ -42,6 +42,7 @@ public:
     QString getAccessToken() const;
     Q_INVOKABLE void reloginWithStoredCredentials();
     Q_INVOKABLE void validateToken();
+    Q_INVOKABLE void fetchCurrentUser();
     void setOAuthCredentials(const QString &serverUrl, const QString &accessToken, const QString &userEmail);
 
 signals:
@@ -86,7 +87,6 @@ private:
     void proceedWithStoredCredentials();
     void setEmail(const QString &email);
     void setUserId(const QString &userId);
-    void fetchCurrentUser();
 };
 
 #endif

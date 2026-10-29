@@ -104,95 +104,36 @@ Page {
                     visible: !page.loadingStatus
                 }
 
-                // PIN dots display
-                Row {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: Theme.paddingLarge
+                PinPad {
+                    id: pinPad
+                    width: parent.width
                     visible: !page.loadingStatus
+                    enabled: !page.checkingPin
 
-                    Repeater {
-                        model: 6
-                        Rectangle {
-                            width: Theme.iconSizeSmall
-                            height: width
-                            radius: width / 2
-                            color: index < enteredPin.length ? Theme.highlightColor : "transparent"
-                            border.width: 2
-                            border.color: Theme.highlightColor
-                        }
-                    }
-                }
-
-                // Number pad
-                Grid {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    columns: 3
-                    spacing: Theme.paddingMedium
-
-                    Repeater {
-                        model: [1, 2, 3, 4, 5, 6, 7, 8, 9, -1, 0, -2]
-
-                        BackgroundItem {
-                            width: Theme.itemSizeLarge
-                            height: Theme.itemSizeLarge
-                            enabled: modelData !== -1
-
-                            Rectangle {
-                                anchors.fill: parent
-                                radius: width / 2
-                                color: parent.highlighted ? Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity) : Theme.rgba(Theme.highlightBackgroundColor, 0.1)
-                                visible: modelData !== -1
-                            }
-
-                            Label {
-                                anchors.centerIn: parent
-                                text: modelData >= 0 ? modelData.toString() : ""
-                                font.pixelSize: Theme.fontSizeExtraLarge
-                                color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
-                                visible: modelData >= 0
-                            }
-
-                            // Backspace icon
-                            Icon {
-                                anchors.centerIn: parent
-                                source: "image://theme/icon-m-backspace"
-                                visible: modelData === -2
-                            }
-
-                            onClicked: {
-                                if (modelData >= 0) {
-                                    if (enteredPin.length < 6) {
-                                        enteredPin = enteredPin + modelData.toString()
-                                        if (enteredPin.length === 6) {
-                                            if (pinExists) {
-                                                // Verify existing PIN
-                                                checkingPin = true
-                                                immichApi.verifyPinCode(enteredPin)
-                                            } else if (!creatingPin) {
-                                                // First entry of new PIN
-                                                firstPin = enteredPin
-                                                enteredPin = ""
-                                                creatingPin = true
-                                            } else {
-                                                // Confirmation entry
-                                                if (enteredPin === firstPin) {
-                                                    checkingPin = true
-                                                    immichApi.createPinCode(enteredPin)
-                                                } else {
-                                                    enteredPin = ""
-                                                    firstPin = ""
-                                                    creatingPin = false
-                                                    //% "PINs to do not match, try again"
-                                                    notification.show(qsTrId("notification.pinMismatch"))
-                                                }
-                                            }
-                                        }
-                                    }
-                                } else if (modelData === -2) {
-                                    if (enteredPin.length > 0) {
-                                        enteredPin = enteredPin.substring(0, enteredPin.length - 1)
-                                    }
-                                }
+                    onCompleted: {
+                        page.enteredPin = pin
+                        if (page.pinExists) {
+                            // Verify existing PIN
+                            page.checkingPin = true
+                            immichApi.verifyPinCode(page.enteredPin)
+                        } else if (!page.creatingPin) {
+                            // First entry of new PIN
+                            page.firstPin = page.enteredPin
+                            page.enteredPin = ""
+                            pinPad.clear()
+                            page.creatingPin = true
+                        } else {
+                            // Confirmation entry
+                            if (page.enteredPin === page.firstPin) {
+                                page.checkingPin = true
+                                immichApi.createPinCode(page.enteredPin)
+                            } else {
+                                page.enteredPin = ""
+                                page.firstPin = ""
+                                page.creatingPin = false
+                                pinPad.clear()
+                                //% "PINs to do not match, try again"
+                                notification.show(qsTrId("notification.pinMismatch"))
                             }
                         }
                     }
@@ -453,8 +394,15 @@ Page {
                 loadLockedAssets()
             } else {
                 enteredPin = ""
+                pinPad.clear()
                 //% "Invalid PIN"
                 notification.show(qsTrId("notification.invalidPin"))
+            }
+        }
+        onErrorOccurred: {
+            if (checkingPin) {
+                checkingPin = false
+                pinPad.clear()
             }
         }
         onPinCodeCreated: {

@@ -84,6 +84,8 @@ public:
     Q_INVOKABLE void removePartner(const QString &userId);
     Q_INVOKABLE void updatePartner(const QString &userId, bool inTimeline);
     Q_INVOKABLE void createPinCode(const QString &pin);
+    Q_INVOKABLE void changePinCode(const QString &newPin, const QString &currentPin, const QString &password);
+    Q_INVOKABLE void resetPinCode(const QString &currentPin, const QString &password);
     Q_INVOKABLE void verifyPinCode(const QString &pin);
     Q_INVOKABLE void fetchAuthStatus();
     static QHttpMultiPart* buildUploadMultiPart(QFile *file, const QFileInfo &fileInfo);
@@ -145,8 +147,10 @@ signals:
     void partnerRemoved(const QString &userId);
     void partnerUpdated(const QString &userId, bool inTimeline);
     void pinCodeCreated();
+    void pinCodeChanged();
+    void pinCodeReset();
     void pinCodeVerified(bool success);
-    void authStatusReceived(bool pinCodeExists);
+    void authStatusReceived(bool pinCodeExists, bool hasPassword);
 
 private slots:
     void onSearchByParametersReplyFinished();

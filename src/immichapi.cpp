@@ -1424,13 +1424,7 @@ void ImmichApi::fetchPartners(const QString &direction)
     const QString meCol = direction == QLatin1String("shared-by") ? QStringLiteral("shared_by_id") : QStringLiteral("shared_with_id");
     QJsonArray partners;
     QSqlQuery q(db->db());
-    q.prepare(QStringLiteral(
-        "SELECT p.%1, p.in_timeline,"
-        " COALESCE(su.name, au.name), COALESCE(su.email, au.email)"
-        " FROM partner p"
-        " LEFT JOIN sync_user su ON su.id = p.%1"
-        " LEFT JOIN auth_user au ON au.id = p.%1"
-        " WHERE p.%2 = ?").arg(otherCol, meCol));
+    q.prepare(QStringLiteral("SELECT p.%1, p.in_timeline, COALESCE(su.name, au.name), COALESCE(su.email, au.email) FROM partner p LEFT JOIN sync_user su ON su.id = p.%1 LEFT JOIN auth_user au ON au.id = p.%1 WHERE p.%2 = ?").arg(otherCol, meCol));
     q.addBindValue(me);
     if (q.exec()) {
         while (q.next()) {
@@ -1505,6 +1499,47 @@ void ImmichApi::createPinCode(const QString &pin)
     });
 }
 
+void ImmichApi::changePinCode(const QString &newPin, const QString &currentPin, const QString &password)
+{
+    qInfo() << "ImmichApi: Changing PIN code";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/auth/pin-code"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    json["newPinCode"] = newPin;
+    if (!currentPin.isEmpty()) {
+        json["pinCode"] = currentPin;
+    } else {
+        json["password"] = password;
+    }
+    QJsonDocument doc(json);
+
+    QNetworkReply *reply = m_networkManager->put(request, doc.toJson());
+    connectReply(reply, [this](const QByteArray &) {
+        emit pinCodeChanged();
+    });
+}
+
+void ImmichApi::resetPinCode(const QString &currentPin, const QString &password)
+{
+    qInfo() << "ImmichApi: Resetting PIN code";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/auth/pin-code"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    QJsonObject json;
+    if (!currentPin.isEmpty()) {
+        json["pinCode"] = currentPin;
+    } else {
+        json["password"] = password;
+    }
+    auto *buffer = createJsonBuffer(json);
+    QNetworkReply *reply = m_networkManager->sendCustomRequest(request, "DELETE", buffer);
+    buffer->setParent(reply);
+    connectReply(reply, [this](const QByteArray &) {
+        emit pinCodeReset();
+    });
+}
+
 void ImmichApi::verifyPinCode(const QString &pin)
 {
     qInfo() << "ImmichApi: Unlocking session with PIN code";
@@ -1536,8 +1571,9 @@ void ImmichApi::fetchAuthStatus()
         QJsonDocument doc = QJsonDocument::fromJson(response);
         QJsonObject obj = doc.object();
         bool pinCodeExists = obj.value("pinCode").toBool(false);
+        bool hasPassword = obj.value("password").toBool(false);
         qInfo() << "ImmichApi: Auth status - pinCode exists:" << pinCodeExists;
-        emit authStatusReceived(pinCodeExists);
+        emit authStatusReceived(pinCodeExists, hasPassword);
     });
 }
 

@@ -11,12 +11,15 @@ Page {
     property bool aboutLoading: false
     property bool statsFailed: false
     property bool aboutFailed: false
+    property bool pinExists: false
+    property bool pinStatusLoading: true
 
     Component.onCompleted: {
         statsLoading = true
         aboutLoading = true
         immichApi.fetchServerStatistics()
         immichApi.fetchServerAbout()
+        immichApi.fetchAuthStatus()
     }
 
     Connections {
@@ -29,7 +32,14 @@ Page {
             settingsPage.serverAbout = about
             settingsPage.aboutLoading = false
         }
+        onAuthStatusReceived: {
+            settingsPage.pinExists = pinCodeExists
+            settingsPage.pinStatusLoading = false
+        }
         onErrorOccurred: {
+            if (pinStatusLoading) {
+                pinStatusLoading = false
+            }
             if (statsLoading && !serverStats) {
                 statsFailed = true
                 statsLoading = false
@@ -336,6 +346,22 @@ Page {
                 //% "Import a client (mTLS) certificate for servers that require it. Changes take effect immediately."
                 description: qsTrId("settingsPage.clientCertificateInfo")
                 onClicked: pageStack.push(Qt.resolvedUrl("ClientCertPage.qml"))
+            }
+
+            ValueButton {
+                //% "Locked folder PIN"
+                label: qsTrId("settingsPage.lockedFolderPin")
+                value: {
+                    //% "Loading..."
+                    if (settingsPage.pinStatusLoading) return qsTrId("settingsPage.lockedFolderPinLoading")
+                    //% "Set"
+                    if (settingsPage.pinExists) return qsTrId("settingsPage.lockedFolderPinSet")
+                    //% "Not set"
+                    return qsTrId("settingsPage.lockedFolderPinNotSet")
+                }
+                //% "Create, change or reset the PIN code for your locked folder."
+                description: qsTrId("settingsPage.lockedFolderPinInfo")
+                onClicked: pageStack.push(Qt.resolvedUrl("PinCodePage.qml"))
             }
 
             SectionHeader {
@@ -674,8 +700,8 @@ Page {
                 onClicked: {
                     var currentDate = settingsManager.backupFromDate ? new Date(settingsManager.backupFromDate) : new Date()
                     var dialog = pageStack.push("Sailfish.Silica.DatePickerDialog", {
-                                                    date: currentDate
-                                                })
+                        date: currentDate
+                    })
                     dialog.accepted.connect(function() {
                         settingsManager.backupFromDate = dialog.date.toISOString().substring(0, 10)
                     })
@@ -700,10 +726,10 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: settingsManager.backupEnabled
                 text: backupManager.backgroundActive
-                //% "Cancel backup"
-                      ? qsTrId("settingsPage.cancelBackup")
-                        //% "Backup now"
-                      : qsTrId("settingsPage.scanNow")
+                    //% "Cancel backup"
+                    ? qsTrId("settingsPage.cancelBackup")
+                    //% "Backup now"
+                    : qsTrId("settingsPage.scanNow")
                 onClicked: {
                     if (backupManager.backgroundActive) {
                         backupManager.cancelBackup()
@@ -781,11 +807,11 @@ Page {
                 value: {
                     var last = syncEngine.lastSyncTime
                     syncEngine.syncing
-                    //% "Sync in progress..."
-                            ? qsTrId("settingsPage.syncInProgress")
-                            : (last ? Qt.formatDateTime(new Date(last), "dd.MM.yyyy hh:mm:ss")
-                                      //% "Not synced yet"
-                                    : qsTrId("settingsPage.notSynced"))
+                        //% "Sync in progress..."
+                        ? qsTrId("settingsPage.syncInProgress")
+                        : (last ? Qt.formatDateTime(new Date(last), "dd.MM.yyyy hh:mm:ss")
+                        //% "Not synced yet"
+                        : qsTrId("settingsPage.notSynced"))
                 }
             }
 

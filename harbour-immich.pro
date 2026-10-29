@@ -97,6 +97,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/MemoriesFilterBar.qml \
     qml/components/NotificationBanner.qml \
     qml/components/PeoplePickerDialog.qml \
+    qml/components/PinPad.qml \
     qml/components/QRCode.qml \
     qml/components/ScrollToTopButton.qml \
     qml/components/SelectedCountButton.qml \
@@ -141,6 +142,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/PeoplePage.qml \
     qml/pages/PersonAccessPage.qml \
     qml/pages/PersonDetailPage.qml \
+    qml/pages/PinCodePage.qml \
     qml/pages/PlaceDetailPage.qml \
     qml/pages/PlacesPage.qml \
     qml/pages/SearchPage.qml \
