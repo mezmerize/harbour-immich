@@ -200,11 +200,12 @@
         <location filename="../qml/pages/AlbumShareDetailPage.qml" line="75"/>
         <location filename="../qml/pages/AlbumsPage.qml" line="101"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="51"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="36"/>
         <location filename="../qml/pages/DeviceFolderPage.qml" line="69"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="47"/>
         <location filename="../qml/pages/FoldersPage.qml" line="89"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="153"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="226"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="167"/>
         <location filename="../qml/pages/MemoriesPage.qml" line="62"/>
         <location filename="../qml/pages/OnThisDevicePage.qml" line="67"/>
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="51"/>
@@ -309,7 +310,7 @@
         <location filename="../qml/pages/AlbumDetailPage.qml" line="313"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="272"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="453"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="478"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="426"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="421"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="420"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="394"/>
@@ -335,7 +336,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="223"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="213"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="383"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="395"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="336"/>
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="222"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="341"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="354"/>
@@ -351,7 +352,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="225"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="215"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="385"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="397"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="338"/>
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="224"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="343"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="356"/>
@@ -367,7 +368,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="231"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="221"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="391"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="403"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="344"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="349"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="362"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="336"/>
@@ -382,7 +383,7 @@
         <location filename="../qml/pages/ArchivedPage.qml" line="233"/>
         <location filename="../qml/pages/FavoritesPage.qml" line="223"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="393"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="405"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="346"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="351"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="364"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="338"/>
@@ -608,7 +609,7 @@
     </message>
     <message id="pullDownMenu.library">
         <location filename="../qml/pages/AlbumsPage.qml" line="83"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="59"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="75"/>
         <location filename="../qml/pages/TimelinePage.qml" line="56"/>
         <source>Library</source>
         <translation type="unfinished"></translation>
@@ -616,7 +617,7 @@
     <message id="pullDownMenu.search">
         <location filename="../qml/pages/AlbumsPage.qml" line="89"/>
         <location filename="../qml/pages/LibraryPage.qml" line="20"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="65"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="81"/>
         <location filename="../qml/pages/TimelinePage.qml" line="62"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
@@ -625,7 +626,7 @@
         <location filename="../qml/pages/AlbumsPage.qml" line="95"/>
         <location filename="../qml/pages/LibraryPage.qml" line="32"/>
         <location filename="../qml/pages/SearchPage.qml" line="174"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="77"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="93"/>
         <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1399,685 +1400,735 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.settings">
-        <location filename="../qml/pages/SettingsPage.qml" line="89"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="105"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.display">
-        <location filename="../qml/pages/SettingsPage.qml" line="94"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="110"/>
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.assetsPerRow">
-        <location filename="../qml/pages/SettingsPage.qml" line="100"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="116"/>
         <source>Assets per row (portrait)</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.detailQuality">
-        <location filename="../qml/pages/SettingsPage.qml" line="115"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="131"/>
         <source>Detail viewer quality</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.detailQualityInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="117"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="133"/>
         <source>Controls image quality when viewing photos in full screen. Preview is faster and uses less data, Original shows the full resolution image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.detailQualityPreview">
-        <location filename="../qml/pages/SettingsPage.qml" line="121"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="137"/>
         <source>Preview (faster, less data)</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.detailQualityOriginal">
-        <location filename="../qml/pages/SettingsPage.qml" line="123"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="139"/>
         <source>Original (full resolution)</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.videoAutoPlay">
-        <location filename="../qml/pages/SettingsPage.qml" line="135"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="151"/>
         <source>Auto-play videos</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.videoAutoPlayInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="137"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="153"/>
         <source>Start playing videos automatically when opened in the detail view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.videoAutoPlayWifiOnly">
-        <location filename="../qml/pages/SettingsPage.qml" line="146"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="162"/>
         <source>Auto-play on Wi-Fi only</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.videoAutoPlayWifiOnlyInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="148"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="164"/>
         <source>Auto-play streamed videos only when connected to Wi-Fi. Videos stored on the device are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.motionPhotos">
-        <location filename="../qml/pages/SettingsPage.qml" line="158"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="174"/>
         <source>Motion photos</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.motionPhotosInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="160"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="176"/>
         <source>Show an indicator on motion photos and allow playing their video part in the detail view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.showMemoriesBar">
-        <location filename="../qml/pages/SettingsPage.qml" line="169"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="185"/>
         <source>Show memories bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.showMemoriesBarInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="171"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="187"/>
         <source>Display memories at the top of the timeline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSize">
-        <location filename="../qml/pages/SettingsPage.qml" line="180"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="196"/>
         <source>Memories thumbnail size</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSizeInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="182"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="198"/>
         <source>Controls appearance size of the memory thumbnails on Timeline page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSizeSmall">
-        <location filename="../qml/pages/SettingsPage.qml" line="187"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="203"/>
         <source>Small</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSizeMedium">
-        <location filename="../qml/pages/SettingsPage.qml" line="189"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="205"/>
         <source>Medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.memoriesThumbnailSizeLarge">
-        <location filename="../qml/pages/SettingsPage.qml" line="191"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="207"/>
         <source>Large</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.scrollToTopPosition">
-        <location filename="../qml/pages/SettingsPage.qml" line="202"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="218"/>
         <source>Scroll to top button position</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.scrollToTopPositionInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="204"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="220"/>
         <source>Controls position of the scroll to top button on the pages which display assets in lists exceeding the viewport height.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.scrollToTopPositionLeft">
-        <location filename="../qml/pages/SettingsPage.qml" line="215"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="231"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.scrollToTopPositionCenter">
-        <location filename="../qml/pages/SettingsPage.qml" line="220"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="236"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.scrollToTopPositionRight">
-        <location filename="../qml/pages/SettingsPage.qml" line="225"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="241"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.selectedCountPosition">
-        <location filename="../qml/pages/SettingsPage.qml" line="239"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="255"/>
         <source>Selected count button position</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.selectedCountPositionInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="241"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="257"/>
         <source>Controls position of the button showing the number of selected assets. Tap it to clear the selection. It cannot share a position with scroll to top button.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.selectedCountPositionTopLeft">
-        <location filename="../qml/pages/SettingsPage.qml" line="251"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="267"/>
         <source>Top left</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.selectedCountPositionTopRight">
-        <location filename="../qml/pages/SettingsPage.qml" line="255"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="271"/>
         <source>Top right</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.selectedCountPositionBottomLeft">
-        <location filename="../qml/pages/SettingsPage.qml" line="259"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="275"/>
         <source>Bottom left</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.selectedCountPositionBottomCenter">
-        <location filename="../qml/pages/SettingsPage.qml" line="264"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="280"/>
         <source>Bottom center</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.selectedCountPositionBottomRight">
-        <location filename="../qml/pages/SettingsPage.qml" line="269"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="285"/>
         <source>Bottom right</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.language">
-        <location filename="../qml/pages/SettingsPage.qml" line="284"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="288"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="300"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="304"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.languageInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="290"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="306"/>
         <source>Application language. Automatic follows the system language. Changes will take effect after application restart.</source>
         <oldsource>Application language. Automatic follows the system language. Changes take effect immediately.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.languageAutomatic">
-        <location filename="../qml/pages/SettingsPage.qml" line="301"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="317"/>
         <source>Automatic (system)</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.security">
-        <location filename="../qml/pages/SettingsPage.qml" line="320"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="336"/>
         <source>Security</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.clientCertificate">
-        <location filename="../qml/pages/SettingsPage.qml" line="325"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="341"/>
         <source>Client certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.clientCertificateNone">
-        <location filename="../qml/pages/SettingsPage.qml" line="328"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="344"/>
         <source>Not configured</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.clientCertificateExpired">
-        <location filename="../qml/pages/SettingsPage.qml" line="330"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="346"/>
         <source>Expired</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.clientCertificateExpiringSoon">
-        <location filename="../qml/pages/SettingsPage.qml" line="332"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="348"/>
         <source>Expiring soon</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.clientCertificateConfigured">
-        <location filename="../qml/pages/SettingsPage.qml" line="334"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="350"/>
         <source>Configured</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.clientCertificateInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="337"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="353"/>
         <source>Import a client (mTLS) certificate for servers that require it. Changes take effect immediately.</source>
         <oldsource>Import a client (mTLS) certificate for servers that require it. Changes take effect after restarting the app.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.cover">
-        <location filename="../qml/pages/SettingsPage.qml" line="343"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="400"/>
         <source>Cover</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.coverShowAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="348"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="405"/>
         <source>Show assets on cover</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.coverShowAssetsInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="350"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="407"/>
         <source>Display photos on the app cover instead of the default icon.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.coverSlideshow">
-        <location filename="../qml/pages/SettingsPage.qml" line="359"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="416"/>
         <source>Slideshow rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.coverSlideshowInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="361"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="418"/>
         <source>Continuously rotate through images while the cover is visible. When off, the image changes only once when the app is minimized.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.downloads">
-        <location filename="../qml/pages/SettingsPage.qml" line="371"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="428"/>
         <source>Downloads</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.downloadsFolder">
-        <location filename="../qml/pages/SettingsPage.qml" line="376"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="433"/>
         <source>Downloads folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.downloadsFolderInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="379"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="436"/>
         <source>Folder where downloaded photos and videos will be saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backup">
-        <location filename="../qml/pages/SettingsPage.qml" line="387"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="444"/>
         <source>Backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupEnabled">
-        <location filename="../qml/pages/SettingsPage.qml" line="392"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="449"/>
         <source>Automatic backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupEnabledInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="394"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="451"/>
         <source>Automatically back up photos and videos from selected folders to your Immich server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backingUp">
-        <location filename="../qml/pages/SettingsPage.qml" line="426"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="483"/>
         <source>Backing up: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupActive">
-        <location filename="../qml/pages/SettingsPage.qml" line="430"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="487"/>
         <source>Backup active</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupIdle">
-        <location filename="../qml/pages/SettingsPage.qml" line="433"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="490"/>
         <source>Backup idle</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backedUpCount">
-        <location filename="../qml/pages/SettingsPage.qml" line="468"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="525"/>
         <source>Backed up: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.pendingCount">
-        <location filename="../qml/pages/SettingsPage.qml" line="475"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="532"/>
         <source>Pending: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.failedCount">
-        <location filename="../qml/pages/SettingsPage.qml" line="482"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="539"/>
         <source>Failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.watchedFolders">
-        <location filename="../qml/pages/SettingsPage.qml" line="512"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="569"/>
         <source>Watched folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.foldersSelected">
-        <location filename="../qml/pages/SettingsPage.qml" line="519"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="576"/>
         <source>%1 folder(s) selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupPhotosOnCellular">
-        <location filename="../qml/pages/SettingsPage.qml" line="530"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="587"/>
         <source>Back up photos on cellular</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupPhotosOnCellularInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="532"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="589"/>
         <source>Allow photo backup when not connected to Wi-Fi.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupVideosOnCellular">
-        <location filename="../qml/pages/SettingsPage.qml" line="542"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="599"/>
         <source>Back up videos on cellular</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupVideosOnCellularInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="544"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="601"/>
         <source>Allow video backup when not connected to Wi-Fi.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupOnlyWhileCharging">
-        <location filename="../qml/pages/SettingsPage.qml" line="554"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="611"/>
         <source>Only while charging</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupOnlyWhileChargingInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="556"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="613"/>
         <source>Only run backup when the device is connected to a charger.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupDeleteAfter">
-        <location filename="../qml/pages/SettingsPage.qml" line="566"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="623"/>
         <source>Delete after backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupDeleteAfterInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="568"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="625"/>
         <source>Remove photos and videos from device after successful backup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupAutoDisable">
-        <location filename="../qml/pages/SettingsPage.qml" line="578"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="635"/>
         <source>Auto-disable after backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupAutoDisableInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="580"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="637"/>
         <source>Automatically turn off backup after all pending files have been uploaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupShowStatusIcon">
-        <location filename="../qml/pages/SettingsPage.qml" line="602"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="659"/>
         <source>Show asset backup status icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupShowStatusIconInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="604"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="661"/>
         <source>Show an icon on the timeline for backed-up assets.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.showDeviceMediaOnTimeline">
-        <location filename="../qml/pages/SettingsPage.qml" line="614"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="671"/>
         <source>Show device media on timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.showDeviceMediaOnTimelineInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="616"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="673"/>
         <source>Display photos and videos from watched folders that are not yet backed up in the timeline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanInterval">
-        <location filename="../qml/pages/SettingsPage.qml" line="627"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="684"/>
         <source>Backup interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanIntervalInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="629"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="686"/>
         <source>How often to run a backup cycle. Shorter intervals may impact battery life. Selecting manual only will require triggering the backup manually by the button below.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanIntervalManual">
-        <location filename="../qml/pages/SettingsPage.qml" line="641"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="698"/>
         <source>Manual only</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanInterval30">
-        <location filename="../qml/pages/SettingsPage.qml" line="646"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="703"/>
         <source>30 minutes</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanInterval60">
-        <location filename="../qml/pages/SettingsPage.qml" line="651"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="708"/>
         <source>1 hour</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanInterval240">
-        <location filename="../qml/pages/SettingsPage.qml" line="656"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="713"/>
         <source>4 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupScanInterval480">
-        <location filename="../qml/pages/SettingsPage.qml" line="661"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="718"/>
         <source>8 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupFromDate">
-        <location filename="../qml/pages/SettingsPage.qml" line="671"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="728"/>
         <source>Back up files from</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupFromDateAll">
-        <location filename="../qml/pages/SettingsPage.qml" line="673"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="730"/>
         <source>All files (no limit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupFromDateInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="693"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="750"/>
         <source>Only back up files modified after this date. Long press to clear.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.cancelBackup">
-        <location filename="../qml/pages/SettingsPage.qml" line="704"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="761"/>
         <source>Cancel backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.scanNow">
-        <location filename="../qml/pages/SettingsPage.qml" line="706"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="763"/>
         <source>Backup now</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.backupClearDbRemorse">
-        <location filename="../qml/pages/SettingsPage.qml" line="735"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="792"/>
         <source>Clearing backup database</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.loggingOut">
-        <location filename="../qml/pages/SettingsPage.qml" line="764"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="821"/>
         <source>Logging out</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.catalog">
-        <location filename="../qml/pages/SettingsPage.qml" line="774"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="831"/>
         <source>Catalog Synchronization</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.syncLastTime">
-        <location filename="../qml/pages/SettingsPage.qml" line="779"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="836"/>
         <source>Last synchronization</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.syncInProgress">
-        <location filename="../qml/pages/SettingsPage.qml" line="785"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="796"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="803"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="810"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="817"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="842"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="853"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="860"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="867"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="874"/>
         <source>Sync in progress...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.notSynced">
-        <location filename="../qml/pages/SettingsPage.qml" line="788"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="845"/>
         <source>Not synced yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.syncAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="794"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="851"/>
         <source>Assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.syncAlbums">
-        <location filename="../qml/pages/SettingsPage.qml" line="801"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="858"/>
         <source>Albums</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.syncPeople">
-        <location filename="../qml/pages/SettingsPage.qml" line="808"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="865"/>
         <source>People</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.syncLocalFiles">
-        <location filename="../qml/pages/SettingsPage.qml" line="815"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="872"/>
         <source>Local files</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.syncNow">
-        <location filename="../qml/pages/SettingsPage.qml" line="823"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="880"/>
         <source>Sync now</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.rebuildCatalog">
-        <location filename="../qml/pages/SettingsPage.qml" line="831"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="888"/>
         <source>Rebuild catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.rebuildingCatalog">
-        <location filename="../qml/pages/SettingsPage.qml" line="836"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="893"/>
         <source>Rebuilding catalog</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.clearImageCache">
-        <location filename="../qml/pages/SettingsPage.qml" line="987"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1044"/>
         <source>Clear image cache</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.clearingImageCache">
-        <location filename="../qml/pages/SettingsPage.qml" line="991"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1048"/>
         <source>Clearing image cache</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.imageCacheCleared">
-        <location filename="../qml/pages/SettingsPage.qml" line="994"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1051"/>
         <source>Image cache cleared</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.serverSyncResult">
-        <location filename="../qml/pages/SettingsPage.qml" line="1027"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1084"/>
         <source>Verified: %1 already on server, %2 new to upload</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.dbCleared">
-        <location filename="../qml/pages/SettingsPage.qml" line="1031"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1088"/>
         <source>Backup database cleared</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.mediaTypesFetchFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="1035"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1092"/>
         <source>Could not fetch supported media types from server - backup disabled</source>
         <oldsource>Could not fetch supported media types from server. Backup disabled.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupSkipVerification">
-        <location filename="../qml/pages/SettingsPage.qml" line="590"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="647"/>
         <source>Skip asset verification</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settingsPage.lockedFolderPin">
+        <location filename="../qml/pages/SettingsPage.qml" line="359"/>
+        <source>Locked folder PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.lockedFolderPinLoading">
+        <location filename="../qml/pages/SettingsPage.qml" line="362"/>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.lockedFolderPinSet">
+        <location filename="../qml/pages/SettingsPage.qml" line="364"/>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.lockedFolderPinNotSet">
+        <location filename="../qml/pages/SettingsPage.qml" line="366"/>
+        <source>Not set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.lockedFolderPinInfo">
+        <location filename="../qml/pages/SettingsPage.qml" line="369"/>
+        <source>Create, change or reset the PIN code for your locked folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.people">
+        <location filename="../qml/pages/SettingsPage.qml" line="375"/>
+        <source>People</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.clusterGroup">
+        <location filename="../qml/pages/SettingsPage.qml" line="382"/>
+        <source>Cluster group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.clusterGroupInvitation">
+        <location filename="../qml/pages/SettingsPage.qml" line="386"/>
+        <source>1 invitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settingsPage.clusterGroupInvitations">
+        <location filename="../qml/pages/SettingsPage.qml" line="389"/>
+        <source>%1 invitations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.clusterGroupInfo">
+        <location filename="../qml/pages/SettingsPage.qml" line="394"/>
+        <source>People are recognized across the photos of everyone in the group.</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="settingsPage.backupSkipVerificationInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="592"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="649"/>
         <source>Skip checking of assets against the server before uploading. Faster scanning, but duplicates are only detected by the server during upload.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupRetryFailed">
-        <location filename="../qml/pages/SettingsPage.qml" line="720"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="777"/>
         <source>Retry failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.backupClearDb">
-        <location filename="../qml/pages/SettingsPage.qml" line="731"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="788"/>
         <source>Clear backup database</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.account">
-        <location filename="../qml/pages/SettingsPage.qml" line="743"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="800"/>
         <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.server">
-        <location filename="../qml/pages/SettingsPage.qml" line="748"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="805"/>
         <source>Server</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.email">
-        <location filename="../qml/pages/SettingsPage.qml" line="754"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="811"/>
         <source>Email</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.logout">
-        <location filename="../qml/pages/SettingsPage.qml" line="761"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="818"/>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.serverStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="844"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="901"/>
         <source>Server Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.serverStatisticsNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="852"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="909"/>
         <source>Server statistics are not available at the moment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalPhotos">
-        <location filename="../qml/pages/SettingsPage.qml" line="862"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="919"/>
         <source>Total photos</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalPhotosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="864"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="921"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalVideos">
-        <location filename="../qml/pages/SettingsPage.qml" line="870"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="927"/>
         <source>Total videos</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalVideosLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="872"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="929"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.storageUsed">
-        <location filename="../qml/pages/SettingsPage.qml" line="878"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="935"/>
         <source>Storage used</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.storageUsedLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="880"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="937"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalAssets">
-        <location filename="../qml/pages/SettingsPage.qml" line="886"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="943"/>
         <source>Total assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.totalAssetsLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="888"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="945"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.refreshStatistics">
-        <location filename="../qml/pages/SettingsPage.qml" line="894"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="951"/>
         <source>Refresh statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.aboutServer">
-        <location filename="../qml/pages/SettingsPage.qml" line="905"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="962"/>
         <source>About Server</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.aboutServerNotAvailable">
-        <location filename="../qml/pages/SettingsPage.qml" line="913"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="970"/>
         <source>Server version info is not available at the moment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.serverVersion">
-        <location filename="../qml/pages/SettingsPage.qml" line="934"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="991"/>
         <source>Server version</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.serverVersionLoading">
-        <location filename="../qml/pages/SettingsPage.qml" line="936"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="993"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.aboutApplication">
-        <location filename="../qml/pages/SettingsPage.qml" line="942"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="999"/>
         <source>About Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.version">
-        <location filename="../qml/pages/SettingsPage.qml" line="947"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1004"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.sourceCode">
-        <location filename="../qml/pages/SettingsPage.qml" line="959"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1016"/>
         <source>Source code</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.translations">
-        <location filename="../qml/pages/SettingsPage.qml" line="972"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1029"/>
         <source>Translations</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.viewLogs">
-        <location filename="../qml/pages/SettingsPage.qml" line="980"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1037"/>
         <source>View application logs</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settingsPage.applicationInfo">
-        <location filename="../qml/pages/SettingsPage.qml" line="1007"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="1064"/>
         <source>Harbour Immich - A native Immich client for Sailfish OS</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2736,7 +2787,7 @@
     <message id="pullDownMenu.albums">
         <location filename="../qml/pages/LibraryPage.qml" line="26"/>
         <location filename="../qml/pages/SearchPage.qml" line="168"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="71"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="87"/>
         <location filename="../qml/pages/TimelinePage.qml" line="68"/>
         <source>Albums</source>
         <translation type="unfinished"></translation>
@@ -2911,55 +2962,58 @@
     </message>
     <message id="lockedFolderPage.lockedFolder">
         <location filename="../qml/pages/LockedFolderPage.qml" line="72"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="256"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="280"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="197"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="221"/>
         <source>Locked Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.pinMismatch">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="186"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="136"/>
+        <location filename="../qml/pages/PinCodePage.qml" line="81"/>
+        <location filename="../qml/pages/PinCodePage.qml" line="100"/>
         <source>PINs to do not match, try again</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="lockedFolderPage.asset">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="266"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="287"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="207"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="228"/>
         <source>1 asset</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="lockedFolderPage.assets">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="268"/>
-        <location filename="../qml/pages/LockedFolderPage.qml" line="287"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="209"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="228"/>
         <source>%1 assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="lockedFolderPage.loading">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="347"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="288"/>
         <source>Loading locked folder assets...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="lockedFolderPage.noAssets">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="362"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="303"/>
         <source>Locked folder is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="lockedFolderPage.noAssetsInfo">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="364"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="305"/>
         <source>Photos and videos in the locked folder are hidden and won&apos;t show up as you browse or search your library</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.invalidPin">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="457"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="399"/>
         <source>Invalid PIN</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.pinCreated">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="462"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="410"/>
+        <location filename="../qml/pages/PinCodePage.qml" line="279"/>
         <source>PIN created successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.removedFromLockedFolder">
-        <location filename="../qml/pages/LockedFolderPage.qml" line="475"/>
+        <location filename="../qml/pages/LockedFolderPage.qml" line="423"/>
         <source>Removed from locked folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3097,12 +3151,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="peoplePage.loading">
-        <location filename="../qml/pages/PeoplePage.qml" line="255"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="256"/>
         <source>Loading people...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="peoplePage.noPeople">
-        <location filename="../qml/pages/PeoplePage.qml" line="263"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="264"/>
         <source>No people found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3981,28 +4035,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="userPickerDialog.share">
-        <location filename="../qml/components/UserPickerDialog.qml" line="48"/>
+        <location filename="../qml/components/UserPickerDialog.qml" line="13"/>
         <source>Share</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="userPickerDialog.partner">
-        <location filename="../qml/components/UserPickerDialog.qml" line="112"/>
-        <source>Partner</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="userPickerDialog.empty">
-        <location filename="../qml/components/UserPickerDialog.qml" line="141"/>
+        <location filename="../qml/components/UserPickerDialog.qml" line="15"/>
         <source>No users to share with</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="userPickerDialog.emptyHint">
-        <location filename="../qml/components/UserPickerDialog.qml" line="143"/>
-        <source>People can only be shared with users in your cluster group. Set it up in the Immich web interface.</source>
-        <oldsource>People can only be shared with users in your cluster group. Set it up in the Immich web app.</oldsource>
+        <location filename="../qml/components/UserPickerDialog.qml" line="17"/>
+        <source>People can only be shared with users in your cluster group. Set it up in the application settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="userPickerDialog.partner">
+        <location filename="../qml/components/UserPickerDialog.qml" line="131"/>
+        <source>Partner</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="userPickerDialog.loading">
-        <location filename="../qml/components/UserPickerDialog.qml" line="154"/>
+        <location filename="../qml/components/UserPickerDialog.qml" line="171"/>
         <source>Loading users...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4111,6 +4164,298 @@
     <message id="onThisDevicePage.addFolderDescription">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="240"/>
         <source>Enter the full path to a folder on your device. The folder must exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pullDownMenu.declineClusterInvitation">
+        <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="22"/>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupInviteDialog.join">
+        <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="37"/>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupInviteDialog.title">
+        <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="39"/>
+        <source>Cluster group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupInviteDialog.joinInfo">
+        <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="46"/>
+        <source>Joining moves your people into this group so faces are recognized across all members&apos; photos.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupInviteDialog.members">
+        <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="53"/>
+        <source>Members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pullDownMenu.leaveClusterGroup">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="42"/>
+        <source>Leave group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pullDownMenu.resetFacialRecognition">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="49"/>
+        <source>Reset facial recognition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pullDownMenu.inviteClusterUsers">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="55"/>
+        <source>Invite users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.invite">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="68"/>
+        <source>Invite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.noUsersToInvite">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="70"/>
+        <source>No users to invite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.allMembersOrInvited">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="72"/>
+        <source>All users are already members or invited</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.title">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="87"/>
+        <source>Cluster group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.members">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="92"/>
+        <source>Members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.you">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="119"/>
+        <source>(you)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.invitations">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="176"/>
+        <source>Invitations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.accept">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="191"/>
+        <source>Accept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.decline">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="197"/>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.decliningInvitation">
+        <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="24"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="199"/>
+        <source>Declining invitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.invitedInfo">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="222"/>
+        <source>You have been invited to join a cluster group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.pendingInvitations">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="240"/>
+        <source>Pending invitations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.cancelInvitation">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="257"/>
+        <source>Cancel invitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.cancellingInvitation">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="259"/>
+        <source>Cancelling invitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.loading">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="300"/>
+        <source>Loading cluster group...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.reset">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="323"/>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.resetFacialRecognition">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="325"/>
+        <source>Reset facial recognition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.resetFacialRecognitionWarning">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="332"/>
+        <source>Resetting facial recognition will delete all people for all users in this group. Already set names and birth dates will be lost. Are you sure you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.queuingFacialRecognitionReset">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="339"/>
+        <source>Queuing facial recognition reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.leaveGroup">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="356"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="358"/>
+        <source>Leave group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterGroupPage.leaveGroupWarning">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="365"/>
+        <source>Your people will no longer be recognized together with the other members. You will be moved to a new group of your own.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.leavingClusterGroup">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="372"/>
+        <source>Leaving cluster group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.clusterGroupJoined">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="400"/>
+        <source>Joined cluster group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.clusterGroupLeft">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="405"/>
+        <source>Left cluster group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.clusterGroupPeopleRegenerated">
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="410"/>
+        <source>Facial recognition reset queued</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterMemberAccessPage.unnamedPerson">
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="20"/>
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="24"/>
+        <source>Unnamed person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pullDownMenu.addPeople">
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="49"/>
+        <source>Add people</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterMemberAccessPage.title">
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="69"/>
+        <source>Person access</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterMemberAccessPage.shareAll">
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="76"/>
+        <source>Share all my people</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterMemberAccessPage.shareAllInfo">
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="78"/>
+        <source>Share every person you own with this user</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterMemberAccessPage.sharedPeople">
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="91"/>
+        <source>Shared people</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterMemberAccessPage.stopSharing">
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="105"/>
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="107"/>
+        <source>Stop sharing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="clusterMemberAccessPage.noSharedPeople">
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="132"/>
+        <source>No people shared with this user</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.confirmPin">
+        <location filename="../qml/pages/PinCodePage.qml" line="21"/>
+        <location filename="../qml/pages/PinCodePage.qml" line="33"/>
+        <source>Re-enter your 6-digit PIN to confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.createNewPin">
+        <location filename="../qml/pages/PinCodePage.qml" line="24"/>
+        <source>Create a 6-digit PIN for your locked folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.enterCurrentPin">
+        <location filename="../qml/pages/PinCodePage.qml" line="29"/>
+        <location filename="../qml/pages/PinCodePage.qml" line="40"/>
+        <source>Enter your current PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.enterNewPin">
+        <location filename="../qml/pages/PinCodePage.qml" line="36"/>
+        <source>Enter a new 6-digit PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.resettingPin">
+        <location filename="../qml/pages/PinCodePage.qml" line="105"/>
+        <location filename="../qml/pages/PinCodePage.qml" line="236"/>
+        <source>Resetting PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.title">
+        <location filename="../qml/pages/PinCodePage.qml" line="123"/>
+        <source>Locked folder PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.pinInfo">
+        <location filename="../qml/pages/PinCodePage.qml" line="147"/>
+        <source>A PIN protects your locked folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.changePin">
+        <location filename="../qml/pages/PinCodePage.qml" line="155"/>
+        <source>Change PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.resetWithPin">
+        <location filename="../qml/pages/PinCodePage.qml" line="165"/>
+        <source>Reset PIN with current PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.resetWithPassword">
+        <location filename="../qml/pages/PinCodePage.qml" line="176"/>
+        <source>Reset PIN with password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.resetPinInfo">
+        <location filename="../qml/pages/PinCodePage.qml" line="188"/>
+        <source>Resetting the PIN locks the locked folder on all devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.password">
+        <location filename="../qml/pages/PinCodePage.qml" line="223"/>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.passwordPlaceholder">
+        <location filename="../qml/pages/PinCodePage.qml" line="225"/>
+        <source>Enter your account password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="pinCodePage.resetPin">
+        <location filename="../qml/pages/PinCodePage.qml" line="233"/>
+        <source>Reset PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.pinChanged">
+        <location filename="../qml/pages/PinCodePage.qml" line="283"/>
+        <source>PIN changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification.pinReset">
+        <location filename="../qml/pages/PinCodePage.qml" line="287"/>
+        <source>PIN reset</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
