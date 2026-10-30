@@ -49,12 +49,12 @@
     <message id="memoriesBar.birthdayTitle">
         <location filename="../qml/components/MemoriesBar.qml" line="27"/>
         <source>%1&apos;s birthday</source>
-        <translation type="unfinished"></translation>
+        <translation>%1s fødselsdag</translation>
     </message>
     <message id="memoriesBar.unknownPerson">
         <location filename="../qml/components/MemoriesBar.qml" line="29"/>
         <source>Unknown</source>
-        <translation type="unfinished">Ukjent</translation>
+        <translation>Ukjent</translation>
     </message>
     <message id="memoriesBar.yearAgo">
         <location filename="../qml/components/MemoriesBar.qml" line="39"/>
@@ -131,7 +131,7 @@
     <message id="selectionActionBar.upload">
         <location filename="../qml/components/SelectionActionBar.qml" line="346"/>
         <source>Upload to server</source>
-        <translation type="unfinished"></translation>
+        <translation>Last opp til server</translation>
     </message>
     <message id="selectionActionBar.moveToArchive">
         <location filename="../qml/components/SelectionActionBar.qml" line="365"/>
@@ -228,12 +228,12 @@
     <message id="pullDownMenu.removeAlbum">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="63"/>
         <source>Remove album</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern album</translation>
     </message>
     <message id="notification.removingAlbum">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="65"/>
         <source>Removing album</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjerner album</translation>
     </message>
     <message id="pullDownMenu.information">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="78"/>
@@ -349,7 +349,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="405"/>
         <source>Downloading asset</source>
         <oldsource>Downloading asset...</oldsource>
-        <translation type="unfinished">Laster ned mediefil...</translation>
+        <translation>Laster ned mediefil</translation>
     </message>
     <message id="notification.downloadingAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="362"/>
@@ -365,7 +365,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="407"/>
         <source>Downloading %1 assets</source>
         <oldsource>Downloading %1 assets...</oldsource>
-        <translation type="unfinished">Laster ned %1 mediefiler...</translation>
+        <translation>Laster ned %1 mediefiler</translation>
     </message>
     <message id="notification.deletingAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="368"/>
@@ -396,7 +396,7 @@
         <location filename="../qml/pages/TrashPage.qml" line="216"/>
         <source>Deleting asset</source>
         <oldsource>Removing album</oldsource>
-        <translation type="unfinished">Sletter mediefil</translation>
+        <translation>Sletter mediefil</translation>
     </message>
     <message id="albumInfoPage.albumInformation">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="65"/>
@@ -766,7 +766,7 @@
         <location filename="../qml/pages/StackDetailPage.qml" line="528"/>
         <source>Downloading</source>
         <oldsource>Downloading...</oldsource>
-        <translation type="unfinished">Laster ned...</translation>
+        <translation>Laster ned</translation>
     </message>
     <message id="notification.removingFromAlbum">
         <location filename="../qml/pages/AssetDetailPage.qml" line="493"/>
@@ -793,12 +793,12 @@
     <message id="assetInfoPeek.releaseToViewInfo">
         <location filename="../qml/components/AssetInfoPeek.qml" line="124"/>
         <source>Release to view info</source>
-        <translation type="unfinished"></translation>
+        <translation>Slipp for å vise informasjon</translation>
     </message>
     <message id="assetInfoPeek.dragForInfo">
         <location filename="../qml/components/AssetInfoPeek.qml" line="126"/>
         <source>Pull up for info</source>
-        <translation type="unfinished"></translation>
+        <translation>Trekk opp for informasjon</translation>
     </message>
     <message id="assetInfoPage.description">
         <location filename="../qml/pages/AssetInfoPage.qml" line="58"/>
@@ -815,12 +815,12 @@
         <location filename="../qml/pages/AssetInfoPage.qml" line="71"/>
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="73"/>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppløsning</translation>
     </message>
     <message id="assetInfoPage.size">
         <location filename="../qml/pages/AssetInfoPage.qml" line="78"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Størrelse</translation>
     </message>
     <message id="assetInfoPage.created">
         <location filename="../qml/pages/AssetInfoPage.qml" line="84"/>
@@ -988,7 +988,7 @@
         <location filename="../qml/pages/LoginPage.qml" line="136"/>
         <source>The Immich server you are trying to log in to is running an unsupported version (minimum required: %1). Some features may not work correctly.</source>
         <oldsource>The Immich server you are trying to log in to is running an unsupported version (minimum required: 3.0.0). Some features may not work correctly.</oldsource>
-        <translation type="unfinished">Immich-serveren du prøver å logge på kjører en versjon som ikke støttes (minimumskrav: 3.0.0). Enkelte funksjoner vil kanskje ikke fungere som de skal.</translation>
+        <translation>Immich-serveren du prøver å logge på kjører en versjon som ikke støttes (minimumskrav: 3.0.0). Enkelte funksjoner vil kanskje ikke fungere som de skal.</translation>
     </message>
     <message id="loginPage.failed">
         <location filename="../qml/pages/LoginPage.qml" line="186"/>
@@ -1009,14 +1009,14 @@
     <message id="memoryDetailPage.birthdayAge">
         <location filename="../qml/pages/MemoryDetailPage.qml" line="399"/>
         <source>%1 years old</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 år gammel</translation>
     </message>
     <message id="notification.motionPhotoFailed">
         <location filename="../qml/pages/AssetDetailPage.qml" line="309"/>
         <location filename="../qml/pages/MemoryDetailPage.qml" line="345"/>
         <location filename="../qml/pages/StackDetailPage.qml" line="314"/>
         <source>Failed to play motion photo</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke å spille av bevegelsesbilde</translation>
     </message>
     <message id="searchPage.stateAny">
         <location filename="../qml/pages/SearchPage.qml" line="14"/>
@@ -1345,29 +1345,29 @@
         <location filename="../qml/pages/SearchResultsPage.qml" line="181"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="210"/>
         <source>Search Results</source>
-        <translation type="unfinished">Søkeresultater</translation>
+        <translation>Søkeresultater</translation>
     </message>
     <message id="searchResultsPage.asset">
         <location filename="../qml/pages/SearchResultsPage.qml" line="194"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="218"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 mediefil</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="searchResultsPage.assets">
         <location filename="../qml/pages/SearchResultsPage.qml" line="196"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="218"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 mediefiler</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="searchResultsPage.loading">
         <location filename="../qml/pages/SearchResultsPage.qml" line="286"/>
         <source>Loading search results...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster søkeresultater…</translation>
     </message>
     <message id="searchResultsPage.noAssets">
         <location filename="../qml/pages/SearchResultsPage.qml" line="301"/>
         <source>No assets</source>
-        <translation type="unfinished">Ingen mediefiler</translation>
+        <translation>Ingen mediefiler</translation>
     </message>
     <message id="notification.addedToFavorites">
         <location filename="../qml/pages/StackDetailPage.qml" line="696"/>
@@ -1382,7 +1382,7 @@
     <message id="pullDownMenu.clientCertificate">
         <location filename="../qml/pages/ServerPage.qml" line="31"/>
         <source>Client certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Klientsertifikat</translation>
     </message>
     <message id="serverPage.serverConfiguration">
         <location filename="../qml/pages/ServerPage.qml" line="43"/>
@@ -1453,32 +1453,32 @@
     <message id="settingsPage.videoAutoPlay">
         <location filename="../qml/pages/SettingsPage.qml" line="135"/>
         <source>Auto-play videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Spill av videoer automatisk</translation>
     </message>
     <message id="settingsPage.videoAutoPlayInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="137"/>
         <source>Start playing videos automatically when opened in the detail view.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spill av videoer automatisk når de åpnes i detaljvisningen.</translation>
     </message>
     <message id="settingsPage.videoAutoPlayWifiOnly">
         <location filename="../qml/pages/SettingsPage.qml" line="146"/>
         <source>Auto-play on Wi-Fi only</source>
-        <translation type="unfinished"></translation>
+        <translation>Spill av automatisk kun på Wi-Fi</translation>
     </message>
     <message id="settingsPage.videoAutoPlayWifiOnlyInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="148"/>
         <source>Auto-play streamed videos only when connected to Wi-Fi. Videos stored on the device are not affected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spill av strømmede videoer automatisk kun ved Wi-Fi-tilkobling. Videoer lagret på enheten påvirkes ikke.</translation>
     </message>
     <message id="settingsPage.motionPhotos">
         <location filename="../qml/pages/SettingsPage.qml" line="158"/>
         <source>Motion photos</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevegelsesbilder</translation>
     </message>
     <message id="settingsPage.motionPhotosInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="160"/>
         <source>Show an indicator on motion photos and allow playing their video part in the detail view.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis indikator på bevegelsesbilder og la videodelen spilles av i detaljvisningen.</translation>
     </message>
     <message id="settingsPage.showMemoriesBar">
         <location filename="../qml/pages/SettingsPage.qml" line="169"/>
@@ -1544,90 +1544,90 @@
     <message id="settingsPage.selectedCountPosition">
         <location filename="../qml/pages/SettingsPage.qml" line="239"/>
         <source>Selected count button position</source>
-        <translation type="unfinished"></translation>
+        <translation>Plassering for tellerknapp for valgte mediefiler</translation>
     </message>
     <message id="settingsPage.selectedCountPositionInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="241"/>
         <source>Controls position of the button showing the number of selected assets. Tap it to clear the selection. It cannot share a position with scroll to top button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestemmer plasseringen til knappen som viser antall valgte filer. Trykk på den for å fjerne markeringen. Den kan ikke ha samme plassering som knappen for å rulle til toppen.</translation>
     </message>
     <message id="settingsPage.selectedCountPositionTopLeft">
         <location filename="../qml/pages/SettingsPage.qml" line="251"/>
         <source>Top left</source>
-        <translation type="unfinished"></translation>
+        <translation>Øverst til venstre</translation>
     </message>
     <message id="settingsPage.selectedCountPositionTopRight">
         <location filename="../qml/pages/SettingsPage.qml" line="255"/>
         <source>Top right</source>
-        <translation type="unfinished"></translation>
+        <translation>Øverst til høyre</translation>
     </message>
     <message id="settingsPage.selectedCountPositionBottomLeft">
         <location filename="../qml/pages/SettingsPage.qml" line="259"/>
         <source>Bottom left</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederst til venstre</translation>
     </message>
     <message id="settingsPage.selectedCountPositionBottomCenter">
         <location filename="../qml/pages/SettingsPage.qml" line="264"/>
         <source>Bottom center</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederst i midten</translation>
     </message>
     <message id="settingsPage.selectedCountPositionBottomRight">
         <location filename="../qml/pages/SettingsPage.qml" line="269"/>
         <source>Bottom right</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederst til høyre</translation>
     </message>
     <message id="settingsPage.language">
         <location filename="../qml/pages/SettingsPage.qml" line="284"/>
         <location filename="../qml/pages/SettingsPage.qml" line="288"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Språk</translation>
     </message>
     <message id="settingsPage.languageInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="290"/>
         <source>Application language. Automatic follows the system language. Changes will take effect after application restart.</source>
         <oldsource>Application language. Automatic follows the system language. Changes take effect immediately.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Appens språk. Følger systemets språk automatisk. Endringer trer i kraft etter omstart av appen.</translation>
     </message>
     <message id="settingsPage.languageAutomatic">
         <location filename="../qml/pages/SettingsPage.qml" line="301"/>
         <source>Automatic (system)</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisk (system)</translation>
     </message>
     <message id="settingsPage.security">
         <location filename="../qml/pages/SettingsPage.qml" line="320"/>
         <source>Security</source>
-        <translation type="unfinished"></translation>
+        <translation>Sikkerhet</translation>
     </message>
     <message id="settingsPage.clientCertificate">
         <location filename="../qml/pages/SettingsPage.qml" line="325"/>
         <source>Client certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Klientsertifikat</translation>
     </message>
     <message id="settingsPage.clientCertificateNone">
         <location filename="../qml/pages/SettingsPage.qml" line="328"/>
         <source>Not configured</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke konfigurert</translation>
     </message>
     <message id="settingsPage.clientCertificateExpired">
         <location filename="../qml/pages/SettingsPage.qml" line="330"/>
         <source>Expired</source>
-        <translation type="unfinished">Utløpt</translation>
+        <translation>Utløpt</translation>
     </message>
     <message id="settingsPage.clientCertificateExpiringSoon">
         <location filename="../qml/pages/SettingsPage.qml" line="332"/>
         <source>Expiring soon</source>
-        <translation type="unfinished"></translation>
+        <translation>Utløper snart</translation>
     </message>
     <message id="settingsPage.clientCertificateConfigured">
         <location filename="../qml/pages/SettingsPage.qml" line="334"/>
         <source>Configured</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurert</translation>
     </message>
     <message id="settingsPage.clientCertificateInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="337"/>
         <source>Import a client (mTLS) certificate for servers that require it. Changes take effect immediately.</source>
         <oldsource>Import a client (mTLS) certificate for servers that require it. Changes take effect after restarting the app.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Importer et klient-mTLS-sertifikat for servere som krever det. Endringer trer i kraft umiddelbart.</translation>
     </message>
     <message id="settingsPage.cover">
         <location filename="../qml/pages/SettingsPage.qml" line="343"/>
@@ -1787,12 +1787,12 @@
     <message id="settingsPage.showDeviceMediaOnTimeline">
         <location filename="../qml/pages/SettingsPage.qml" line="614"/>
         <source>Show device media on timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis mediefiler fra enheten på tidslinjen</translation>
     </message>
     <message id="settingsPage.showDeviceMediaOnTimelineInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="616"/>
         <source>Display photos and videos from watched folders that are not yet backed up in the timeline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis bilder og videoer fra overvåkede mapper som ennå ikke er sikkerhetskopiert i tidslinjen.</translation>
     </message>
     <message id="settingsPage.backupScanInterval">
         <location filename="../qml/pages/SettingsPage.qml" line="627"/>
@@ -1870,12 +1870,12 @@
     <message id="settingsPage.catalog">
         <location filename="../qml/pages/SettingsPage.qml" line="774"/>
         <source>Catalog Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalogsynkronisering</translation>
     </message>
     <message id="settingsPage.syncLastTime">
         <location filename="../qml/pages/SettingsPage.qml" line="779"/>
         <source>Last synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Siste synkronisering</translation>
     </message>
     <message id="settingsPage.syncInProgress">
         <location filename="../qml/pages/SettingsPage.qml" line="785"/>
@@ -1884,62 +1884,62 @@
         <location filename="../qml/pages/SettingsPage.qml" line="810"/>
         <location filename="../qml/pages/SettingsPage.qml" line="817"/>
         <source>Sync in progress...</source>
-        <translation type="unfinished"></translation>
+        <translation>Synkronisering pågår…</translation>
     </message>
     <message id="settingsPage.notSynced">
         <location filename="../qml/pages/SettingsPage.qml" line="788"/>
         <source>Not synced yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke synkronisert ennå</translation>
     </message>
     <message id="settingsPage.syncAssets">
         <location filename="../qml/pages/SettingsPage.qml" line="794"/>
         <source>Assets</source>
-        <translation type="unfinished"></translation>
+        <translation>Mediefiler</translation>
     </message>
     <message id="settingsPage.syncAlbums">
         <location filename="../qml/pages/SettingsPage.qml" line="801"/>
         <source>Albums</source>
-        <translation type="unfinished">Album</translation>
+        <translation>Album</translation>
     </message>
     <message id="settingsPage.syncPeople">
         <location filename="../qml/pages/SettingsPage.qml" line="808"/>
         <source>People</source>
-        <translation type="unfinished">Personer</translation>
+        <translation>Personer</translation>
     </message>
     <message id="settingsPage.syncLocalFiles">
         <location filename="../qml/pages/SettingsPage.qml" line="815"/>
         <source>Local files</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokale filer</translation>
     </message>
     <message id="settingsPage.syncNow">
         <location filename="../qml/pages/SettingsPage.qml" line="823"/>
         <source>Sync now</source>
-        <translation type="unfinished"></translation>
+        <translation>Synkroniser nå</translation>
     </message>
     <message id="settingsPage.rebuildCatalog">
         <location filename="../qml/pages/SettingsPage.qml" line="831"/>
         <source>Rebuild catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Bygg katalog på nytt</translation>
     </message>
     <message id="notification.rebuildingCatalog">
         <location filename="../qml/pages/SettingsPage.qml" line="836"/>
         <source>Rebuilding catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Bygger katalog på nytt</translation>
     </message>
     <message id="settingsPage.clearImageCache">
         <location filename="../qml/pages/SettingsPage.qml" line="987"/>
         <source>Clear image cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Tøm bildebuffer</translation>
     </message>
     <message id="notification.clearingImageCache">
         <location filename="../qml/pages/SettingsPage.qml" line="991"/>
         <source>Clearing image cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Tømmer bildebuffer</translation>
     </message>
     <message id="notification.imageCacheCleared">
         <location filename="../qml/pages/SettingsPage.qml" line="994"/>
         <source>Image cache cleared</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildebuffer tømt</translation>
     </message>
     <message id="notification.serverSyncResult">
         <location filename="../qml/pages/SettingsPage.qml" line="1027"/>
@@ -1955,7 +1955,7 @@
         <location filename="../qml/pages/SettingsPage.qml" line="1035"/>
         <source>Could not fetch supported media types from server - backup disabled</source>
         <oldsource>Could not fetch supported media types from server. Backup disabled.</oldsource>
-        <translation type="unfinished">Kunne ikke hente støttede medietyper fra serveren. Sikkerhetskopiering er deaktivert.</translation>
+        <translation>Kunne ikke hente støttede medietyper fra serveren - sikkerhetskopiering er deaktivert</translation>
     </message>
     <message id="settingsPage.backupSkipVerification">
         <location filename="../qml/pages/SettingsPage.qml" line="590"/>
@@ -2414,7 +2414,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="306"/>
         <source>Synchronizing timeline...</source>
         <oldsource>Syncing library…</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Synkroniserer tidslinje...</translation>
     </message>
     <message id="pullDownMenu.upload">
         <location filename="../qml/pages/TimelinePage.qml" line="74"/>
@@ -2456,7 +2456,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="394"/>
         <source>Uploading %1 files</source>
         <oldsource>Uploading %1 files...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Laster opp %1 filer</translation>
     </message>
     <message id="notification.addedToAlbum">
         <location filename="../qml/pages/TimelinePage.qml" line="489"/>
@@ -2587,7 +2587,7 @@
     <message id="folderPickerPage.includedVia">
         <location filename="../qml/pages/FolderPickerPage.qml" line="186"/>
         <source>Included via %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkludert via %1</translation>
     </message>
     <message id="folderPickerPage.customFolder">
         <location filename="../qml/pages/FolderPickerPage.qml" line="203"/>
@@ -2783,7 +2783,7 @@
     <message id="libraryPage.memories">
         <location filename="../qml/pages/LibraryPage.qml" line="61"/>
         <source>Memories</source>
-        <translation type="unfinished"></translation>
+        <translation>Minner</translation>
     </message>
     <message id="libraryPage.archived">
         <location filename="../qml/pages/LibraryPage.qml" line="63"/>
@@ -3062,7 +3062,7 @@
     <message id="placesPage.noPlacesMatch">
         <location filename="../qml/pages/PlacesPage.qml" line="202"/>
         <source>No places match filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen steder samsvarer med filteret</translation>
     </message>
     <message id="pullDownMenu.hideHidden">
         <location filename="../qml/pages/PeoplePage.qml" line="49"/>
@@ -3123,7 +3123,7 @@
         <location filename="../qml/pages/PeoplePage.qml" line="236"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="67"/>
         <source>Manage access</source>
-        <translation type="unfinished"></translation>
+        <translation>Administrer tilgang</translation>
     </message>
     <message id="peoplePage.loading">
         <location filename="../qml/pages/PeoplePage.qml" line="255"/>
@@ -3179,17 +3179,17 @@
     <message id="editPersonDialog.applyTo">
         <location filename="../qml/components/EditPersonDialog.qml" line="93"/>
         <source>Apply name and birthday to</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk navn og fødselsdato på</translation>
     </message>
     <message id="editPersonDialog.applyEveryone">
         <location filename="../qml/components/EditPersonDialog.qml" line="98"/>
         <source>Everyone with access</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle med tilgang</translation>
     </message>
     <message id="editPersonDialog.applyOnlyMe">
         <location filename="../qml/components/EditPersonDialog.qml" line="100"/>
         <source>Only me</source>
-        <translation type="unfinished"></translation>
+        <translation>Bare meg</translation>
     </message>
     <message id="pullDownMenu.editPerson">
         <location filename="../qml/pages/PersonDetailPage.qml" line="78"/>
@@ -3206,13 +3206,13 @@
         <location filename="../qml/pages/PersonDetailPage.qml" line="166"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="218"/>
         <source>Shared with %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Delt med %1</translation>
     </message>
     <message id="personDetailPage.sharedBy">
         <location filename="../qml/pages/PersonDetailPage.qml" line="175"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="227"/>
         <source>Shared by %1</source>
-        <translation type="unfinished">Delt av %1</translation>
+        <translation>Delt av %1</translation>
     </message>
     <message id="personDetailPage.asset">
         <location filename="../qml/pages/PersonDetailPage.qml" line="186"/>
@@ -3239,7 +3239,7 @@
     <message id="personDetailPage.sharedEmptyHint">
         <location filename="../qml/pages/PersonDetailPage.qml" line="311"/>
         <source>Only photos from partners and shared albums are shown</source>
-        <translation type="unfinished"></translation>
+        <translation>Bare bilder fra partnere og delte album vises</translation>
     </message>
     <message id="notification.personUpdated">
         <location filename="../qml/pages/PersonDetailPage.qml" line="416"/>
@@ -3264,7 +3264,7 @@
     <message id="filterBar.upcoming">
         <location filename="../qml/components/MemoriesFilterBar.qml" line="55"/>
         <source>Upcoming</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommende</translation>
     </message>
     <message id="filterBar.favorites">
         <location filename="../qml/components/FilterBar.qml" line="106"/>
@@ -3659,215 +3659,215 @@
         <location filename="../qml/harbour-immich.qml" line="61"/>
         <source>Client certificate has expired. Update it to keep connecting.</source>
         <oldsource>Client certificate has expired. Tap to update.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Klientsertifikatet har utløpt. Oppdater det for å fortsette tilkoblingen.</translation>
     </message>
     <message id="app.clientCertExpiringSoon">
         <location filename="../qml/harbour-immich.qml" line="63"/>
         <source>Client certificate expires in %1 day(s).</source>
         <oldsource>Client certificate expires in %1 day(s). Tap to update.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Klientsrrtifikst utløper om %1 dag(er).</translation>
     </message>
     <message id="clientCertPage.statusExpired">
         <location filename="../qml/pages/ClientCertPage.qml" line="25"/>
         <source>Expired</source>
-        <translation type="unfinished">Utløpt</translation>
+        <translation>Utløpt</translation>
     </message>
     <message id="clientCertPage.statusExpiringSoon" numerus="yes">
         <location filename="../qml/pages/ClientCertPage.qml" line="29"/>
         <source>Expires in %n day(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Utløper om %1 dag</numerusform>
+            <numerusform>Utløper om %1 dager</numerusform>
         </translation>
     </message>
     <message id="clientCertPage.statusValid">
         <location filename="../qml/pages/ClientCertPage.qml" line="32"/>
         <source>Valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyldig</translation>
     </message>
     <message id="clientCertPage.title">
         <location filename="../qml/pages/ClientCertPage.qml" line="46"/>
         <source>Client Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Klientsertifikat</translation>
     </message>
     <message id="clientCertPage.description">
         <location filename="../qml/pages/ClientCertPage.qml" line="56"/>
         <source>Import a PKCS#12 (.p12 or .pfx) certificate to authenticate this device to servers that require mutual TLS (mTLS). Changes take effect immediately.</source>
         <oldsource>Import a PKCS#12 (.p12 or .pfx) certificate to authenticate this device to servers that require mutual TLS (mTLS). Changes take effect after restarting the app.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Importer et PKCS#12-sertifikat (.p12 eller .pfx) for å autentisere denne enheten mot servere som krever gjensidig TLS (mTLS). Endringene trer i kraft umiddelbart.</translation>
     </message>
     <message id="clientCertPage.expiredWarning">
         <location filename="../qml/pages/ClientCertPage.qml" line="88"/>
         <source>The client certificate has expired. Import a new one to keep connecting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klientsertifikatet har utløpt. Oppdater det for å fortsette tilkoblingen.</translation>
     </message>
     <message id="clientCertPage.expiringSoonWarning">
         <location filename="../qml/pages/ClientCertPage.qml" line="90"/>
         <source>The client certificate is expiring soon. Consider importing a new one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klient-sertifikatet utløper snart. Vurder å importere et nytt.</translation>
     </message>
     <message id="clientCertPage.details">
         <location filename="../qml/pages/ClientCertPage.qml" line="98"/>
         <source>Certificate details</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikatdetaljer</translation>
     </message>
     <message id="clientCertPage.subject">
         <location filename="../qml/pages/ClientCertPage.qml" line="107"/>
         <source>Subject</source>
-        <translation type="unfinished"></translation>
+        <translation>Emne</translation>
     </message>
     <message id="clientCertPage.issuer">
         <location filename="../qml/pages/ClientCertPage.qml" line="112"/>
         <source>Issuer</source>
-        <translation type="unfinished"></translation>
+        <translation>Utsteder</translation>
     </message>
     <message id="clientCertPage.serial">
         <location filename="../qml/pages/ClientCertPage.qml" line="117"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Serienummer</translation>
     </message>
     <message id="clientCertPage.validFrom">
         <location filename="../qml/pages/ClientCertPage.qml" line="122"/>
         <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyldig fra</translation>
     </message>
     <message id="clientCertPage.validUntil">
         <location filename="../qml/pages/ClientCertPage.qml" line="127"/>
         <source>Valid until</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyldig til</translation>
     </message>
     <message id="clientCertPage.status">
         <location filename="../qml/pages/ClientCertPage.qml" line="156"/>
         <source>Status:</source>
         <oldsource>Status</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Status:</translation>
     </message>
     <message id="clientCertPage.none">
         <location filename="../qml/pages/ClientCertPage.qml" line="174"/>
         <source>No client certificate configured</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen klientsertifikat er konfigurert</translation>
     </message>
     <message id="clientCertPage.replace">
         <location filename="../qml/pages/ClientCertPage.qml" line="188"/>
         <source>Replace certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstatt sertifikat</translation>
     </message>
     <message id="clientCertPage.import">
         <location filename="../qml/pages/ClientCertPage.qml" line="190"/>
         <source>Import certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer sertifikat</translation>
     </message>
     <message id="clientCertPage.remove">
         <location filename="../qml/pages/ClientCertPage.qml" line="198"/>
         <source>Remove certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern sertifikat</translation>
     </message>
     <message id="notification.removingCertificate">
         <location filename="../qml/pages/ClientCertPage.qml" line="201"/>
         <source>Removing certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjerner sertifikat</translation>
     </message>
     <message id="clientCertPage.allowSelfSigned">
         <location filename="../qml/pages/ClientCertPage.qml" line="214"/>
         <source>Allow self-signed server certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillat selvsignerte sertifikater</translation>
     </message>
     <message id="clientCertPage.allowSelfSignedInfo">
         <location filename="../qml/pages/ClientCertPage.qml" line="216"/>
         <source>Disables server certificate verification for the configured server only. Client certificate (mTLS) still applies.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deaktiverer verifisering av serversertifikat kun for den konfigurerte serveren. Klientsertifikat (mTLS) gjelder fortsatt.</translation>
     </message>
     <message id="clientCertPage.importCertificate">
         <location filename="../qml/pages/ClientCertPage.qml" line="252"/>
         <source>Import certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer sertifikat</translation>
     </message>
     <message id="clientCertPage.certificateFile">
         <location filename="../qml/pages/ClientCertPage.qml" line="258"/>
         <source>Certificate file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikatfil</translation>
     </message>
     <message id="clientCertPage.chooseFile">
         <location filename="../qml/pages/ClientCertPage.qml" line="260"/>
         <source>Choose file</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg fil</translation>
     </message>
     <message id="notification.certificateImported">
         <location filename="../qml/pages/ClientCertPage.qml" line="294"/>
         <source>Certificate imported and applied</source>
         <oldsource>Certificate imported and applied.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikat importert og tatt i bruk</translation>
     </message>
     <message id="notification.certificateImportFailed">
         <location filename="../qml/pages/ClientCertPage.qml" line="298"/>
         <source>Could not import certificate - check the file and password</source>
         <oldsource>Could not import certificate. Check the file and password.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke importere sertifikat – sjekk filen og passordet</translation>
     </message>
     <message id="clientCertPage.selectFile">
         <location filename="../qml/pages/ClientCertPage.qml" line="280"/>
         <source>Select certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg sertifikat</translation>
     </message>
     <message id="clientCertPage.password">
         <location filename="../qml/pages/ClientCertPage.qml" line="268"/>
         <source>Password</source>
-        <translation type="unfinished">Passord</translation>
+        <translation>Passord</translation>
     </message>
     <message id="clientCertPage.passwordPlaceholder">
         <location filename="../qml/pages/ClientCertPage.qml" line="270"/>
         <source>Leave empty if the file has no password</source>
-        <translation type="unfinished"></translation>
+        <translation>La stå tom hvis filen ikke har noe passord</translation>
     </message>
     <message id="memoriesPage.birthdayTitle">
         <location filename="../qml/pages/MemoriesPage.qml" line="33"/>
         <source>%1&apos;s birthday</source>
-        <translation type="unfinished"></translation>
+        <translation>%1s bursdag</translation>
     </message>
     <message id="memoriesPage.unknownPerson">
         <location filename="../qml/pages/MemoriesPage.qml" line="35"/>
         <source>Unknown</source>
-        <translation type="unfinished">Ukjent</translation>
+        <translation>Ukjent</translation>
     </message>
     <message id="memoriesPage.memory">
         <location filename="../qml/pages/MemoriesPage.qml" line="38"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Minne</translation>
     </message>
     <message id="memoriesPage.thisYear">
         <location filename="../qml/pages/MemoriesPage.qml" line="41"/>
         <source>This year</source>
-        <translation type="unfinished"></translation>
+        <translation>I år</translation>
     </message>
     <message id="memoriesPage.yearAgo">
         <location filename="../qml/pages/MemoriesPage.qml" line="43"/>
         <source>A year ago</source>
-        <translation type="unfinished">1 år siden</translation>
+        <translation>1 år siden</translation>
     </message>
     <message id="memoriesPage.yearsAgo">
         <location filename="../qml/pages/MemoriesPage.qml" line="45"/>
         <source>%1 years ago</source>
-        <translation type="unfinished">%1 år siden</translation>
+        <translation>%1 år siden</translation>
     </message>
     <message id="memoriesPage.memories">
         <location filename="../qml/pages/MemoriesPage.qml" line="72"/>
         <source>Memories</source>
-        <translation type="unfinished"></translation>
+        <translation>Minner</translation>
     </message>
     <message id="memoriesPage.loading">
         <location filename="../qml/pages/MemoriesPage.qml" line="197"/>
         <source>Loading memories...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster inn minner…</translation>
     </message>
     <message id="memoriesPage.noMemories">
         <location filename="../qml/pages/MemoriesPage.qml" line="205"/>
         <source>No memories found</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen minner funnet</translation>
     </message>
     <message id="deviceAssetDetailPage.failed">
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="178"/>
         <source>Failed to load image</source>
-        <translation type="unfinished">Kunne ikke laste inn bilde</translation>
+        <translation>Kunne ikke laste inn bilde</translation>
     </message>
     <message id="notification.uploadingFile">
         <location filename="../qml/pages/AssetDetailPage.qml" line="508"/>
@@ -3876,272 +3876,272 @@
         <location filename="../qml/pages/TimelinePage.qml" line="392"/>
         <source>Uploading file</source>
         <oldsource>Uploading file...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Laster opp fil</translation>
     </message>
     <message id="notification.deletingFile">
         <location filename="../qml/pages/AssetDetailPage.qml" line="521"/>
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="355"/>
         <location filename="../qml/pages/DeviceFolderPage.qml" line="339"/>
         <source>Deleting file from device</source>
-        <translation type="unfinished"></translation>
+        <translation>Sletter fil fra enheten</translation>
     </message>
     <message id="notification.uploadedFile">
         <location filename="../qml/pages/AssetDetailPage.qml" line="613"/>
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="400"/>
         <source>Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Lastet opp</translation>
     </message>
     <message id="notification.uploadFileFailed">
         <location filename="../qml/pages/AssetDetailPage.qml" line="619"/>
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="406"/>
         <source>Upload failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Opplasting feilet</translation>
     </message>
     <message id="deviceAssetDetailPage.backedUp">
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="293"/>
         <source>Backed up</source>
-        <translation type="unfinished"></translation>
+        <translation>Sikkerhetskopiert</translation>
     </message>
     <message id="deviceAssetInfoPage.title">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="38"/>
         <source>File Information</source>
         <oldsource>File Info</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Filinformasjon</translation>
     </message>
     <message id="deviceAssetInfoPage.name">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="50"/>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message id="deviceAssetInfoPage.type">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="56"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message id="deviceAssetInfoPage.video">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="59"/>
         <source>Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Video</translation>
     </message>
     <message id="deviceAssetInfoPage.photo">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="61"/>
         <source>Photo</source>
-        <translation type="unfinished"></translation>
+        <translation>Foto</translation>
     </message>
     <message id="deviceAssetInfoPage.size">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="66"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Størrelse</translation>
     </message>
     <message id="deviceAssetInfoPage.lastModified">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="86"/>
         <source>Last modified</source>
-        <translation type="unfinished">Sist endret</translation>
+        <translation>Sist endret</translation>
     </message>
     <message id="deviceAssetInfoPage.backupStatus">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="92"/>
         <source>Backup status</source>
-        <translation type="unfinished"></translation>
+        <translation>Status for sikkerhetskopi</translation>
     </message>
     <message id="deviceAssetInfoPage.backedUp">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="95"/>
         <source>Backed up</source>
-        <translation type="unfinished"></translation>
+        <translation>Sikkerhetskopiert</translation>
     </message>
     <message id="deviceAssetInfoPage.notBackedUp">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="97"/>
         <source>Not backed up</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke sikkerhetskopiert</translation>
     </message>
     <message id="pullDownMenu.showOldestFirst">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="76"/>
         <source>Show oldest first</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis eldst først</translation>
     </message>
     <message id="pullDownMenu.showNewestFirst">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="78"/>
         <source>Show newest first</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis nyest først</translation>
     </message>
     <message id="deviceFolderPage.asset">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="129"/>
         <location filename="../qml/pages/DeviceFolderPage.qml" line="142"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 mediefil</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="deviceFolderPage.assets">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="131"/>
         <location filename="../qml/pages/DeviceFolderPage.qml" line="142"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 mediefiler</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="deviceFolderPage.checking">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="309"/>
         <source>Checking against server...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sjekker mot server…</translation>
     </message>
     <message id="deviceFolderPage.empty">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="317"/>
         <source>No media files in this folder</source>
-        <translation type="unfinished">Mappen inneholder ingen mediefiler</translation>
+        <translation>Mappen inneholder ingen mediefiler</translation>
     </message>
     <message id="notification.deletingFiles">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="341"/>
         <source>Deleting %1 files from device</source>
-        <translation type="unfinished"></translation>
+        <translation>Sletter %1 filer fra enheten</translation>
     </message>
     <message id="notification.removedFile">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="375"/>
         <source>Removed file from device</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjernet fil fra enheten</translation>
     </message>
     <message id="notification.removedFiles">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="377"/>
         <source>Removed %1 files from device</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjernet %1 filer fra enheten</translation>
     </message>
     <message id="notification.checkFailed">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="370"/>
         <source>Server check failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Serversjekk mislyktes</translation>
     </message>
     <message id="uploadPickerPage.title">
         <location filename="../qml/pages/UploadPickerPage.qml" line="42"/>
         <source>Select folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg mappe</translation>
     </message>
     <message id="userPickerDialog.share">
         <location filename="../qml/components/UserPickerDialog.qml" line="48"/>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>Del</translation>
     </message>
     <message id="userPickerDialog.partner">
         <location filename="../qml/components/UserPickerDialog.qml" line="112"/>
         <source>Partner</source>
-        <translation type="unfinished"></translation>
+        <translation>Partner</translation>
     </message>
     <message id="userPickerDialog.empty">
         <location filename="../qml/components/UserPickerDialog.qml" line="141"/>
         <source>No users to share with</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen brukere å dele med</translation>
     </message>
     <message id="userPickerDialog.emptyHint">
         <location filename="../qml/components/UserPickerDialog.qml" line="143"/>
         <source>People can only be shared with users in your cluster group. Set it up in the Immich web interface.</source>
         <oldsource>People can only be shared with users in your cluster group. Set it up in the Immich web app.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Personer kan bare deles med brukere i clustergruppen din. Konfigurer dette i Immich-webgrensesnittet.</translation>
     </message>
     <message id="userPickerDialog.loading">
         <location filename="../qml/components/UserPickerDialog.qml" line="154"/>
         <source>Loading users...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster inn brukere…</translation>
     </message>
     <message id="personAccessPage.addUsers">
         <location filename="../qml/pages/PersonAccessPage.qml" line="23"/>
         <source>Add users</source>
-        <translation type="unfinished">Legg til brukere</translation>
+        <translation>Legg til brukere</translation>
     </message>
     <message id="personAccessPage.title">
         <location filename="../qml/pages/PersonAccessPage.qml" line="45"/>
         <source>Manage access</source>
-        <translation type="unfinished"></translation>
+        <translation>Administrer tilgang</translation>
     </message>
     <message id="personAccessPage.sharedByMe">
         <location filename="../qml/pages/PersonAccessPage.qml" line="51"/>
         <source>Sharing with</source>
         <oldsource>Shared by me</oldsource>
-        <translation type="unfinished">Deler med</translation>
+        <translation>Deler med</translation>
     </message>
     <message id="personAccessPage.stopSharing">
         <location filename="../qml/pages/PersonAccessPage.qml" line="67"/>
         <location filename="../qml/pages/PersonAccessPage.qml" line="71"/>
         <source>Stop sharing</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopp deling</translation>
     </message>
     <message id="personAccessPage.notShared">
         <location filename="../qml/pages/PersonAccessPage.qml" line="243"/>
         <source>Not shared with anyone</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke delt med noen</translation>
     </message>
     <message id="personAccessPage.notSharedHint">
         <location filename="../qml/pages/PersonAccessPage.qml" line="245"/>
         <source>Add a user from your cluster group to share the person with them</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til en bruker fra clustergruppen din for å dele personen med dem</translation>
     </message>
     <message id="personAccessPage.sharedWithMe">
         <location filename="../qml/pages/PersonAccessPage.qml" line="131"/>
         <source>Shared with me</source>
-        <translation type="unfinished">Delt med meg</translation>
+        <translation>Delt med meg</translation>
     </message>
     <message id="personAccessPage.shareBack">
         <location filename="../qml/pages/PersonAccessPage.qml" line="151"/>
         <source>Share back</source>
-        <translation type="unfinished"></translation>
+        <translation>Del tilbake</translation>
     </message>
     <message id="personAccessPage.sharedBack">
         <location filename="../qml/pages/PersonAccessPage.qml" line="217"/>
         <source>Shared back</source>
-        <translation type="unfinished"></translation>
+        <translation>Delt tilbake</translation>
     </message>
     <message id="pullDownMenu.addCustomFolder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="73"/>
         <source>Add custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til egendefinert mappe</translation>
     </message>
     <message id="onThisDevicePage.title">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="88"/>
         <source>On This Device</source>
-        <translation type="unfinished">På denne enheten</translation>
+        <translation>På denne enheten</translation>
     </message>
     <message id="notification.removeCustomFolder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="120"/>
         <source>Removing folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjerner mappe</translation>
     </message>
     <message id="onThisDevicePage.asset">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="162"/>
         <source>1 asset</source>
-        <translation type="unfinished">1 mediefil</translation>
+        <translation>1 mediefil</translation>
     </message>
     <message id="onThisDevicePage.assets">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="164"/>
         <source>%1 assets</source>
-        <translation type="unfinished">%1 mediefiler</translation>
+        <translation>%1 mediefiler</translation>
     </message>
     <message id="onThisDevicePage.removeCustomFolder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="179"/>
         <source>Remove folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern mappe</translation>
     </message>
     <message id="onThisDevicePage.noFolders">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="202"/>
         <source>No folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen mapper</translation>
     </message>
     <message id="onThisDevicePage.noFoldersHint">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="204"/>
         <source>Pull down to add a custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Trekk ned for å legge til en egendefinert mappe</translation>
     </message>
     <message id="onThisDevicePage.addFolderAccept">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="219"/>
         <source>Add Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til mappe</translation>
     </message>
     <message id="onThisDevicePage.folderPathPlaceholder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="225"/>
         <source>Enter folder path</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppgi mappebane</translation>
     </message>
     <message id="onThisDevicePage.folderPath">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="227"/>
         <source>Folder path</source>
-        <translation type="unfinished">Mappebane</translation>
+        <translation>Mappebane</translation>
     </message>
     <message id="onThisDevicePage.addFolderDescription">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="240"/>
         <source>Enter the full path to a folder on your device. The folder must exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv inn den fullstendige banen til en mappe på enheten din. Mappen må eksistere.</translation>
     </message>
 </context>
 </TS>
