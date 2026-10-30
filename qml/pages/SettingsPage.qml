@@ -13,6 +13,8 @@ Page {
     property bool aboutFailed: false
     property bool pinExists: false
     property bool pinStatusLoading: true
+    property int clusterGroupInvitationCount: 0
+    property bool clusterGroupVisible: authManager.clusterGroupId !== ""
 
     Component.onCompleted: {
         statsLoading = true
@@ -20,6 +22,9 @@ Page {
         immichApi.fetchServerStatistics()
         immichApi.fetchServerAbout()
         immichApi.fetchAuthStatus()
+        if (clusterGroupVisible) {
+            immichApi.fetchClusterGroupRequests()
+        }
     }
 
     Connections {
@@ -36,6 +41,7 @@ Page {
             settingsPage.pinExists = pinCodeExists
             settingsPage.pinStatusLoading = false
         }
+        onClusterGroupRequestsReceived: settingsPage.clusterGroupInvitationCount = requests.length
         onErrorOccurred: {
             if (pinStatusLoading) {
                 pinStatusLoading = false
@@ -362,6 +368,31 @@ Page {
                 //% "Create, change or reset the PIN code for your locked folder."
                 description: qsTrId("settingsPage.lockedFolderPinInfo")
                 onClicked: pageStack.push(Qt.resolvedUrl("PinCodePage.qml"))
+            }
+
+            SectionHeader {
+                //% "People"
+                text: qsTrId("settingsPage.people")
+                visible: settingsPage.clusterGroupVisible
+            }
+
+            ValueButton {
+                visible: settingsPage.clusterGroupVisible
+                //% "Cluster group"
+                label: qsTrId("settingsPage.clusterGroup")
+                value: {
+                    if (settingsPage.clusterGroupInvitationCount === 1) {
+                        //% "1 invitation"
+                        return qsTrId("settingsPage.clusterGroupInvitation")
+                    } else if (settingsPage.clusterGroupInvitationCount > 1) {
+                        //% "%1 invitations"
+                        return qsTrId("settingsPage.clusterGroupInvitations").arg(settingsPage.clusterGroupInvitationCount)
+                    }
+                    return ""
+                }
+                //% "People are recognized across the photos of everyone in the group."
+                description: qsTrId("clusterGroupPage.clusterGroupInfo")
+                onClicked: pageStack.push(Qt.resolvedUrl("ClusterGroupPage.qml"))
             }
 
             SectionHeader {

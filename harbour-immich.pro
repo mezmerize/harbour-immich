@@ -115,6 +115,9 @@ DISTFILES += qml/harbour-immich.qml \
     qml/pages/AssetDetailPage.qml \
     qml/pages/AssetInfoPage.qml \
     qml/pages/ClientCertPage.qml \
+    qml/pages/ClusterGroupInviteDialog.qml \
+    qml/pages/ClusterGroupPage.qml \
+    qml/pages/ClusterMemberAccessPage.qml \
     qml/pages/DeviceAssetDetailPage.qml \
     qml/pages/DeviceAssetInfoPage.qml \
     qml/pages/DeviceFolderPage.qml \

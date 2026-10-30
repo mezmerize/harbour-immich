@@ -23,6 +23,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <QTimer>
+#include <QSharedPointer>
 #include <algorithm>
 #include <QLocale>
 
@@ -802,9 +803,8 @@ void ImmichApi::onSharedLinkReplyFinished()
     reply->deleteLater();
 }
 
-void ImmichApi::fetchUsers()
+QJsonArray ImmichApi::catalogUsers() const
 {
-    qInfo() << "ImmichApi: Fetching users";
     AssetDatabase *db = AssetDatabase::instance();
     QJsonArray users;
     QSqlQuery q(db->db());
@@ -821,6 +821,13 @@ void ImmichApi::fetchUsers()
         u[QStringLiteral("email")] = q.value(2).toString();
         users.append(u);
     }
+    return users;
+}
+
+void ImmichApi::fetchUsers()
+{
+    qInfo() << "ImmichApi: Fetching users";
+    QJsonArray users = catalogUsers();
     qInfo() << "ImmichApi: Users from catalog, count:" << users.size();
     emit usersReceived(users);
 }
@@ -1283,17 +1290,17 @@ void ImmichApi::fetchPersonShares()
     });
 }
 
-void ImmichApi::fetchClusterGroupUsers()
+void ImmichApi::fetchClusterGroupUsers(const QString &groupId)
 {
-    const QString groupId = m_authManager->clusterGroupId();
-    if (groupId.isEmpty()) {
-        emit clusterGroupUsersReceived(QJsonArray());
+    const QString gid = groupId.isEmpty() ? m_authManager->clusterGroupId() : groupId;
+    if (gid.isEmpty()) {
+        emit clusterGroupUsersReceived(QJsonArray(), gid);
         return;
     }
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/cluster-groups/") + groupId + QStringLiteral("/users"));
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/cluster-groups/") + gid + QStringLiteral("/users"));
     QNetworkRequest request = createAuthenticatedRequest(url);
     QNetworkReply *reply = m_networkManager->get(request);
-    connectReply(reply, [this](const QByteArray &response) {
+    connectReply(reply, [this, gid](const QByteArray &response) {
         const QString me = m_authManager->userId();
         AssetDatabase *db = AssetDatabase::instance();
         QSqlQuery q(db->db());
@@ -1320,7 +1327,118 @@ void ImmichApi::fetchClusterGroupUsers()
         for (const QJsonObject &u : users) {
             result.append(u);
         }
-        emit clusterGroupUsersReceived(result);
+        emit clusterGroupUsersReceived(result, gid);
+    });
+}
+
+void ImmichApi::fetchClusterGroupRequests()
+{
+    qInfo() << "ImmichApi: Fetching received cluster group requests";
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/cluster-groups/requests"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this](const QByteArray &response) {
+        emit clusterGroupRequestsReceived(QJsonDocument::fromJson(response).array());
+    });
+}
+
+void ImmichApi::fetchClusterGroupSentRequests()
+{
+    qInfo() << "ImmichApi: Fetching sent cluster group requests";
+    const QString groupId = m_authManager->clusterGroupId();
+    if (groupId.isEmpty()) {
+        emit clusterGroupSentRequestsReceived(QJsonArray());
+        return;
+    }
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/cluster-groups/") + groupId + QStringLiteral("/requests"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->get(request);
+    connectReply(reply, [this](const QByteArray &response) {
+        emit clusterGroupSentRequestsReceived(QJsonDocument::fromJson(response).array());
+    });
+}
+
+void ImmichApi::inviteToClusterGroup(const QStringList &userIds)
+{
+    if (userIds.isEmpty()) {
+        return;
+    }
+    qInfo() << "ImmichApi: Inviting" << userIds.size() << "users to cluster group";
+    const QString groupId = m_authManager->clusterGroupId();
+    if (groupId.isEmpty()) {
+        emit clusterGroupInvitesSent();
+        return;
+    }
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/cluster-groups/") + groupId + QStringLiteral("/requests"));
+    QSharedPointer<int> remaining(new int(userIds.size()));
+    for (const QString &userId : userIds) {
+        QNetworkRequest request = createAuthenticatedRequest(url);
+        QJsonObject json;
+        json[QStringLiteral("userId")] = userId;
+        QNetworkReply *reply = m_networkManager->put(request, QJsonDocument(json).toJson());
+        auto done = [this, remaining]() {
+            *remaining -= 1;
+            if (*remaining == 0) {
+                emit clusterGroupInvitesSent();
+            }
+        };
+        connectReply(reply, [done](const QByteArray &) {
+            done();
+        }, 30000, done);
+    }
+}
+
+void ImmichApi::acceptClusterGroupRequest(const QString &requestId)
+{
+    qInfo() << "ImmichApi: Accepting cluster group request:" << requestId;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/cluster-groups/requests/") + requestId + QStringLiteral("/accept"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->post(request, QByteArray());
+    connectReply(reply, [this](const QByteArray &) {
+        m_authManager->fetchCurrentUser();
+        emit clusterGroupJoined();
+    });
+}
+
+void ImmichApi::declineClusterGroupRequest(const QString &requestId)
+{
+    qInfo() << "ImmichApi: Deleting cluster group request:" << requestId;
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/cluster-groups/requests/") + requestId);
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->deleteResource(request);
+    connectReply(reply, [this, requestId](const QByteArray &) {
+        emit clusterGroupRequestDeleted(requestId);
+    });
+}
+
+void ImmichApi::leaveClusterGroup()
+{
+    qInfo() << "ImmichApi: Leaving cluster group";
+    const QString groupId = m_authManager->clusterGroupId();
+    if (groupId.isEmpty()) {
+        return;
+    }
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/cluster-groups/") + groupId + QStringLiteral("/leave"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->post(request, QByteArray());
+    connectReply(reply, [this](const QByteArray &) {
+        m_authManager->fetchCurrentUser();
+        emit clusterGroupLeft();
+    });
+}
+
+void ImmichApi::regenerateClusterGroupPeople()
+{
+    qInfo() << "ImmichApi: Regenerating cluster group people";
+    const QString groupId = m_authManager->clusterGroupId();
+    if (groupId.isEmpty()) {
+        return;
+    }
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/cluster-groups/") + groupId + QStringLiteral("/regenerate-people"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+    QNetworkReply *reply = m_networkManager->post(request, QByteArray());
+    connectReply(reply, [this](const QByteArray &) {
+        emit clusterGroupPeopleRegenerated();
     });
 }
 
@@ -1341,25 +1459,82 @@ void ImmichApi::sharePeople(const QStringList &personIds, const QStringList &use
     });
 }
 
-void ImmichApi::unsharePerson(const QString &personId, const QString &userId)
+void ImmichApi::sharePeopleWithEveryone(const QStringList &userIds)
 {
-    qInfo() << "ImmichApi: Unsharing person" << personId << "from" << userId;
+    qInfo() << "ImmichApi: Sharing all people with" << userIds.size() << "users";
     QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/people/users"));
     QNetworkRequest request = createAuthenticatedRequest(url);
 
-    QJsonObject item;
-    item[QStringLiteral("personId")] = personId;
-    item[QStringLiteral("sharedWithId")] = userId;
-    const QByteArray payload = QJsonDocument(QJsonArray{item}).toJson(QJsonDocument::Compact);
+    QJsonObject json;
+    json[QStringLiteral("type")] = QStringLiteral("everyone");
+    json[QStringLiteral("sharedWithIds")] = toJsonStringArray(userIds);
+    json[QStringLiteral("role")] = QStringLiteral("admin");
 
+    QNetworkReply *reply = m_networkManager->put(request, QJsonDocument(json).toJson());
+    connectReply(reply, [this](const QByteArray &) {
+        emit peopleShared(QStringList());
+    });
+}
+
+QNetworkReply *ImmichApi::sendPeopleUsersDeleteRequest(const QJsonArray &items)
+{
+    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/people/users"));
+    QNetworkRequest request = createAuthenticatedRequest(url);
+
+    const QByteArray payload = QJsonDocument(items).toJson(QJsonDocument::Compact);
     auto *buffer = new QBuffer();
     buffer->setData(payload);
     buffer->open(QIODevice::ReadOnly);
     QNetworkReply *reply = m_networkManager->sendCustomRequest(request, "DELETE", buffer);
     buffer->setParent(reply);
+    return reply;
+}
+
+void ImmichApi::unsharePerson(const QString &personId, const QString &userId)
+{
+    qInfo() << "ImmichApi: Unsharing person" << personId << "from" << userId;
+    QJsonObject item;
+    item[QStringLiteral("personId")] = personId;
+    item[QStringLiteral("sharedWithId")] = userId;
+    QNetworkReply *reply = sendPeopleUsersDeleteRequest(QJsonArray{item});
     connectReply(reply, [this, personId, userId](const QByteArray &) {
         emit personUnshared(personId, userId);
     });
+}
+
+void ImmichApi::unsharePeople(const QStringList &personIds, const QString &userId)
+{
+    if (personIds.isEmpty()) {
+        return;
+    }
+    qInfo() << "ImmichApi: Unsharing" << personIds.size() << "people from" << userId;
+    QJsonArray items;
+    for (const QString &personId : personIds) {
+        QJsonObject item;
+        item[QStringLiteral("personId")] = personId;
+        item[QStringLiteral("sharedWithId")] = userId;
+        items.append(item);
+    }
+    QNetworkReply *reply = sendPeopleUsersDeleteRequest(items);
+    connectReply(reply, [this, personIds, userId](const QByteArray &) {
+        emit peopleUnshared(personIds, userId);
+    });
+}
+
+QJsonArray ImmichApi::ownPeople() const
+{
+    return peopleFromCatalog(true, AssetDatabase::instance()->metaValue(QStringLiteral("current_user_id")));
+}
+
+QString ImmichApi::currentUserName() const
+{
+    AssetDatabase *db = AssetDatabase::instance();
+    QSqlQuery q(db->db());
+    q.exec(QStringLiteral("SELECT name FROM sync_user WHERE id = (SELECT value FROM sync_meta WHERE key = 'current_user_id')"));
+    if (q.next()) {
+        return q.value(0).toString();
+    }
+    return QString();
 }
 
 void ImmichApi::fetchCities()
@@ -1689,7 +1864,7 @@ QJsonArray ImmichApi::albumsFromCatalog(const QString &filter) const
     return albums;
 }
 
-QJsonArray ImmichApi::peopleFromCatalog(bool withHidden) const
+QJsonArray ImmichApi::peopleFromCatalog(bool withHidden, const QString &ownerId) const
 {
     AssetDatabase *db = AssetDatabase::instance();
     QJsonArray people;
@@ -1703,11 +1878,21 @@ QJsonArray ImmichApi::peopleFromCatalog(bool withHidden) const
         " FROM person p"
         " JOIN asset_face af ON af.person_id = p.id AND af.is_visible = 1 AND af.deleted_at IS NULL"
         " JOIN remote_asset ra ON ra.id = af.asset_id AND ra.visibility = 'timeline' AND ra.deleted_at IS NULL");
+    QStringList where;
     if (!withHidden) {
-        sql += QStringLiteral(" WHERE p.is_hidden = 0");
+        where.append(QStringLiteral("p.is_hidden = 0"));
+    }
+    if (!ownerId.isEmpty()) {
+        where.append(QStringLiteral("p.owner_id = ?"));
+    }
+    if (!where.isEmpty()) {
+        sql += QStringLiteral(" WHERE ") + where.join(QStringLiteral(" AND "));
     }
     sql += QStringLiteral(" GROUP BY p.id HAVING COALESCE(p.name, '') != '' OR COUNT(DISTINCT ra.id) >= ? ORDER BY p.name");
     q.prepare(sql);
+    if (!ownerId.isEmpty()) {
+        q.addBindValue(ownerId);
+    }
     q.addBindValue(minFaces);
     if (!q.exec()) {
         qWarning() << "ImmichApi: Failed people catalog query:" << q.lastError().text();

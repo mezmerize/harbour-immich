@@ -8,23 +8,24 @@ Dialog {
     property var selectedUserIds: []
     property bool loading: true
     property var users: []
+    property var sourceUsers: null
+    //% "Share"
+    property string acceptText: qsTrId("userPickerDialog.share")
+    //% "No users to share with"
+    property string emptyText: qsTrId("userPickerDialog.empty")
+    //% "People can only be shared with users in your cluster group. Set it up in the application settings."
+    property string emptyHint: qsTrId("userPickerDialog.emptyHint")
 
     canAccept: selectedUserIds.length > 0
 
-    Component.onCompleted: immichApi.fetchClusterGroupUsers()
-
-    Connections {
-        target: immichApi
-        onClusterGroupUsersReceived: {
-            var result = []
-            for (var i = 0; i < users.length; i++) {
-                if (userPickerDialog.excludedIds.indexOf(users[i].id) < 0) {
-                    result.push(users[i])
-                }
+    function applyUsers(all) {
+        var result = []
+        for (var i = 0; i < all.length; i++) {
+            if (userPickerDialog.excludedIds.indexOf(all[i].id) < 0) {
+                result.push(all[i])
             }
-            userPickerDialog.users = result
-            userPickerDialog.loading = false
         }
+        userPickerDialog.users = result
     }
 
     function toggleUser(userId) {
@@ -38,14 +39,32 @@ Dialog {
         selectedUserIds = ids
     }
 
+    Component.onCompleted: {
+        if (sourceUsers !== null) {
+            applyUsers(sourceUsers)
+            loading = false
+        } else {
+            immichApi.fetchClusterGroupUsers()
+        }
+    }
+
+    Connections {
+        target: immichApi
+        onClusterGroupUsersReceived: {
+            if (userPickerDialog.sourceUsers !== null) return
+            if (groupId !== authManager.clusterGroupId) return
+            userPickerDialog.applyUsers(users)
+            userPickerDialog.loading = false
+        }
+    }
+
     SilicaListView {
         id: listView
         anchors.fill: parent
         model: userPickerDialog.users
 
         header: DialogHeader {
-            //% "Share"
-            acceptText: qsTrId("userPickerDialog.share")
+            acceptText: userPickerDialog.acceptText
         }
 
         delegate: ListItem {
@@ -137,10 +156,8 @@ Dialog {
                 anchors.fill: parent
                 visible: parent.shown
                 iconSource: "image://theme/icon-m-people"
-                //% "No users to share with"
-                message: qsTrId("userPickerDialog.empty")
-                //% "People can only be shared with users in your cluster group. Set it up in the Immich web interface."
-                hint: qsTrId("userPickerDialog.emptyHint")
+                message: userPickerDialog.emptyText
+                hint: userPickerDialog.emptyHint
             }
         }
 

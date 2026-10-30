@@ -263,6 +263,10 @@ int main(int argc, char *argv[])
     QObject::connect(immichApi, &ImmichApi::albumUserRemoved, resyncTimer, queueResync);
     QObject::connect(immichApi, &ImmichApi::stackCreated, resyncTimer, queueResync);
     QObject::connect(immichApi, &ImmichApi::stackDeleted, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::clusterGroupJoined, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::clusterGroupLeft, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::clusterGroupPeopleRegenerated, resyncTimer, queueResync);
+    QObject::connect(immichApi, &ImmichApi::peopleUnshared, resyncTimer, queueResync);
     QObject::connect(backupManager, &BackupManager::fileBackedUp, resyncTimer, queueResync);
     QObject::connect(immichApi, &ImmichApi::stackCreated, assetDatabase, &AssetDatabase::applyStack);
     QObject::connect(immichApi, &ImmichApi::stackDeleted, assetDatabase, &AssetDatabase::removeStack);

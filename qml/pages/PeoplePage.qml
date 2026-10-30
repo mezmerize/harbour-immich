@@ -234,6 +234,7 @@ Page {
                 MenuItem {
                     //% "Manage access"
                     text: qsTrId("peoplePage.manageAccess")
+                    visible: authManager.clusterGroupId !== ""
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("PersonAccessPage.qml"), {
                             personId: model.personId,
