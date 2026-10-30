@@ -4,6 +4,7 @@ import harbour.immich.models 1.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property string folderPath: ""
@@ -62,6 +63,7 @@ Page {
         model: folderModel
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             enabled: !page.selectionMode
 
             MenuItem {

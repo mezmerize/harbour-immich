@@ -4,6 +4,7 @@ import QtGraphicalEffects 1.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
    id: searchPage
 
    property var selectedPeople: []
@@ -157,6 +158,7 @@ Page {
        contentHeight: searchContent.height
 
        PullDownMenu {
+           backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
            MenuItem {
                //% "Settings"
                text: qsTrId("pullDownMenu.settings")
@@ -210,6 +212,7 @@ Page {
                label: qsTrId("searchPage.searchInLabel")
                currentIndex: 0
                menu: ContextMenu {
+                   backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                    //% "Context (smart search)"
                    MenuItem { text: qsTrId("searchPage.searchInContext") }
                    //% "Filename / Extension"
@@ -251,6 +254,7 @@ Page {
                label: qsTrId("searchPage.sortOrderLabel")
                currentIndex: 0
                menu: ContextMenu {
+                   backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                    //% "Newest first"
                    MenuItem { text: qsTrId("searchPage.sortOrderNewest") }
                    //% "Oldest first"
@@ -497,6 +501,7 @@ Page {
                label: qsTrId("searchPage.typeLabel")
                currentIndex: 0
                menu: ContextMenu {
+                   backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                    //% "All"
                    MenuItem { text: qsTrId("searchPage.typeAll") }
                    //% "Photos"

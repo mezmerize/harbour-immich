@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import QtGraphicalEffects 1.0
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property string assetId
@@ -22,6 +23,7 @@ Page {
         contentHeight: column.height
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             enabled: !isOwnedByOther
 
             MenuItem {

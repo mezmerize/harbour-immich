@@ -2,6 +2,7 @@ import QtQuick 2.6
 import Sailfish.Silica 1.0
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
   id: page
 
   property string previousLogs: ""
@@ -23,6 +24,7 @@ Page {
       contentHeight: column.height
 
       PullDownMenu {
+          backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
           MenuItem {
               //% "Clear logs"
               text: qsTrId("pullDownMenu.clearLogs")

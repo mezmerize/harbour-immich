@@ -4114,5 +4114,95 @@
         <source>Enter the full path to a folder on your device. The folder must exist.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
+    <message id="memoryDetailPage.assetCounter">
+            <location filename="../qml/pages/MemoryDetailPage.qml" line="374"/>
+            <source>%1 / %2</source>
+            <translation>%1 / %2</translation>
+        </message>
+    <message id="onThisDevicePage.empty">
+            <location filename="../qml/pages/OnThisDevicePage.qml" line="285"/>
+            <source>No media files in this folder</source>
+            <translation>Geen mediabestanden in deze map</translation>
+        </message>
+    <message id="searchResultsPage.noResults">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="154"/>
+            <source>No results found</source>
+            <translation>Geen resultaten gevonden</translation>
+        </message>
+    <message id="searchResultsPage.noResultsHint">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="156"/>
+            <source>Try adjusting your search filters</source>
+            <translation>Probeer je zoekfilters aan te passen</translation>
+        </message>
+    <message id="searchResultsPage.result">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="100"/>
+            <source>1 result</source>
+            <translation>1 resultaat</translation>
+        </message>
+    <message id="searchResultsPage.results">
+            <location filename="../qml/pages/SearchResultsPage.qml" line="102"/>
+            <source>%1 results</source>
+            <translation>%1 resultaten</translation>
+        </message>
+    <message id="selectionActionBar.clear">
+            <location filename="../qml/components/SelectionActionBar.qml" line="462"/>
+            <source>Clear selection</source>
+            <translation>Selectie opheffen</translation>
+        </message>
+    <message id="selectionActionBar.selected">
+            <location filename="../qml/components/SelectionActionBar.qml" line="106"/>
+            <source>%1 selected</source>
+            <translation>%1 geselecteerd</translation>
+        </message>
+    <message id="settingsPage.appearance">
+            <location filename="../qml/pages/SettingsPage.qml" line="101"/>
+            <source>Appearance</source>
+            <translation>Weergave</translation>
+        </message>
+    <message id="settingsPage.appearanceDark">
+            <location filename="../qml/pages/SettingsPage.qml" line="119"/>
+            <source>Dark</source>
+            <translation>Donker</translation>
+        </message>
+    <message id="settingsPage.appearanceInfo">
+            <location filename="../qml/pages/SettingsPage.qml" line="103"/>
+            <source>Appearance of the app. System follows the phone's color scheme setting; changes apply immediately.</source>
+            <translation>Weergave van de app. De optie Systeem volgt het kleurenschema van de telefoon. Wijzigingen worden direct toegepast.</translation>
+        </message>
+    <message id="settingsPage.appearanceLight">
+            <location filename="../qml/pages/SettingsPage.qml" line="115"/>
+            <source>Light</source>
+            <translation>Licht</translation>
+        </message>
+    <message id="settingsPage.appearanceSystem">
+            <location filename="../qml/pages/SettingsPage.qml" line="111"/>
+            <source>System</source>
+            <translation>Systeem</translation>
+        </message>
+    <message id="settingsPage.loadedAssets">
+            <location filename="../qml/pages/SettingsPage.qml" line="724"/>
+            <source>Loaded assets</source>
+            <translation>Ingeladen mediabestanden</translation>
+        </message>
+    <message id="stackDetailPage.assetCounter">
+            <location filename="../qml/pages/StackDetailPage.qml" line="399"/>
+            <source>%1 / %2</source>
+            <translation>%1 / %2</translation>
+        </message>
+    <message id="timelineBucketDelegate.item">
+            <location filename="../qml/components/TimelineBucketDelegate.qml" line="276"/>
+            <source>1 item</source>
+            <translation>1 item</translation>
+        </message>
+    <message id="timelineBucketDelegate.items">
+            <location filename="../qml/components/TimelineBucketDelegate.qml" line="278"/>
+            <source>%1 items</source>
+            <translation>%1 items</translation>
+        </message>
+    <message id="uploadPage.selectFiles">
+            <location filename="../qml/pages/UploadPage.qml" line="364"/>
+            <source>Select files</source>
+            <translation>Selecteer bestanden</translation>
+        </message>
+    </context>
 </TS>

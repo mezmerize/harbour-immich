@@ -5,6 +5,7 @@ import "../components"
 import "../components/TimelineHelper.js" as TimelineHelper
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
@@ -42,6 +43,7 @@ Page {
         columns: page.assetsPerRow
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")

@@ -4,6 +4,7 @@ import "../components"
 import "../components/SharedLinksHelper.js" as SharedLinksHelper
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property var sharedLinks: []
@@ -47,6 +48,7 @@ Page {
         model: sharedLinks.length
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")

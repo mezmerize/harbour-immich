@@ -4,6 +4,7 @@ import "../components"
 import "../components/FilterHelper.js" as FilterHelper
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property var placesModel: []
@@ -31,6 +32,7 @@ Page {
         contentHeight: column.height
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")

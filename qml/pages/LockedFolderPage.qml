@@ -5,6 +5,7 @@ import "../components"
 import "../components/TimelineHelper.js" as TimelineHelper
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property bool authenticated: false
@@ -160,6 +161,7 @@ Page {
         visible: authenticated
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             enabled: lockedModel.selectedCount === 0
 
             MenuItem {

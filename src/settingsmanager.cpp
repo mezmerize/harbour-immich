@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <QLocale>
+#include <QProcess>
 
 SettingsManager::SettingsManager(QObject *parent)
     : QObject(parent)
@@ -479,4 +480,75 @@ QVariantList SettingsManager::availableLanguages() const
         result.append(entry);
     }
     return result;
+}
+
+QString SettingsManager::themeMode() const
+{
+    return m_settings.value("themeMode", "system").toString();
+}
+
+void SettingsManager::setThemeMode(const QString &mode)
+{
+    if (themeMode() != mode) {
+        m_settings.setValue("themeMode", mode);
+        emit themeModeChanged();
+    }
+}
+
+int SettingsManager::systemColorScheme() const
+{
+    return m_systemColorScheme;
+}
+
+int SettingsManager::systemDefaultScheme() const
+{
+    return m_systemDefaultScheme;
+}
+
+void SettingsManager::setSystemDefaultScheme(int scheme)
+{
+    if (m_systemDefaultScheme != scheme) {
+        m_systemDefaultScheme = scheme;
+        emit systemDefaultSchemeChanged();
+    }
+}
+
+void SettingsManager::refreshSystemColorScheme()
+{
+    // The OS color scheme lives in dconf (0 = dark, 1 = light). Sailfish OS does
+    // not run a dconf daemon on the session bus, so read it with the dconf CLI.
+    // IMPORTANT: run it ASYNCHRONOUSLY — a blocking waitForFinished() on the GUI
+    // thread would stall the UI while dconf is slow, and if the read never
+    // completes the "system" mode would keep using a stale theme. Kick it off and
+    // apply the value when the finished signal fires (see the connect() below).
+    if (m_dconfProcess) {
+        return; // already running
+    }
+    m_dconfProcess = new QProcess(this);
+    // Qt 5.6.3 (SFOS) has no QOverload, and QProcess::finished is overloaded
+    // (finished(int) and finished(int, ExitStatus)). Disambiguate by declaring
+    // the exact member-function-pointer type first (valid C++, no QOverload).
+    void (QProcess::*finishedSig)(int, QProcess::ExitStatus) = &QProcess::finished;
+    connect(m_dconfProcess,
+            finishedSig,
+            this, [this](int code, QProcess::ExitStatus) {
+                QProcess *proc = m_dconfProcess;
+                m_dconfProcess = nullptr;
+                if (code == 0) {
+                    const QString out =
+                            QString::fromLocal8Bit(proc->readAllStandardOutput()).trimmed();
+                    bool ok = false;
+                    const int value = out.toInt(&ok);
+                    if (ok && (value == 0 || value == 1)) {
+                        if (m_systemColorScheme != value) {
+                            m_systemColorScheme = value;
+                            emit systemColorSchemeChanged();
+                        }
+                    }
+                }
+                proc->deleteLater();
+            });
+    m_dconfProcess->start(QStringLiteral("/usr/bin/dconf"),
+                          QStringList() << QStringLiteral("read")
+                                       << QStringLiteral("/desktop/jolla/theme/color_scheme"));
 }

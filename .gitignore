@@ -1,3 +1,9 @@
+# Build artifacts (RPMs are NEVER committed)
+dist/
+output/
+build.log
+*.user
+
 # C++ objects and libs
 *.slo
 *.lo

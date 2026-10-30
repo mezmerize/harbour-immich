@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property string homePath: settingsManager.homePath()
@@ -62,6 +63,7 @@ Page {
         model: mediaRoots.length
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             MenuItem {
                 //% "Refresh"
                 text: qsTrId("pullDownMenu.refresh")
@@ -174,6 +176,7 @@ Page {
                 id: contextMenuComponent
 
                 ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                     MenuItem {
                         //% "Remove folder"
                         text: qsTrId("onThisDevicePage.removeCustomFolder")

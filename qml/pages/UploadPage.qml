@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
   id: uploadPage
 
   // Status: "picking" -> "uploading" -> "complete"
@@ -125,6 +126,7 @@ Page {
       contentHeight: column.height
 
       PullDownMenu {
+          backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
           visible: uploadState === "uploading"
           MenuItem {
               //% "Cancel upload"
@@ -372,6 +374,7 @@ Page {
                   Component {
                       id: fileContextMenu
                       ContextMenu {
+                          backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                           MenuItem {
                               //% "Remove"
                               text: qsTrId("uploadPage.remove")

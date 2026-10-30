@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
@@ -72,6 +73,7 @@ Page {
         model: albumModel
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             MenuItem {
                 //% "Settings"
                 text: qsTrId("pullDownMenu.settings")
@@ -194,6 +196,7 @@ Page {
                     }
 
                     menu: ContextMenu {
+                        backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                         //% "Most recent photo"
                         MenuItem { text: qsTrId("albumsPage.sortEndDate") }
                         //% "Oldest photo"

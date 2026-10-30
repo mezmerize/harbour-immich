@@ -191,6 +191,7 @@ Dialog {
                     Component {
                         id: memberContextMenu
                         ContextMenu {
+                            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                             MenuItem {
                                 text: model.odRole === "editor"
                                     //% "Change to viewer"
@@ -351,6 +352,7 @@ Dialog {
                 currentIndex: dialog.selectedRole === "editor" ? 0 : 1
 
                 menu: ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                     //% "Editor"
                     MenuItem { text: qsTrId("sharePage.roleEditorOption") }
                     //% "Viewer"
@@ -506,6 +508,7 @@ Dialog {
                 }
 
                 menu: ContextMenu {
+                    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
                     //% "Never"
                     MenuItem { text: qsTrId("sharePage.expirationNever") }
                     //% "30 minutes"

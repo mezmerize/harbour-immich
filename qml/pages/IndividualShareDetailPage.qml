@@ -6,6 +6,7 @@ import "../components/AssetGroupHelper.js" as AssetGroupHelper
 import "../components/SharedLinksHelper.js" as SharedLinksHelper
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property string linkId: ""
@@ -146,6 +147,7 @@ Page {
         model: page.groupedAssets
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             enabled: !page.selectionMode
 
             MenuItem {

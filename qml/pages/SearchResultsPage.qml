@@ -4,6 +4,7 @@ import "../components"
 import "../components/AssetGroupHelper.js" as AssetGroupHelper
 
 Page {
+    backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.rgba(palette.overlayBackgroundColor, 0))
     id: page
 
     property var searchParams: ({})
@@ -146,6 +147,7 @@ Page {
         model: page.groupedAssets
 
         PullDownMenu {
+            backgroundColor: __silica_applicationwindow_instance.lightSurface(Theme.highlightBackgroundColor)
             enabled: !page.selectionMode
 
             MenuItem {
