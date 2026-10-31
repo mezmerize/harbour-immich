@@ -1633,52 +1633,52 @@
     <message id="settingsPage.lockedFolderPin">
         <location filename="../qml/pages/SettingsPage.qml" line="359"/>
         <source>Locked folder PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN-kode for låst mappe</translation>
     </message>
     <message id="settingsPage.lockedFolderPinLoading">
         <location filename="../qml/pages/SettingsPage.qml" line="362"/>
         <source>Loading...</source>
-        <translation type="unfinished">Laster...</translation>
+        <translation>Laster inn…</translation>
     </message>
     <message id="settingsPage.lockedFolderPinSet">
         <location filename="../qml/pages/SettingsPage.qml" line="364"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Sett</translation>
     </message>
     <message id="settingsPage.lockedFolderPinNotSet">
         <location filename="../qml/pages/SettingsPage.qml" line="366"/>
         <source>Not set</source>
-        <translation type="unfinished">Ikke satt</translation>
+        <translation>Ikke satt</translation>
     </message>
     <message id="settingsPage.lockedFolderPinInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="369"/>
         <source>Create, change or reset the PIN code for your locked folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opprett, endre eller nullstill PIN-koden for den låste mappen.</translation>
     </message>
     <message id="settingsPage.people">
         <location filename="../qml/pages/SettingsPage.qml" line="375"/>
         <source>People</source>
-        <translation type="unfinished">Personer</translation>
+        <translation>Personer</translation>
     </message>
     <message id="settingsPage.clusterGroup">
         <location filename="../qml/pages/SettingsPage.qml" line="382"/>
         <source>Cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Klustergruppe</translation>
     </message>
     <message id="settingsPage.clusterGroupInvitation">
         <location filename="../qml/pages/SettingsPage.qml" line="386"/>
         <source>1 invitation</source>
-        <translation type="unfinished"></translation>
+        <translation>1 invitasjon</translation>
     </message>
     <message id="settingsPage.clusterGroupInvitations">
         <location filename="../qml/pages/SettingsPage.qml" line="389"/>
         <source>%1 invitations</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 invitasjoner</translation>
     </message>
     <message id="clusterGroupPage.clusterGroupInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="394"/>
         <source>People are recognized across the photos of everyone in the group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Personer gjenkjennes på tvers av bildene til alle i gruppen.</translation>
     </message>
     <message id="settingsPage.cover">
         <location filename="../qml/pages/SettingsPage.qml" line="400"/>
@@ -4083,7 +4083,7 @@
         <location filename="../qml/components/UserPickerDialog.qml" line="17"/>
         <source>People can only be shared with users in your cluster group. Set it up in the application settings.</source>
         <oldsource>People can only be shared with users in your cluster group. Set it up in the Immich web interface.</oldsource>
-        <translation type="unfinished">Personer kan bare deles med brukere i clustergruppen din. Konfigurer dette i Immich-webgrensesnittet.</translation>
+        <translation>Personer kan bare deles med brukere i klustergruppen din. Konfigurer dette i Immich-webgrensesnittet.</translation>
     </message>
     <message id="userPickerDialog.loading">
         <location filename="../qml/components/UserPickerDialog.qml" line="171"/>
@@ -4120,7 +4120,7 @@
     <message id="personAccessPage.notSharedHint">
         <location filename="../qml/pages/PersonAccessPage.qml" line="245"/>
         <source>Add a user from your cluster group to share the person with them</source>
-        <translation>Legg til en bruker fra clustergruppen din for å dele personen med dem</translation>
+        <translation>Legg til en bruker fra klustergruppen din for å dele personen med dem</translation>
     </message>
     <message id="personAccessPage.sharedWithMe">
         <location filename="../qml/pages/PersonAccessPage.qml" line="131"/>
@@ -4200,294 +4200,294 @@
     <message id="pullDownMenu.declineClusterInvitation">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="22"/>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslå</translation>
     </message>
     <message id="notification.decliningInvitation">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="24"/>
         <location filename="../qml/pages/ClusterGroupPage.qml" line="199"/>
         <source>Declining invitation</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslår invitasjon</translation>
     </message>
     <message id="clusterGroupInviteDialog.join">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="37"/>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Bli med</translation>
     </message>
     <message id="clusterGroupInviteDialog.title">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="39"/>
         <source>Cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Klustergruppe</translation>
     </message>
     <message id="clusterGroupInviteDialog.joinInfo">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="46"/>
         <source>Joining moves your people into this group so faces are recognized across all members&apos; photos.</source>
-        <translation type="unfinished"></translation>
+        <translation>Når du blir med, flyttes personene dine inn i denne gruppen, slik at ansikter gjenkjennes på tvers av alle medlemmenes bilder.</translation>
     </message>
     <message id="clusterGroupInviteDialog.members">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="53"/>
         <source>Members</source>
-        <translation type="unfinished"></translation>
+        <translation>Medlemmer</translation>
     </message>
     <message id="pullDownMenu.leaveClusterGroup">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="42"/>
         <source>Leave group</source>
-        <translation type="unfinished"></translation>
+        <translation>Forlat gruppe</translation>
     </message>
     <message id="pullDownMenu.resetFacialRecognition">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="49"/>
         <source>Reset facial recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullstill ansiktsgjenkjenning</translation>
     </message>
     <message id="pullDownMenu.inviteClusterUsers">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="55"/>
         <source>Invite users</source>
-        <translation type="unfinished"></translation>
+        <translation>Inviter brukere</translation>
     </message>
     <message id="clusterGroupPage.invite">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="68"/>
         <source>Invite</source>
-        <translation type="unfinished"></translation>
+        <translation>Inviter</translation>
     </message>
     <message id="clusterGroupPage.noUsersToInvite">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="70"/>
         <source>No users to invite</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen brukere å invitere</translation>
     </message>
     <message id="clusterGroupPage.allMembersOrInvited">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="72"/>
         <source>All users are already members or invited</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle brukere er allerede medlemmer eller invitert</translation>
     </message>
     <message id="clusterGroupPage.title">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="87"/>
         <source>Cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Klustrrgruppe</translation>
     </message>
     <message id="clusterGroupPage.members">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="92"/>
         <source>Members</source>
-        <translation type="unfinished"></translation>
+        <translation>Medlemmer</translation>
     </message>
     <message id="clusterGroupPage.you">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="119"/>
         <source>(you)</source>
-        <translation type="unfinished"></translation>
+        <translation>(du)</translation>
     </message>
     <message id="clusterGroupPage.invitations">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="176"/>
         <source>Invitations</source>
-        <translation type="unfinished"></translation>
+        <translation>Invitasjoner</translation>
     </message>
     <message id="clusterGroupPage.accept">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="191"/>
         <source>Accept</source>
-        <translation type="unfinished">Godta</translation>
+        <translation>Godta</translation>
     </message>
     <message id="clusterGroupPage.decline">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="197"/>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslå</translation>
     </message>
     <message id="clusterGroupPage.invitedInfo">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="222"/>
         <source>You have been invited to join a cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Du har blitt invitert til å bli med i en klustergruppe</translation>
     </message>
     <message id="clusterGroupPage.pendingInvitations">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="240"/>
         <source>Pending invitations</source>
-        <translation type="unfinished"></translation>
+        <translation>Ventende invitasjoner</translation>
     </message>
     <message id="clusterGroupPage.cancelInvitation">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="257"/>
         <source>Cancel invitation</source>
-        <translation type="unfinished"></translation>
+        <translation>Trekk tilbake invitasjon</translation>
     </message>
     <message id="notification.cancellingInvitation">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="259"/>
         <source>Cancelling invitation</source>
-        <translation type="unfinished"></translation>
+        <translation>Trekker tilbake invitasjonen</translation>
     </message>
     <message id="clusterGroupPage.loading">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="300"/>
         <source>Loading cluster group...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laster inn klustergruppe…</translation>
     </message>
     <message id="clusterGroupPage.reset">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="323"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilbakestill</translation>
     </message>
     <message id="clusterGroupPage.resetFacialRecognition">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="325"/>
         <source>Reset facial recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullstill ansiktsgjenkjenning</translation>
     </message>
     <message id="clusterGroupPage.resetFacialRecognitionWarning">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="332"/>
         <source>Resetting facial recognition will delete all people for all users in this group. Already set names and birth dates will be lost. Are you sure you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullstilling av ansiktsgjenkjenning vil slette alle personer for alle brukere i denne gruppen. Allerede angitte navn og fødselsdatoer vil gå tapt. Er du sikker på at du vil fortsette?</translation>
     </message>
     <message id="notification.queuingFacialRecognitionReset">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="339"/>
         <source>Queuing facial recognition reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Legger nullstilling av ansiktsgjenkjenning i kø</translation>
     </message>
     <message id="clusterGroupPage.leaveGroup">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="356"/>
         <location filename="../qml/pages/ClusterGroupPage.qml" line="358"/>
         <source>Leave group</source>
-        <translation type="unfinished"></translation>
+        <translation>Forlat gruppe</translation>
     </message>
     <message id="clusterGroupPage.leaveGroupWarning">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="365"/>
         <source>Your people will no longer be recognized together with the other members. You will be moved to a new group of your own.</source>
-        <translation type="unfinished"></translation>
+        <translation>Personene dine vil ikke lenger bli gjenkjent sammen med de andre medlemmene. Du vil bli flyttet til din egen nye gruppe.</translation>
     </message>
     <message id="notification.leavingClusterGroup">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="372"/>
         <source>Leaving cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Forlater Klustergruppe</translation>
     </message>
     <message id="notification.clusterGroupJoined">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="400"/>
         <source>Joined cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Ble med i Klustergruppe</translation>
     </message>
     <message id="notification.clusterGroupLeft">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="405"/>
         <source>Left cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Forlot klustergruppe</translation>
     </message>
     <message id="notification.clusterGroupPeopleRegenerated">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="410"/>
         <source>Facial recognition reset queued</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullstilling av ansiktsgjenkjenning er lagt i kø</translation>
     </message>
     <message id="clusterMemberAccessPage.unnamedPerson">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="20"/>
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="24"/>
         <source>Unnamed person</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke navngitt person</translation>
     </message>
     <message id="pullDownMenu.addPeople">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="49"/>
         <source>Add people</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til personer</translation>
     </message>
     <message id="clusterMemberAccessPage.title">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="69"/>
         <source>Person access</source>
-        <translation type="unfinished"></translation>
+        <translation>Persontilgang</translation>
     </message>
     <message id="clusterMemberAccessPage.shareAll">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="76"/>
         <source>Share all my people</source>
-        <translation type="unfinished"></translation>
+        <translation>Del alle mine personer</translation>
     </message>
     <message id="clusterMemberAccessPage.shareAllInfo">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="78"/>
         <source>Share every person you own with this user</source>
-        <translation type="unfinished"></translation>
+        <translation>Del alle personene du har, med denne brukeren</translation>
     </message>
     <message id="clusterMemberAccessPage.sharedPeople">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="91"/>
         <source>Shared people</source>
-        <translation type="unfinished"></translation>
+        <translation>Delte personer</translation>
     </message>
     <message id="clusterMemberAccessPage.stopSharing">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="105"/>
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="107"/>
         <source>Stop sharing</source>
-        <translation type="unfinished">Stopp deling</translation>
+        <translation>Stopp deling</translation>
     </message>
     <message id="clusterMemberAccessPage.noSharedPeople">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="132"/>
         <source>No people shared with this user</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen personer delt med denne brukeren</translation>
     </message>
     <message id="pinCodePage.confirmPin">
         <location filename="../qml/pages/PinCodePage.qml" line="21"/>
         <location filename="../qml/pages/PinCodePage.qml" line="33"/>
         <source>Re-enter your 6-digit PIN to confirm</source>
-        <translation type="unfinished">Gjenta den 6-sifrede PIN-koden for å bekrefte</translation>
+        <translation>Gjenta den 6-sifrede PIN-koden for å bekrefte</translation>
     </message>
     <message id="pinCodePage.createNewPin">
         <location filename="../qml/pages/PinCodePage.qml" line="24"/>
         <source>Create a 6-digit PIN for your locked folder</source>
-        <translation type="unfinished">Opprett en 6-sifret PIN-kode for den låste mappen din</translation>
+        <translation>Opprett en 6-sifret PIN-kode for den låste mappen din</translation>
     </message>
     <message id="pinCodePage.enterCurrentPin">
         <location filename="../qml/pages/PinCodePage.qml" line="29"/>
         <location filename="../qml/pages/PinCodePage.qml" line="40"/>
         <source>Enter your current PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv inn din nåværende PIN-kode</translation>
     </message>
     <message id="pinCodePage.enterNewPin">
         <location filename="../qml/pages/PinCodePage.qml" line="36"/>
         <source>Enter a new 6-digit PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv inn ny 6-sifret PIN-kode</translation>
     </message>
     <message id="notification.resettingPin">
         <location filename="../qml/pages/PinCodePage.qml" line="105"/>
         <location filename="../qml/pages/PinCodePage.qml" line="236"/>
         <source>Resetting PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullstiller PIN-kode</translation>
     </message>
     <message id="pinCodePage.title">
         <location filename="../qml/pages/PinCodePage.qml" line="123"/>
         <source>Locked folder PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN-kode for låst mappe</translation>
     </message>
     <message id="pinCodePage.pinInfo">
         <location filename="../qml/pages/PinCodePage.qml" line="147"/>
         <source>A PIN protects your locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>En PIN-kode beskytter din låste mappe</translation>
     </message>
     <message id="pinCodePage.changePin">
         <location filename="../qml/pages/PinCodePage.qml" line="155"/>
         <source>Change PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Endre PIN-kode</translation>
     </message>
     <message id="pinCodePage.resetWithPin">
         <location filename="../qml/pages/PinCodePage.qml" line="165"/>
         <source>Reset PIN with current PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullstill PIN-kode med nåværende PIN-kode</translation>
     </message>
     <message id="pinCodePage.resetWithPassword">
         <location filename="../qml/pages/PinCodePage.qml" line="176"/>
         <source>Reset PIN with password</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullstill PIN-kode med passord</translation>
     </message>
     <message id="pinCodePage.resetPinInfo">
         <location filename="../qml/pages/PinCodePage.qml" line="188"/>
         <source>Resetting the PIN locks the locked folder on all devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullstilling av PIN-koden låser den låste mappen på alle enheter</translation>
     </message>
     <message id="pinCodePage.password">
         <location filename="../qml/pages/PinCodePage.qml" line="223"/>
         <source>Password</source>
-        <translation type="unfinished">Passord</translation>
+        <translation>Passord</translation>
     </message>
     <message id="pinCodePage.passwordPlaceholder">
         <location filename="../qml/pages/PinCodePage.qml" line="225"/>
         <source>Enter your account password</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv inn passordet for din konto</translation>
     </message>
     <message id="pinCodePage.resetPin">
         <location filename="../qml/pages/PinCodePage.qml" line="233"/>
         <source>Reset PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullstill PIN-kode</translation>
     </message>
     <message id="notification.pinChanged">
         <location filename="../qml/pages/PinCodePage.qml" line="283"/>
         <source>PIN changed</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN-kode endret</translation>
     </message>
     <message id="notification.pinReset">
         <location filename="../qml/pages/PinCodePage.qml" line="287"/>
         <source>PIN reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Nullstilling av PIN-kode</translation>
     </message>
 </context>
 </TS>
