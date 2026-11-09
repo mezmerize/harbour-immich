@@ -89,6 +89,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/FilterHelper.js \
     qml/components/GroupedAssetListDelegate.qml \
     qml/components/HeroImageRotator.qml \
+    qml/components/InitialAvatar.qml \
     qml/components/DismissDragBackdrop.qml \
     qml/components/DownloadFolderDialog.qml \
     qml/components/FilterablePickerDialog.qml \
@@ -97,6 +98,7 @@ DISTFILES += qml/harbour-immich.qml \
     qml/components/MemoriesFilterBar.qml \
     qml/components/NotificationBanner.qml \
     qml/components/PeoplePickerDialog.qml \
+    qml/components/PersonAvatar.qml \
     qml/components/PinPad.qml \
     qml/components/QRCode.qml \
     qml/components/ScrollToTopButton.qml \

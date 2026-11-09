@@ -82,23 +82,10 @@ Page {
                         anchors.rightMargin: Theme.horizontalPageMargin
                         spacing: Theme.paddingMedium
 
-                        Item {
-                            width: Theme.itemSizeSmall
-                            height: Theme.itemSizeSmall
+                        InitialAvatar {
                             anchors.verticalCenter: parent.verticalCenter
-
-                            Rectangle {
-                                anchors.fill: parent
-                                radius: width / 2
-                                color: Theme.rgba(Theme.highlightBackgroundColor, 0.3)
-                            }
-
-                            Label {
-                                anchors.centerIn: parent
-                                text: ((partner.name || partner.email || "?").charAt(0)).toUpperCase()
-                                font.pixelSize: Theme.fontSizeLarge
-                                color: Theme.highlightColor
-                            }
+                            name: partner.name || partner.email || ""
+                            selected: sharedByItem.menuOpen
                         }
 
                         Column {
@@ -160,23 +147,9 @@ Page {
                         anchors.rightMargin: Theme.horizontalPageMargin
                         spacing: Theme.paddingMedium
 
-                        Item {
-                            width: Theme.itemSizeSmall
-                            height: Theme.itemSizeSmall
+                        InitialAvatar {
+                            name: partner.name || partner.email || ""
                             anchors.verticalCenter: parent.verticalCenter
-
-                            Rectangle {
-                                anchors.fill: parent
-                                radius: width / 2
-                                color: Theme.rgba(Theme.highlightBackgroundColor, 0.3)
-                            }
-
-                            Label {
-                                anchors.centerIn: parent
-                                text: ((partner.name || partner.email || "?").charAt(0)).toUpperCase()
-                                font.pixelSize: Theme.fontSizeLarge
-                                color: Theme.highlightColor
-                            }
                         }
 
                         Column {
@@ -351,23 +324,9 @@ Page {
                         anchors.rightMargin: Theme.horizontalPageMargin
                         spacing: Theme.paddingMedium
 
-                        Item {
-                            width: Theme.itemSizeSmall
-                            height: Theme.itemSizeSmall
+                        InitialAvatar {
+                            name: user.name || user.email || ""
                             anchors.verticalCenter: parent.verticalCenter
-
-                            Rectangle {
-                                anchors.fill: parent
-                                radius: width / 2
-                                color: Theme.rgba(Theme.highlightBackgroundColor, 0.3)
-                            }
-
-                            Label {
-                                anchors.centerIn: parent
-                                text: ((user.name || user.email || "?").charAt(0)).toUpperCase()
-                                font.pixelSize: Theme.fontSizeLarge
-                                color: Theme.highlightColor
-                            }
                         }
 
                         Column {

@@ -58,6 +58,7 @@ Page {
                 ListItem {
                     id: sharedByMeItem
                     contentHeight: Theme.itemSizeMedium
+                    width: column.width
 
                     property var user: modelData
 
@@ -81,35 +82,20 @@ Page {
                         anchors.rightMargin: Theme.horizontalPageMargin
                         spacing: Theme.paddingMedium
 
-                        Item {
-                            width: Theme.itemSizeSmall
-                            height: Theme.itemSizeSmall
+                        InitialAvatar {
                             anchors.verticalCenter: parent.verticalCenter
-
-                            Rectangle {
-                                anchors.fill: parent
-                                radius: width / 2
-                                color: Theme.rgba(Theme.highlightBackgroundColor, 0.3)
-                            }
-
-                            Label {
-                                anchors.centerIn: parent
-                                text: ((user.name || user.email || "?").charAt(0)).toUpperCase()
-                                font.pixelSize: Theme.fontSizeLarge
-                                color: Theme.highlightColor
-                            }
+                            name: user.name || user.email || ""
+                            selected: sharedByMeItem.menuOpen
                         }
 
                         Column {
-                            width: parent.width - Theme.itemSizeSmall - 2 * Theme.paddingMedium
+                            width: parent.width - Theme.itemSizeSmall - Theme.paddingMedium
                             anchors.verticalCenter: parent.verticalCenter
-                            spacing: Theme.paddingSmall / 2
 
                             Label {
                                 width: parent.width
                                 text: user.name || user.email || ""
                                 color: sharedByMeItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                                font.pixelSize: Theme.fontSizeMedium
                                 truncationMode: TruncationMode.Fade
                             }
 
@@ -138,6 +124,7 @@ Page {
                 ListItem {
                     id: sharedWithMeItem
                     contentHeight: Theme.itemSizeMedium
+                    width: column.width
 
                     menu: modelData.sharedBack ? null : shareBackMenu
 
@@ -145,6 +132,7 @@ Page {
 
                     Component {
                         id: shareBackMenu
+
                         ContextMenu {
                             MenuItem {
                                 //% "Share back"
@@ -160,35 +148,20 @@ Page {
                         anchors.rightMargin: Theme.horizontalPageMargin
                         spacing: Theme.paddingMedium
 
-                        Item {
-                            width: Theme.itemSizeSmall
-                            height: Theme.itemSizeSmall
+                        InitialAvatar {
                             anchors.verticalCenter: parent.verticalCenter
-
-                            Rectangle {
-                                anchors.fill: parent
-                                radius: width / 2
-                                color: Theme.rgba(Theme.highlightBackgroundColor, 0.3)
-                            }
-
-                            Label {
-                                anchors.centerIn: parent
-                                text: ((partner.name || partner.email || "?").charAt(0)).toUpperCase()
-                                font.pixelSize: Theme.fontSizeLarge
-                                color: Theme.highlightColor
-                            }
+                            name: user.name || user.email || ""
+                            selected: sharedWithMeItem.menuOpen
                         }
 
                         Column {
-                            width: parent.width - Theme.itemSizeSmall - 2 * Theme.paddingMedium
+                            width: parent.width - Theme.itemSizeSmall - Theme.paddingMedium
                             anchors.verticalCenter: parent.verticalCenter
-                            spacing: Theme.paddingSmall / 2
 
                             Label {
                                 width: parent.width
                                 text: user.name || user.email || ""
                                 color: sharedWithMeItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                                font.pixelSize: Theme.fontSizeMedium
                                 truncationMode: TruncationMode.Fade
                             }
 

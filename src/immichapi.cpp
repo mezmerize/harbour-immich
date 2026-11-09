@@ -1459,23 +1459,6 @@ void ImmichApi::sharePeople(const QStringList &personIds, const QStringList &use
     });
 }
 
-void ImmichApi::sharePeopleWithEveryone(const QStringList &userIds)
-{
-    qInfo() << "ImmichApi: Sharing all people with" << userIds.size() << "users";
-    QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/people/users"));
-    QNetworkRequest request = createAuthenticatedRequest(url);
-
-    QJsonObject json;
-    json[QStringLiteral("type")] = QStringLiteral("everyone");
-    json[QStringLiteral("sharedWithIds")] = toJsonStringArray(userIds);
-    json[QStringLiteral("role")] = QStringLiteral("admin");
-
-    QNetworkReply *reply = m_networkManager->put(request, QJsonDocument(json).toJson());
-    connectReply(reply, [this](const QByteArray &) {
-        emit peopleShared(QStringList());
-    });
-}
-
 QNetworkReply *ImmichApi::sendPeopleUsersDeleteRequest(const QJsonArray &items)
 {
     QUrl url(m_authManager->serverUrl() + QStringLiteral("/api/people/users"));

@@ -81,7 +81,6 @@ public:
     Q_INVOKABLE void leaveClusterGroup();
     Q_INVOKABLE void regenerateClusterGroupPeople();
     Q_INVOKABLE void sharePeople(const QStringList &personIds, const QStringList &userIds);
-    Q_INVOKABLE void sharePeopleWithEveryone(const QStringList &userIds);
     Q_INVOKABLE void unsharePerson(const QString &personId, const QString &userId);
     Q_INVOKABLE void unsharePeople(const QStringList &personIds, const QString &userId);
     Q_INVOKABLE QJsonArray catalogUsers() const;

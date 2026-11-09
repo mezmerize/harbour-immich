@@ -9,19 +9,18 @@ Page {
     property string userName: ""
     property var ownPeople: []
     property var sharedIds: []
+    property var peopleById: ({})
+    property bool loading: false
     property bool allShared: page.ownPeople.length > 0 && page.ownPeople.every(function(p) {
         return page.sharedIds.indexOf(p.id) >= 0
     })
 
-    function personName(personId) {
+    function rebuildPeopleById() {
+        var map = {}
         for (var i = 0; i < page.ownPeople.length; i++) {
-            if (page.ownPeople[i].id === personId) {
-                //% "Unnamed person"
-                return page.ownPeople[i].name || qsTrId("clusterMemberAccessPage.unnamedPerson")
-            }
+            map[page.ownPeople[i].id] = page.ownPeople[i]
         }
-        //% "Unnamed person"
-        return qsTrId("clusterMemberAccessPage.unnamedPerson")
+        page.peopleById = map
     }
 
     function unsharedPeople() {
@@ -36,12 +35,15 @@ Page {
 
     Component.onCompleted: {
         page.ownPeople = immichApi.ownPeople()
+        page.rebuildPeopleById()
         immichApi.fetchPersonShares()
     }
 
-    SilicaFlickable {
+    SilicaListView {
+        id: listView
         anchors.fill: parent
-        contentHeight: column.height
+
+        model: page.sharedIds
 
         PullDownMenu {
             MenuItem {
@@ -60,9 +62,8 @@ Page {
             }
         }
 
-        Column {
-            id: column
-            width: parent.width
+        header: Column {
+            width: listView.width
 
             PageHeader {
                 //% "Person access"
@@ -71,15 +72,22 @@ Page {
             }
 
             TextSwitch {
-                id: shareAllSwitch
                 //% "Share all my people"
                 text: qsTrId("clusterMemberAccessPage.shareAll")
                 //% "Share every person you own with this user"
                 description: qsTrId("clusterMemberAccessPage.shareAllInfo")
+                automaticCheck: false
                 checked: page.allShared
+                busy: page.loading
                 onClicked: {
-                    if (checked) {
-                        immichApi.sharePeopleWithEveryone([page.userId])
+                    page.loading = true
+                    if (!checked) {
+                        var ids = page.unsharedPeople().map(function(p) {
+                            return p.id
+                        })
+                        if (ids.length === 0) return
+                        page.loading = true
+                        immichApi.sharePeople(ids, [page.userId])
                     } else {
                         immichApi.unsharePeople(page.sharedIds, page.userId)
                     }
@@ -90,44 +98,60 @@ Page {
                 //% "Shared people"
                 text: qsTrId("clusterMemberAccessPage.sharedPeople")
             }
+        }
 
-            Repeater {
-                model: page.sharedIds
+        delegate: ListItem {
+            id: sharedItem
+            contentHeight: Theme.itemSizeMedium
+            width: listView.width
 
-                ListItem {
-                    id: sharedItem
-                    contentHeight: Theme.itemSizeSmall
-                    width: column.width
+            property var person: page.peopleById[modelData]
 
-                    menu: ContextMenu {
-                        MenuItem {
-                            //% "Stop sharing"
-                            text: qsTrId("clusterMemberAccessPage.stopSharing")
-                            //% "Stop sharing"
-                            onClicked: sharedItem.remorseAction(qsTrId("clusterMemberAccessPage.stopSharing"), function() {
-                                immichApi.unsharePerson(modelData, page.userId)
-                            })
-                        }
-                    }
-
-                    Label {
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            verticalCenter: parent.verticalCenter
-                            leftMargin: Theme.horizontalPageMargin
-                            rightMargin: Theme.horizontalPageMargin
-                        }
-                        text: page.personName(modelData)
-                        color: sharedItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                        truncationMode: TruncationMode.Fade
-                    }
+            menu: ContextMenu {
+                MenuItem {
+                    //% "Stop sharing"
+                    text: qsTrId("clusterMemberAccessPage.stopSharing")
+                    //% "Stop sharing"
+                    onClicked: sharedItem.remorseAction(qsTrId("clusterMemberAccessPage.stopSharing"), function() {
+                        immichApi.unsharePerson(modelData, page.userId)
+                    })
                 }
             }
 
+            Row {
+                anchors.fill: parent
+                anchors.leftMargin: Theme.horizontalPageMargin
+                anchors.rightMargin: Theme.horizontalPageMargin
+                spacing: Theme.paddingMedium
+
+                PersonAvatar {
+                    anchors.verticalCenter: parent.verticalCenter
+                    personId: modelData
+                    name: sharedItem.person ? (sharedItem.person.name || "") : ""
+                    hasThumbnail: sharedItem.person ? sharedItem.person.hasThumbnail : true
+                    selected: sharedItem.menuOpen
+                }
+
+                Label {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width - Theme.itemSizeSmall - Theme.paddingMedium
+                    //% "Unnamed person"
+                    text: person && person.name ? person.name : qsTrId("clusterMemberAccessPage.unnamedPerson")
+                    color: sharedItem.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    truncationMode: TruncationMode.Fade
+                }
+            }
+        }
+
+        footer: Item {
+            width: listView.width
+            height: page.sharedIds.length === 0 ? noSharedLabel.height : 0
+            visible: page.sharedIds.length === 0
+
             Label {
+                id: noSharedLabel
                 x: Theme.horizontalPageMargin
-                visible: page.sharedIds.length === 0
+                width: parent.width - Theme.horizontalPageMargin
                 //% "No people shared with this user"
                 text: qsTrId("clusterMemberAccessPage.noSharedPeople")
                 color: Theme.secondaryColor
@@ -153,14 +177,22 @@ Page {
                     ids.push(s.personId)
                 }
             }
+            ids.sort(function(a, b) {
+                var pa = page.peopleById[a]
+                var pb = page.peopleById[b]
+                var na = pa && pa.name ? pa.name : ""
+                var nb = pb && pb.name ? pb.name : ""
+                if (na === "" || nb === "") return (na === "") - (nb === "")
+                return na.localeCompare(nb)
+            })
             page.sharedIds = ids
-            shareAllSwitch.checked = page.allShared
+            page.loading = false
         }
         onPeopleShared: immichApi.fetchPersonShares()
         onPersonUnshared: immichApi.fetchPersonShares()
         onPeopleUnshared: immichApi.fetchPersonShares()
         onErrorOccurred: {
-            shareAllSwitch.checked = page.allShared
+            page.loading = false
             notification.showError(error)
         }
     }

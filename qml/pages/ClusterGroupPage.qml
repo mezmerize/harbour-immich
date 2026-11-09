@@ -96,37 +96,47 @@ Page {
                 height: Theme.itemSizeMedium
                 width: column.width
 
-                Column {
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        verticalCenter: parent.verticalCenter
-                        leftMargin: Theme.horizontalPageMargin
-                        rightMargin: Theme.horizontalPageMargin
+                Row {
+                    anchors.fill: parent
+                    anchors.leftMargin: Theme.horizontalPageMargin
+                    anchors.rightMargin: Theme.horizontalPageMargin
+                    spacing: Theme.paddingMedium
+
+                    InitialAvatar {
+                        name: immichApi.currentUserName() || authManager.email
+                        anchors.verticalCenter: parent.verticalCenter
                     }
 
-                    Row {
-                        width: parent.width
-                        spacing: Theme.paddingSmall
+                    Column {
+                        width: parent.width - Theme.itemSizeSmall - Theme.paddingMedium
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        Row {
+                            width: parent.width
+                            spacing: Theme.paddingSmall
+
+                            Label {
+                                width: Math.min(implicitWidth, parent.width - youLabel.width - parent.spacing)
+                                text: immichApi.currentUserName() || authManager.email
+                                truncationMode: TruncationMode.Fade
+                            }
+
+                            Label {
+                                id: youLabel
+                                //% "(you)"
+                                text: qsTrId("clusterGroupPage.you")
+                                color: Theme.highlightColor
+                            }
+                        }
 
                         Label {
-                            text: immichApi.currentUserName() || authManager.email
+                            width: parent.width
+                            text: authManager.email
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            color: Theme.secondaryColor
+                            visible: immichApi.currentUserName() && immichApi.currentUserName() !== "" && authManager.email !== immichApi.currentUserName()
                             truncationMode: TruncationMode.Fade
                         }
-
-                        Label {
-                            //% "(you)"
-                            text: qsTrId("clusterGroupPage.you")
-                            color: Theme.highlightColor
-                        }
-                    }
-
-                    Label {
-                        width: parent.width
-                        text: authManager.email
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                        color: Theme.secondaryColor
-                        truncationMode: TruncationMode.Fade
                     }
                 }
             }
@@ -139,28 +149,37 @@ Page {
                     contentHeight: Theme.itemSizeMedium
                     width: column.width
 
-                    Column {
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            verticalCenter: parent.verticalCenter
-                            leftMargin: Theme.horizontalPageMargin
-                            rightMargin: Theme.horizontalPageMargin
+                    Row {
+                        anchors.fill: parent
+                        anchors.leftMargin: Theme.horizontalPageMargin
+                        anchors.rightMargin: Theme.horizontalPageMargin
+                        spacing: Theme.paddingMedium
+
+                        InitialAvatar {
+                            name: modelData.name || modelData.email || ""
+                            anchors.verticalCenter: parent.verticalCenter
                         }
 
-                        Label {
-                            width: parent.width
-                            text: modelData.name || ""
-                            color: memberItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                            truncationMode: TruncationMode.Fade
-                        }
+                        Column {
+                            width: parent.width - Theme.itemSizeSmall - Theme.paddingMedium
+                            anchors.verticalCenter: parent.verticalCenter
 
-                        Label {
-                            width: parent.width
-                            text: modelData.email || ""
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                            color: Theme.secondaryColor
-                            truncationMode: TruncationMode.Fade
+                            Label {
+                                width: parent.width
+                                text: modelData.name || modelData.email || ""
+                                color: memberItem.highlighted ? Theme.highlightColor : Theme.primaryColor
+                                font.pixelSize: Theme.fontSizeMedium
+                                truncationMode: TruncationMode.Fade
+                            }
+
+                            Label {
+                                width: parent.width
+                                text: modelData.email || ""
+                                font.pixelSize: Theme.fontSizeExtraSmall
+                                color: memberItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
+                                visible: modelData.name && modelData.name !== "" && modelData.email !== modelData.name
+                                truncationMode: TruncationMode.Fade
+                            }
                         }
                     }
 
@@ -207,29 +226,37 @@ Page {
                         clusterGroupId: modelData.clusterGroupId
                     })
 
-                    Column {
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            verticalCenter: parent.verticalCenter
-                            leftMargin: Theme.horizontalPageMargin
-                            rightMargin: Theme.horizontalPageMargin
+                    Row {
+                        anchors.fill: parent
+                        anchors.leftMargin: Theme.horizontalPageMargin
+                        anchors.rightMargin: Theme.horizontalPageMargin
+                        spacing: Theme.paddingMedium
+
+                        InitialAvatar {
+                            anchors.verticalCenter: parent.verticalCenter
+                            iconSource: "image://theme/icon-m-people"
+                            selected: inviteItem.menuOpen
                         }
 
-                        Label {
-                            width: parent.width
-                            //% "You have been invited to join a cluster group"
-                            text: qsTrId("clusterGroupPage.invitedInfo")
-                            color: inviteItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                            truncationMode: TruncationMode.Fade
-                        }
+                        Column {
+                            width: parent.width - Theme.itemSizeSmall - Theme.paddingMedium
+                            anchors.verticalCenter: parent.verticalCenter
 
-                        Label {
-                            width: parent.width
-                            text: Qt.formatDate(new Date(modelData.createdAt), "dd MMM yyyy")
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                            color: Theme.secondaryColor
-                            truncationMode: TruncationMode.Fade
+                            Label {
+                                width: parent.width
+                                //% "You have been invited to join a cluster group"
+                                text: qsTrId("clusterGroupPage.invitedInfo")
+                                color: inviteItem.highlighted ? Theme.highlightColor : Theme.primaryColor
+                                truncationMode: TruncationMode.Fade
+                            }
+
+                            Label {
+                                width: parent.width
+                                text: Qt.formatDate(new Date(modelData.createdAt), "dd MMM yyyy")
+                                font.pixelSize: Theme.fontSizeExtraSmall
+                                color: Theme.secondaryColor
+                                truncationMode: TruncationMode.Fade
+                            }
                         }
                     }
                 }
@@ -262,28 +289,36 @@ Page {
                         }
                     }
 
-                    Column {
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            verticalCenter: parent.verticalCenter
-                            leftMargin: Theme.horizontalPageMargin
-                            rightMargin: Theme.horizontalPageMargin
+                    Row {
+                        anchors.fill: parent
+                        anchors.leftMargin: Theme.horizontalPageMargin
+                        anchors.rightMargin: Theme.horizontalPageMargin
+                        spacing: Theme.paddingMedium
+
+                        InitialAvatar {
+                            anchors.verticalCenter: parent.verticalCenter
+                            name: sentItem.invitedUser ? (sentItem.invitedUser.name || sentItem.invitedUser.email || "") : ""
+                            selected: sentItem.menuOpen
                         }
 
-                        Label {
-                            width: parent.width
-                            text: sentItem.invitedUser ? (sentItem.invitedUser.name || "") : modelData.userId
-                            color: sentItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                            truncationMode: TruncationMode.Fade
-                        }
+                        Column {
+                            width: parent.width - Theme.itemSizeSmall - Theme.paddingMedium
+                            anchors.verticalCenter: parent.verticalCenter
 
-                        Label {
-                            width: parent.width
-                            text: sentItem.invitedUser ? (sentItem.invitedUser.email || "") : ""
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                            color: Theme.secondaryColor
-                            truncationMode: TruncationMode.Fade
+                            Label {
+                                width: parent.width
+                                text: sentItem.invitedUser ? (sentItem.invitedUser.name || "") : modelData.userId
+                                color: sentItem.highlighted ? Theme.highlightColor : Theme.primaryColor
+                                truncationMode: TruncationMode.Fade
+                            }
+
+                            Label {
+                                width: parent.width
+                                text: sentItem.invitedUser ? (sentItem.invitedUser.email || "") : ""
+                                font.pixelSize: Theme.fontSizeExtraSmall
+                                color: Theme.secondaryColor
+                                truncationMode: TruncationMode.Fade
+                            }
                         }
                     }
                 }

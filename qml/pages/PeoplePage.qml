@@ -1,6 +1,5 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
-import QtGraphicalEffects 1.0
 import harbour.immich.models 1.0
 import "../components"
 
@@ -115,47 +114,16 @@ Page {
                     height: personDelegate.thumbnailSize
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    Item {
+                    PersonAvatar {
                         anchors.fill: parent
                         opacity: model.isHidden ? 0.6 : 1.0
-
-                        Rectangle {
-                            anchors.fill: parent
-                            color: "transparent"
-                            border.width: personContextMenu.active ? 3 : 1
-                            border.color: personContextMenu.active ? Theme.highlightColor : Theme.secondaryColor
-                            radius: width / 2
-                        }
-
-                        Image {
-                            id: personImage
-                            anchors.fill: parent
-                            anchors.margins: 2
-                            source: model.hasThumbnail ? "image://immich/person/" + model.personId : ""
-                            fillMode: Image.PreserveAspectCrop
-                            asynchronous: true
-                            sourceSize.width: personDelegate.thumbnailSize
-                            sourceSize.height: personDelegate.thumbnailSize
-                            layer.enabled: true
-                            layer.effect: OpacityMask {
-                                maskSource: Item {
-                                    width: personImage.width
-                                    height: personImage.height
-                                    Rectangle {
-                                        anchors.fill: parent
-                                        radius: width / 2
-                                    }
-                                }
-                            }
-                        }
-
-                        Label {
-                            anchors.centerIn: parent
-                            text: ((model.name || "?").charAt(0)).toUpperCase()
-                            font.pixelSize: Theme.fontSizeHuge
-                            color: Theme.secondaryColor
-                            visible: !model.hasThumbnail
-                        }
+                        personId: model.personId
+                        name: model.name || ""
+                        hasThumbnail: model.hasThumbnail
+                        selected: personContextMenu.active
+                        backgroundColor: "transparent"
+                        letterColor: Theme.secondaryColor
+                        letterPixelSize: Theme.fontSizeHuge
                     }
 
                     Icon {

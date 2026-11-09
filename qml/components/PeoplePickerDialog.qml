@@ -1,6 +1,5 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
-import QtGraphicalEffects 1.0
 import harbour.immich.models 1.0
 
 Dialog {
@@ -119,45 +118,17 @@ Dialog {
                 width: parent.width
                 spacing: Theme.paddingSmall / 2
 
-                Rectangle {
+                PersonAvatar {
                     width: personDelegate.thumbnailSize
                     height: personDelegate.thumbnailSize
                     anchors.horizontalCenter: parent.horizontalCenter
-                    color: "transparent"
-                    border.width: isSelected ? 3 : 1
-                    border.color: isSelected ? Theme.highlightColor : Theme.secondaryColor
-                    radius: width / 2
-
-                    Image {
-                        id: personImage
-                        anchors.fill: parent
-                        anchors.margins: 2
-                        source: model.hasThumbnail ? "image://immich/person/" + model.personId : ""
-                        fillMode: Image.PreserveAspectCrop
-                        asynchronous: true
-                        sourceSize.width: personDelegate.thumbnailSize
-                        sourceSize.height: personDelegate.thumbnailSize
-                        layer.enabled: true
-                        layer.effect: OpacityMask {
-                            maskSource: Item {
-                                width: personImage.width
-                                height: personImage.height
-                                Rectangle {
-                                    anchors.fill: parent
-                                    radius: width / 2
-                                }
-                            }
-                        }
-                    }
-
-                    // Fallback when no thumbnail
-                    Label {
-                        anchors.centerIn: parent
-                        text: (model.name || "?").charAt(0).toUpperCase()
-                        font.pixelSize: Theme.fontSizeLarge
-                        color: Theme.secondaryColor
-                        visible: !model.hasThumbnail
-                    }
+                    personId: model.personId
+                    name: model.name || ""
+                    hasThumbnail: model.hasThumbnail
+                    selected: isSelected
+                    backgroundColor: "transparent"
+                    letterColor: Theme.secondaryColor
+                    letterPixelSize: Theme.fontSizeLarge
 
                     // Selection checkmark
                     Rectangle {

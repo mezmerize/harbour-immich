@@ -65,52 +65,52 @@
         <translation>%1 jaar geleden</translation>
     </message>
     <message id="peoplePickerDialog.selectPeople">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="10"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="9"/>
         <source>Select People</source>
         <translation>Selecteer personen</translation>
     </message>
     <message id="peoplePickerDialog.done">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="50"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="49"/>
         <source>Done</source>
         <translation>Klaar</translation>
     </message>
     <message id="peoplePickerDialog.cancel">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="52"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="51"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message id="peoplePickerDialog.filterName">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="59"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="58"/>
         <source>Filter by name...</source>
         <translation>Filteren op naam…</translation>
     </message>
     <message id="peoplePickerDialog.selected">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="74"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="73"/>
         <source>%1 selected</source>
         <translation>%1 geselecteerd</translation>
     </message>
     <message id="peoplePickerDialog.tapToSelect">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="76"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="75"/>
         <source>Tap to select people</source>
         <translation>Tik om personen te selecteren</translation>
     </message>
     <message id="peoplePickerDialog.clear">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="90"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="89"/>
         <source>Clear selection</source>
         <translation>Selectie opheffen</translation>
     </message>
     <message id="peoplePickerDialog.unknown">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="185"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="156"/>
         <source>Unknown</source>
         <translation>Onbekend</translation>
     </message>
     <message id="peoplePickerDialog.noPeople">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="210"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="181"/>
         <source>No people available</source>
         <translation>Geen personen beschikbaar</translation>
     </message>
     <message id="peoplePickerDialog.noMatches">
-        <location filename="../qml/components/PeoplePickerDialog.qml" line="212"/>
+        <location filename="../qml/components/PeoplePickerDialog.qml" line="183"/>
         <source>No matches found</source>
         <translation>Geen overeenkomsten gevonden</translation>
     </message>
@@ -210,7 +210,7 @@
         <location filename="../qml/pages/OnThisDevicePage.qml" line="67"/>
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="51"/>
         <location filename="../qml/pages/PartnersPage.qml" line="27"/>
-        <location filename="../qml/pages/PeoplePage.qml" line="42"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="41"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="61"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="148"/>
         <location filename="../qml/pages/PlacesPage.qml" line="36"/>
@@ -314,7 +314,7 @@
         <location filename="../qml/pages/PersonDetailPage.qml" line="421"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="420"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="394"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="511"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="519"/>
         <source>Moved to archive</source>
         <translation>Verplaatst naar archief</translation>
     </message>
@@ -326,7 +326,7 @@
         <location filename="../qml/pages/PersonDetailPage.qml" line="424"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="423"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="397"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="514"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="522"/>
         <source>Moved to locked folder</source>
         <translation>Verplaatst naar vergrendelde map</translation>
     </message>
@@ -341,7 +341,7 @@
         <location filename="../qml/pages/PersonDetailPage.qml" line="341"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="354"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="328"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="405"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="413"/>
         <source>Downloading asset</source>
         <oldsource>Downloading asset...</oldsource>
         <translation type="unfinished">Mediabestand wordt gedownload…</translation>
@@ -357,7 +357,7 @@
         <location filename="../qml/pages/PersonDetailPage.qml" line="343"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="356"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="330"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="407"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="415"/>
         <source>Downloading %1 assets</source>
         <oldsource>Downloading %1 assets...</oldsource>
         <translation type="unfinished">%1 mediabestanden worden gedownload…</translation>
@@ -372,7 +372,7 @@
         <location filename="../qml/pages/PersonDetailPage.qml" line="349"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="362"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="336"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="418"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="426"/>
         <location filename="../qml/pages/TrashPage.qml" line="214"/>
         <source>Deleting %1 assets</source>
         <translation>%1 mediabestanden worden verwijderd</translation>
@@ -387,7 +387,7 @@
         <location filename="../qml/pages/PersonDetailPage.qml" line="351"/>
         <location filename="../qml/pages/PlaceDetailPage.qml" line="364"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="338"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="416"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="424"/>
         <location filename="../qml/pages/TrashPage.qml" line="216"/>
         <source>Deleting asset</source>
         <oldsource>Removing album</oldsource>
@@ -435,7 +435,7 @@
     </message>
     <message id="assetInfoPage.owner">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="101"/>
-        <location filename="../qml/pages/AssetInfoPage.qml" line="274"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="247"/>
         <source>Owner</source>
         <translation>Eigenaar</translation>
     </message>
@@ -762,7 +762,7 @@
     <message id="notification.downloaded">
         <location filename="../qml/pages/AssetDetailPage.qml" line="602"/>
         <location filename="../qml/pages/StackDetailPage.qml" line="705"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="484"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="492"/>
         <source>Downloaded to: %1</source>
         <translation>Gedownload op: %1</translation>
     </message>
@@ -866,66 +866,66 @@
         <translation>Personen</translation>
     </message>
     <message id="assetInfoPage.unknownPerson">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="216"/>
-        <location filename="../qml/pages/AssetInfoPage.qml" line="228"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="189"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="201"/>
         <source>Unknown</source>
         <translation>Onbekend</translation>
     </message>
     <message id="assetInfoPage.location">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="239"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="212"/>
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="143"/>
         <source>Location</source>
         <translation>Locatie</translation>
     </message>
     <message id="assetInfoPage.coordinates">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="246"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="219"/>
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="150"/>
         <source>Coordinates</source>
         <translation>Coördinaten</translation>
     </message>
     <message id="assetInfoPage.city">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="253"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="226"/>
         <source>City</source>
         <translation>Stad</translation>
     </message>
     <message id="assetInfoPage.country">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="260"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="233"/>
         <source>Country</source>
         <translation>Land</translation>
     </message>
     <message id="assetInfoPage.openInMaps">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="268"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="241"/>
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="158"/>
         <source>Open in Maps</source>
         <translation>Openen op kaart</translation>
     </message>
     <message id="assetInfoPage.ownerName">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="281"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="254"/>
         <source>Name</source>
         <translation>Naaam</translation>
     </message>
     <message id="assetInfoPage.ownerEmail">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="288"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="261"/>
         <source>Email</source>
         <translation>E-mailadres</translation>
     </message>
     <message id="assetInfoPage.albums">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="294"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="267"/>
         <source>Albums</source>
         <translation>Albums</translation>
     </message>
     <message id="assetInfoPage.asset">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="352"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="325"/>
         <source>1 asset</source>
         <translation>1 mediabestand</translation>
     </message>
     <message id="assetInfoPage.assets">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="354"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="327"/>
         <source>%1 assets</source>
         <translation>%1 mediabestanden</translation>
     </message>
     <message id="assetInfoPage.shared">
-        <location filename="../qml/pages/AssetInfoPage.qml" line="371"/>
+        <location filename="../qml/pages/AssetInfoPage.qml" line="344"/>
         <source>Shared</source>
         <translation>Gedeeld</translation>
     </message>
@@ -973,8 +973,7 @@
         <location filename="../qml/harbour-immich.qml" line="106"/>
         <location filename="../qml/pages/LoginPage.qml" line="136"/>
         <source>The Immich server you are trying to log in to is running an unsupported version (minimum required: %1). Some features may not work correctly.</source>
-        <oldsource>The Immich server you are trying to log in to is running an unsupported version (minimum required: 3.0.0). Some features may not work correctly.</oldsource>
-        <translation type="unfinished">De Immich-server waarop je je probeert aan te melden draait op een niet-ondersteunde versie (minimaal: versie 3.0.0). Sommige functies zullen mogelijk niet correct werken.</translation>
+        <translation type="unfinished">De Immich-server waarop je je probeert aan te melden draait op een niet-ondersteunde versie (minimaal: versie %1). Sommige functies zullen mogelijk niet correct werken.</translation>
     </message>
     <message id="loginPage.failed">
         <location filename="../qml/pages/LoginPage.qml" line="186"/>
@@ -2438,7 +2437,7 @@
         <translation>Annuleren</translation>
     </message>
     <message id="timelinePage.syncing">
-        <location filename="../qml/pages/TimelinePage.qml" line="306"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="314"/>
         <source>Synchronizing timeline...</source>
         <oldsource>Syncing library…</oldsource>
         <translation type="unfinished"></translation>
@@ -2454,54 +2453,54 @@
         <translation>Tijdlijn</translation>
     </message>
     <message id="timelinePage.loading">
-        <location filename="../qml/pages/TimelinePage.qml" line="308"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="316"/>
         <source>Loading timeline...</source>
         <translation>Tijdlijn wordt geladen…</translation>
     </message>
     <message id="timelinePage.noFavoritesLabel">
-        <location filename="../qml/pages/TimelinePage.qml" line="323"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="331"/>
         <source>No favorites yet</source>
         <translation>Nog geen favorieten</translation>
     </message>
     <message id="timelinePage.noAssetsLabel">
-        <location filename="../qml/pages/TimelinePage.qml" line="325"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="333"/>
         <source>No assets yet</source>
         <translation>Nog geen mediabestanden</translation>
     </message>
     <message id="timelinePage.noFavoritesInfo">
-        <location filename="../qml/pages/TimelinePage.qml" line="328"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="336"/>
         <source>Long-press an asset and add it to favorites to see it here</source>
         <translation>Houd lang ingedrukt op een mediabestand en voeg het toe aan je favorieten om het hier te zien</translation>
     </message>
     <message id="timelinePage.noAssetsInfo">
-        <location filename="../qml/pages/TimelinePage.qml" line="330"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="338"/>
         <source>Upload or import assets in Immich to start building your timeline</source>
         <translation>Upload of importeer mediabestanden in Immich om je tijdlijn te maken</translation>
     </message>
     <message id="notification.uploadingFiles">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="44"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="394"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="402"/>
         <source>Uploading %1 files</source>
         <oldsource>Uploading %1 files...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.addedToAlbum">
-        <location filename="../qml/pages/TimelinePage.qml" line="489"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="497"/>
         <source>Added asset(s) to album</source>
         <translation>Mediabestand(en) toegevoegd aan album</translation>
     </message>
     <message id="notification.createdAlbum">
-        <location filename="../qml/pages/TimelinePage.qml" line="497"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="505"/>
         <source>Created album: %1</source>
         <translation>Album aangemaakt: %1</translation>
     </message>
     <message id="notification.stackCreated">
-        <location filename="../qml/pages/TimelinePage.qml" line="502"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="510"/>
         <source>Stack created</source>
         <translation>Stapel aangemaakt</translation>
     </message>
     <message id="notification.stackDeleted">
-        <location filename="../qml/pages/TimelinePage.qml" line="506"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="514"/>
         <source>Stack removed</source>
         <translation>Stapel verwijderd</translation>
     </message>
@@ -3090,73 +3089,73 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="pullDownMenu.hideHidden">
-        <location filename="../qml/pages/PeoplePage.qml" line="49"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="48"/>
         <source>Hide hidden people</source>
         <translation>Verborgen personen verbergen</translation>
     </message>
     <message id="pullDownMenu.showHidden">
-        <location filename="../qml/pages/PeoplePage.qml" line="51"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="50"/>
         <source>Show hidden people</source>
         <translation>Verborgen personen tonen</translation>
     </message>
     <message id="peoplePage.people">
-        <location filename="../qml/pages/PeoplePage.qml" line="65"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="64"/>
         <source>People</source>
         <translation>Personen</translation>
     </message>
     <message id="peoplePage.filter">
-        <location filename="../qml/pages/PeoplePage.qml" line="87"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="86"/>
         <source>Filter by name...</source>
         <translation>Filteren op naam…</translation>
     </message>
     <message id="filterBar.name">
-        <location filename="../qml/pages/PeoplePage.qml" line="75"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="74"/>
         <source>Name</source>
         <translation>Naam</translation>
     </message>
     <message id="filterBar.updated">
-        <location filename="../qml/pages/PeoplePage.qml" line="77"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="76"/>
         <source>Updated</source>
         <translation>Bijgewerkt</translation>
     </message>
     <message id="peoplePage.unknown">
-        <location filename="../qml/pages/PeoplePage.qml" line="192"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="160"/>
         <source>Unknown</source>
         <translation>Onbekend</translation>
     </message>
     <message id="peoplePage.removeFromFavorites">
-        <location filename="../qml/pages/PeoplePage.qml" line="219"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="187"/>
         <source>Remove from favorites</source>
         <translation>Verwijderen uit favorieten</translation>
     </message>
     <message id="peoplePage.addToFavorites">
-        <location filename="../qml/pages/PeoplePage.qml" line="221"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="189"/>
         <source>Add to favorites</source>
         <translation>Toevoegen aan favorieten</translation>
     </message>
     <message id="peoplePage.unhidePerson">
-        <location filename="../qml/pages/PeoplePage.qml" line="228"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="196"/>
         <source>Show person</source>
         <translation>Persoon tonen</translation>
     </message>
     <message id="peoplePage.hidePerson">
-        <location filename="../qml/pages/PeoplePage.qml" line="230"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="198"/>
         <source>Hide person</source>
         <translation>Persoon verbergen</translation>
     </message>
     <message id="peoplePage.manageAccess">
-        <location filename="../qml/pages/PeoplePage.qml" line="236"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="204"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="67"/>
         <source>Manage access</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="peoplePage.loading">
-        <location filename="../qml/pages/PeoplePage.qml" line="256"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="224"/>
         <source>Loading people...</source>
         <translation>Personen worden geladen…</translation>
     </message>
     <message id="peoplePage.noPeople">
-        <location filename="../qml/pages/PeoplePage.qml" line="264"/>
+        <location filename="../qml/pages/PeoplePage.qml" line="232"/>
         <source>No people found</source>
         <translation>Geen personen gevonden</translation>
     </message>
@@ -3361,62 +3360,62 @@
         <translation>Partner wordt verwijderd</translation>
     </message>
     <message id="partnersPage.sharedWithMe">
-        <location filename="../qml/pages/PartnersPage.qml" line="133"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="119"/>
         <source>Shared with me</source>
         <translation>Gedeeld met mij</translation>
     </message>
     <message id="partnersPage.hideFromTimeline">
-        <location filename="../qml/pages/PartnersPage.qml" line="150"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="136"/>
         <source>Hide from timeline</source>
         <translation>Verbergen op tijdlijn</translation>
     </message>
     <message id="partnersPage.showOnTimeline">
-        <location filename="../qml/pages/PartnersPage.qml" line="152"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="138"/>
         <source>Show on timeline</source>
         <translation>Tonen op tijdlijn</translation>
     </message>
     <message id="partnersPage.onTimeline">
-        <location filename="../qml/pages/PartnersPage.qml" line="217"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="189"/>
         <source>On timeline</source>
         <translation>Op tijdlijn</translation>
     </message>
     <message id="partnersPage.loading">
-        <location filename="../qml/pages/PartnersPage.qml" line="250"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="222"/>
         <source>Loading partners...</source>
         <translation>Partners worden geladen…</translation>
     </message>
     <message id="peoplePage.noPartners">
-        <location filename="../qml/pages/PartnersPage.qml" line="259"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="231"/>
         <source>No partners</source>
         <translation>Geen partners</translation>
     </message>
     <message id="partnersPage.noPartnersHint">
-        <location filename="../qml/pages/PartnersPage.qml" line="261"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="233"/>
         <source>Add a partner to share your photos with them</source>
         <translation>Voeg een partner toe om je foto’s met hem/haar te delen</translation>
     </message>
     <message id="notification.partnerAdded">
-        <location filename="../qml/pages/PartnersPage.qml" line="290"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="262"/>
         <source>Partner added</source>
         <translation>Partner toegevoegd</translation>
     </message>
     <message id="notification.partnerRemoved">
-        <location filename="../qml/pages/PartnersPage.qml" line="296"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="268"/>
         <source>Partner removed</source>
         <translation>Partner verwijderd</translation>
     </message>
     <message id="notification.partnerUpdated">
-        <location filename="../qml/pages/PartnersPage.qml" line="302"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="274"/>
         <source>Partner updated</source>
         <translation>Partner bijgewerkt</translation>
     </message>
     <message id="notification.noUsersAvailable">
-        <location filename="../qml/pages/PartnersPage.qml" line="321"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="293"/>
         <source>No users available to add as partner</source>
         <translation>Geen gebruikers beschikbaar om als partner toe te voegen</translation>
     </message>
     <message id="partnersPage.addPartnerTitle">
-        <location filename="../qml/pages/PartnersPage.qml" line="340"/>
+        <location filename="../qml/pages/PartnersPage.qml" line="312"/>
         <source>Add Partner</source>
         <translation>Partner toevoegen</translation>
     </message>
@@ -3898,7 +3897,7 @@
         <location filename="../qml/pages/AssetDetailPage.qml" line="508"/>
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="343"/>
         <location filename="../qml/pages/DeviceFolderPage.qml" line="42"/>
-        <location filename="../qml/pages/TimelinePage.qml" line="392"/>
+        <location filename="../qml/pages/TimelinePage.qml" line="400"/>
         <source>Uploading file</source>
         <oldsource>Uploading file...</oldsource>
         <translation type="unfinished"></translation>
@@ -4077,33 +4076,33 @@
         <translation type="unfinished">Wordt gedeeld met</translation>
     </message>
     <message id="personAccessPage.stopSharing">
-        <location filename="../qml/pages/PersonAccessPage.qml" line="67"/>
-        <location filename="../qml/pages/PersonAccessPage.qml" line="71"/>
+        <location filename="../qml/pages/PersonAccessPage.qml" line="68"/>
+        <location filename="../qml/pages/PersonAccessPage.qml" line="72"/>
         <source>Stop sharing</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="personAccessPage.notShared">
-        <location filename="../qml/pages/PersonAccessPage.qml" line="243"/>
+        <location filename="../qml/pages/PersonAccessPage.qml" line="214"/>
         <source>Not shared with anyone</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="personAccessPage.notSharedHint">
-        <location filename="../qml/pages/PersonAccessPage.qml" line="245"/>
+        <location filename="../qml/pages/PersonAccessPage.qml" line="216"/>
         <source>Add a user from your cluster group to share the person with them</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="personAccessPage.sharedWithMe">
-        <location filename="../qml/pages/PersonAccessPage.qml" line="131"/>
+        <location filename="../qml/pages/PersonAccessPage.qml" line="117"/>
         <source>Shared with me</source>
         <translation type="unfinished">Gedeeld met mij</translation>
     </message>
     <message id="personAccessPage.shareBack">
-        <location filename="../qml/pages/PersonAccessPage.qml" line="151"/>
+        <location filename="../qml/pages/PersonAccessPage.qml" line="137"/>
         <source>Share back</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="personAccessPage.sharedBack">
-        <location filename="../qml/pages/PersonAccessPage.qml" line="217"/>
+        <location filename="../qml/pages/PersonAccessPage.qml" line="188"/>
         <source>Shared back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4233,120 +4232,119 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.you">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="119"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="127"/>
         <source>(you)</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.invitations">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="176"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="195"/>
         <source>Invitations</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.accept">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="191"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="212"/>
         <source>Accept</source>
         <translation type="unfinished">Accepteren</translation>
     </message>
     <message id="clusterGroupPage.decline">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="197"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="218"/>
         <source>Decline</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.decliningInvitation">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="24"/>
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="199"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="220"/>
         <source>Declining invitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.invitedInfo">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="222"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="250"/>
         <source>You have been invited to join a cluster group</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.pendingInvitations">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="240"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="269"/>
         <source>Pending invitations</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.cancelInvitation">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="257"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="288"/>
         <source>Cancel invitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.cancellingInvitation">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="259"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="290"/>
         <source>Cancelling invitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.loading">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="300"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="339"/>
         <source>Loading cluster group...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.reset">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="323"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="362"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.resetFacialRecognition">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="325"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="364"/>
         <source>Reset facial recognition</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.resetFacialRecognitionWarning">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="332"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="371"/>
         <source>Resetting facial recognition will delete all people for all users in this group. Already set names and birth dates will be lost. Are you sure you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.queuingFacialRecognitionReset">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="339"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="378"/>
         <source>Queuing facial recognition reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.leaveGroup">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="356"/>
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="358"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="395"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="397"/>
         <source>Leave group</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterGroupPage.leaveGroupWarning">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="365"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="404"/>
         <source>Your people will no longer be recognized together with the other members. You will be moved to a new group of your own.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.leavingClusterGroup">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="372"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="411"/>
         <source>Leaving cluster group</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.clusterGroupJoined">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="400"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="439"/>
         <source>Joined cluster group</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.clusterGroupLeft">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="405"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="444"/>
         <source>Left cluster group</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification.clusterGroupPeopleRegenerated">
-        <location filename="../qml/pages/ClusterGroupPage.qml" line="410"/>
+        <location filename="../qml/pages/ClusterGroupPage.qml" line="449"/>
         <source>Facial recognition reset queued</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterMemberAccessPage.unnamedPerson">
-        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="20"/>
-        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="24"/>
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="139"/>
         <source>Unnamed person</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="pullDownMenu.addPeople">
-        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="49"/>
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="51"/>
         <source>Add people</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterMemberAccessPage.title">
-        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="69"/>
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="70"/>
         <source>Person access</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4361,18 +4359,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterMemberAccessPage.sharedPeople">
-        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="91"/>
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="99"/>
         <source>Shared people</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterMemberAccessPage.stopSharing">
-        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="105"/>
-        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="107"/>
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="113"/>
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="115"/>
         <source>Stop sharing</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="clusterMemberAccessPage.noSharedPeople">
-        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="132"/>
+        <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="156"/>
         <source>No people shared with this user</source>
         <translation type="unfinished"></translation>
     </message>

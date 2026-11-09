@@ -60,27 +60,34 @@ Dialog {
                     contentHeight: Theme.itemSizeMedium
                     width: column.width
 
-                    Column {
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            verticalCenter: parent.verticalCenter
-                            leftMargin: Theme.horizontalPageMargin
-                            rightMargin: Theme.horizontalPageMargin
+                    Row {
+                        anchors.fill: parent
+                        anchors.leftMargin: Theme.horizontalPageMargin
+                        anchors.rightMargin: Theme.horizontalPageMargin
+                        spacing: Theme.paddingMedium
+
+                        InitialAvatar {
+                            name: modelData.name || modelData.email || ""
+                            anchors.verticalCenter: parent.verticalCenter
                         }
 
-                        Label {
-                            width: parent.width
-                            text: modelData.name || ""
-                            truncationMode: TruncationMode.Fade
-                        }
+                        Column {
+                            width: parent.width - Theme.itemSizeSmall - Theme.paddingMedium
+                            anchors.verticalCenter: parent.verticalCenter
 
-                        Label {
-                            width: parent.width
-                            text: modelData.email || ""
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                            color: Theme.secondaryColor
-                            truncationMode: TruncationMode.Fade
+                            Label {
+                                width: parent.width
+                                text: modelData.name || ""
+                                truncationMode: TruncationMode.Fade
+                            }
+
+                            Label {
+                                width: parent.width
+                                text: modelData.email || ""
+                                font.pixelSize: Theme.fontSizeExtraSmall
+                                color: Theme.secondaryColor
+                                truncationMode: TruncationMode.Fade
+                            }
                         }
                     }
                 }

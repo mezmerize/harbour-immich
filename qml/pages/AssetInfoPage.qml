@@ -1,6 +1,6 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
-import QtGraphicalEffects 1.0
+import "../components"
 
 Page {
     id: page
@@ -173,41 +173,14 @@ Page {
                                 anchors.fill: parent
                                 spacing: Theme.paddingSmall / 2
 
-                                Rectangle {
+                                PersonAvatar {
                                     width: Theme.itemSizeMedium
                                     height: Theme.itemSizeMedium
-                                    color: "transparent"
-                                    border.width: 1
-                                    border.color: Theme.secondaryColor
-                                    radius: width / 2
-
-                                    Image {
-                                        id: personThumbnail
-                                        anchors.fill: parent
-                                        anchors.margins: 2
-                                        source: modelData.id ? "image://immich/person/" + modelData.id : ""
-                                        fillMode: Image.PreserveAspectCrop
-                                        asynchronous: true
-                                        layer.enabled: true
-                                        layer.effect: OpacityMask {
-                                            maskSource:  Item {
-                                                width: personThumbnail.width
-                                                height: personThumbnail.height
-                                                Rectangle {
-                                                    anchors.fill: parent
-                                                    radius: width / 2
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    Label {
-                                        anchors.centerIn: parent
-                                        text: (modelData.name || "?").charAt(0).toUpperCase()
-                                        font.pixelSize: Theme.fontSizeLarge
-                                        color: Theme.secondaryColor
-                                        visible: personThumbnail.status !== Image.Ready
-                                    }
+                                    personId: modelData.id || ""
+                                    name: modelData.name || ""
+                                    backgroundColor: "transparent"
+                                    letterColor: Theme.secondaryColor
+                                    letterPixelSize: Theme.fontSizeLarge
                                 }
 
                                 Label {

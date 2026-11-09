@@ -226,16 +226,24 @@ Page {
             y: scrubArea.pressed ? Math.max(0, Math.min(timelineScrubber.height - height, scrubArea.mouseY - height / 2)) : Math.max(0, Math.min(timelineScrubber.height - height, timelineScrubber.scrollFraction * (timelineScrubber.height - height)))
         }
 
-        Label {
-            id: scrubMonthLabel
-            visible: scrubArea.pressed && text !== ""
+        Rectangle {
             anchors {
                 right: scrubHandle.left
                 rightMargin: Theme.paddingMedium
                 verticalCenter: scrubHandle.verticalCenter
             }
-            font.pixelSize: Theme.fontSizeMedium
-            color: Theme.highlightColor
+            width: scrubMonthLabel.implicitWidth + 2 * Theme.paddingLarge
+            height: scrubMonthLabel.implicitHeight + Theme.paddingMedium
+            radius: height / 2
+            color: Theme.rgba(Theme.highlightDimmerColor, 0.9)
+            visible: scrubArea.pressed && scrubMonthLabel.text !== ""
+
+            Label {
+                id: scrubMonthLabel
+                anchors.centerIn: parent
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.highlightColor
+            }
         }
 
         ThemeEffect {
