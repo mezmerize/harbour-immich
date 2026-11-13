@@ -38,6 +38,8 @@ Page {
     property real panX: 0
     property real panY: 0
     property bool zoomed: imageScale > 1.05
+    readonly property int decodeSize: Math.max(Screen.width, Screen.height)
+    property bool neighborImagesReady: !isLocal || assetImage.status !== Image.Loading
 
     // Horizontal slide state (for prev/next peek)
     property real slideOffset: 0
@@ -186,7 +188,9 @@ Page {
                 width: imageViewport.width
                 height: imageViewport.height
                 fillMode: Image.PreserveAspectFit
-                source: getAssetSource(currentIndex - 1)
+                source: neighborImagesReady ? getAssetSource(currentIndex - 1) : ""
+                sourceSize.width: page.decodeSize
+                sourceSize.height: page.decodeSize
                 asynchronous: true
                 cache: true
                 autoTransform: true
@@ -215,6 +219,8 @@ Page {
                 fillMode: Image.PreserveAspectFit
                 autoTransform: true
                 source: isLocal ? (isVideo || !currentPath ? "" : "file://" + currentPath) : ((assetId && !isVideo) ? "image://immich/detail/" + assetId : "")
+                sourceSize.width: page.decodeSize
+                sourceSize.height: page.decodeSize
                 asynchronous: true
                 smooth: true
                 scale: imageScale
@@ -234,7 +240,7 @@ Page {
 
                 LoadingIndicator {
                     anchors.centerIn: parent
-                    visible: assetImage.status === Image.Loading && !currentThumbhash
+                    loading: assetImage.status === Image.Loading && !currentThumbhash
                 }
 
                 Label {
@@ -246,6 +252,29 @@ Page {
                 }
             }
 
+            // Bigger resolution local image for zoom
+            Image {
+                id: fullResolutionImage
+                x: assetImage.x
+                width: imageViewport.width
+                height: imageViewport.height
+                fillMode: Image.PreserveAspectFit
+                autoTransform: true
+                source: (isLocal && !isVideo && zoomed && currentPath) ? "file://" + currentPath : ""
+                sourceSize.width: 4096
+                sourceSize.height: 4096
+                asynchronous: true
+                smooth: true
+                visible: status === Image.Ready
+                scale: imageScale
+                transformOrigin: Item.Center
+
+                transform: Translate {
+                    x: panX
+                    y: panY
+                }
+            }
+
             // Next asset (right of current)
             Image {
                 id: nextImage
@@ -253,7 +282,9 @@ Page {
                 width: imageViewport.width
                 height: imageViewport.height
                 fillMode: Image.PreserveAspectFit
-                source: getAssetSource(currentIndex + 1)
+                source: neighborImagesReady ? getAssetSource(currentIndex + 1) : ""
+                sourceSize.width: page.decodeSize
+                sourceSize.height: page.decodeSize
                 asynchronous: true
                 cache: true
                 autoTransform: true
@@ -265,6 +296,8 @@ Page {
                 width: imageViewport.width
                 height: imageViewport.height
                 fillMode: Image.PreserveAspectFit
+                sourceSize.width: page.decodeSize
+                sourceSize.height: page.decodeSize
                 visible: false
                 asynchronous: false
                 cache: true

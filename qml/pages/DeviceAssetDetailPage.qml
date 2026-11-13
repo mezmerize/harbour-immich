@@ -168,7 +168,7 @@ Page {
 
                 LoadingIndicator {
                     anchors.centerIn: parent
-                    visible: assetImage.status === Image.Loading
+                    loading: assetImage.status === Image.Loading
                 }
 
                 Label {
