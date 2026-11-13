@@ -34,7 +34,7 @@ Page {
     property bool controlsShown: true
 
     function getMemoryAssetSource(index) {
-        if (!assets || assets.length === 0) return ""
+        if (!assets || assets.length < 2) return ""
         var wrapped = ((index % assets.length) + assets.length) % assets.length
         return assets[wrapped] && assets[wrapped].id ? "image://immich/detail/" + assets[wrapped].id : ""
     }
@@ -277,7 +277,7 @@ Page {
                 currentIndex: page.currentIndex
                 totalCount: page.assets ? page.assets.length : 0
                 enableZoom: false
-                wrapAround: true
+                wrapAround: page.assets ? page.assets.length > 1 : false
                 onTapped: {
                     if (page.currentIsVideo) {
                         videoPlayer.toggleControls()
