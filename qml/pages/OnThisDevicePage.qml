@@ -9,12 +9,12 @@ Page {
     property var allMediaRoots: [
         { name: "Pictures", path: StandardPaths.pictures, icon: "image://theme/icon-m-image" },
         { name: "Videos", path: StandardPaths.videos, icon: "image://theme/icon-m-video" },
-        { name: "Screenshots", path: StandardPaths.pictures + "/Screenshots", icon: "image://theme/icon-m-screenshot" },
+        { name: "Screenshots", path: StandardPaths.pictures + "/Screenshots", icon: "image://theme/icon-m-browser-camera" },
         { name: "Downloads", path: StandardPaths.download, icon: "image://theme/icon-m-cloud-download" },
         { name: "DCIM", path: homePath + "/android_storage/DCIM", icon: "image://theme/icon-m-camera" },
         { name: "Android Pictures", path: homePath + "/android_storage/Pictures", icon: "image://theme/icon-m-image" },
         { name: "Android Download", path: homePath + "/android_storage/Download", icon: "image://theme/icon-m-cloud-download" },
-        { name: "Android Screenshots", path: homePath + "/android_storage/Pictures/Screenshots", icon: "image://theme/icon-m-screenshot" }
+        { name: "Android Screenshots", path: homePath + "/android_storage/Pictures/Screenshots", icon: "image://theme/icon-m-browser-camera" }
     ]
     property var customFolderPaths: settingsManager.validCustomBrowseFolders()
     property var mediaRoots: {
