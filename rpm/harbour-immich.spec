@@ -37,6 +37,11 @@ Categories:
 Custom:
   Repo: https://github.com/mezmerize/harbour-immich
 PackageIcon: https://raw.githubusercontent.com/mezmerize/harbour-immich/main/icons/172x172/harbour-immich.png
+Screenshots:
+ - https://raw.githubusercontent.com/mezmerize/harbour-immich/main/screenshots/Timeline.png
+ - https://raw.githubusercontent.com/mezmerize/harbour-immich/main/screenshots/Albums.png
+ - https://raw.githubusercontent.com/mezmerize/harbour-immich/main/screenshots/Album_detail.png
+ - https://raw.githubusercontent.com/mezmerize/harbour-immich/main/screenshots/Asset_detail.png
 Links:
   Homepage: https://github.com/mezmerize/harbour-immich
   Bugtracker: https://github.com/mezmerize/harbour-immich/issues
