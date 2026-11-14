@@ -84,14 +84,59 @@ pkcon install-local harbour-immich-client.rpm
 
 ## Screenshots
 
-| | | |
-|---|---|---|
-| <img src="screenshots/Timeline.png" alt="Timeline page" width="240"> | <img src="screenshots/Albums.png" alt="Albums" width="240"> | <img src="screenshots/Album_detail.png" alt="Album detail" width="240"> |
-| How default Timeline page where you land at after login looks like | Albums page where you can browse and filter all your albums | A detailed view of an album with all of its assets and hero images rotation |
-| <img src="screenshots/Asset_detail.png" alt="Asset detail" width="240"> | <img src="screenshots/Asset_detail_peek.png" alt="Asset detail peek from bottom" width="240"> | <img src="screenshots/Search.png" alt="Search page" width="240"> |
-| Asset detail with available actions | You can quickly display a brief information about asset when peeking from bottom or simply drag to open detailed info | Search page with all available criteria to filter |
-| <img src="screenshots/Library.png" alt="Library page" width="240"> | <img src="screenshots/Places.png" alt="Places page" width="240"> | <img src="screenshots/Settings_backup.png" alt="Backup settings" width="240"> |
-| Library page where you can go to more details for each available category | How for example Places page looks like when opened from Library | Detailed backup settings |
+<table>
+  <tr>
+    <td width="33.33%" align="center">
+      <img src="screenshots/Timeline.png" alt="Timeline page" width="240">
+      <br>
+      How default Timeline page where you land at after login looks like
+    </td>
+    <td width="33.33%" align="center">
+      <img src="screenshots/Albums.png" alt="Albums" width="240">
+      <br>
+      Albums page where you can browse and filter all your albums
+    </td>
+    <td width="33.33%" align="center">
+      <img src="screenshots/Album_detail.png" alt="Album detail" width="240">
+      <br>
+      A detailed view of an album with all of its assets and hero images rotation
+    </td>
+  </tr>
+  <tr>
+    <td width="33.33%" align="center">
+      <img src="screenshots/Asset_detail.png" alt="Asset detail page" width="240">
+      <br>
+      Asset detail with available actions
+    </td>
+    <td width="33.33%" align="center">
+      <img src="screenshots/Asset_detail_peek.png" alt="Asset detail peek from bottom" width="240">
+      <br>
+      You can quickly display a brief information about asset when peeking from bottom or simply drag to open detailed info
+    </td>
+    <td width="33.33%" align="center">
+      <img src="screenshots/Search.png" alt="Search page" width="240">
+      <br>
+      Search page with all available criteria to filter
+    </td>
+  </tr>
+  <tr>
+    <td width="33.33%" align="center">
+      <img src="screenshots/Library.png" alt="Library page" width="240">
+      <br>
+      Library page where you can go to more details for each available category
+    </td>
+    <td width="33.33%" align="center">
+      <img src="screenshots/Places.png" alt="Places page" width="240">
+      <br>
+      How for example Places page looks like when opened from Library
+    </td>
+    <td width="33.33%" align="center">
+      <img src="screenshots/Settings_backup.png" alt="Backup settings" width="240">
+      <br>
+      Detailed backup settings
+    </td>
+  </tr>
+</table>
 
 ---
 
