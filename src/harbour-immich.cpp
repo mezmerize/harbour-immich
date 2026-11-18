@@ -29,6 +29,7 @@
 #endif
 #include "immichapi.h"
 #include "albummodel.h"
+#include "albumfiltermodel.h"
 #include "timelinemodel.h"
 #include "settingsmanager.h"
 #include "securestorage.h"
@@ -142,6 +143,7 @@ int main(int argc, char *argv[])
         });
     }
 #endif
+    qmlRegisterType<AlbumFilterModel>("harbour.immich.models", 1, 0, "AlbumFilterModel");
     qmlRegisterType<DeviceFolderModel>("harbour.immich.models", 1, 0, "DeviceFolderModel");
     qmlRegisterType<MemoriesModel>("harbour.immich.models", 1, 0, "MemoriesModel");
     qmlRegisterType<PeopleModel>("harbour.immich.models", 1, 0, "PeopleModel");

@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
+import QtGraphicalEffects 1.0
 import harbour.immich.models 1.0
 import "../components"
 
@@ -128,6 +129,19 @@ Page {
                     asynchronous: true
                     sourceSize.width: memoriesGrid.cellWidth
                     sourceSize.height: memoriesGrid.cellHeight
+                    visible: status === Image.Ready
+                    layer.enabled: status === Image.Ready
+                    layer.effect: OpacityMask {
+                        maskSource: Item {
+                            width: memoryImage.width
+                            height: memoryImage.height
+
+                            Rectangle {
+                                anchors.fill: parent
+                                radius: Theme.paddingSmall - 2
+                            }
+                        }
+                    }
 
                     Rectangle {
                         anchors.fill: parent

@@ -198,7 +198,7 @@
     <message id="pullDownMenu.refresh">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="72"/>
         <location filename="../qml/pages/AlbumShareDetailPage.qml" line="75"/>
-        <location filename="../qml/pages/AlbumsPage.qml" line="101"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="97"/>
         <location filename="../qml/pages/ArchivedPage.qml" line="51"/>
         <location filename="../qml/pages/ClusterGroupPage.qml" line="36"/>
         <location filename="../qml/pages/DeviceFolderPage.qml" line="69"/>
@@ -206,7 +206,7 @@
         <location filename="../qml/pages/FoldersPage.qml" line="89"/>
         <location filename="../qml/pages/IndividualShareDetailPage.qml" line="153"/>
         <location filename="../qml/pages/LockedFolderPage.qml" line="167"/>
-        <location filename="../qml/pages/MemoriesPage.qml" line="62"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="63"/>
         <location filename="../qml/pages/OnThisDevicePage.qml" line="67"/>
         <location filename="../qml/pages/PartnerAssetsPage.qml" line="51"/>
         <location filename="../qml/pages/PartnersPage.qml" line="27"/>
@@ -499,107 +499,92 @@
         <translation>Avaktiverad</translation>
     </message>
     <message id="albumPickerPage.selectOrCreate">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="70"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="82"/>
         <source>Select or create album</source>
         <translation>Välj eller skapa album</translation>
     </message>
     <message id="albumPickerPage.add">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="72"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="84"/>
         <source>Add</source>
         <translation>Lägg till</translation>
     </message>
     <message id="albumPickerPage.createNew">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="77"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="89"/>
         <source>Create new album</source>
         <translation>Skapa nytt album</translation>
     </message>
     <message id="albumPickerPage.albumName">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="84"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="96"/>
         <source>Album name</source>
         <translation>Albumnamn</translation>
     </message>
     <message id="albumPickerPage.newAlbumName">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="86"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="98"/>
         <source>New album name</source>
         <translation>Nytt albumnamn</translation>
     </message>
     <message id="albumPickerPage.existingAlbums">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="107"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="119"/>
         <source>Existing albums</source>
         <translation>Befintliga album</translation>
     </message>
     <message id="albumPickerPage.filter">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="128"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="139"/>
         <source>Filter albums...</source>
         <translation>Filtrera album...</translation>
     </message>
-    <message id="albumPickerPage.result">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="140"/>
-        <source>1 result</source>
-        <translation>1 träff</translation>
-    </message>
-    <message id="albumPickerPage.results">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="142"/>
-        <source>%1 results</source>
-        <translation>%1 träffar</translation>
-    </message>
-    <message id="albumPickerPage.album">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="144"/>
-        <source>1 album</source>
-        <translation>1 album</translation>
-    </message>
-    <message id="albumPickerPage.albums">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="146"/>
-        <source>%1 albums</source>
-        <translation>%1 album</translation>
-    </message>
     <message id="albumPickerPage.asset">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="187"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="223"/>
         <source>1 asset</source>
         <translation>1 tillgång</translation>
     </message>
     <message id="albumPickerPage.assets">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="189"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="225"/>
         <source>%1 assets</source>
         <translation>%1 tillgångar</translation>
     </message>
+    <message id="albumPickerPage.sharedBy">
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="227"/>
+        <source>Shared by %1</source>
+        <translation type="unfinished">Delade efter %1</translation>
+    </message>
     <message id="albumPickerPage.noAlbumsMatch">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="214"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="256"/>
         <source>No albums match filter</source>
         <translation>Inga album matchar filtret</translation>
     </message>
     <message id="albumPickerPage.noAlbums">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="216"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="258"/>
         <source>No albums yet</source>
         <translation>Inga album ännu</translation>
     </message>
     <message id="albumsPage.sortAlbumName">
-        <location filename="../qml/pages/AlbumsPage.qml" line="202"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="198"/>
         <source>Album title</source>
         <translation>Albumtitel</translation>
     </message>
     <message id="albumsPage.sortAssetCount">
-        <location filename="../qml/pages/AlbumsPage.qml" line="204"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="200"/>
         <source>Number of assets</source>
         <translation>Antal tillgångar</translation>
     </message>
     <message id="albumsPage.sortUpdatedAt">
-        <location filename="../qml/pages/AlbumsPage.qml" line="206"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="202"/>
         <source>Last modified</source>
         <translation>Ändrad</translation>
     </message>
     <message id="albumsPage.sortCreatedAt">
-        <location filename="../qml/pages/AlbumsPage.qml" line="208"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="204"/>
         <source>Created date</source>
         <translation>Skapad</translation>
     </message>
     <message id="albumsPage.sortEndDate">
-        <location filename="../qml/pages/AlbumsPage.qml" line="198"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="194"/>
         <source>Most recent photo</source>
         <translation>Senaste foto</translation>
     </message>
     <message id="pullDownMenu.settings">
-        <location filename="../qml/pages/AlbumsPage.qml" line="77"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="73"/>
         <location filename="../qml/pages/LibraryPage.qml" line="14"/>
         <location filename="../qml/pages/SearchPage.qml" line="162"/>
         <location filename="../qml/pages/TimelinePage.qml" line="50"/>
@@ -607,14 +592,14 @@
         <translation>Inställningar</translation>
     </message>
     <message id="pullDownMenu.library">
-        <location filename="../qml/pages/AlbumsPage.qml" line="83"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="79"/>
         <location filename="../qml/pages/SettingsPage.qml" line="75"/>
         <location filename="../qml/pages/TimelinePage.qml" line="56"/>
         <source>Library</source>
         <translation>Bibliotek</translation>
     </message>
     <message id="pullDownMenu.search">
-        <location filename="../qml/pages/AlbumsPage.qml" line="89"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="85"/>
         <location filename="../qml/pages/LibraryPage.qml" line="20"/>
         <location filename="../qml/pages/SettingsPage.qml" line="81"/>
         <location filename="../qml/pages/TimelinePage.qml" line="62"/>
@@ -622,7 +607,7 @@
         <translation>Sök</translation>
     </message>
     <message id="pullDownMenu.timeline">
-        <location filename="../qml/pages/AlbumsPage.qml" line="95"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="91"/>
         <location filename="../qml/pages/LibraryPage.qml" line="32"/>
         <location filename="../qml/pages/SearchPage.qml" line="174"/>
         <location filename="../qml/pages/SettingsPage.qml" line="93"/>
@@ -630,22 +615,22 @@
         <translation>Tidslinje</translation>
     </message>
     <message id="albumsPage.sortStartDate">
-        <location filename="../qml/pages/AlbumsPage.qml" line="200"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="196"/>
         <source>Oldest photo</source>
         <translation>Äldsta fotot</translation>
     </message>
     <message id="albumsPage.albums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="111"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="107"/>
         <source>Albums</source>
         <translation>Album</translation>
     </message>
     <message id="albumsPage.sortBy">
-        <location filename="../qml/pages/AlbumsPage.qml" line="188"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="184"/>
         <source>Sort by</source>
         <translation>Sortera efter</translation>
     </message>
     <message id="albumsPage.filter">
-        <location filename="../qml/pages/AlbumsPage.qml" line="224"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="219"/>
         <source>Filter albums...</source>
         <translation>Filtrera album...</translation>
     </message>
@@ -665,67 +650,62 @@
         <translation>Mina album</translation>
     </message>
     <message id="albumsPage.asset">
-        <location filename="../qml/pages/AlbumsPage.qml" line="286"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="294"/>
         <source>1 asset</source>
         <translation>1 tillgång</translation>
     </message>
     <message id="albumsPage.assets">
-        <location filename="../qml/pages/AlbumsPage.qml" line="288"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="296"/>
         <source>%1 assets</source>
         <translation>%1 tillgångar</translation>
     </message>
-    <message id="albumsPage.owned">
-        <location filename="../qml/pages/AlbumsPage.qml" line="297"/>
-        <source>Owned</source>
-        <translation>Ägda</translation>
-    </message>
     <message id="albumsPage.sharedBy">
-        <location filename="../qml/pages/AlbumsPage.qml" line="299"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="298"/>
         <source>Shared by %1</source>
         <translation>Delade efter %1</translation>
     </message>
     <message id="albumsPage.loading">
-        <location filename="../qml/pages/AlbumsPage.qml" line="326"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="324"/>
         <source>Loading albums...</source>
         <translation>Läser in album...</translation>
     </message>
     <message id="albumsPage.noAlbums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="336"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="334"/>
         <source>No albums</source>
         <translation>Inga album</translation>
     </message>
     <message id="albumsPage.noSharedAlbums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="338"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="336"/>
         <source>No shared albums</source>
         <translation>Inga delade album</translation>
     </message>
     <message id="albumsPage.noSharedWithMeAlbums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="340"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="338"/>
         <source>No albums shared with you</source>
         <translation>Inga album delade med dig</translation>
     </message>
     <message id="albumsPage.noMyAlbums">
-        <location filename="../qml/pages/AlbumsPage.qml" line="342"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="340"/>
         <source>No personal albums</source>
         <translation>Inga personliga album</translation>
     </message>
     <message id="albumsPage.noAllAlbumsHint">
-        <location filename="../qml/pages/AlbumsPage.qml" line="345"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="343"/>
         <source>Pull down to refresh or create albums in Immich</source>
         <translation>Dra neråt för att uppdatera eller skapa album i Immich</translation>
     </message>
     <message id="albumsPage.noSharedAlbumsHint">
-        <location filename="../qml/pages/AlbumsPage.qml" line="347"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="345"/>
         <source>Shared albums will appear here</source>
         <translation>Delade album visas här</translation>
     </message>
     <message id="albumsPage.noSharedWithMeAlbumsHint">
-        <location filename="../qml/pages/AlbumsPage.qml" line="349"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="347"/>
         <source>Albums shared with you will appear here</source>
         <translation>Albumm delade med dig visas här</translation>
     </message>
     <message id="albumsPage.noMyAlbumsHint">
-        <location filename="../qml/pages/AlbumsPage.qml" line="351"/>
+        <location filename="../qml/pages/AlbumsPage.qml" line="349"/>
         <source>Create an album in Immich to see it here</source>
         <translation>Skapa ett album i Immich för att se det här</translation>
     </message>
@@ -4057,47 +4037,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="memoriesPage.birthdayTitle">
-        <location filename="../qml/pages/MemoriesPage.qml" line="33"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="34"/>
         <source>%1&apos;s birthday</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="memoriesPage.unknownPerson">
-        <location filename="../qml/pages/MemoriesPage.qml" line="35"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="36"/>
         <source>Unknown</source>
         <translation type="unfinished">Okänd</translation>
     </message>
     <message id="memoriesPage.memory">
-        <location filename="../qml/pages/MemoriesPage.qml" line="38"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="39"/>
         <source>Memory</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="memoriesPage.thisYear">
-        <location filename="../qml/pages/MemoriesPage.qml" line="41"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="42"/>
         <source>This year</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="memoriesPage.yearAgo">
-        <location filename="../qml/pages/MemoriesPage.qml" line="43"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="44"/>
         <source>A year ago</source>
         <translation type="unfinished">Ett år sedan</translation>
     </message>
     <message id="memoriesPage.yearsAgo">
-        <location filename="../qml/pages/MemoriesPage.qml" line="45"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="46"/>
         <source>%1 years ago</source>
         <translation type="unfinished">%1 år sedan</translation>
     </message>
     <message id="memoriesPage.memories">
-        <location filename="../qml/pages/MemoriesPage.qml" line="72"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="73"/>
         <source>Memories</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="memoriesPage.loading">
-        <location filename="../qml/pages/MemoriesPage.qml" line="197"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="211"/>
         <source>Loading memories...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="memoriesPage.noMemories">
-        <location filename="../qml/pages/MemoriesPage.qml" line="205"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="219"/>
         <source>No memories found</source>
         <translation type="unfinished"></translation>
     </message>

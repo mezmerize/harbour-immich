@@ -1,17 +1,15 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
+import QtGraphicalEffects 1.0
+import harbour.immich.models 1.0
 import "../components"
 
 Page {
     id: page
 
-    property int assetsPerRow: isPortrait ? settingsManager.assetsPerRow : (settingsManager.assetsPerRow * 2)
-    property real thumbnailSize: width / assetsPerRow
-
     // Filter state: "all", "shared", "sharedWithMe", "mine"
     property string activeFilter: "all"
     property var loadedAlbums: []
-    property int filteredCount: 0
     property bool sharedSubsetVisible: activeFilter === "shared" || activeFilter === "sharedWithMe"
     property bool loading: true
 
@@ -53,23 +51,21 @@ Page {
         immichApi.fetchAlbums(activeFilter)
     }
 
-    function updateFilteredCount() {
-        var count = 0
-        for (var i = 0; i < loadedAlbums.length; i++) {
-            var album = loadedAlbums[i]
-            if (filterText.length > 0 && (!album.albumName || album.albumName.toLowerCase().indexOf(filterText) === -1)) continue
-            count++
-        }
-        filteredCount = count
+    AlbumFilterModel {
+        id: filteredAlbums
+        sourceAlbumModel: albumModel
+        filterText: page.filterText
     }
 
-    onFilterTextChanged: updateFilteredCount()
-
-    SilicaListView {
-        id: listView
+    SilicaGridView {
+        id: albumGrid
         anchors.fill: parent
         clip: true
-        model: albumModel
+        model: filteredAlbums
+        currentIndex: -1
+        cellWidth: width / (page.isPortrait ? 2 : 4)
+        cellHeight: cellWidth + Theme.fontSizeSmall + Theme.fontSizeExtraSmall + 2 * Theme.paddingMedium + Theme.paddingSmall
+        cacheBuffer: Math.round(cellHeight * 3)
 
         PullDownMenu {
             MenuItem {
@@ -104,7 +100,7 @@ Page {
         }
 
         header: Column {
-            width: listView.width
+            width: albumGrid.width
 
             PageHeader {
                 //% "Albums"
@@ -113,14 +109,14 @@ Page {
 
 
             AlbumFilterBar {
-                width: listView.width
+                width: albumGrid.width
                 activeFilter: page.activeFilter
                 onFilterActivated: page.setActiveFilter(filter)
             }
 
             // Sort row
             Item {
-                width: listView.width
+                width: albumGrid.width
                 height: Theme.itemSizeExtraSmall
 
                 BackgroundItem {
@@ -218,8 +214,7 @@ Page {
 
             SearchField {
                 id: albumSearchField
-                width: listView.width
-                visible: listView.count > 5
+                width: albumGrid.width
                 //% "Filter albums..."
                 placeholderText: qsTrId("albumsPage.filter")
                 onTextChanged: page.filterText = text.toLowerCase()
@@ -228,79 +223,82 @@ Page {
             }
         }
 
-        delegate: ListItem {
-            id: listItem
+        delegate: BackgroundItem {
+            id: albumDelegate
+            width: albumGrid.cellWidth
+            height: albumGrid.cellHeight
 
-            property bool matchesFilter: page.filterText.length === 0 || albumName.toLowerCase().indexOf(page.filterText) !== -1
-
-            contentHeight: matchesFilter ? page.thumbnailSize + 2 * Theme.paddingMedium : 0
-            visible: matchesFilter
-
-            Row {
+            Item {
                 anchors.fill: parent
-                anchors.margins: Theme.paddingMedium
-                spacing: Theme.paddingMedium
+                anchors.leftMargin: Theme.paddingMedium / 2
+                anchors.rightMargin: Theme.paddingMedium / 2
 
                 Item {
-                    width: page.thumbnailSize
+                    id: gridThumbnailArea
+                    width: parent.width
                     height: width
 
+                    Rectangle {
+                        anchors.fill: parent
+                        color: Theme.rgba(Theme.highlightBackgroundColor, 0.2)
+                        radius: Theme.paddingMedium
+                        visible: gridThumbnail.status !== Image.Ready
+                    }
+
+                    Icon {
+                        anchors.centerIn: parent
+                        source: "image://theme/icon-m-image"
+                        visible: gridThumbnail.status !== Image.Ready
+                    }
+
                     Image {
-                        id: albumThumbnail
+                        id: gridThumbnail
                         anchors.fill: parent
                         fillMode: Image.PreserveAspectCrop
                         source: albumThumbnailAssetId ? "image://immich/thumbnail/" + albumThumbnailAssetId : ""
                         asynchronous: true
+                        sourceSize.width: width
+                        sourceSize.height: height
+                        visible: status === Image.Ready
+                        layer.enabled: status === Image.Ready
+                        layer.effect: OpacityMask {
+                            maskSource: Item {
+                                width: gridThumbnail.width
+                                height: gridThumbnail.height
 
-                        Rectangle {
-                            anchors.fill: parent
-                            color: Theme.rgba(Theme.highlightBackgroundColor, 0.2)
-                            visible: albumThumbnail.status !== Image.Ready
-                        }
-
-                        Icon {
-                            anchors.centerIn: parent
-                            source: "image://theme/icon-m-image"
-                            visible: albumThumbnail.status !== Image.Ready
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: Theme.paddingMedium
+                                }
+                            }
                         }
                     }
                 }
 
-                Column {
-                    width: parent.width - page.thumbnailSize - 3 * Theme.paddingMedium
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: Theme.paddingSmall
+                Label {
+                    id: gridNameLabel
+                    anchors.top: gridThumbnailArea.bottom
+                    anchors.topMargin: Theme.paddingSmall
+                    width: parent.width
+                    text: albumName
+                    color: albumDelegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeSmall
+                    truncationMode: TruncationMode.Fade
+                }
 
-                    Label {
-                        width: parent.width
-                        text: albumName
-                        color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                        font.pixelSize: Theme.fontSizeMedium
-                        truncationMode: TruncationMode.Fade
-                    }
-
-                    Label {
-                        width: parent.width
-                        text: assetCount === 1
-                            //% "1 asset"
-                            ? qsTrId("albumsPage.asset")
-                            //% "%1 assets"
-                            : qsTrId("albumsPage.assets").arg(assetCount)
-                        color: listItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
-                        font.pixelSize: Theme.fontSizeSmall
-                    }
-
-                    Label {
-                        width: parent.width
-                        text: isOwned
-                            //% "Owned"
-                            ? qsTrId("albumsPage.owned")
-                            //% "Shared by %1"
-                            : qsTrId("albumsPage.sharedBy").arg(ownerName)
-                        color: listItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                        truncationMode: TruncationMode.Fade
-                    }
+                Label {
+                    anchors.top: gridNameLabel.bottom
+                    width: parent.width
+                    text: (assetCount === 1
+                        //% "1 asset"
+                        ? qsTrId("albumsPage.asset")
+                        //% "%1 assets"
+                        : qsTrId("albumsPage.assets").arg(assetCount)) + (isOwned ? "" : " · " +
+                        //% "Shared by %1"
+                        qsTrId("albumsPage.sharedBy").arg(ownerName))
+                    color: albumDelegate.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    truncationMode: TruncationMode.Fade
                 }
             }
 
@@ -320,16 +318,16 @@ Page {
 
     // Loading indicator
     LoadingIndicator {
-        anchors.fill: listView
-        loading: page.loading && listView.count === 0
+        anchors.fill: albumGrid
+        loading: page.loading && filteredAlbums.count === 0
         //% "Loading albums..."
         message: qsTrId("albumsPage.loading")
     }
 
     // Empty state
     EmptyState {
-        anchors.fill: listView
-        visible: !page.loading && page.filteredCount === 0
+        anchors.fill: albumGrid
+        visible: !page.loading && filteredAlbums.count === 0
         iconSource: page.activeFilter === "all" ? "image://theme/icon-m-folder" : page.activeFilter === "shared" ? "image://theme/icon-m-share" : page.activeFilter === "sharedWithMe" ? "image://theme/icon-m-message" : "image://theme/icon-m-person"
         message: page.activeFilter === "all"
             //% "No albums"
@@ -352,13 +350,13 @@ Page {
     }
 
     ScrollToTopButton {
-        targetFlickable: listView
+        targetFlickable: albumGrid
     }
 
     Timer {
         id: scrollToTopTimer
         interval: 1
-        onTriggered: listView.positionViewAtBeginning()
+        onTriggered: albumGrid.positionViewAtBeginning()
     }
 
     Connections {

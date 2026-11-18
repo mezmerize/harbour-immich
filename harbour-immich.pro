@@ -18,6 +18,7 @@ harbour {
 }
 
 SOURCES += src/harbour-immich.cpp \
+    src/albumfiltermodel.cpp \
     src/assetdatabase.cpp \
     src/syncengine.cpp \
     src/localmediaindex.cpp \
@@ -43,6 +44,7 @@ SOURCES += src/harbour-immich.cpp \
     src/videocontroller.cpp
 
 HEADERS += \
+    src/albumfiltermodel.h \
     src/assetdatabase.h \
     src/syncengine.h \
     src/localmediaindex.h \

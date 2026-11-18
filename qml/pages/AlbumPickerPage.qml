@@ -1,5 +1,7 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
+import QtGraphicalEffects 1.0
+import harbour.immich.models 1.0
 import "../components"
 
 Dialog {
@@ -20,7 +22,7 @@ Dialog {
 
     function updateFilteredCount() {
         if (filterText.length === 0) {
-            filteredCount = listView.count
+            filteredCount = filteredAlbums.count
             return
         }
         var count = 0
@@ -56,14 +58,24 @@ Dialog {
         }
     }
 
-    SilicaListView {
-        id: listView
+    AlbumFilterModel {
+        id: filteredAlbums
+        sourceAlbumModel: albumModel
+        filterText: albumPickerDialog.filterText
+    }
+
+    SilicaGridView {
+        id: albumGrid
         anchors.fill: parent
         clip: true
-        model: albumModel
+        model: filteredAlbums
+        currentIndex: -1
+        cellWidth: width / (albumPickerDialog.isPortrait ? 2 : 4)
+        cellHeight: cellWidth + Theme.fontSizeSmall + Theme.fontSizeExtraSmall + 2 * Theme.paddingMedium + Theme.paddingSmall
+        cacheBuffer: Math.round(cellHeight * 3)
 
         header: Column {
-            width: listView.width
+            width: albumGrid.width
 
             DialogHeader {
                 //% "Select or create album"
@@ -105,13 +117,12 @@ Dialog {
             SectionHeader {
                 //% "Existing albums"
                 text: qsTrId("albumPickerPage.existingAlbums")
-                visible: listView.count > 0
+                visible: albumGrid.count > 0
             }
 
             // Album type filter row
             AlbumFilterBar {
-                visible: listView.count > 0
-                width: listView.width
+                width: albumGrid.width
                 activeFilter: albumPickerDialog.activeFilter
                 onFilterActivated: {
                     if (albumPickerDialog.activeFilter !== filter) {
@@ -123,87 +134,118 @@ Dialog {
 
             SearchField {
                 id: albumFilterField
-                width: listView.width
+                width: albumGrid.width
                 //% "Filter albums..."
                 placeholderText: qsTrId("albumPickerPage.filter")
-                visible: listView.count > 5
                 onTextChanged: albumPickerDialog.filterText = text.toLowerCase()
                 EnterKey.iconSource: "image://theme/icon-m-enter-close"
                 EnterKey.onClicked: focus = false
             }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: listView.width - 2 * Theme.horizontalPageMargin
-                text: filterText.length > 0 ? (filteredCount === 1
-                    //% "1 result"
-                    ? qsTrId("albumPickerPage.result")
-                    //% "%1 results"
-                    : qsTrId("albumPickerPage.results").arg(filteredCount)) : (listView.count === 1
-                    //% "1 album"
-                    ? qsTrId("albumPickerPage.album")
-                    //% "%1 albums"
-                    : qsTrId("albumPickerPage.albums").arg(listView.count))
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.secondaryColor
-                visible: listView.count > 5
-            }
         }
 
-        delegate: ListItem {
-            id: albumListItem
+        delegate: BackgroundItem {
+            id: albumDelegate
+            width: albumGrid.cellWidth
+            height: albumGrid.cellHeight
 
-            property bool matchesFilter: albumPickerDialog.filterText.length === 0 || albumName.toLowerCase().indexOf(albumPickerDialog.filterText) !== -1
+            Item {
+                anchors.fill: parent
+                anchors.leftMargin: Theme.paddingMedium / 2
+                anchors.rightMargin: Theme.paddingMedium / 2
 
-            contentHeight: matchesFilter ? Theme.itemSizeMedium : 0
-            visible: matchesFilter
-            highlighted: down || albumPickerDialog.selectedAlbumId === albumId
+                Item {
+                    id: gridThumbnailArea
+                    width: parent.width
+                    height: width
 
-            Row {
-                anchors.left: parent.left
-                anchors.leftMargin: Theme.horizontalPageMargin
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.paddingMedium
-                visible: albumListItem.matchesFilter
+                    Rectangle {
+                        anchors.fill: parent
+                        color: Theme.rgba(Theme.highlightBackgroundColor, 0.2)
+                        radius: Theme.paddingMedium
+                        visible: gridThumbnail.status !== Image.Ready
+                    }
 
-                Icon {
-                    source: "image://theme/icon-m-folder"
-                    width: Theme.iconSizeMedium
-                    height: Theme.iconSizeMedium
-                    anchors.verticalCenter: parent.verticalCenter
+                    Icon {
+                        anchors.centerIn: parent
+                        source: "image://theme/icon-m-image"
+                        visible: gridThumbnail.status !== Image.Ready
+                    }
+
+                    Image {
+                        id: gridThumbnail
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectCrop
+                        source: albumThumbnailAssetId ? "image://immich/thumbnail/" + albumThumbnailAssetId : ""
+                        asynchronous: true
+                        sourceSize.width: width
+                        sourceSize.height: height
+                        visible: status === Image.Ready
+                        layer.enabled: status === Image.Ready
+                        layer.effect: OpacityMask {
+                            maskSource: Item {
+                                width: gridThumbnail.width
+                                height: gridThumbnail.height
+
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: Theme.paddingMedium
+                                }
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: albumId === albumPickerDialog.selectedAlbumId ? Theme.rgba(Theme.highlightBackgroundColor, 0.2) : "transparent"
+                        border.width: albumId === albumPickerDialog.selectedAlbumId ? 2 : 0
+                        border.color: Theme.highlightColor
+                        radius: Theme.paddingMedium
+                        z: 10
+                    }
                 }
 
-                Column {
-                    anchors.verticalCenter: parent.verticalCenter
+                Label {
+                    id: gridNameLabel
+                    anchors.top: gridThumbnailArea.bottom
+                    anchors.topMargin: Theme.paddingSmall
+                    width: parent.width
+                    text: albumName
+                    color: (albumDelegate.highlighted || albumId === albumPickerDialog.selectedAlbumId) ? Theme.highlightColor : Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeSmall
+                    truncationMode: TruncationMode.Fade
+                }
 
-                    Label {
-                        text: albumName
-                        color: albumListItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    }
-
-                    Label {
-                        text: assetCount === 1
-                            //% "1 asset"
-                            ? qsTrId("albumPickerPage.asset")
-                            //% "%1 assets"
-                            : qsTrId("albumPickerPage.assets").arg(assetCount || 0)
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.secondaryColor
-                    }
+                Label {
+                    anchors.top: gridNameLabel.bottom
+                    width: parent.width
+                    text: (assetCount === 1
+                        //% "1 asset"
+                        ? qsTrId("albumPickerPage.asset")
+                        //% "%1 assets"
+                        : qsTrId("albumPickerPage.assets").arg(assetCount)) + (isOwned ? "" : " · " +
+                        //% "Shared by %1"
+                        qsTrId("albumPickerPage.sharedBy").arg(ownerName))
+                    color: (albumDelegate.highlighted || albumId === albumPickerDialog.selectedAlbumId) ? Theme.secondaryHighlightColor : Theme.secondaryColor
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    truncationMode: TruncationMode.Fade
                 }
             }
 
             onClicked: {
-                albumPickerDialog.selectedAlbumId = albumId
-                albumPickerDialog.createNew = false
-                albumPickerDialog.newAlbumName = ""
+                if (albumPickerDialog.selectedAlbumId !== albumId) {
+                    albumPickerDialog.selectedAlbumId = albumId
+                    albumPickerDialog.createNew = false
+                    albumPickerDialog.newAlbumName = ""
+                } else {
+                    albumPickerDialog.selectedAlbumId = ""
+                }
             }
         }
 
         footer: Item {
-            width: listView.width
-            property bool shown: listView.count === 0 || (albumPickerDialog.filterText.length > 0 && albumPickerDialog.filteredCount === 0)
-            height: shown ? Math.max(Theme.itemSizeHuge, (albumPickerDialog.isPortrait ? Screen.height : Screen.width) - (listView.headerItem ? listView.headerItem.height : 0)) : 0
+            width: albumGrid.width
+            property bool shown: albumGrid.count === 0 || (albumPickerDialog.filterText.length > 0 && albumPickerDialog.filteredCount === 0)
+            height: shown ? Math.max(Theme.itemSizeHuge, (albumPickerDialog.isPortrait ? Screen.height : Screen.width) - (albumGrid.headerItem ? albumGrid.headerItem.height : 0)) : 0
 
             EmptyState {
                 anchors.fill: parent
@@ -223,7 +265,7 @@ Dialog {
     Timer {
         id: scrollToTopTimer
         interval: 1
-        onTriggered: listView.positionViewAtBeginning()
+        onTriggered: albumGrid.positionViewAtBeginning()
     }
 
     onStatusChanged: if (status === PageStatus.Active) applyFilter()
