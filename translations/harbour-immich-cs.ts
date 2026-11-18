@@ -554,7 +554,7 @@
     <message id="albumPickerPage.sharedBy">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="227"/>
         <source>Shared by %1</source>
-        <translation type="unfinished">Sdíleno od %1</translation>
+        <translation>Sdíleno od %1</translation>
     </message>
     <message id="albumPickerPage.noAlbumsMatch">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="256"/>
