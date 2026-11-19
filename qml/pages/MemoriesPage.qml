@@ -52,7 +52,7 @@ Page {
         clip: true
         currentIndex: -1
         cellWidth: width / (page.isPortrait ? 2 : 4)
-        cellHeight: cellWidth
+        cellHeight: cellWidth + Theme.fontSizeSmall + Theme.fontSizeExtraSmall + 2 * Theme.paddingMedium + Theme.paddingSmall
         cacheBuffer: Math.round(cellHeight * 3)
 
         model: memoriesModel
@@ -103,90 +103,103 @@ Page {
             width: memoriesGrid.cellWidth
             height: memoriesGrid.cellHeight
 
-            Rectangle {
+            Item {
                 anchors.fill: parent
-                anchors.margins: Theme.paddingSmall / 2
-                color: Theme.rgba(Theme.highlightBackgroundColor, 0.2)
-                radius: Theme.paddingSmall
+                anchors.leftMargin: Theme.paddingMedium / 2
+                anchors.rightMargin: Theme.paddingMedium / 2
 
-                Image {
-                    id: thumbhashImage
-                    anchors.fill: parent
-                    anchors.margins: 2
-                    fillMode: Image.PreserveAspectCrop
-                    source: model.thumbhash ? "image://thumbhash/" + model.thumbhash : ""
-                    visible: memoryImage.status !== Image.Ready
-                    asynchronous: false
-                    smooth: true
-                }
+                Item {
+                    id: memoryImageArea
+                    width: parent.width
+                    height: width
 
-                Image {
-                    id: memoryImage
-                    anchors.fill: parent
-                    anchors.margins: 2
-                    source: model.thumbnailId ? "image://immich/thumbnail/" + model.thumbnailId : ""
-                    fillMode: Image.PreserveAspectCrop
-                    asynchronous: true
-                    sourceSize.width: memoriesGrid.cellWidth
-                    sourceSize.height: memoriesGrid.cellHeight
-                    visible: status === Image.Ready
-                    layer.enabled: status === Image.Ready
-                    layer.effect: OpacityMask {
-                        maskSource: Item {
-                            width: memoryImage.width
-                            height: memoryImage.height
+                    Rectangle {
+                        anchors.fill: parent
+                        color: Theme.rgba(Theme.highlightBackgroundColor, 0.2)
+                        radius: Theme.paddingMedium
+                        visible: memoryImage.status !== Image.Ready
+                    }
 
-                            Rectangle {
-                                anchors.fill: parent
-                                radius: Theme.paddingSmall - 2
+                    Image {
+                        id: thumbhashImage
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectCrop
+                        source: model.thumbhash ? "image://thumbhash/" + model.thumbhash : ""
+                        asynchronous: false
+                        smooth: true
+                        visible: memoryImage.status !== Image.Ready
+                        layer.enabled: memoryImage.status !== Image.Ready
+                        layer.effect: OpacityMask {
+                            maskSource: Item {
+                                width: thumbhashImage.width
+                                height: thumbhashImage.height
+
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: Theme.paddingMedium
+                                }
                             }
                         }
                     }
 
-                    Rectangle {
+                    Image {
+                        id: memoryImage
                         anchors.fill: parent
-                        color: "transparent"
-                        radius: Theme.paddingSmall - 2
-                        border.width: memoryDelegate.highlighted ? 3 : 0
-                        border.color: Theme.highlightColor
-                    }
-                }
+                        source: model.thumbnailId ? "image://immich/thumbnail/" + model.thumbnailId : ""
+                        fillMode: Image.PreserveAspectCrop
+                        asynchronous: true
+                        sourceSize.width: memoriesGrid.cellWidth
+                        sourceSize.height: memoriesGrid.cellHeight
+                        visible: status === Image.Ready
+                        layer.enabled: status === Image.Ready
+                        layer.effect: OpacityMask {
+                            maskSource: Item {
+                                width: memoryImage.width
+                                height: memoryImage.height
 
-                // Favorite indicator
-                Icon {
-                    anchors.top: parent.top
-                    anchors.right: parent.right
-                    anchors.margins: Theme.paddingSmall
-                    width: Theme.iconSizeSmall
-                    height: Theme.iconSizeSmall
-                    source: "image://theme/icon-s-favorite"
-                    visible: model.isSaved
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: Theme.paddingMedium
+                                }
+                            }
+                        }
+                    }
+
+                    // Favorite indicator
+                    Icon {
+                        anchors.top: parent.top
+                        anchors.right: parent.right
+                        anchors.margins: Theme.paddingSmall
+                        width: Theme.iconSizeSmall
+                        height: Theme.iconSizeSmall
+                        source: "image://theme/icon-s-favorite"
+                        visible: model.isSaved
+                    }
                 }
 
                 // Memory date overlay at bottom
-                Rectangle {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-                    height: dateLabel.height + Theme.paddingSmall
-                    radius: Theme.paddingSmall
-                    color: Theme.rgba("black", 0.6)
+                Label {
+                    id: dateLabel
+                    anchors.top: memoryImageArea.bottom
+                    anchors.topMargin: Theme.paddingSmall
+                    width: parent.width
+                    text: model.memoryDate ? (new Date(model.memoryDate)).toLocaleDateString() : ""
+                    color: memoryDelegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeSmall
+                    truncationMode: TruncationMode.Fade
+                }
 
-                    Rectangle {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-                        height: parent.radius
-                        color: parent.color
-                    }
-
-                    Label {
-                        id: dateLabel
-                        anchors.centerIn: parent
-                        text: model.memoryDate ? (new Date(model.memoryDate)).toLocaleDateString() : ""
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                        color: Theme.lightPrimaryColor
-                    }
+                Label {
+                    anchors.top: dateLabel.bottom
+                    width: parent.width
+                    text: (model.assetCount === 1
+                        //% "1 asset"
+                        ? qsTrId("memoriesPage.asset")
+                        //% "%1 assets"
+                        : qsTrId("memoriesPage.assets").arg(model.assetCount))
+                    color: memoryDelegate.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    truncationMode: TruncationMode.Fade
                 }
             }
 

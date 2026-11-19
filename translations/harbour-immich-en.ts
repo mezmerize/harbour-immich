@@ -3857,13 +3857,23 @@
         <source>Memories</source>
         <translation>Memories</translation>
     </message>
+    <message id="memoriesPage.asset">
+        <location filename="../qml/pages/MemoriesPage.qml" line="197"/>
+        <source>1 asset</source>
+        <translation>1 asset</translation>
+    </message>
+    <message id="memoriesPage.assets">
+        <location filename="../qml/pages/MemoriesPage.qml" line="199"/>
+        <source>%1 assets</source>
+        <translation>%1 assets</translation>
+    </message>
     <message id="memoriesPage.loading">
-        <location filename="../qml/pages/MemoriesPage.qml" line="211"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="224"/>
         <source>Loading memories...</source>
         <translation>Loading memories...</translation>
     </message>
     <message id="memoriesPage.noMemories">
-        <location filename="../qml/pages/MemoriesPage.qml" line="219"/>
+        <location filename="../qml/pages/MemoriesPage.qml" line="232"/>
         <source>No memories found</source>
         <translation>No memories found</translation>
     </message>
