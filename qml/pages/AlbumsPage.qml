@@ -353,12 +353,6 @@ Page {
         targetFlickable: albumGrid
     }
 
-    Timer {
-        id: scrollToTopTimer
-        interval: 1
-        onTriggered: albumGrid.positionViewAtBeginning()
-    }
-
     Connections {
         target: immichApi
         onAlbumsReceived: {
@@ -366,7 +360,6 @@ Page {
             page.loading = false
             page.loadedAlbums = albums
             page.updateFilteredCount()
-            scrollToTopTimer.restart()
         }
         onAlbumUpdated: albumModel.updateAlbumMetadata(albumId, albumName, albumThumbnailAssetId)
         onErrorOccurred: if (page.status === PageStatus.Active) page.loading = false

@@ -500,62 +500,62 @@
         <translation>Désactivé</translation>
     </message>
     <message id="albumPickerPage.selectOrCreate">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="82"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="81"/>
         <source>Select or create album</source>
         <translation>Sélectionner ou créer un album</translation>
     </message>
     <message id="albumPickerPage.add">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="84"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="83"/>
         <source>Add</source>
         <translation>Ajouter</translation>
     </message>
     <message id="albumPickerPage.createNew">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="89"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="88"/>
         <source>Create new album</source>
         <translation>Créer un nouvel album</translation>
     </message>
     <message id="albumPickerPage.albumName">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="96"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="95"/>
         <source>Album name</source>
         <translation>Nom de l&apos;album</translation>
     </message>
     <message id="albumPickerPage.newAlbumName">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="98"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="97"/>
         <source>New album name</source>
         <translation>Nouveau nom d&apos;album</translation>
     </message>
     <message id="albumPickerPage.existingAlbums">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="119"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="118"/>
         <source>Existing albums</source>
         <translation>Albums existants</translation>
     </message>
     <message id="albumPickerPage.filter">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="139"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="137"/>
         <source>Filter albums...</source>
         <translation>Filtrer les albums...</translation>
     </message>
     <message id="albumPickerPage.asset">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="223"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="221"/>
         <source>1 asset</source>
         <translation>1 éléments</translation>
     </message>
     <message id="albumPickerPage.assets">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="225"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="223"/>
         <source>%1 assets</source>
         <translation>%1 éléments</translation>
     </message>
     <message id="albumPickerPage.sharedBy">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="227"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="225"/>
         <source>Shared by %1</source>
         <translation type="unfinished">Partagé par %1</translation>
     </message>
     <message id="albumPickerPage.noAlbumsMatch">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="256"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="255"/>
         <source>No albums match filter</source>
         <translation>Pas de filtre d&apos;albums correspondant</translation>
     </message>
     <message id="albumPickerPage.noAlbums">
-        <location filename="../qml/pages/AlbumPickerPage.qml" line="258"/>
+        <location filename="../qml/pages/AlbumPickerPage.qml" line="257"/>
         <source>No albums yet</source>
         <translation>Pas encore d&apos;albums</translation>
     </message>

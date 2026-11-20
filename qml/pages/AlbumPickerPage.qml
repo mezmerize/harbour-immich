@@ -54,7 +54,6 @@ Dialog {
             if (albumPickerDialog.status !== PageStatus.Active) return
             albumPickerDialog.loadedAlbums = albums
             albumPickerDialog.updateFilteredCount()
-            scrollToTopTimer.restart()
         }
     }
 
@@ -117,7 +116,6 @@ Dialog {
             SectionHeader {
                 //% "Existing albums"
                 text: qsTrId("albumPickerPage.existingAlbums")
-                visible: albumGrid.count > 0
             }
 
             // Album type filter row
@@ -244,8 +242,9 @@ Dialog {
 
         footer: Item {
             width: albumGrid.width
-            property bool shown: albumGrid.count === 0 || (albumPickerDialog.filterText.length > 0 && albumPickerDialog.filteredCount === 0)
             height: shown ? Math.max(Theme.itemSizeHuge, (albumPickerDialog.isPortrait ? Screen.height : Screen.width) - (albumGrid.headerItem ? albumGrid.headerItem.height : 0)) : 0
+
+            property bool shown: albumGrid.count === 0 || (albumPickerDialog.filterText.length > 0 && albumPickerDialog.filteredCount === 0)
 
             EmptyState {
                 anchors.fill: parent
@@ -260,12 +259,6 @@ Dialog {
         }
 
         VerticalScrollDecorator {}
-    }
-
-    Timer {
-        id: scrollToTopTimer
-        interval: 1
-        onTriggered: albumGrid.positionViewAtBeginning()
     }
 
     onStatusChanged: if (status === PageStatus.Active) applyFilter()
