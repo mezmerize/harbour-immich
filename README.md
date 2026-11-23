@@ -183,3 +183,4 @@ GPLv3
 - nthn (https://forum.sailfishos.org/u/nthn) - Dutch translations
 - xamino (https://forum.sailfishos.org/u/xamino) - German translations
 - eson (https://forum.sailfishos.org/u/eson) - Swedish translations
+- bittin  - Swedish translations
