@@ -47,12 +47,12 @@
     <message id="memoriesBar.birthdayTitle">
         <location filename="../qml/components/MemoriesBar.qml" line="27"/>
         <source>%1&apos;s birthday</source>
-        <translation type="unfinished"></translation>
+        <translation>%1&apos;s date de naissance</translation>
     </message>
     <message id="memoriesBar.unknownPerson">
         <location filename="../qml/components/MemoriesBar.qml" line="29"/>
         <source>Unknown</source>
-        <translation type="unfinished">Inconnu</translation>
+        <translation>Inconnu</translation>
     </message>
     <message id="memoriesBar.yearAgo">
         <location filename="../qml/components/MemoriesBar.qml" line="39"/>
@@ -127,7 +127,7 @@
     <message id="selectionActionBar.upload">
         <location filename="../qml/components/SelectionActionBar.qml" line="346"/>
         <source>Upload to server</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléverser au serveur</translation>
     </message>
     <message id="selectionActionBar.moveToArchive">
         <location filename="../qml/components/SelectionActionBar.qml" line="365"/>
@@ -224,12 +224,12 @@
     <message id="pullDownMenu.removeAlbum">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="63"/>
         <source>Remove album</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer l&apos;album</translation>
     </message>
     <message id="notification.removingAlbum">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="65"/>
         <source>Removing album</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer l&apos;album</translation>
     </message>
     <message id="pullDownMenu.information">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="78"/>
@@ -344,7 +344,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="413"/>
         <source>Downloading asset</source>
         <oldsource>Downloading asset...</oldsource>
-        <translation type="unfinished">Téléchargement de l&apos;élément...</translation>
+        <translation>Téléchargement de l&apos;élément...</translation>
     </message>
     <message id="notification.downloadingAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="362"/>
@@ -360,7 +360,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="415"/>
         <source>Downloading %1 assets</source>
         <oldsource>Downloading %1 assets...</oldsource>
-        <translation type="unfinished">Téléchargement de %1 éléments...</translation>
+        <translation>Téléchargement de %1 éléments...</translation>
     </message>
     <message id="notification.deletingAssets">
         <location filename="../qml/pages/AlbumDetailPage.qml" line="368"/>
@@ -391,7 +391,7 @@
         <location filename="../qml/pages/TrashPage.qml" line="216"/>
         <source>Deleting asset</source>
         <oldsource>Removing album</oldsource>
-        <translation type="unfinished">Suppression de l&apos;élément</translation>
+        <translation>Suppression de l&apos;élément</translation>
     </message>
     <message id="albumInfoPage.albumInformation">
         <location filename="../qml/pages/AlbumInfoPage.qml" line="65"/>
@@ -547,7 +547,7 @@
     <message id="albumPickerPage.sharedBy">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="225"/>
         <source>Shared by %1</source>
-        <translation type="unfinished">Partagé par %1</translation>
+        <translation>Partagé par %1</translation>
     </message>
     <message id="albumPickerPage.noAlbumsMatch">
         <location filename="../qml/pages/AlbumPickerPage.qml" line="255"/>
@@ -732,7 +732,7 @@
         <location filename="../qml/pages/StackDetailPage.qml" line="528"/>
         <source>Downloading</source>
         <oldsource>Downloading...</oldsource>
-        <translation type="unfinished">Téléchargement...</translation>
+        <translation>Téléchargement...</translation>
     </message>
     <message id="notification.removingFromAlbum">
         <location filename="../qml/pages/AssetDetailPage.qml" line="526"/>
@@ -759,12 +759,12 @@
     <message id="assetInfoPeek.releaseToViewInfo">
         <location filename="../qml/components/AssetInfoPeek.qml" line="124"/>
         <source>Release to view info</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquer ici pour afficher les informations</translation>
     </message>
     <message id="assetInfoPeek.dragForInfo">
         <location filename="../qml/components/AssetInfoPeek.qml" line="126"/>
         <source>Pull up for info</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquer ici pour plus d&apos;informations</translation>
     </message>
     <message id="assetInfoPage.description">
         <location filename="../qml/pages/AssetInfoPage.qml" line="58"/>
@@ -781,12 +781,12 @@
         <location filename="../qml/pages/AssetInfoPage.qml" line="71"/>
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="73"/>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Résolution de l&apos;image</translation>
     </message>
     <message id="assetInfoPage.size">
         <location filename="../qml/pages/AssetInfoPage.qml" line="78"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille</translation>
     </message>
     <message id="assetInfoPage.created">
         <location filename="../qml/pages/AssetInfoPage.qml" line="84"/>
@@ -953,7 +953,7 @@
         <location filename="../qml/harbour-immich.qml" line="106"/>
         <location filename="../qml/pages/LoginPage.qml" line="136"/>
         <source>The Immich server you are trying to log in to is running an unsupported version (minimum required: %1). Some features may not work correctly.</source>
-        <translation type="unfinished">Le serveur Immich auquel vous essayez de vous connecter utilise une version non prise en charge (version minimale requise : %1). Certaines fonctionnalités risquent de ne pas fonctionner correctement.</translation>
+        <translation>Le serveur Immich auquel vous essayez de vous connecter utilise une version non prise en charge (version minimale requise&#xa0;: %1). Certaines fonctionnalités risquent de ne pas fonctionner correctement.</translation>
     </message>
     <message id="loginPage.failed">
         <location filename="../qml/pages/LoginPage.qml" line="186"/>
@@ -974,14 +974,14 @@
     <message id="memoryDetailPage.birthdayAge">
         <location filename="../qml/pages/MemoryDetailPage.qml" line="399"/>
         <source>%1 years old</source>
-        <translation type="unfinished"></translation>
+        <translation>Il y a %1 ans</translation>
     </message>
     <message id="notification.motionPhotoFailed">
         <location filename="../qml/pages/AssetDetailPage.qml" line="342"/>
         <location filename="../qml/pages/MemoryDetailPage.qml" line="345"/>
         <location filename="../qml/pages/StackDetailPage.qml" line="314"/>
         <source>Failed to play motion photo</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire la photo animée</translation>
     </message>
     <message id="searchPage.stateAny">
         <location filename="../qml/pages/SearchPage.qml" line="14"/>
@@ -1308,29 +1308,29 @@
         <location filename="../qml/pages/SearchResultsPage.qml" line="181"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="210"/>
         <source>Search Results</source>
-        <translation type="unfinished">Montrer résultats</translation>
+        <translation>Montrer les résultats</translation>
     </message>
     <message id="searchResultsPage.asset">
         <location filename="../qml/pages/SearchResultsPage.qml" line="194"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="218"/>
         <source>1 asset</source>
-        <translation type="unfinished"></translation>
+        <translation>1 élément</translation>
     </message>
     <message id="searchResultsPage.assets">
         <location filename="../qml/pages/SearchResultsPage.qml" line="196"/>
         <location filename="../qml/pages/SearchResultsPage.qml" line="218"/>
         <source>%1 assets</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 éléments</translation>
     </message>
     <message id="searchResultsPage.loading">
         <location filename="../qml/pages/SearchResultsPage.qml" line="286"/>
         <source>Loading search results...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement des résultats recherchés</translation>
     </message>
     <message id="searchResultsPage.noAssets">
         <location filename="../qml/pages/SearchResultsPage.qml" line="301"/>
         <source>No assets</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas d&apos;éléments</translation>
     </message>
     <message id="notification.addedToFavorites">
         <location filename="../qml/pages/StackDetailPage.qml" line="696"/>
@@ -1345,7 +1345,7 @@
     <message id="pullDownMenu.clientCertificate">
         <location filename="../qml/pages/ServerPage.qml" line="31"/>
         <source>Client certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Certificat client</translation>
     </message>
     <message id="serverPage.serverConfiguration">
         <location filename="../qml/pages/ServerPage.qml" line="43"/>
@@ -1416,32 +1416,32 @@
     <message id="settingsPage.videoAutoPlay">
         <location filename="../qml/pages/SettingsPage.qml" line="151"/>
         <source>Auto-play videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Lecture automatique des vidéos</translation>
     </message>
     <message id="settingsPage.videoAutoPlayInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="153"/>
         <source>Start playing videos automatically when opened in the detail view.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire automatiquement les vidéos à leur ouverture dans la vue détaillée.</translation>
     </message>
     <message id="settingsPage.videoAutoPlayWifiOnly">
         <location filename="../qml/pages/SettingsPage.qml" line="162"/>
         <source>Auto-play on Wi-Fi only</source>
-        <translation type="unfinished"></translation>
+        <translation>Lecture automatique en Wi-Fi uniquement</translation>
     </message>
     <message id="settingsPage.videoAutoPlayWifiOnlyInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="164"/>
         <source>Auto-play streamed videos only when connected to Wi-Fi. Videos stored on the device are not affected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire automatiquement les vidéos en streaming uniquement lorsque l&apos;appareil est connecté au Wi-Fi. Les vidéos stockées sur l&apos;appareil ne sont pas concernées.</translation>
     </message>
     <message id="settingsPage.motionPhotos">
         <location filename="../qml/pages/SettingsPage.qml" line="174"/>
         <source>Motion photos</source>
-        <translation type="unfinished"></translation>
+        <translation>Photos animées</translation>
     </message>
     <message id="settingsPage.motionPhotosInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="176"/>
         <source>Show an indicator on motion photos and allow playing their video part in the detail view.</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher un indicateur sur les photos animées et permettre la lecture de leur séquence vidéo dans la vue détaillée.</translation>
     </message>
     <message id="settingsPage.showMemoriesBar">
         <location filename="../qml/pages/SettingsPage.qml" line="185"/>
@@ -1506,90 +1506,90 @@
     <message id="settingsPage.selectedCountPosition">
         <location filename="../qml/pages/SettingsPage.qml" line="255"/>
         <source>Selected count button position</source>
-        <translation type="unfinished"></translation>
+        <translation>Position du bouton du nombre d&apos;éléments sélectionnés</translation>
     </message>
     <message id="settingsPage.selectedCountPositionInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="257"/>
         <source>Controls position of the button showing the number of selected assets. Tap it to clear the selection. It cannot share a position with scroll to top button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Définit la position du bouton indiquant le nombre d&apos;éléments sélectionnés. Appuyez dessus pour désélectionner tous les éléments. Il ne peut pas occuper la même position que le bouton permettant de revenir en haut de la page.</translation>
     </message>
     <message id="settingsPage.selectedCountPositionTopLeft">
         <location filename="../qml/pages/SettingsPage.qml" line="267"/>
         <source>Top left</source>
-        <translation type="unfinished"></translation>
+        <translation>En haut à gauche</translation>
     </message>
     <message id="settingsPage.selectedCountPositionTopRight">
         <location filename="../qml/pages/SettingsPage.qml" line="271"/>
         <source>Top right</source>
-        <translation type="unfinished"></translation>
+        <translation>En haut à droite</translation>
     </message>
     <message id="settingsPage.selectedCountPositionBottomLeft">
         <location filename="../qml/pages/SettingsPage.qml" line="275"/>
         <source>Bottom left</source>
-        <translation type="unfinished"></translation>
+        <translation>En bas à gauche</translation>
     </message>
     <message id="settingsPage.selectedCountPositionBottomCenter">
         <location filename="../qml/pages/SettingsPage.qml" line="280"/>
         <source>Bottom center</source>
-        <translation type="unfinished"></translation>
+        <translation>En bas au centre</translation>
     </message>
     <message id="settingsPage.selectedCountPositionBottomRight">
         <location filename="../qml/pages/SettingsPage.qml" line="285"/>
         <source>Bottom right</source>
-        <translation type="unfinished"></translation>
+        <translation>En bas à droite</translation>
     </message>
     <message id="settingsPage.language">
         <location filename="../qml/pages/SettingsPage.qml" line="300"/>
         <location filename="../qml/pages/SettingsPage.qml" line="304"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Langue</translation>
     </message>
     <message id="settingsPage.languageInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="306"/>
         <source>Application language. Automatic follows the system language. Changes will take effect after application restart.</source>
         <oldsource>Application language. Automatic follows the system language. Changes take effect immediately.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Langue de l&apos;application. Le mode automatique utilise la langue du système. Les modifications prendront effet après le redémarrage de l&apos;application.</translation>
     </message>
     <message id="settingsPage.languageAutomatic">
         <location filename="../qml/pages/SettingsPage.qml" line="317"/>
         <source>Automatic (system)</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatique (langue du système)</translation>
     </message>
     <message id="settingsPage.security">
         <location filename="../qml/pages/SettingsPage.qml" line="336"/>
         <source>Security</source>
-        <translation type="unfinished"></translation>
+        <translation>Sécurité</translation>
     </message>
     <message id="settingsPage.clientCertificate">
         <location filename="../qml/pages/SettingsPage.qml" line="341"/>
         <source>Client certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Certificat client</translation>
     </message>
     <message id="settingsPage.clientCertificateNone">
         <location filename="../qml/pages/SettingsPage.qml" line="344"/>
         <source>Not configured</source>
-        <translation type="unfinished"></translation>
+        <translation>Non configuré</translation>
     </message>
     <message id="settingsPage.clientCertificateExpired">
         <location filename="../qml/pages/SettingsPage.qml" line="346"/>
         <source>Expired</source>
-        <translation type="unfinished">Expiré</translation>
+        <translation>Expiré</translation>
     </message>
     <message id="settingsPage.clientCertificateExpiringSoon">
         <location filename="../qml/pages/SettingsPage.qml" line="348"/>
         <source>Expiring soon</source>
-        <translation type="unfinished"></translation>
+        <translation>Expire bientôt</translation>
     </message>
     <message id="settingsPage.clientCertificateConfigured">
         <location filename="../qml/pages/SettingsPage.qml" line="350"/>
         <source>Configured</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuré</translation>
     </message>
     <message id="settingsPage.clientCertificateInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="353"/>
         <source>Import a client (mTLS) certificate for servers that require it. Changes take effect immediately.</source>
         <oldsource>Import a client (mTLS) certificate for servers that require it. Changes take effect after restarting the app.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Importer un certificat client (mTLS) pour les serveurs qui l&apos;exigent. Les modifications prennent effet immédiatement.</translation>
     </message>
     <message id="settingsPage.cover">
         <location filename="../qml/pages/SettingsPage.qml" line="400"/>
@@ -1749,12 +1749,12 @@
     <message id="settingsPage.showDeviceMediaOnTimeline">
         <location filename="../qml/pages/SettingsPage.qml" line="671"/>
         <source>Show device media on timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les médias de l&apos;appareil dans la chronologie</translation>
     </message>
     <message id="settingsPage.showDeviceMediaOnTimelineInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="673"/>
         <source>Display photos and videos from watched folders that are not yet backed up in the timeline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher dans la chronologie les photos et vidéos des dossiers surveillés qui n&apos;ont pas encore été sauvegardées.</translation>
     </message>
     <message id="settingsPage.backupScanInterval">
         <location filename="../qml/pages/SettingsPage.qml" line="684"/>
@@ -1764,7 +1764,7 @@
     <message id="settingsPage.backupScanIntervalInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="686"/>
         <source>How often to run a backup cycle. Shorter intervals may impact battery life. Selecting manual only will require triggering the backup manually by the button below.</source>
-        <translation>À quelle fréquence effectuer un cycle de sauvegarde ? Des intervalles trop courts peuvent réduire la durée de vie de la batterie. Si vous sélectionnez « Manuel uniquement », vous devrez lancer la sauvegarde manuellement à l&apos;aide du bouton ci-dessous.</translation>
+        <translation>À quelle fréquence effectuer un cycle de sauvegarde&#x202f;? Des intervalles trop courts peuvent réduire la durée de vie de la batterie. Si vous sélectionnez « Manuel uniquement », vous devrez lancer la sauvegarde manuellement à l&apos;aide du bouton ci-dessous.</translation>
     </message>
     <message id="settingsPage.backupScanIntervalManual">
         <location filename="../qml/pages/SettingsPage.qml" line="698"/>
@@ -1829,12 +1829,12 @@
     <message id="settingsPage.catalog">
         <location filename="../qml/pages/SettingsPage.qml" line="831"/>
         <source>Catalog Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronisation du catalogue</translation>
     </message>
     <message id="settingsPage.syncLastTime">
         <location filename="../qml/pages/SettingsPage.qml" line="836"/>
         <source>Last synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Dernière synchronisation</translation>
     </message>
     <message id="settingsPage.syncInProgress">
         <location filename="../qml/pages/SettingsPage.qml" line="842"/>
@@ -1843,62 +1843,62 @@
         <location filename="../qml/pages/SettingsPage.qml" line="867"/>
         <location filename="../qml/pages/SettingsPage.qml" line="874"/>
         <source>Sync in progress...</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchro en progrès...</translation>
     </message>
     <message id="settingsPage.notSynced">
         <location filename="../qml/pages/SettingsPage.qml" line="845"/>
         <source>Not synced yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Non synchronisé encore</translation>
     </message>
     <message id="settingsPage.syncAssets">
         <location filename="../qml/pages/SettingsPage.qml" line="851"/>
         <source>Assets</source>
-        <translation type="unfinished"></translation>
+        <translation>Éléments</translation>
     </message>
     <message id="settingsPage.syncAlbums">
         <location filename="../qml/pages/SettingsPage.qml" line="858"/>
         <source>Albums</source>
-        <translation type="unfinished">Albums</translation>
+        <translation>Albums</translation>
     </message>
     <message id="settingsPage.syncPeople">
         <location filename="../qml/pages/SettingsPage.qml" line="865"/>
         <source>People</source>
-        <translation type="unfinished">Personnes</translation>
+        <translation>Personnes</translation>
     </message>
     <message id="settingsPage.syncLocalFiles">
         <location filename="../qml/pages/SettingsPage.qml" line="872"/>
         <source>Local files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers locaux</translation>
     </message>
     <message id="settingsPage.syncNow">
         <location filename="../qml/pages/SettingsPage.qml" line="880"/>
         <source>Sync now</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchro maintenant</translation>
     </message>
     <message id="settingsPage.rebuildCatalog">
         <location filename="../qml/pages/SettingsPage.qml" line="888"/>
         <source>Rebuild catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Reconstruire le catalogue</translation>
     </message>
     <message id="notification.rebuildingCatalog">
         <location filename="../qml/pages/SettingsPage.qml" line="893"/>
         <source>Rebuilding catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Reconstruction du catalogue</translation>
     </message>
     <message id="settingsPage.clearImageCache">
         <location filename="../qml/pages/SettingsPage.qml" line="1044"/>
         <source>Clear image cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Vider le cache des images</translation>
     </message>
     <message id="notification.clearingImageCache">
         <location filename="../qml/pages/SettingsPage.qml" line="1048"/>
         <source>Clearing image cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Vidage du cache des images</translation>
     </message>
     <message id="notification.imageCacheCleared">
         <location filename="../qml/pages/SettingsPage.qml" line="1051"/>
         <source>Image cache cleared</source>
-        <translation type="unfinished"></translation>
+        <translation>Cache des images nettoyé</translation>
     </message>
     <message id="notification.serverSyncResult">
         <location filename="../qml/pages/SettingsPage.qml" line="1084"/>
@@ -1914,7 +1914,7 @@
         <location filename="../qml/pages/SettingsPage.qml" line="1092"/>
         <source>Could not fetch supported media types from server - backup disabled</source>
         <oldsource>Could not fetch supported media types from server. Backup disabled.</oldsource>
-        <translation type="unfinished">Impossible de récupérer les types de fichiers pris en charge depuis le serveur. La sauvegarde est désactivée.</translation>
+        <translation>Impossible de récupérer les types de fichiers pris en charge depuis le serveur. La sauvegarde est désactivée.</translation>
     </message>
     <message id="settingsPage.backupSkipVerification">
         <location filename="../qml/pages/SettingsPage.qml" line="647"/>
@@ -1924,52 +1924,52 @@
     <message id="settingsPage.lockedFolderPin">
         <location filename="../qml/pages/SettingsPage.qml" line="359"/>
         <source>Locked folder PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN du dossier verrouillé</translation>
     </message>
     <message id="settingsPage.lockedFolderPinLoading">
         <location filename="../qml/pages/SettingsPage.qml" line="362"/>
         <source>Loading...</source>
-        <translation type="unfinished">Chargement en cours...</translation>
+        <translation>Chargement en cours...</translation>
     </message>
     <message id="settingsPage.lockedFolderPinSet">
         <location filename="../qml/pages/SettingsPage.qml" line="364"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir</translation>
     </message>
     <message id="settingsPage.lockedFolderPinNotSet">
         <location filename="../qml/pages/SettingsPage.qml" line="366"/>
         <source>Not set</source>
-        <translation type="unfinished">Pas indiqué</translation>
+        <translation>Non défini</translation>
     </message>
     <message id="settingsPage.lockedFolderPinInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="369"/>
         <source>Create, change or reset the PIN code for your locked folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer, modifier ou réinitialiser le code PIN de votre dossier verrouillé.</translation>
     </message>
     <message id="settingsPage.people">
         <location filename="../qml/pages/SettingsPage.qml" line="375"/>
         <source>People</source>
-        <translation type="unfinished">Personnes</translation>
+        <translation>Personnes</translation>
     </message>
     <message id="settingsPage.clusterGroup">
         <location filename="../qml/pages/SettingsPage.qml" line="382"/>
         <source>Cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Groupe de regroupement</translation>
     </message>
     <message id="settingsPage.clusterGroupInvitation">
         <location filename="../qml/pages/SettingsPage.qml" line="386"/>
         <source>1 invitation</source>
-        <translation type="unfinished"></translation>
+        <translation>1 invitation</translation>
     </message>
     <message id="settingsPage.clusterGroupInvitations">
         <location filename="../qml/pages/SettingsPage.qml" line="389"/>
         <source>%1 invitations</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 invitations</translation>
     </message>
     <message id="clusterGroupPage.clusterGroupInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="394"/>
         <source>People are recognized across the photos of everyone in the group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les personnes sont reconnues dans les photos de tous les membres du groupe.</translation>
     </message>
     <message id="settingsPage.backupSkipVerificationInfo">
         <location filename="../qml/pages/SettingsPage.qml" line="649"/>
@@ -2420,7 +2420,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="314"/>
         <source>Synchronizing timeline...</source>
         <oldsource>Syncing library…</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Synchronisation de la chronologie en cours...</translation>
     </message>
     <message id="pullDownMenu.upload">
         <location filename="../qml/pages/TimelinePage.qml" line="74"/>
@@ -2462,7 +2462,7 @@
         <location filename="../qml/pages/TimelinePage.qml" line="402"/>
         <source>Uploading %1 files</source>
         <oldsource>Uploading %1 files...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Téléversement d&apos;1% fichiers</translation>
     </message>
     <message id="notification.addedToAlbum">
         <location filename="../qml/pages/TimelinePage.qml" line="497"/>
@@ -2653,7 +2653,7 @@
     <message id="folderPickerPage.includedVia">
         <location filename="../qml/pages/FolderPickerPage.qml" line="186"/>
         <source>Included via %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Inclus via %1</translation>
     </message>
     <message id="folderPickerPage.customFolder">
         <location filename="../qml/pages/FolderPickerPage.qml" line="203"/>
@@ -2784,7 +2784,7 @@
     <message id="libraryPage.memories">
         <location filename="../qml/pages/LibraryPage.qml" line="61"/>
         <source>Memories</source>
-        <translation type="unfinished"></translation>
+        <translation>Souvenirs</translation>
     </message>
     <message id="libraryPage.archived">
         <location filename="../qml/pages/LibraryPage.qml" line="63"/>
@@ -3066,7 +3066,7 @@
     <message id="placesPage.noPlacesMatch">
         <location filename="../qml/pages/PlacesPage.qml" line="202"/>
         <source>No places match filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun lieu ne correspond au filtre</translation>
     </message>
     <message id="pullDownMenu.hideHidden">
         <location filename="../qml/pages/PeoplePage.qml" line="48"/>
@@ -3127,7 +3127,7 @@
         <location filename="../qml/pages/PeoplePage.qml" line="204"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="67"/>
         <source>Manage access</source>
-        <translation type="unfinished"></translation>
+        <translation>Gérer les accès</translation>
     </message>
     <message id="peoplePage.loading">
         <location filename="../qml/pages/PeoplePage.qml" line="224"/>
@@ -3183,17 +3183,17 @@
     <message id="editPersonDialog.applyTo">
         <location filename="../qml/components/EditPersonDialog.qml" line="93"/>
         <source>Apply name and birthday to</source>
-        <translation type="unfinished"></translation>
+        <translation>Appliquer le nom et la date de naissance à</translation>
     </message>
     <message id="editPersonDialog.applyEveryone">
         <location filename="../qml/components/EditPersonDialog.qml" line="98"/>
         <source>Everyone with access</source>
-        <translation type="unfinished"></translation>
+        <translation>Toutes les personnes ayant accès</translation>
     </message>
     <message id="editPersonDialog.applyOnlyMe">
         <location filename="../qml/components/EditPersonDialog.qml" line="100"/>
         <source>Only me</source>
-        <translation type="unfinished"></translation>
+        <translation>Seulement moi</translation>
     </message>
     <message id="pullDownMenu.editPerson">
         <location filename="../qml/pages/PersonDetailPage.qml" line="78"/>
@@ -3210,13 +3210,13 @@
         <location filename="../qml/pages/PersonDetailPage.qml" line="166"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="218"/>
         <source>Shared with %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Partagé avec %1</translation>
     </message>
     <message id="personDetailPage.sharedBy">
         <location filename="../qml/pages/PersonDetailPage.qml" line="175"/>
         <location filename="../qml/pages/PersonDetailPage.qml" line="227"/>
         <source>Shared by %1</source>
-        <translation type="unfinished">Partagé par %1</translation>
+        <translation>Partagé par %1</translation>
     </message>
     <message id="personDetailPage.asset">
         <location filename="../qml/pages/PersonDetailPage.qml" line="186"/>
@@ -3243,7 +3243,7 @@
     <message id="personDetailPage.sharedEmptyHint">
         <location filename="../qml/pages/PersonDetailPage.qml" line="311"/>
         <source>Only photos from partners and shared albums are shown</source>
-        <translation type="unfinished"></translation>
+        <translation>Seules les photos des partenaires et des albums partagés sont affichées.</translation>
     </message>
     <message id="notification.personUpdated">
         <location filename="../qml/pages/PersonDetailPage.qml" line="416"/>
@@ -3268,7 +3268,7 @@
     <message id="filterBar.upcoming">
         <location filename="../qml/components/MemoriesFilterBar.qml" line="55"/>
         <source>Upcoming</source>
-        <translation type="unfinished"></translation>
+        <translation>À venir</translation>
     </message>
     <message id="filterBar.favorites">
         <location filename="../qml/components/FilterBar.qml" line="106"/>
@@ -3662,225 +3662,225 @@
         <location filename="../qml/harbour-immich.qml" line="61"/>
         <source>Client certificate has expired. Update it to keep connecting.</source>
         <oldsource>Client certificate has expired. Tap to update.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Le certificat client a expiré. Mettez-le à jour pour continuer à vous connecter.</translation>
     </message>
     <message id="app.clientCertExpiringSoon">
         <location filename="../qml/harbour-immich.qml" line="63"/>
         <source>Client certificate expires in %1 day(s).</source>
         <oldsource>Client certificate expires in %1 day(s). Tap to update.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Le certificat client expire dans %1 jour(s).</translation>
     </message>
     <message id="clientCertPage.statusExpired">
         <location filename="../qml/pages/ClientCertPage.qml" line="25"/>
         <source>Expired</source>
-        <translation type="unfinished">Expiré</translation>
+        <translation>Expiré</translation>
     </message>
     <message id="clientCertPage.statusExpiringSoon" numerus="yes">
         <location filename="../qml/pages/ClientCertPage.qml" line="29"/>
         <source>Expires in %n day(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Expire dans %n jour</numerusform>
+            <numerusform>Expire dans %n jours</numerusform>
         </translation>
     </message>
     <message id="clientCertPage.statusValid">
         <location filename="../qml/pages/ClientCertPage.qml" line="32"/>
         <source>Valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Valide</translation>
     </message>
     <message id="clientCertPage.title">
         <location filename="../qml/pages/ClientCertPage.qml" line="46"/>
         <source>Client Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Certificat client</translation>
     </message>
     <message id="clientCertPage.description">
         <location filename="../qml/pages/ClientCertPage.qml" line="56"/>
         <source>Import a PKCS#12 (.p12 or .pfx) certificate to authenticate this device to servers that require mutual TLS (mTLS). Changes take effect immediately.</source>
         <oldsource>Import a PKCS#12 (.p12 or .pfx) certificate to authenticate this device to servers that require mutual TLS (mTLS). Changes take effect after restarting the app.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Importer un certificat PKCS#12 (.p12 ou .pfx) pour authentifier cet appareil auprès des serveurs qui exigent une authentification TLS mutuelle (mTLS). Les modifications prennent effet immédiatement.</translation>
     </message>
     <message id="clientCertPage.expiredWarning">
         <location filename="../qml/pages/ClientCertPage.qml" line="88"/>
         <source>The client certificate has expired. Import a new one to keep connecting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le certificat client a expiré. Importez-en un nouveau pour continuer à vous connecter.</translation>
     </message>
     <message id="clientCertPage.expiringSoonWarning">
         <location filename="../qml/pages/ClientCertPage.qml" line="90"/>
         <source>The client certificate is expiring soon. Consider importing a new one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le certificat client arrive bientôt à expiration. Pensez à en importer un nouveau.</translation>
     </message>
     <message id="clientCertPage.details">
         <location filename="../qml/pages/ClientCertPage.qml" line="98"/>
         <source>Certificate details</source>
-        <translation type="unfinished"></translation>
+        <translation>Détails du certificat</translation>
     </message>
     <message id="clientCertPage.subject">
         <location filename="../qml/pages/ClientCertPage.qml" line="107"/>
         <source>Subject</source>
-        <translation type="unfinished"></translation>
+        <translation>Sujet</translation>
     </message>
     <message id="clientCertPage.issuer">
         <location filename="../qml/pages/ClientCertPage.qml" line="112"/>
         <source>Issuer</source>
-        <translation type="unfinished"></translation>
+        <translation>Émetteur</translation>
     </message>
     <message id="clientCertPage.serial">
         <location filename="../qml/pages/ClientCertPage.qml" line="117"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Numéro de série</translation>
     </message>
     <message id="clientCertPage.validFrom">
         <location filename="../qml/pages/ClientCertPage.qml" line="122"/>
         <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <translation>Valide à partir du</translation>
     </message>
     <message id="clientCertPage.validUntil">
         <location filename="../qml/pages/ClientCertPage.qml" line="127"/>
         <source>Valid until</source>
-        <translation type="unfinished"></translation>
+        <translation>Valide jusqu&apos;au</translation>
     </message>
     <message id="clientCertPage.status">
         <location filename="../qml/pages/ClientCertPage.qml" line="156"/>
         <source>Status:</source>
         <oldsource>Status</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Statut&#xa0;:</translation>
     </message>
     <message id="clientCertPage.none">
         <location filename="../qml/pages/ClientCertPage.qml" line="174"/>
         <source>No client certificate configured</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun certificat client configuré</translation>
     </message>
     <message id="clientCertPage.replace">
         <location filename="../qml/pages/ClientCertPage.qml" line="188"/>
         <source>Replace certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplacer le certificat</translation>
     </message>
     <message id="clientCertPage.import">
         <location filename="../qml/pages/ClientCertPage.qml" line="190"/>
         <source>Import certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer un certificat</translation>
     </message>
     <message id="clientCertPage.remove">
         <location filename="../qml/pages/ClientCertPage.qml" line="198"/>
         <source>Remove certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le certificat</translation>
     </message>
     <message id="notification.removingCertificate">
         <location filename="../qml/pages/ClientCertPage.qml" line="201"/>
         <source>Removing certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Suppression du certificat en cours</translation>
     </message>
     <message id="clientCertPage.allowSelfSigned">
         <location filename="../qml/pages/ClientCertPage.qml" line="214"/>
         <source>Allow self-signed server certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoriser les certificats serveur autosignés</translation>
     </message>
     <message id="clientCertPage.allowSelfSignedInfo">
         <location filename="../qml/pages/ClientCertPage.qml" line="216"/>
         <source>Disables server certificate verification for the configured server only. Client certificate (mTLS) still applies.</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactive la vérification du certificat du serveur configuré uniquement. Le certificat client (mTLS) reste applicable.</translation>
     </message>
     <message id="clientCertPage.importCertificate">
         <location filename="../qml/pages/ClientCertPage.qml" line="252"/>
         <source>Import certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Import du certificat</translation>
     </message>
     <message id="clientCertPage.certificateFile">
         <location filename="../qml/pages/ClientCertPage.qml" line="258"/>
         <source>Certificate file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier du certificat</translation>
     </message>
     <message id="clientCertPage.chooseFile">
         <location filename="../qml/pages/ClientCertPage.qml" line="260"/>
         <source>Choose file</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisir le fichier</translation>
     </message>
     <message id="notification.certificateImported">
         <location filename="../qml/pages/ClientCertPage.qml" line="294"/>
         <source>Certificate imported and applied</source>
         <oldsource>Certificate imported and applied.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Certificat importé et appliqué</translation>
     </message>
     <message id="notification.certificateImportFailed">
         <location filename="../qml/pages/ClientCertPage.qml" line="298"/>
         <source>Could not import certificate - check the file and password</source>
         <oldsource>Could not import certificate. Check the file and password.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;importer le certificat&#xa0;: vérifiez le fichier et le mot de passe.</translation>
     </message>
     <message id="clientCertPage.selectFile">
         <location filename="../qml/pages/ClientCertPage.qml" line="280"/>
         <source>Select certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le certificat</translation>
     </message>
     <message id="clientCertPage.password">
         <location filename="../qml/pages/ClientCertPage.qml" line="268"/>
         <source>Password</source>
-        <translation type="unfinished">Mot de passe</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message id="clientCertPage.passwordPlaceholder">
         <location filename="../qml/pages/ClientCertPage.qml" line="270"/>
         <source>Leave empty if the file has no password</source>
-        <translation type="unfinished"></translation>
+        <translation>Laissez ce champ vide si le fichier n&apos;est pas protégé par un mot de passe.</translation>
     </message>
     <message id="memoriesPage.birthdayTitle">
         <location filename="../qml/pages/MemoriesPage.qml" line="34"/>
         <source>%1&apos;s birthday</source>
-        <translation type="unfinished"></translation>
+        <translation>Date de naissance de %1</translation>
     </message>
     <message id="memoriesPage.unknownPerson">
         <location filename="../qml/pages/MemoriesPage.qml" line="36"/>
         <source>Unknown</source>
-        <translation type="unfinished">Inconnu</translation>
+        <translation>Inconnu</translation>
     </message>
     <message id="memoriesPage.memory">
         <location filename="../qml/pages/MemoriesPage.qml" line="39"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Souvenir</translation>
     </message>
     <message id="memoriesPage.thisYear">
         <location filename="../qml/pages/MemoriesPage.qml" line="42"/>
         <source>This year</source>
-        <translation type="unfinished"></translation>
+        <translation>Cette année</translation>
     </message>
     <message id="memoriesPage.yearAgo">
         <location filename="../qml/pages/MemoriesPage.qml" line="44"/>
         <source>A year ago</source>
-        <translation type="unfinished">Il y a un an</translation>
+        <translation>Il y a un an</translation>
     </message>
     <message id="memoriesPage.yearsAgo">
         <location filename="../qml/pages/MemoriesPage.qml" line="46"/>
         <source>%1 years ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Il y a %1 ans</translation>
     </message>
     <message id="memoriesPage.memories">
         <location filename="../qml/pages/MemoriesPage.qml" line="73"/>
         <source>Memories</source>
-        <translation type="unfinished"></translation>
+        <translation>Souvenirs</translation>
     </message>
     <message id="memoriesPage.asset">
         <location filename="../qml/pages/MemoriesPage.qml" line="197"/>
         <source>1 asset</source>
-        <translation type="unfinished"></translation>
+        <translation>1 élément</translation>
     </message>
     <message id="memoriesPage.assets">
         <location filename="../qml/pages/MemoriesPage.qml" line="199"/>
         <source>%1 assets</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 éléments</translation>
     </message>
     <message id="memoriesPage.loading">
         <location filename="../qml/pages/MemoriesPage.qml" line="224"/>
         <source>Loading memories...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement des souvenirs...</translation>
     </message>
     <message id="memoriesPage.noMemories">
         <location filename="../qml/pages/MemoriesPage.qml" line="232"/>
         <source>No memories found</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun souvenir trouvé</translation>
     </message>
     <message id="deviceAssetDetailPage.failed">
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="178"/>
         <source>Failed to load image</source>
-        <translation type="unfinished">Chargement d&apos;image échoué</translation>
+        <translation>Chargement d&apos;image échoué</translation>
     </message>
     <message id="notification.uploadingFile">
         <location filename="../qml/pages/AssetDetailPage.qml" line="541"/>
@@ -3889,562 +3889,562 @@
         <location filename="../qml/pages/TimelinePage.qml" line="400"/>
         <source>Uploading file</source>
         <oldsource>Uploading file...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Téléversement du fichier</translation>
     </message>
     <message id="notification.deletingFile">
         <location filename="../qml/pages/AssetDetailPage.qml" line="554"/>
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="355"/>
         <location filename="../qml/pages/DeviceFolderPage.qml" line="339"/>
         <source>Deleting file from device</source>
-        <translation type="unfinished"></translation>
+        <translation>Suppression du fichier de l&apos;appareil en cours</translation>
     </message>
     <message id="notification.uploadedFile">
         <location filename="../qml/pages/AssetDetailPage.qml" line="646"/>
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="400"/>
         <source>Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléversé</translation>
     </message>
     <message id="notification.uploadFileFailed">
         <location filename="../qml/pages/AssetDetailPage.qml" line="652"/>
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="406"/>
         <source>Upload failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléversement échoué</translation>
     </message>
     <message id="deviceAssetDetailPage.backedUp">
         <location filename="../qml/pages/DeviceAssetDetailPage.qml" line="293"/>
         <source>Backed up</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegardé</translation>
     </message>
     <message id="deviceAssetInfoPage.title">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="38"/>
         <source>File Information</source>
         <oldsource>File Info</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Informations sur le fichier</translation>
     </message>
     <message id="deviceAssetInfoPage.name">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="50"/>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message id="deviceAssetInfoPage.type">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="56"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message id="deviceAssetInfoPage.video">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="59"/>
         <source>Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Vidéo</translation>
     </message>
     <message id="deviceAssetInfoPage.photo">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="61"/>
         <source>Photo</source>
-        <translation type="unfinished"></translation>
+        <translation>Photo</translation>
     </message>
     <message id="deviceAssetInfoPage.size">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="66"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille</translation>
     </message>
     <message id="deviceAssetInfoPage.lastModified">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="86"/>
         <source>Last modified</source>
-        <translation type="unfinished">Dernier modifié</translation>
+        <translation>Dernier modifié</translation>
     </message>
     <message id="deviceAssetInfoPage.backupStatus">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="92"/>
         <source>Backup status</source>
-        <translation type="unfinished"></translation>
+        <translation>État de la sauvegarde</translation>
     </message>
     <message id="deviceAssetInfoPage.backedUp">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="95"/>
         <source>Backed up</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegardé</translation>
     </message>
     <message id="deviceAssetInfoPage.notBackedUp">
         <location filename="../qml/pages/DeviceAssetInfoPage.qml" line="97"/>
         <source>Not backed up</source>
-        <translation type="unfinished"></translation>
+        <translation>Non sauvegardé</translation>
     </message>
     <message id="pullDownMenu.showOldestFirst">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="76"/>
         <source>Show oldest first</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les plus anciens en premier</translation>
     </message>
     <message id="pullDownMenu.showNewestFirst">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="78"/>
         <source>Show newest first</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les plus récents en premier</translation>
     </message>
     <message id="deviceFolderPage.asset">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="129"/>
         <location filename="../qml/pages/DeviceFolderPage.qml" line="142"/>
         <source>1 asset</source>
-        <translation type="unfinished"></translation>
+        <translation>1 élément</translation>
     </message>
     <message id="deviceFolderPage.assets">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="131"/>
         <location filename="../qml/pages/DeviceFolderPage.qml" line="142"/>
         <source>%1 assets</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 éléments</translation>
     </message>
     <message id="deviceFolderPage.checking">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="309"/>
         <source>Checking against server...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérification auprès du serveur...</translation>
     </message>
     <message id="deviceFolderPage.empty">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="317"/>
         <source>No media files in this folder</source>
-        <translation type="unfinished">Ce dossier ne contient aucun fichier multimédia</translation>
+        <translation>Ce dossier ne contient aucun fichier multimédia</translation>
     </message>
     <message id="notification.deletingFiles">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="341"/>
         <source>Deleting %1 files from device</source>
-        <translation type="unfinished"></translation>
+        <translation>Suppression de %1 fichiers de l&apos;appareil en cours</translation>
     </message>
     <message id="notification.removedFile">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="375"/>
         <source>Removed file from device</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier supprimé de l&apos;appareil</translation>
     </message>
     <message id="notification.removedFiles">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="377"/>
         <source>Removed %1 files from device</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 fichiers supprimés de l&apos;appareil</translation>
     </message>
     <message id="notification.checkFailed">
         <location filename="../qml/pages/DeviceFolderPage.qml" line="370"/>
         <source>Server check failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la vérification auprès du serveur</translation>
     </message>
     <message id="uploadPickerPage.title">
         <location filename="../qml/pages/UploadPickerPage.qml" line="42"/>
         <source>Select folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un dossier</translation>
     </message>
     <message id="userPickerDialog.share">
         <location filename="../qml/components/UserPickerDialog.qml" line="13"/>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>Partager</translation>
     </message>
     <message id="userPickerDialog.empty">
         <location filename="../qml/components/UserPickerDialog.qml" line="15"/>
         <source>No users to share with</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun utilisateur avec lequel partager.</translation>
     </message>
     <message id="userPickerDialog.emptyHint">
         <location filename="../qml/components/UserPickerDialog.qml" line="17"/>
         <source>People can only be shared with users in your cluster group. Set it up in the application settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les personnes ne peuvent être partagées qu&apos;avec les utilisateurs de votre groupe de regroupement. Configurez-le dans les paramètres de l&apos;application.</translation>
     </message>
     <message id="userPickerDialog.partner">
         <location filename="../qml/components/UserPickerDialog.qml" line="131"/>
         <source>Partner</source>
-        <translation type="unfinished"></translation>
+        <translation>Partenaire</translation>
     </message>
     <message id="userPickerDialog.loading">
         <location filename="../qml/components/UserPickerDialog.qml" line="171"/>
         <source>Loading users...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement des utilisateurs...</translation>
     </message>
     <message id="personAccessPage.addUsers">
         <location filename="../qml/pages/PersonAccessPage.qml" line="23"/>
         <source>Add users</source>
-        <translation type="unfinished">Ajouter des utilisateurs</translation>
+        <translation>Ajouter des utilisateurs</translation>
     </message>
     <message id="personAccessPage.title">
         <location filename="../qml/pages/PersonAccessPage.qml" line="45"/>
         <source>Manage access</source>
-        <translation type="unfinished"></translation>
+        <translation>Gérer les accès</translation>
     </message>
     <message id="personAccessPage.sharedByMe">
         <location filename="../qml/pages/PersonAccessPage.qml" line="51"/>
         <source>Sharing with</source>
         <oldsource>Shared by me</oldsource>
-        <translation type="unfinished">Partager avec</translation>
+        <translation>Partager avec</translation>
     </message>
     <message id="personAccessPage.stopSharing">
         <location filename="../qml/pages/PersonAccessPage.qml" line="68"/>
         <location filename="../qml/pages/PersonAccessPage.qml" line="72"/>
         <source>Stop sharing</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter le partage</translation>
     </message>
     <message id="personAccessPage.notShared">
         <location filename="../qml/pages/PersonAccessPage.qml" line="216"/>
         <source>Not shared with anyone</source>
-        <translation type="unfinished"></translation>
+        <translation>Partagé avec personne</translation>
     </message>
     <message id="personAccessPage.notSharedHint">
         <location filename="../qml/pages/PersonAccessPage.qml" line="218"/>
         <source>Add a user from your cluster group to share the person with them</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajoutez un utilisateur de votre groupe de regroupement pour partager cette personne avec lui.</translation>
     </message>
     <message id="personAccessPage.sharedWithMe">
         <location filename="../qml/pages/PersonAccessPage.qml" line="117"/>
         <source>Shared with me</source>
-        <translation type="unfinished">Partagé avec moi</translation>
+        <translation>Partagé avec moi</translation>
     </message>
     <message id="personAccessPage.shareBack">
         <location filename="../qml/pages/PersonAccessPage.qml" line="139"/>
         <source>Share back</source>
-        <translation type="unfinished"></translation>
+        <translation>Partager en retour</translation>
     </message>
     <message id="personAccessPage.sharedBack">
         <location filename="../qml/pages/PersonAccessPage.qml" line="190"/>
         <source>Shared back</source>
-        <translation type="unfinished"></translation>
+        <translation>Partager en retour</translation>
     </message>
     <message id="pullDownMenu.addCustomFolder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="73"/>
         <source>Add custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un dossier personnalisé</translation>
     </message>
     <message id="onThisDevicePage.title">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="88"/>
         <source>On This Device</source>
-        <translation type="unfinished">Sur cet appareil</translation>
+        <translation>Sur cet appareil</translation>
     </message>
     <message id="notification.removeCustomFolder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="120"/>
         <source>Removing folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le dossier</translation>
     </message>
     <message id="onThisDevicePage.asset">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="162"/>
         <source>1 asset</source>
-        <translation type="unfinished"></translation>
+        <translation>1 élément</translation>
     </message>
     <message id="onThisDevicePage.assets">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="164"/>
         <source>%1 assets</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 éléments</translation>
     </message>
     <message id="onThisDevicePage.removeCustomFolder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="179"/>
         <source>Remove folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le dossier</translation>
     </message>
     <message id="onThisDevicePage.noFolders">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="202"/>
         <source>No folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de dossiers</translation>
     </message>
     <message id="onThisDevicePage.noFoldersHint">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="204"/>
         <source>Pull down to add a custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Faites glisser vers le bas pour ajouter un dossier personnalisé.</translation>
     </message>
     <message id="onThisDevicePage.addFolderAccept">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="219"/>
         <source>Add Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter dossier</translation>
     </message>
     <message id="onThisDevicePage.folderPathPlaceholder">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="225"/>
         <source>Enter folder path</source>
-        <translation type="unfinished">Saisissez le chemin d&apos;accès au dossier</translation>
+        <translation>Saisissez le chemin d&apos;accès au dossier</translation>
     </message>
     <message id="onThisDevicePage.folderPath">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="227"/>
         <source>Folder path</source>
-        <translation type="unfinished">Chemin d&apos;accès au dossier</translation>
+        <translation>Chemin d&apos;accès au dossier</translation>
     </message>
     <message id="onThisDevicePage.addFolderDescription">
         <location filename="../qml/pages/OnThisDevicePage.qml" line="240"/>
         <source>Enter the full path to a folder on your device. The folder must exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Saisissez le chemin d&apos;accès complet d&apos;un dossier sur votre appareil. Le dossier doit exister.</translation>
     </message>
     <message id="pullDownMenu.declineClusterInvitation">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="22"/>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Refuser</translation>
     </message>
     <message id="clusterGroupInviteDialog.join">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="37"/>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Joindre</translation>
     </message>
     <message id="clusterGroupInviteDialog.title">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="39"/>
         <source>Cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Groupe de regroupement</translation>
     </message>
     <message id="clusterGroupInviteDialog.joinInfo">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="46"/>
         <source>Joining moves your people into this group so faces are recognized across all members&apos; photos.</source>
-        <translation type="unfinished"></translation>
+        <translation>En rejoignant ce groupe, vos personnes y seront transférées afin que les visages soient reconnus dans les photos de tous ses membres.</translation>
     </message>
     <message id="clusterGroupInviteDialog.members">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="53"/>
         <source>Members</source>
-        <translation type="unfinished"></translation>
+        <translation>Membres</translation>
     </message>
     <message id="pullDownMenu.leaveClusterGroup">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="42"/>
         <source>Leave group</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitter le groupe</translation>
     </message>
     <message id="pullDownMenu.resetFacialRecognition">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="49"/>
         <source>Reset facial recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialiser la reconnaissance faciale</translation>
     </message>
     <message id="pullDownMenu.inviteClusterUsers">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="55"/>
         <source>Invite users</source>
-        <translation type="unfinished"></translation>
+        <translation>Inviter des utilisateurs</translation>
     </message>
     <message id="clusterGroupPage.invite">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="68"/>
         <source>Invite</source>
-        <translation type="unfinished"></translation>
+        <translation>Inviter</translation>
     </message>
     <message id="clusterGroupPage.noUsersToInvite">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="70"/>
         <source>No users to invite</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun utilisateur à inviter</translation>
     </message>
     <message id="clusterGroupPage.allMembersOrInvited">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="72"/>
         <source>All users are already members or invited</source>
-        <translation type="unfinished"></translation>
+        <translation>Tous les utilisateurs sont déjà membres du groupe ou ont déjà été invités.</translation>
     </message>
     <message id="clusterGroupPage.title">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="87"/>
         <source>Cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Groupe de regroupement</translation>
     </message>
     <message id="clusterGroupPage.members">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="92"/>
         <source>Members</source>
-        <translation type="unfinished"></translation>
+        <translation>Membres</translation>
     </message>
     <message id="clusterGroupPage.you">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="127"/>
         <source>(you)</source>
-        <translation type="unfinished"></translation>
+        <translation>(vous)</translation>
     </message>
     <message id="clusterGroupPage.invitations">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="195"/>
         <source>Invitations</source>
-        <translation type="unfinished"></translation>
+        <translation>Invitations</translation>
     </message>
     <message id="clusterGroupPage.accept">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="210"/>
         <source>Accept</source>
-        <translation type="unfinished">Accepter</translation>
+        <translation>Accepter</translation>
     </message>
     <message id="clusterGroupPage.decline">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="216"/>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Refuser</translation>
     </message>
     <message id="notification.decliningInvitation">
         <location filename="../qml/pages/ClusterGroupInviteDialog.qml" line="24"/>
         <location filename="../qml/pages/ClusterGroupPage.qml" line="218"/>
         <source>Declining invitation</source>
-        <translation type="unfinished"></translation>
+        <translation>Refuser l&apos;invitation</translation>
     </message>
     <message id="clusterGroupPage.invitedInfo">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="248"/>
         <source>You have been invited to join a cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous avez été invité à rejoindre un groupe de regroupement</translation>
     </message>
     <message id="clusterGroupPage.pendingInvitations">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="267"/>
         <source>Pending invitations</source>
-        <translation type="unfinished"></translation>
+        <translation>Invitations en attente</translation>
     </message>
     <message id="clusterGroupPage.cancelInvitation">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="284"/>
         <source>Cancel invitation</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler l&apos;invitation</translation>
     </message>
     <message id="notification.cancellingInvitation">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="286"/>
         <source>Cancelling invitation</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulation de l&apos;invitation</translation>
     </message>
     <message id="clusterGroupPage.loading">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="335"/>
         <source>Loading cluster group...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement du groupe de regroupement en cours...</translation>
     </message>
     <message id="clusterGroupPage.reset">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="358"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialiser</translation>
     </message>
     <message id="clusterGroupPage.resetFacialRecognition">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="360"/>
         <source>Reset facial recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialiser la reconnaissance faciale</translation>
     </message>
     <message id="clusterGroupPage.resetFacialRecognitionWarning">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="367"/>
         <source>Resetting facial recognition will delete all people for all users in this group. Already set names and birth dates will be lost. Are you sure you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>La réinitialisation de la reconnaissance faciale supprimera toutes les personnes pour l&apos;ensemble des utilisateurs de ce groupe. Les noms et dates de naissance déjà définis seront perdus. Voulez-vous vraiment continuer&#x202f;?</translation>
     </message>
     <message id="notification.queuingFacialRecognitionReset">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="374"/>
         <source>Queuing facial recognition reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Mise en file d&apos;attente de la réinitialisation de la reconnaissance faciale</translation>
     </message>
     <message id="clusterGroupPage.leaveGroup">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="391"/>
         <location filename="../qml/pages/ClusterGroupPage.qml" line="393"/>
         <source>Leave group</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitter le groupe</translation>
     </message>
     <message id="clusterGroupPage.leaveGroupWarning">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="400"/>
         <source>Your people will no longer be recognized together with the other members. You will be moved to a new group of your own.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vos personnes ne seront plus reconnues avec celles des autres membres. Vous serez déplacé vers un nouveau groupe dont vous serez le seul membre.</translation>
     </message>
     <message id="notification.leavingClusterGroup">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="407"/>
         <source>Leaving cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitter le groupe de regroupement en cours</translation>
     </message>
     <message id="notification.clusterGroupJoined">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="435"/>
         <source>Joined cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous avez rejoint le groupe de regroupement</translation>
     </message>
     <message id="notification.clusterGroupLeft">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="440"/>
         <source>Left cluster group</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous avez quitté le groupe de regroupement</translation>
     </message>
     <message id="notification.clusterGroupPeopleRegenerated">
         <location filename="../qml/pages/ClusterGroupPage.qml" line="445"/>
         <source>Facial recognition reset queued</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialisation de la reconnaissance faciale mise en file d&apos;attente</translation>
     </message>
     <message id="clusterMemberAccessPage.unnamedPerson">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="139"/>
         <source>Unnamed person</source>
-        <translation type="unfinished"></translation>
+        <translation>Personne sans nom</translation>
     </message>
     <message id="pullDownMenu.addPeople">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="51"/>
         <source>Add people</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter des personnes</translation>
     </message>
     <message id="clusterMemberAccessPage.title">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="70"/>
         <source>Person access</source>
-        <translation type="unfinished"></translation>
+        <translation>Accès aux personnes</translation>
     </message>
     <message id="clusterMemberAccessPage.shareAll">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="76"/>
         <source>Share all my people</source>
-        <translation type="unfinished"></translation>
+        <translation>Partager toutes mes personnes</translation>
     </message>
     <message id="clusterMemberAccessPage.shareAllInfo">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="78"/>
         <source>Share every person you own with this user</source>
-        <translation type="unfinished"></translation>
+        <translation>Partager toutes les personnes dont vous êtes propriétaire avec cet utilisateur</translation>
     </message>
     <message id="clusterMemberAccessPage.sharedPeople">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="99"/>
         <source>Shared people</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnes partagées</translation>
     </message>
     <message id="clusterMemberAccessPage.stopSharing">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="113"/>
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="115"/>
         <source>Stop sharing</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter le partage</translation>
     </message>
     <message id="clusterMemberAccessPage.noSharedPeople">
         <location filename="../qml/pages/ClusterMemberAccessPage.qml" line="156"/>
         <source>No people shared with this user</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune personne partagée avec cet utilisateur</translation>
     </message>
     <message id="pinCodePage.confirmPin">
         <location filename="../qml/pages/PinCodePage.qml" line="21"/>
         <location filename="../qml/pages/PinCodePage.qml" line="33"/>
         <source>Re-enter your 6-digit PIN to confirm</source>
-        <translation type="unfinished">Saisissez à nouveau votre code PIN à 6 chiffres pour confirmer</translation>
+        <translation>Saisissez à nouveau votre code PIN à 6 chiffres pour confirmer</translation>
     </message>
     <message id="pinCodePage.createNewPin">
         <location filename="../qml/pages/PinCodePage.qml" line="24"/>
         <source>Create a 6-digit PIN for your locked folder</source>
-        <translation type="unfinished">Créez un code PIN à 6 chiffres pour votre dossier verrouillé</translation>
+        <translation>Créez un code PIN à 6 chiffres pour votre dossier verrouillé</translation>
     </message>
     <message id="pinCodePage.enterCurrentPin">
         <location filename="../qml/pages/PinCodePage.qml" line="29"/>
         <location filename="../qml/pages/PinCodePage.qml" line="40"/>
         <source>Enter your current PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrez votre code PIN actuel</translation>
     </message>
     <message id="pinCodePage.enterNewPin">
         <location filename="../qml/pages/PinCodePage.qml" line="36"/>
         <source>Enter a new 6-digit PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrez un nouveau code PIN à 6 chiffres</translation>
     </message>
     <message id="notification.resettingPin">
         <location filename="../qml/pages/PinCodePage.qml" line="105"/>
         <location filename="../qml/pages/PinCodePage.qml" line="236"/>
         <source>Resetting PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialisation du code PIN</translation>
     </message>
     <message id="pinCodePage.title">
         <location filename="../qml/pages/PinCodePage.qml" line="123"/>
         <source>Locked folder PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Code PIN du dossier verrouiller</translation>
     </message>
     <message id="pinCodePage.pinInfo">
         <location filename="../qml/pages/PinCodePage.qml" line="147"/>
         <source>A PIN protects your locked folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Un code PIN protège votre dossier verrouillé</translation>
     </message>
     <message id="pinCodePage.changePin">
         <location filename="../qml/pages/PinCodePage.qml" line="155"/>
         <source>Change PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer code PIN</translation>
     </message>
     <message id="pinCodePage.resetWithPin">
         <location filename="../qml/pages/PinCodePage.qml" line="165"/>
         <source>Reset PIN with current PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialiser le code PIN à l&apos;aide du code PIN actuel</translation>
     </message>
     <message id="pinCodePage.resetWithPassword">
         <location filename="../qml/pages/PinCodePage.qml" line="176"/>
         <source>Reset PIN with password</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialiser le code PIN à l&apos;aide du mot de passe</translation>
     </message>
     <message id="pinCodePage.resetPinInfo">
         <location filename="../qml/pages/PinCodePage.qml" line="188"/>
         <source>Resetting the PIN locks the locked folder on all devices</source>
-        <translation type="unfinished"></translation>
+        <translation>La réinitialisation du code PIN verrouille le dossier verrouillé sur tous les appareils</translation>
     </message>
     <message id="pinCodePage.password">
         <location filename="../qml/pages/PinCodePage.qml" line="223"/>
         <source>Password</source>
-        <translation type="unfinished">Mot de passe</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message id="pinCodePage.passwordPlaceholder">
         <location filename="../qml/pages/PinCodePage.qml" line="225"/>
         <source>Enter your account password</source>
-        <translation type="unfinished"></translation>
+        <translation>Saisissez le mot de passe de votre compte</translation>
     </message>
     <message id="pinCodePage.resetPin">
         <location filename="../qml/pages/PinCodePage.qml" line="233"/>
         <source>Reset PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialiser le code PIN</translation>
     </message>
     <message id="notification.pinChanged">
         <location filename="../qml/pages/PinCodePage.qml" line="283"/>
         <source>PIN changed</source>
-        <translation type="unfinished"></translation>
+        <translation>Code PIN changé</translation>
     </message>
     <message id="notification.pinReset">
         <location filename="../qml/pages/PinCodePage.qml" line="287"/>
         <source>PIN reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialisation du code PIN</translation>
     </message>
 </context>
 </TS>
